@@ -20,18 +20,6 @@
         "type": "github"
       }
     },
-    "cloudflareCertAuthFile": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-dgw2FVrzVjFyOMu8c8rxa1YCJN5vH3HPVvl7ULSxWaY=",
-        "type": "file",
-        "url": "https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -146,7 +134,6 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "cloudflareCertAuthFile": "cloudflareCertAuthFile",
         "home-manager": "home-manager",
         "homeage": "homeage",
         "nixos-wsl": "nixos-wsl",

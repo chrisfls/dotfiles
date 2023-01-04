@@ -133,7 +133,8 @@
 
   services.cloudflare-warp = {
     enable = true;
-    certificate = toString (misc "Cloudflare_CA.crt"); # move this into a package
+    # download from https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
+    certificate = misc "Cloudflare_CA.crt";
   };
 
   #

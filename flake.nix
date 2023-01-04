@@ -29,18 +29,14 @@
       url = "github:jordanisaacs/homeage";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    cloudflareCertAuthFile = {
-      type = "file";
-      url = "https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt";
-      flake = false;
-    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
     let
       userPathFor = username: hostname: "${username}@${hostname}";
+
       specialArgs = {
-        inherit (inputs) nixpkgs agenix homeage cloudflareCertAuthFile;
+        inherit (inputs) nixpkgs agenix homeage;
         # helpers
         home = path: ./assets/home/${path};
         misc = path: ./assets/misc/${path};
