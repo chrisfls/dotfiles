@@ -132,6 +132,13 @@ in
     };
   };
 
+  programs.micro = {
+    enable = true;
+    settings = {
+      colorscheme = "solarized-tc";
+    };
+  };
+
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
