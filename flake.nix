@@ -46,7 +46,7 @@
         importUser = username: hostname:
           import ./users/${userPathFor username hostname}/home.nix
             { inherit username hostname; };
-        compose = with nixpkgs; lib.trivial.flip lib.trivial.pipe; # eff da police (see: bit.ly/3IiZTw9)
+        # compose = with nixpkgs; lib.trivial.flip lib.trivial.pipe; # eff da police (see: bit.ly/3IiZTw9)
         # global config
         defaultUser = "kress";
       };
