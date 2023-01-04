@@ -13,14 +13,6 @@ let
   # shared settings
   #
 
-  gitExtraConfig = {
-    user.name = "Chris";
-    core.editor = "micro";
-    rerere.enabled = true;
-    pull.rebase = true;
-    init.defaultBranch = "main";
-  };
-
   defaultBrowser = "brave-browser.desktop";
 
   #
@@ -29,9 +21,10 @@ let
 
   # TODO: move this to specialArgs as homeageFromConfig username hostname { identities, file }
   homeageFromSecrets = { identities, file }: {
-      identityPaths = map (path: "${homeDirectory}/${path}") identities;
-      installationType = "activation";
-      file = lib.attrsets.mapAttrs' (target: source:
+    identityPaths = map (path: "${homeDirectory}/${path}") identities;
+    installationType = "activation";
+    file = lib.attrsets.mapAttrs'
+      (target: source:
         {
           name = toString source;
           value = {
@@ -39,13 +32,9 @@ let
             copies = [ "${homeDirectory}/${target}" ];
           };
         }
-      ) file;
+      )
+      file;
   };
-
-  toGitINI = compose [
-    (lib.trivial.mergeAttrs gitExtraConfig)
-    lib.generators.toGitINI
-  ];
 
   secret = secretPath username hostname;
 in
@@ -67,15 +56,8 @@ in
         exec ${fish}
       fi
     '';
-    "gitlab/.envrc".source = ./gitlab/.envrc;
-    "gitlab/.gitconfig".text = toGitINI {
-      user.email = "christian.ferraz@paack.co";
-    };
+    "gitlab/.keep".text = "";
     "paack/.envrc".source = ./paack/.envrc;
-    "paack/.gitconfig".text = toGitINI {
-      user.email = "664520-kress95@users.noreply.gitlab.com";
-      user.name = "Christian Ferraz";
-    };
   };
 
   xdg = {
@@ -119,9 +101,30 @@ in
 
   programs.git = {
     enable = true;
-    userName = gitExtraConfig.user.name;
+    userName = "Chris";
     userEmail = "2013206+kress95@users.noreply.github.com";
-    extraConfig = gitExtraConfig;
+    extraConfig = {
+      rerere.enabled = true;
+      pull.rebase = true;
+      init.defaultBranch = "main";
+      core = {
+        editor = "micro";
+        excludesfile = "$NIXOS_CONFIG_DIR/scripts/gitignore";
+      };
+    };
+    includes = [
+      {
+        condition = "gitdir:${homeDirectory}/gitlab/";
+        contents.user.email = "664520-kress95@users.noreply.gitlab.com";
+      }
+      {
+        condition = "gitdir:${homeDirectory}/paack/";
+        contents = {
+          user.name = "Christian Ferraz";
+          user.email = "christian.ferraz@paack.co";
+        };
+      }
+    ];
   };
 
   programs.keychain = {
@@ -164,7 +167,7 @@ in
   home.activation = {
     direnvAllow = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       $DRY_RUN_CMD ${direnv} allow $HOME
-      $DRY_RUN_CMD ${direnv} allow $HOME/gitlab
+      # $DRY_RUN_CMD ${direnv} allow $HOME/gitlab
       $DRY_RUN_CMD ${direnv} allow $HOME/paack
     '';
   };
