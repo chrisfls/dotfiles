@@ -3,6 +3,9 @@
 let
   # directories
   homeDirectory = "/home/${username}";
+  windowsDataDirectory = "/mnt/d"; # d is for data, c is for "can't move out of here"
+  windowsHomeDirectory = "${windowsDataDirectory}/Users/${username}";
+  windowsDesktopDirectory = "${windowsHomeDirectory}/Desktop";
 
   # binaries
   fish = "${config.programs.fish.package}/bin/fish";
@@ -20,6 +23,8 @@ let
   #
 
   homeageConfig = homeageConfigUser userArgs;
+
+  winDesktopDirectory = "/mnt/d/Users/kress/Desktop";
 in
 {
   imports = [ homeage.homeManagerModules.homeage ];
@@ -101,6 +106,10 @@ in
         contents.user.email = "664520-kress95@users.noreply.gitlab.com";
       }
       {
+        condition = "gitdir:${windowsDesktopDirectory}/gitlab/";
+        contents.user.email = "664520-kress95@users.noreply.gitlab.com";
+      }
+      {
         condition = "gitdir:${homeDirectory}/paack/";
         contents = {
           user.name = "Christian Ferraz";
@@ -129,6 +138,11 @@ in
     '';
     functions = {
       dev = builtins.readFile (fileFromHome ".config/fish/functions/dev.fish");
+      win = ''
+      function win --wraps='cd ${windowsDesktopDirectory}' --description 'cd to a folder at the desktop'
+        cd "${windowsDesktopDirectory}/$argv[1]"
+      end
+      '';
     };
   };
 
