@@ -33,20 +33,45 @@
 
   outputs = { self, nixpkgs, ... }@inputs:
     let
-      userPathFor = username: hostname: "${username}@${hostname}";
+      userPath = username: hostname: "users/${username}@${hostname}";
+
+      # helpers
+
+      fileFromHome = path: ./assets/home/${path};
+
+      fileFromMisc = path: ./assets/misc/${path};
+
+      fileFromSecrets = { username, hostname, ... }: path:
+        ./secrets/${userPath username hostname}/${path};
+
+      keys = import ./secrets/keys.nix;
+
+      importUser = username: hostname:
+        import ./${userPath username hostname}/home.nix { inherit username hostname; };
+
+      homeageConfigUser = { username, hostname, ... }@userArgs: { identities, file }: {
+        identityPaths = map (path: "/home/${username}/${path}") identities;
+        installationType = "activation";
+        file = nixpkgs.lib.attrsets.mapAttrs'
+          (target: source:
+            {
+              name = toString source;
+              value = {
+                source = fileFromSecrets userArgs source;
+                copies = [ "/home/${username}/${target}" ];
+              };
+            }
+          )
+          file;
+      };
+
+      # eff da police (see: bit.ly/3IiZTw9)
+      # compose = nixpkgs.lib.trivial.flip nixpkgs.lib.trivial.pipe; 
 
       specialArgs = {
         inherit (inputs) nixpkgs agenix homeage;
-        # helpers
-        home = path: ./assets/home/${path};
-        misc = path: ./assets/misc/${path};
-        keys = import ./secrets/keys.nix;
-        secretPath = username: hostname: path:
-          ./secrets/users/${userPathFor username hostname}/${path};
-        importUser = username: hostname:
-          import ./users/${userPathFor username hostname}/home.nix
-            { inherit username hostname; };
-        # compose = with nixpkgs; lib.trivial.flip lib.trivial.pipe; # eff da police (see: bit.ly/3IiZTw9)
+        inherit fileFromHome fileFromMisc fileFromSecrets;
+        inherit keys importUser homeageConfigUser;
         # global config
         defaultUser = "kress";
       };

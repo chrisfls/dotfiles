@@ -1,4 +1,4 @@
-{ username, hostname, ... }:
+{ username, hostname, ... }@userArgs:
 { config, pkgs, lib, specialArgs, ... }: with specialArgs;
 let
   # directories
@@ -19,24 +19,7 @@ let
   # helpers
   #
 
-  # TODO: move this to specialArgs as homeageFromConfig username hostname { identities, file }
-  homeageFromSecrets = { identities, file }: {
-    identityPaths = map (path: "${homeDirectory}/${path}") identities;
-    installationType = "activation";
-    file = lib.attrsets.mapAttrs'
-      (target: source:
-        {
-          name = toString source;
-          value = {
-            source = secretPath username hostname source;
-            copies = [ "${homeDirectory}/${target}" ];
-          };
-        }
-      )
-      file;
-  };
-
-  secret = secretPath username hostname;
+  homeageConfig = homeageConfigUser userArgs;
 in
 {
   imports = [ homeage.homeManagerModules.homeage ];
@@ -48,8 +31,8 @@ in
   #
 
   home.file = {
-    ".bashrc".source = home ".bashrc";
-    ".bash_profile".source = home ".bash_profile";
+    ".bashrc".source = fileFromHome ".bashrc";
+    ".bash_profile".source = fileFromHome ".bash_profile";
     ".profile".text = ''
       if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z "$BASH_EXECUTION_STRING" ]]
       then
@@ -86,7 +69,7 @@ in
     };
   };
 
-  homeage = homeageFromSecrets {
+  homeage = homeageConfig {
     identities = [ ".ssh/id_ed25519" ];
     file = {
       "paack/.secretrc" = "paack/.secretrc.age";
@@ -142,10 +125,10 @@ in
     };
     shellInit = ''
       set -g SHELL "${fish}"
-      ${(builtins.readFile (misc "shell_init.fish"))}
+      ${(builtins.readFile (fileFromMisc "shell_init.fish"))}
     '';
     functions = {
-      dev = builtins.readFile (home ".config/fish/functions/dev.fish");
+      dev = builtins.readFile (fileFromHome ".config/fish/functions/dev.fish");
     };
   };
 

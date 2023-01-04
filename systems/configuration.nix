@@ -135,7 +135,7 @@
     enable = true;
     # not working, for some reason:
     # # download from https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
-    # certificate = misc "Cloudflare_CA.crt";
+    # certificate = fileFromMisc "Cloudflare_CA.crt";
   };
 
   #
