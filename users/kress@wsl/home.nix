@@ -3,9 +3,12 @@
 let
   # directories
   homeDirectory = "/home/${username}";
-  windowsDataDirectory = "/mnt/d"; # d is for data, c is for "can't move out of here"
-  windowsHomeDirectory = "${windowsDataDirectory}/Users/${username}";
+  windowsDataRoot = "/mnt/d"; # d is for data
+  windowsHomeDirectory = "${windowsDataRoot}/Users/${username}";
   windowsDesktopDirectory = "${windowsHomeDirectory}/Desktop";
+  windowsMainRoot = "/mnt/c"; # c is for "can't move out of here"
+  windowsMainDirectory = "${windowsMainRoot}/Windows";
+  windowsSystem32Directory = "${windowsMainDirectory}/System32";
 
   # binaries
   fish = "${config.programs.fish.package}/bin/fish";
@@ -23,8 +26,6 @@ let
   #
 
   homeageConfig = homeageConfigUser userArgs;
-
-  winDesktopDirectory = "/mnt/d/Users/kress/Desktop";
 in
 {
   imports = [ homeage.homeManagerModules.homeage ];
@@ -127,10 +128,12 @@ in
   programs.fish = {
     enable = true;
     shellAliases = {
+      "cmd" = "${windowsSystem32Directory}/cmd.exe"; # you can't run cmd inside wsl on windows
       "g" = "git";
-      "sys" = "git --git-dir=$HOME/.system.git --work-tree=/etc/nixos";
-      "rebuild-sys" = "sudo nixos-rebuild switch -v && rebuild-home -v";
+      "powershell" = "${windowsSystem32Directory}/WindowsPowerShell/v1.0/powershell.exe";
       "rebuild-home" = "eval (cat /etc/systemd/system/home-manager-$USER.service | sed -n 's/ExecStart=//p')";
+      "rebuild-sys" = "sudo nixos-rebuild switch -v && rebuild-home -v";
+      "sys" = "git --git-dir=$HOME/.system.git --work-tree=/etc/nixos";
     };
     shellInit = ''
       set -g SHELL "${fish}"
@@ -139,9 +142,14 @@ in
     functions = {
       dev = builtins.readFile (fileFromHome ".config/fish/functions/dev.fish");
       win = ''
-      function win --wraps='cd ${windowsDesktopDirectory}' --description 'cd to a folder at the desktop'
-        cd "${windowsDesktopDirectory}/$argv[1]"
-      end
+        function win --wraps='cd ${windowsDesktopDirectory}' --description 'cd to a folder at the desktop'
+          cd "${windowsDesktopDirectory}/$argv[1]"
+        end
+      '';
+      code = ''
+        function code --wraps='code' --description 'runs vscode on windows'
+          powershell "code $argv[1..-1]"
+        end
       '';
     };
   };
