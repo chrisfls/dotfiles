@@ -128,12 +128,17 @@ in
   programs.fish = {
     enable = true;
     shellAliases = {
-      "cmd" = "${windowsSystem32Directory}/cmd.exe"; # you can't run cmd inside wsl on windows
+      # shorthand aliases
       "g" = "git";
-      "powershell" = "${windowsSystem32Directory}/WindowsPowerShell/v1.0/powershell.exe";
+      # command aliases
+      "sys" = "git --git-dir=$HOME/.system.git --work-tree=/etc/nixos";
       "rebuild-home" = "eval (cat /etc/systemd/system/home-manager-$USER.service | sed -n 's/ExecStart=//p')";
       "rebuild-sys" = "sudo nixos-rebuild switch -v && rebuild-home -v";
-      "sys" = "git --git-dir=$HOME/.system.git --work-tree=/etc/nixos";
+      # wsl apps
+      "cmd" = "${windowsSystem32Directory}/cmd.exe"; # you can't run cmd inside wsl on windows
+      "neovide" = " /mnt/c/Users/kress/scoop/shims/neovide.exe --wsl";
+      "explorer" = "${windowsMainDirectory}/explorer.exe";
+      "powershell" = "${windowsSystem32Directory}/WindowsPowerShell/v1.0/powershell.exe";
     };
     shellInit = ''
       set -g SHELL "${fish}"
