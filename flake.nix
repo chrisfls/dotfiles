@@ -29,6 +29,10 @@
       url = "github:jordanisaacs/homeage";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-ld = {
+      url = "github:Mic92/nix-ld";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
@@ -81,10 +85,11 @@
         wsl =
           let
             system = "x86_64-linux";
-            modules = [
-              inputs.nixos-wsl.nixosModules.wsl
-              inputs.vscode-server.nixosModule
-              inputs.home-manager.nixosModules.home-manager
+            modules = with inputs; [
+              nixos-wsl.nixosModules.wsl
+              nix-ld.nixosModules.nix-ld
+              vscode-server.nixosModule
+              home-manager.nixosModules.home-manager
               ./systems/configuration.nix
               ./systems/wsl/configuration.nix
               ./systems/wsl/users.nix
