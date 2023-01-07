@@ -80,6 +80,9 @@
     neofetch
     mosh # probably never used
 
+    # used to support languagetool in vscode
+    adoptopenjdk-jre-openj9-bin-16
+
     # used just to setup cloudflare warp
     brave
     xdg-utils
