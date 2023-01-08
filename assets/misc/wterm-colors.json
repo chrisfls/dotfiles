@@ -1,0 +1,25 @@
+[
+  {
+    "background": "#000000",
+    "black": "#1D2021",
+    "blue": "#458588",
+    "brightBlack": "#928374",
+    "brightBlue": "#99C6CA",
+    "brightCyan": "#7EC16E",
+    "brightGreen": "#B8BB26",
+    "brightPurple": "#D3869B",
+    "brightRed": "#F42C3E",
+    "brightWhite": "#EBDBB2",
+    "brightYellow": "#FABD2F",
+    "cursorColor": "#F2E5BC",
+    "cyan": "#689D6A",
+    "foreground": "#F2E5BC",
+    "green": "#98971A",
+    "name": "Popping and Locking Black",
+    "purple": "#B16286",
+    "red": "#CC241D",
+    "selectionBackground": "#6A6B5D",
+    "white": "#A89984",
+    "yellow": "#D79921"
+  }
+]
