@@ -131,6 +131,7 @@ in
       # shorthand aliases
       "g" = "git";
       # command aliases
+      "m" = "deno run -A Makefile.ts";
       "sys" = "git --git-dir=$HOME/.system.git --work-tree=/etc/nixos";
       "rebuild-home" = "eval (cat /etc/systemd/system/home-manager-$USER.service | sed -n 's/ExecStart=//p')";
       "rebuild-sys" = "sudo nixos-rebuild switch -v && rebuild-home -v";
