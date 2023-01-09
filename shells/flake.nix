@@ -25,6 +25,25 @@
                 dotnet-sdk_7
               ];
             };
+            equalizer = pkgs.mkShell rec {
+              name = "equalizer";
+              buildInputs = with pkgs; [
+                deno
+                libsndfile
+                # TODO: use pip2nix to generate this list
+                (python3.withPackages (p: with p; [
+                  pillow
+                  matplotlib
+                  pandas
+                  scipy
+                  numpy
+                  tabulate
+                  soundfile
+                  pyyaml
+                  tqdm
+                ]))
+              ];
+            };
           };
         });
 }
