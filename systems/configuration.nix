@@ -51,6 +51,10 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  nixpkgs.overlays = [
+    nix-alien.overlays.default
+  ];
+
   environment.systemPackages = with pkgs; [
     agenix.defaultPackage."${system}" # secrets
     cachix # cache
@@ -87,6 +91,11 @@
     brave
     xdg-utils
     desktop-file-utils
+
+    # nix-alien
+    nix-alien
+    nix-index # not necessary, but recommended
+    nix-index-update
 
     # other
     wget

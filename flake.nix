@@ -29,8 +29,8 @@
       url = "github:jordanisaacs/homeage";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-ld = {
-      url = "github:Mic92/nix-ld";
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -73,7 +73,7 @@
       # compose = nixpkgs.lib.trivial.flip nixpkgs.lib.trivial.pipe; 
 
       specialArgs = {
-        inherit (inputs) nixpkgs agenix homeage;
+        inherit (inputs) nixpkgs agenix homeage nix-alien;
         inherit fileFromHome fileFromMisc fileFromSecrets;
         inherit keys importUser homeageConfigUser;
         # global config
@@ -87,7 +87,6 @@
             system = "x86_64-linux";
             modules = with inputs; [
               nixos-wsl.nixosModules.wsl
-              nix-ld.nixosModules.nix-ld
               vscode-server.nixosModule
               home-manager.nixosModules.home-manager
               ./systems/configuration.nix
