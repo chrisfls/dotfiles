@@ -128,34 +128,55 @@ in
   programs.fish = {
     enable = true;
     shellAliases = {
-      # shorthand aliases
-      "g" = "git";
-      # command aliases
       "m" = "deno run -A Makefile.ts";
+      "e" = "code";
+      "f" = "explorer";
+      "da" = "direnv allow";
+      "g" = "git";
+      # system management
       "sys" = "git --git-dir=$HOME/.system.git --work-tree=/etc/nixos";
       "rebuild-home" = "eval (cat /etc/systemd/system/home-manager-$USER.service | sed -n 's/ExecStart=//p')";
       "rebuild-sys" = "sudo nixos-rebuild switch -v && rebuild-home -v";
-      # wsl apps
-      "cmd" = "${windowsSystem32Directory}/cmd.exe"; # you can't run cmd inside wsl on windows
+      # wsl apps 
+      "cmd" = "${windowsSystem32Directory}/cmd.exe"; # you can't run cmd inside a wsl folder on windows
       "neovide" = " /mnt/c/Users/kress/scoop/shims/neovide.exe --wsl";
-      "explorer" = "${windowsMainDirectory}/explorer.exe";
       "powershell" = "${windowsSystem32Directory}/WindowsPowerShell/v1.0/powershell.exe";
     };
     shellInit = ''
       set -g SHELL "${fish}"
+      set -g w "${windowsDesktopDirectory}/"
       ${(builtins.readFile (fileFromMisc "shell_init.fish"))}
     '';
     functions = {
-      dev = builtins.readFile (fileFromHome ".config/fish/functions/dev.fish");
-      win = ''
-        function win --wraps='cd ${windowsDesktopDirectory}' --description 'cd to a folder at the desktop'
-          cd "${windowsDesktopDirectory}/$argv[1]"
-        end
+      shell = ''
+        # prefer using direnv as using nix-shell directly is slow
+        # also depends on any-nix-shell to maintain current shell
+        nix-shell shell.nix $argv[1..-1]
+      '';
+      develop = ''
+        nix develop "/etc/nixos/shells/$argv[1]" -c fish $argv[2..-1];
       '';
       code = ''
-        function code --wraps='code' --description 'runs vscode on windows'
-          powershell "code $argv[1..-1]"
+        if count $argv >/dev/null
+          set here (realpath -m $argv[1])
+        else
+          set here $PWD
         end
+        if test -d $here
+          powershell "code --folder-uri=vscode-remote://ssh-remote+localhost$here"
+        else
+          powershell "code --file-uri=vscode-remote://ssh-remote+localhost$here"
+        end
+      '';
+      explorer = ''
+        if count $argv >/dev/null
+          set here (realpath -m $argv[1])
+        else
+          set here $PWD
+        end
+        # TODO: check if $here is a drive letter
+        set here (string replace -a '/' '\\' "//wsl.localhost/NixOS$here")
+        ${windowsMainDirectory}/explorer.exe $here
       '';
     };
   };
@@ -185,7 +206,6 @@ in
   home.activation = {
     direnvAllow = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       $DRY_RUN_CMD ${direnv} allow $HOME
-      # $DRY_RUN_CMD ${direnv} allow $HOME/gitlab
       $DRY_RUN_CMD ${direnv} allow $HOME/paack
     '';
   };
