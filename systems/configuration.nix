@@ -102,6 +102,7 @@
     wget
     jq
     nixpkgs-fmt
+    ltex-ls
   ];
 
   environment.shells = with pkgs; [ fish ];
