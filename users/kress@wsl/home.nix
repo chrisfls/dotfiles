@@ -133,8 +133,9 @@ in
       "f" = "explorer";
       "da" = "direnv allow";
       "g" = "git";
+      "ns" = "nix search nixpkgs";
       # system management
-      "sys" = "git --git-dir=$HOME/.system.git --work-tree=/etc/nixos";
+      "s" = "git --git-dir=$HOME/.system.git --work-tree=/etc/nixos";
       "rebuild-home" = "eval (cat /etc/systemd/system/home-manager-$USER.service | sed -n 's/ExecStart=//p')";
       "rebuild-sys" = "sudo nixos-rebuild switch -v && rebuild-home -v";
       # wsl apps 
@@ -192,6 +193,9 @@ in
     enable = true;
     nix-direnv.enable = true;
   };
+
+  programs.nix-index.enable = true;
+
 
   #
   # services
