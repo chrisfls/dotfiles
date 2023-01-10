@@ -38,4 +38,5 @@ end
 # silent direnv
 set -x DIRENV_LOG_FORMAT ""
 
+any-nix-shell fish --info-right | source
 direnv hook fish | source

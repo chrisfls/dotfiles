@@ -67,6 +67,7 @@
     fishPlugins.foreign-env # probably not needed
     fishPlugins.sponge
     fishPlugins.tide
+    any-nix-shell
 
     # git
     git
