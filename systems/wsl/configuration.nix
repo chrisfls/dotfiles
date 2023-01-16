@@ -15,15 +15,30 @@
   };
 
   #
+  # packages
+  #
+
+  environment.systemPackages = with pkgs; [
+    code-server
+  ];
+
+  #
   # services
   #
 
   services.openssh.permitRootLogin = "yes";
-
-  services.vscode-server = {
+  
+  services.code-server = { # ssh -N -L 42069:127.0.0.1:42069 root@wsl
     enable = true;
-    useFhsNodeEnvironment = true;
+    auth = "none";
+    host = "0.0.0.0";
+    user = "kress";
+    port = 42069;
   };
+
+  # services.vscode-server = {
+  #   enable = true;
+  # };
 
   # before changing this value read the documentation for this option
   system.stateVersion = "22.11";

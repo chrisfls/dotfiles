@@ -55,6 +55,7 @@ in
     dataFile = {
       "warp/accepted-teams-tos.txt".text = "yes\n";
       "warp/accepted-tos.txt".text = "yes\n";
+      "code-server/".source = config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/.vscode";
     };
 
     # default apps
@@ -192,6 +193,13 @@ in
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
+  };
+
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode;
+    extensions = with pkgs.vscode-extensions; [
+    ];
   };
 
   programs.nix-index.enable = true;
