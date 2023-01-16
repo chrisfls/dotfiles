@@ -1,8 +1,11 @@
 {
     "folders": [
         {
-            "path": "/mnt/d/Users/kress/Desktop/gitlab/fsharp-game"
+            "path": "/home/kress/gitlab/fsharp-game"
         }
     ],
-    "settings": {}
+    "settings": {
+        "deno.enable": true,
+        "deno.unstable": true
+    }
 }

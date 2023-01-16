@@ -20,7 +20,10 @@
 
   services.openssh.permitRootLogin = "yes";
 
-  services.vscode-server.enable = true;
+  services.vscode-server = {
+    enable = true;
+    useFhsNodeEnvironment = true;
+  };
 
   # before changing this value read the documentation for this option
   system.stateVersion = "22.11";
