@@ -89,7 +89,7 @@
     adoptopenjdk-jre-openj9-bin-16
 
     # used just to setup cloudflare warp
-    brave
+    chromium
     xdg-utils
     desktop-file-utils
 

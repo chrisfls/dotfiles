@@ -49,13 +49,16 @@ in
     "paack/.envrc".source = ./paack/.envrc;
   };
 
+  home.sessionPath = [
+    "$HOME/.local/bin"
+  ];
+
   xdg = {
     enable = true;
 
     dataFile = {
       "warp/accepted-teams-tos.txt".text = "yes\n";
       "warp/accepted-tos.txt".text = "yes\n";
-      "code-server/".source = config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/.vscode";
     };
 
     # default apps
@@ -195,15 +198,7 @@ in
     nix-direnv.enable = true;
   };
 
-  programs.vscode = {
-    enable = true;
-    package = pkgs.vscode;
-    extensions = with pkgs.vscode-extensions; [
-    ];
-  };
-
   programs.nix-index.enable = true;
-
 
   #
   # services
