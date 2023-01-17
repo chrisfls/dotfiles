@@ -35,6 +35,11 @@ if not set -q warp_setup
   echo "cloudflare warp setup done"
 end
 
+if not set -q fix_vscode
+  sed -i "s/a.execChildProcess(\"uname -m\")/\"$(uname -m)\"/g" $HOME/.vscode-server/extensions/ms-dotnettools.csharp-*-linux-x64/dist/extension.js
+  set --universal fix_vscode true
+end
+
 # silent direnv
 set -x DIRENV_LOG_FORMAT ""
 
