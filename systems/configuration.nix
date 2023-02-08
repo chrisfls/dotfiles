@@ -148,8 +148,10 @@
 
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
-    kbdInteractiveAuthentication = false;
+    settings = {
+      passwordAuthentication = false;
+      kbdInteractiveAuthentication = false;
+    };
   };
 
   services.cloudflare-warp = {

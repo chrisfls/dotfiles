@@ -39,7 +39,7 @@
   # services
   #
 
-  services.openssh.passwordAuthentication = false;
+  services.openssh.settings.PasswordAuthentication = false;
 
   # services.vscode-server = {
   #   enable = true;
