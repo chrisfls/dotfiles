@@ -56,7 +56,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    agenix.defaultPackage."${system}" # secrets
+    agenix.packages."${system}".default # secrets
     cachix # cache
 
     # shell
