@@ -8,7 +8,6 @@ let
   windowsDesktopDirectory = "${windowsHomeDirectory}/Desktop";
   windowsMainRoot = "/mnt/c"; # c is for "can't move out of here"
   windowsMainDirectory = "${windowsMainRoot}/Windows";
-  windowsSystem32Directory = "${windowsMainDirectory}/System32";
 
   # binaries
   fish = "${config.programs.fish.package}/bin/fish";
@@ -47,6 +46,8 @@ in
     '';
     "gitlab/.keep".text = "";
     "paack/.envrc".source = ./paack/.envrc;
+    ".local/bin/cmd".source = ./.local/bin/cmd;
+    ".local/bin/powershell".source = ./.local/bin/powershell;
   };
 
   home.sessionPath = [
@@ -143,9 +144,7 @@ in
       "rebuild-home" = "eval (cat /etc/systemd/system/home-manager-$USER.service | sed -n 's/ExecStart=//p')";
       "rebuild-sys" = "sudo nixos-rebuild switch -v && rebuild-home -v";
       # wsl apps 
-      "cmd" = "${windowsSystem32Directory}/cmd.exe"; # you can't run cmd inside a wsl folder on windows
       "neovide" = " /mnt/c/Users/kress/scoop/shims/neovide.exe --wsl";
-      "powershell" = "${windowsSystem32Directory}/WindowsPowerShell/v1.0/powershell.exe";
     };
     shellInit = ''
       set -g SHELL "${fish}"
