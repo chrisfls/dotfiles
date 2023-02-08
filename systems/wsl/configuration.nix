@@ -14,7 +14,6 @@
     interop.includePath = false;
   };
 
-
   systemd.services.nixs-wsl-systemd-fix = {
     description = "Fix the /dev/shm symlink to be a mount";
     unitConfig = {
@@ -34,15 +33,17 @@
     wantedBy = [ "sysinit.target" ];
   };
 
+  programs.nix-ld.enable = true;
+
   #
   # services
   #
 
   services.openssh.passwordAuthentication = false;
 
-  services.vscode-server = {
-    enable = true;
-  };
+  # services.vscode-server = {
+  #   enable = true;
+  # };
 
   # before changing this value read the documentation for this option
   system.stateVersion = "22.11";

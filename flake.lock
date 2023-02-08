@@ -197,8 +197,7 @@
         "homeage": "homeage",
         "nix-alien": "nix-alien",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs",
-        "vscode-server": "vscode-server"
+        "nixpkgs": "nixpkgs"
       }
     },
     "utils": {
@@ -213,26 +212,6 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "vscode-server": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1675723356,
-        "narHash": "sha256-AdmSiPSLEHS/iJj5boi91JdlLINJHOlyhCHaErQi4NI=",
-        "owner": "msteen",
-        "repo": "nixos-vscode-server",
-        "rev": "abc8f1d59c0ea54cc7317f5f3937febea7540c60",
-        "type": "github"
-      },
-      "original": {
-        "owner": "msteen",
-        "repo": "nixos-vscode-server",
         "type": "github"
       }
     }

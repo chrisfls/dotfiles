@@ -14,6 +14,21 @@ let
   direnv = "${pkgs.direnv}/bin/direnv";
   browser = "${pkgs.brave}/bin/brave";
 
+  # vs-effing code
+  
+  nix-ld-so = pkgs.runCommand "ld.so" {} ''
+    ln -s "$(cat '${pkgs.stdenv.cc}/nix-support/dynamic-linker')" $out
+  '';
+
+  ldEnv = {
+    NIX_LD = toString nix-ld-so;
+    NIX_LD_LIBRARY_PATH = "/run/current-system/sw/share/nix-ld/lib";
+  };
+
+  ldExports = lib.mapAttrsToList (name: value: "export ${name}=${value}") ldEnv;
+
+  joinedLdExports = builtins.concatStringsSep "\n" ldExports;
+
   #
   # shared settings
   #
@@ -25,6 +40,7 @@ let
   #
 
   homeageConfig = homeageConfigUser userArgs;
+
 in
 {
   imports = [ homeage.homeManagerModules.homeage ];
@@ -48,6 +64,7 @@ in
     "paack/.envrc".source = ./paack/.envrc;
     ".local/bin/cmd".source = ./.local/bin/cmd;
     ".local/bin/powershell".source = ./.local/bin/powershell;
+    ".vscode-server/server-env-setup".text = joinedLdExports;
   };
 
   home.sessionPath = [

@@ -17,10 +17,10 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vscode-server = {
-      url = "github:msteen/nixos-vscode-server";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # vscode-server = {
+    #   url = "github:msteen/nixos-vscode-server";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -87,7 +87,7 @@
             system = "x86_64-linux";
             modules = with inputs; [
               nixos-wsl.nixosModules.wsl
-              vscode-server.nixosModule
+              # vscode-server.nixosModule
               home-manager.nixosModules.home-manager
               ./systems/configuration.nix
               ./systems/wsl/configuration.nix
