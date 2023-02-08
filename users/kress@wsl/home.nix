@@ -14,7 +14,9 @@ let
   direnv = "${pkgs.direnv}/bin/direnv";
   browser = "${pkgs.brave}/bin/brave";
 
-  # vs-effing code
+  #
+  # vs-effing code fix
+  #
   
   nix-ld-so = pkgs.runCommand "ld.so" {} ''
     ln -s "$(cat '${pkgs.stdenv.cc}/nix-support/dynamic-linker')" $out
@@ -28,6 +30,11 @@ let
   ldExports = lib.mapAttrsToList (name: value: "export ${name}=${value}") ldEnv;
 
   joinedLdExports = builtins.concatStringsSep "\n" ldExports;
+
+  serverEnvSetup = ''
+    ${joinedLdExports}
+    sed -i "s/a.execChildProcess(\"uname -m\")/\"$(uname -m)\"/g" $HOME/.vscode-server/extensions/ms-dotnettools.csharp-*-linux-x64/dist/extension.js
+  '';
 
   #
   # shared settings
@@ -64,7 +71,7 @@ in
     "paack/.envrc".source = ./paack/.envrc;
     ".local/bin/cmd".source = ./.local/bin/cmd;
     ".local/bin/powershell".source = ./.local/bin/powershell;
-    ".vscode-server/server-env-setup".text = joinedLdExports;
+    ".vscode-server/server-env-setup".text = serverEnvSetup;
   };
 
   home.sessionPath = [

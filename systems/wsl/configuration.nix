@@ -27,7 +27,7 @@
       Type = "oneshot";
       ExecStart = [
         "${pkgs.coreutils-full}/bin/rm /dev/shm"
-        "/run/wrappers/bin/mount --bind -o X-mount.mkdir /run/shm /dev/shm"
+        "/run/wrappers/bin/mount --bind -o X-mount.mkd\ir /run/shm /dev/shm"
       ];
     };
     wantedBy = [ "sysinit.target" ];
