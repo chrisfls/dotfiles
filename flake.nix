@@ -17,10 +17,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # vscode-server = {
-    #   url = "github:msteen/nixos-vscode-server";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,9 +65,6 @@
           file;
       };
 
-      # eff da police (see: bit.ly/3IiZTw9)
-      # compose = nixpkgs.lib.trivial.flip nixpkgs.lib.trivial.pipe; 
-
       specialArgs = {
         inherit (inputs) nixpkgs agenix homeage nix-alien;
         inherit fileFromHome fileFromMisc fileFromSecrets;
@@ -87,7 +80,6 @@
             system = "x86_64-linux";
             modules = with inputs; [
               nixos-wsl.nixosModules.wsl
-              # vscode-server.nixosModule
               home-manager.nixosModules.home-manager
               ./systems/configuration.nix
               ./systems/wsl/configuration.nix

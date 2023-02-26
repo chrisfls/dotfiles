@@ -41,10 +41,6 @@
 
   services.openssh.settings.PasswordAuthentication = false;
 
-  # services.vscode-server = {
-  #   enable = true;
-  # };
-
   # before changing this value read the documentation for this option
   system.stateVersion = "22.11";
 }
