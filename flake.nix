@@ -37,7 +37,7 @@
 
   outputs = { self, nixpkgs, ... }@inputs:
     let
-      userPath = username: hostname: "users/${username}@${hostname}";
+      userPath = username: hostname: "users/${hostname}/${username}";
 
       # helpers
 
