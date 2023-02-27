@@ -98,7 +98,6 @@
             };
             modules = [
               ./home_modules/not_nixos.nix
-              ./home_modules/base.nix
               ./home_modules/base_devel.nix
               ./home_modules/fish.nix
               ./home_modules/fish_wsl.nix

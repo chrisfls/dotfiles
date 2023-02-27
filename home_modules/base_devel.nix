@@ -1,6 +1,7 @@
 # base for development machines
 { pkgs, ... }:
 {
+  imports = [./base.nix];
   home.packages = with pkgs; [
     any-nix-shell
     nixpkgs-fmt

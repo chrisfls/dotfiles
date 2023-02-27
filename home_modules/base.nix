@@ -9,7 +9,6 @@
     # tooling
     htop
     traceroute
-    killall
     neofetch
     mosh # probably never used
 
