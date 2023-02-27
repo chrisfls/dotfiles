@@ -31,7 +31,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       userPath = username: hostname: "users/${hostname}/${username}";
 
@@ -87,6 +87,31 @@
             ];
           in
           nixpkgs.lib.nixosSystem { inherit system modules specialArgs; };
+      };
+      homeConfigurations = { 
+        kress =
+          let
+            system = "x86_64-linux";
+            pkgs = import nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+            };
+            modules = [
+              ./home_modules/not_nixos.nix
+              ./home_modules/base.nix
+              ./home_modules/base_devel.nix
+              ./home_modules/fish.nix
+              ./home_modules/fish_wsl.nix
+              ./home_modules/keychain.nix
+              ./home_modules/git.nix
+              ./home_modules/micro.nix
+              ./home_modules/direnv.nix
+              ./users/arch/kress/home.nix
+            ];
+          in home-manager.lib.homeManagerConfiguration {
+            inherit pkgs modules;
+            extraSpecialArgs = specialArgs;
+          };
       };
     };
 }
