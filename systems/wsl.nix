@@ -1,4 +1,4 @@
-{ config, pkgs, nixpkgs, specialArgs, ... }: with specialArgs;
+{ pkgs, specialArgs, ... }: with specialArgs;
 {
   imports = [
     nixos-wsl.nixosModules.wsl
