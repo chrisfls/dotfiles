@@ -1,4 +1,0 @@
-[submodule "secrets"]
-	path = secrets
-	url = git@github.com:kress95/nix-secrets.git
-	branch = main

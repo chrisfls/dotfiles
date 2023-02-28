@@ -66,7 +66,7 @@
       };
 
       specialArgs = {
-        inherit (inputs) nixpkgs agenix homeage nix-alien;
+        inherit (inputs) nixpkgs home-manager agenix homeage nix-alien nixos-wsl;
         inherit fileFromHome fileFromMisc fileFromSecrets;
         inherit keys importUser homeageConfigUser;
         # global config
@@ -78,11 +78,7 @@
         wsl =
           let
             system = "x86_64-linux";
-            modules = with inputs; [
-              nixos-wsl.nixosModules.wsl
-              home-manager.nixosModules.home-manager
-              ./systems/wsl.nix
-            ];
+            modules = [ ./systems/wsl.nix ];
           in
           nixpkgs.lib.nixosSystem { inherit system modules specialArgs; };
       };

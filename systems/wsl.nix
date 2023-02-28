@@ -1,6 +1,8 @@
 { config, pkgs, nixpkgs, specialArgs, ... }: with specialArgs;
 {
   imports = [
+    nixos-wsl.nixosModules.wsl
+    home-manager.nixosModules.home-manager
     ../modules/configuration.nix
     ../pkgs/cloudflare-warp.nix
   ];
