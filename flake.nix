@@ -81,9 +81,7 @@
             modules = with inputs; [
               nixos-wsl.nixosModules.wsl
               home-manager.nixosModules.home-manager
-              ./systems/configuration.nix
-              ./systems/wsl/configuration.nix
-              ./systems/wsl/users.nix
+              ./systems/wsl.nix
             ];
           in
           nixpkgs.lib.nixosSystem { inherit system modules specialArgs; };

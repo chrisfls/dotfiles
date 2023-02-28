@@ -14,8 +14,6 @@
     registry.nixpkgs.flake = nixpkgs;
   };
 
-  imports = [ ../pkgs/cloudflare-warp.nix ];
-
   networking = {
     firewall.enable = false;
     usePredictableInterfaceNames = true;
@@ -30,19 +28,6 @@
     # extraLocaleSettings = {
     #   LC_TIME = "pt_BR.UTF-8/UTF-8";
     # };
-  };
-
-  security.sudo.wheelNeedsPassword = false;
-
-  #
-  # virtualisation / containerization
-  #
-
-  boot.enableContainers = false; # conflicts with virtualisation.containers
-
-  virtualisation.podman = {
-    enable = true;
-    dockerCompat = true; # podman provides docker
   };
 
   #
@@ -119,28 +104,6 @@
   };
 
   #
-  # programs (that require more than their packages to work)
-  #
-
-  programs.command-not-found.enable = false;
-
-  programs.fish = {
-    enable = true;
-    vendor = {
-      config.enable = true;
-      completions.enable = true;
-      functions.enable = true;
-    };
-  };
-
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    defaultEditor = false;
-  };
-
-  #
   # services
   #
 
@@ -152,13 +115,6 @@
       passwordAuthentication = false;
       kbdInteractiveAuthentication = false;
     };
-  };
-
-  services.cloudflare-warp = {
-    enable = true;
-    # not working, for some reason:
-    # # download from https://developers.cloudflare.com/cloudflare-one/static/documentation/connections/Cloudflare_CA.crt
-    # certificate = fileFromMisc "Cloudflare_CA.crt";
   };
 
   #
