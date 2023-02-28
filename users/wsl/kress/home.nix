@@ -166,7 +166,7 @@ in
       # system management
       "s" = "git --git-dir=$HOME/.system.git --work-tree=/etc/nixos";
       "rebuild-home" = "eval (cat /etc/systemd/system/home-manager-$USER.service | sed -n 's/ExecStart=//p')";
-      "rebuild-sys" = "sudo nixos-rebuild switch -v && rebuild-home -v";
+      "rebuild-sys" = "sudo nixos-rebuild switch --override-input nix-secrets /etc/nixos/secrets -v && rebuild-home -v";
       # wsl apps 
       "neovide" = " /mnt/c/Users/kress/scoop/shims/neovide.exe --wsl";
     };
