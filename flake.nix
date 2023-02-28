@@ -29,9 +29,13 @@
       url = "github:thiagokokada/nix-alien";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-secrets = {
+      url = "github:kress95/nix-secrets";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nix-secrets, ... }@inputs:
     let
       userPath = username: hostname: "users/${hostname}/${username}";
 
@@ -42,9 +46,9 @@
       fileFromMisc = path: ./assets/misc/${path};
 
       fileFromSecrets = { username, hostname, ... }: path:
-        ./secrets/${userPath username hostname}/${path};
+        builtins.toPath "${nix-secrets}/${userPath username hostname}/${path}";
 
-      keys = import ./secrets/keys.nix;
+      keys = import "${nix-secrets}/keys.nix";
 
       importUser = username: hostname:
         import ./${userPath username hostname}/home.nix { inherit username hostname; };
@@ -66,7 +70,7 @@
       };
 
       specialArgs = {
-        inherit (inputs) nixpkgs home-manager agenix homeage nix-alien nixos-wsl;
+        inherit (inputs) nixpkgs nix-secrets home-manager agenix homeage nix-alien nixos-wsl;
         inherit fileFromHome fileFromMisc fileFromSecrets;
         inherit keys importUser homeageConfigUser;
         # global config
