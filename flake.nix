@@ -37,56 +37,20 @@
 
   outputs = { self, nixpkgs, home-manager, nix-secrets, ... }@inputs:
     let
-      userPath = username: hostname: "users/${hostname}/${username}";
-
-      # helpers
-
-      fileFromHome = path: ./assets/home/${path};
-
-      fileFromMisc = path: ./assets/misc/${path};
-
-      fileFromSecrets = { username, hostname, ... }: path:
-        builtins.toPath "${nix-secrets}/${userPath username hostname}/${path}";
-
-      keys = import "${nix-secrets}/keys.nix";
-
-      importUser = username: hostname:
-        import ./${userPath username hostname}/home.nix { inherit username hostname; };
-
-      homeageConfigUser = { username, hostname, ... }@userArgs: { identities, file }: {
-        identityPaths = map (path: "/home/${username}/${path}") identities;
-        installationType = "activation";
-        file = nixpkgs.lib.attrsets.mapAttrs'
-          (target: source:
-            {
-              name = toString source;
-              value = {
-                source = fileFromSecrets userArgs source;
-                copies = [ "/home/${username}/${target}" ];
-              };
-            }
-          )
-          file;
-      };
-
       specialArgs = {
         inherit (inputs) nixpkgs nix-secrets home-manager agenix homeage nix-alien nixos-wsl;
-        inherit fileFromHome fileFromMisc fileFromSecrets;
-        inherit keys importUser homeageConfigUser;
-        # global config
-        defaultUser = "kress";
+        keys = import "${nix-secrets}/keys.nix";
       };
     in
     {
       nixosConfigurations = {
-        wsl =
-          let
-            system = "x86_64-linux";
-            modules = [ ./systems/wsl.nix ];
-          in
-          nixpkgs.lib.nixosSystem { inherit system modules specialArgs; };
+        wsl = nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          system = "x86_64-linux";
+          modules = [ ./systems/wsl.nix ];
+        };
       };
-      homeConfigurations = { 
+      homeConfigurations = {
         kress =
           let
             system = "x86_64-linux";
@@ -103,9 +67,10 @@
               ./home_modules/git.nix
               ./home_modules/micro.nix
               ./home_modules/direnv.nix
-              ./users/arch/kress/home.nix
+              ./systems/arch/kress.nix
             ];
-          in home-manager.lib.homeManagerConfiguration {
+          in
+          home-manager.lib.homeManagerConfiguration {
             inherit pkgs modules;
             extraSpecialArgs = specialArgs;
           };

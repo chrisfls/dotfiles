@@ -1,3 +1,4 @@
+# TODO: embed this in fish config
 set fish_greeting ""
 
 if not set -q tide_setup

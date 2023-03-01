@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-    
-# To suppress warning, add DWORD DisableUNCCheck = 0x1 in
-# HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor\
-
-/mnt/c/Windows/System32/cmd.exe /C "w: & cd \".${PWD//\//\\}\" & cmd /C $@"

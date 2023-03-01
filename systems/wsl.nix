@@ -1,22 +1,21 @@
-{ pkgs, specialArgs, ... }: with specialArgs;
+{ config, pkgs, specialArgs, ... }:
+with specialArgs;
 {
   imports = [
     nixos-wsl.nixosModules.wsl
     home-manager.nixosModules.home-manager
-    ../modules/configuration.nix
     ../pkgs/cloudflare-warp.nix
+    ../modules/configuration.nix
   ];
 
-  networking = {
-    hostName = "wsl";
-  };
+  networking = { hostName = "wsl"; };
 
   security.sudo.wheelNeedsPassword = false;
 
   wsl = {
     enable = true;
+    defaultUser = "kress";
     wslConf.automount.root = "/mnt";
-    defaultUser = defaultUser;
     startMenuLaunchers = true;
     nativeSystemd = true;
     interop.register = false;
@@ -94,21 +93,25 @@
   #
   # users
   #
-  
+
   users.users.root.openssh.authorizedKeys.keys = [
     keys."KGPDWM/kress"
   ];
 
-  users.users.${defaultUser} = {
+  users.users.${config.wsl.defaultUser} = {
     hashedPassword = "$6$tKkm8UV4qq7GrjqA$PvAGAV0g/8bgEpWoIBoUcYhBHzq.3bTUxzWH./p8lFUpfndlCheJ2h.LYg8s3R.0Mhawdi.O09rNH2GOZ88od1";
     openssh.authorizedKeys.keys = [
       keys."KGPDWM/kress"
     ];
   };
 
-  users.groups.docker.members = [ defaultUser ];
+  users.groups.docker.members = [ config.wsl.defaultUser ];
 
-  home-manager.users.${defaultUser} = importUser defaultUser "wsl";
+  home-manager.users.${config.wsl.defaultUser} = { ... }: {
+    imports = [
+      ./wsl/${config.wsl.defaultUser}.nix
+    ];
+  };
 
   # before changing this value read the documentation for this option
   system.stateVersion = "22.11";

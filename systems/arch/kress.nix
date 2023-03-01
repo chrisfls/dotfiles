@@ -9,18 +9,14 @@ in
   home.homeDirectory = "/home/kress";
 
   home.file = {
-    ".bashrc".source = fileFromHome ".bashrc";
-    ".bash_profile".source = fileFromHome ".bash_profile";
     ".profile".text = ''
+      export PATH=$HOME/.dotnet/tools:$HOME/.local/bin:$PATH
       if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z "$BASH_EXECUTION_STRING" ]]
       then
         exec ${fish}
       fi
     '';
     "gitlab/.keep".text = "";
-    "paack/.envrc".source = fileFromMisc "/paack/.envrc";
-    ".local/bin/cmd".source = fileFromMisc "cmd";
-    ".local/bin/powershell".source = fileFromMisc "powershell";
   };
 
   # let home manager install and manage itself

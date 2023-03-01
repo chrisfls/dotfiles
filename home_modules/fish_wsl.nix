@@ -20,7 +20,6 @@ in
     shellInit = ''
       set -g SHELL "${fish}"
       set -g w "${windowsDesktopDirectory}/"
-      ${(builtins.readFile (fileFromMisc "shell_init.fish"))}
     '';
     functions = {
       shell = ''

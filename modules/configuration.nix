@@ -124,6 +124,9 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = specialArgs;
+    extraSpecialArgs = specialArgs // {
+      distro = "NixOS";
+      nixosConfig = config;
+    };
   };
 }
