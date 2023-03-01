@@ -6,32 +6,30 @@ git clone --recurse-submodules git@github.com:kress95/nix-configs.git /etc/nixos
 
 (not implemented yet)
 
-- [ ] `assets/**/*`
+- [x] `assets/**/*`
     - Generic assets required `configuration.nix` and `home.nix`.
-- [ ] `home/{{module}}.nix`
+- [x] `home/{{module}}.nix` `home/{{module}}/default.nix`
     - Generic home manager modules to be imported from `home.nix`.
-- [ ] `home/{{module}}/**/*`
+- [x] `home/{{module}}/**/*`
     - Assets required by `user/*.nix` modules.
-- [ ] `host/{{module}}.nix`
+- [x] `host/{{module}}.nix` `host/{{module}}/default.nix` 
     - Generic modules to be imported from the `configuration.nix`.
-- [ ] `pkgs/{{package}}.nix`
+- [x] `pkgs/{{package}}.nix` `pkgs/{{package}}/default.nix`
     - Packages that aren't packaged (or properly packaged) in the official repos.
-- [ ] `secrets/`
+- [x] `secrets/`
     - Submodule with encrypted sensible data.
 - [ ] `secrets/keys/{{hostname}}/{{username}}_id_{{algorithm}}.pub`
     - Public keys.
 - [ ] `secrets/{{hostname}}/{{username}}/**/*`
     - User-platform specific encrypted assets required by `home.nix` modules.
-- [ ] `shells/{{shell}}.nix`
+- [x] `shells/{{shell}}.nix` `shells/{{shell}}/default.nix`
     - `shell.nix` that for some reason can't be included in their projects.
-- [ ] `systems/{{hostname}}.nix`
+- [x] `per-system/{{hostname}}/default.nix`
     - `configuration.nix` for each managed _NixOS_ system.
-        - Might be a good idea to use `configuration.nix` instead to pair with
-        `hardware-configuration.nix`, but I only have WSL systems, so I'm not
-        sure if it's worth.
-- [ ] `systems/{{hostname}}/{{username}}.nix`
+        - Might also include `hardware-configuration.nix`, but I only have WSL systems.
+- [x] `per-system/{{hostname}}/per-user/{{username}}/default.nix`
     - `home.nix` home manager configuration for each user of the system.
-- [ ] `systems/{{hostname}}/{{username}}/**/*`
+- [x] `per-system/{{hostname}}/per-user/{{username}}/**/*`
     - User-platform specific assets required by `home.nix` modules.
-- [ ] `systems/{{hostname}}/assets/**/*`
-    - Platform specific assets required by `home.nix` modules.
+- [x] `per-system/{{hostname}}/assets/**/*` (not used yet)
+    - Platform specific assets required by `configuration.nix` modules.

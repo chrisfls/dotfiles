@@ -36,58 +36,12 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.overlays = [
-    nix-alien.overlays.default
-  ];
-
   environment.systemPackages = with pkgs; [
     agenix.packages."${system}".default # secrets
     cachix # cache
 
     # shell
-    fish
-    fishPlugins.autopair-fish # probably not needed
-    fishPlugins.colored-man-pages
-    fishPlugins.done # probably never used
-    fishPlugins.foreign-env # probably not needed
-    fishPlugins.sponge
-    fishPlugins.tide
     any-nix-shell
-
-    # git
-    git
-    micro
-
-    # compression
-    p7zip
-    unrar
-    unzip
-
-    # tooling
-    htop
-    traceroute
-    killall
-    neofetch
-    mosh # probably never used
-
-    # used to support languagetool in vscode
-    adoptopenjdk-jre-openj9-bin-16
-
-    # used just to setup cloudflare warp
-    chromium
-    xdg-utils
-    desktop-file-utils
-
-    # nix-alien
-    nix-alien
-    nix-index # not necessary, but recommended
-    nix-index-update
-
-    # other
-    wget
-    jq
-    nixpkgs-fmt
-    ltex-ls
   ];
 
   environment.shells = with pkgs; [ fish ];

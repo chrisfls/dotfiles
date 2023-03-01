@@ -2,6 +2,7 @@
 with lib;
 let
   cfg = config.module.direnv;
+  bin = "${pkgs.direnv}/bin/direnv";
 in
 {
   imports = [
@@ -10,7 +11,6 @@ in
 
   options.module.direnv = {
     enable = mkEnableOption "direnv module";
-    bin = mkOption { type = types.nullOr types.str; };
   };
 
   config = mkIf cfg.enable {
@@ -23,8 +23,8 @@ in
     
     home.activation = {
       direnvAllow = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD ${cfg.bin} allow $HOME
-        $DRY_RUN_CMD ${cfg.bin} allow $HOME/paack
+        $DRY_RUN_CMD ${bin} allow $HOME
+        $DRY_RUN_CMD ${bin} allow $HOME/paack
       '';
     };
   };

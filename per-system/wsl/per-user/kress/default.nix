@@ -2,29 +2,21 @@
 with specialArgs;
 {
   imports = [
-    homeage.homeManagerModules.homeage
-    ../../home/browser.nix
-    ../../home/direnv.nix
-    ../../home/fish
-    ../../home/git.nix
-    ../../home/home.nix
-    ../../home/homeage.nix
-    ../../home/warp.nix
-    ../../home/wsl
+    ../../../../home
+    ../../../../home/dev.nix
+    ../../../../home/direnv.nix
+    ../../../../home/fish
+    ../../../../home/git.nix
+    ../../../../home/homeage.nix
+    ../../../../home/warp.nix
+    ../../../../home/wsl
   ];
 
   module = {
-    browser = {
-      enable = true;
-      name = "brave-browser.desktop";
-    };
-    direnv = {
-      enable = true;
-      bin = "${pkgs.direnv}/bin/direnv";
-    };
+    dev.enable = true;
+    direnv.enable = true;
     fish = {
       enable = true;
-      bin = "${config.programs.fish.package}/bin/fish";
       wsl =
         {
           enable = true;
@@ -57,7 +49,7 @@ with specialArgs;
     {
       file = {
         "gitlab/.keep".text = "";
-        "paack/.envrc".source = ./kress/paack/.envrc;
+        "paack/.envrc".source = ./paack/.envrc;
       };
       sessionPath = [
         "$HOME/.local/bin"

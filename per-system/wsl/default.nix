@@ -2,10 +2,8 @@
 with specialArgs;
 {
   imports = [
-    nixos-wsl.nixosModules.wsl
-    home-manager.nixosModules.home-manager
-    ../pkgs/cloudflare-warp.nix
-    ../modules/configuration.nix
+    ../../nixos
+    ../../nixos/cloudflare-warp.nix
   ];
 
   networking = { hostName = "wsl"; };
@@ -61,22 +59,6 @@ with specialArgs;
 
   programs.command-not-found.enable = false;
 
-  programs.fish = {
-    enable = true;
-    vendor = {
-      config.enable = true;
-      completions.enable = true;
-      functions.enable = true;
-    };
-  };
-
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    defaultEditor = false;
-  };
-
   #
   # services
   #
@@ -107,9 +89,10 @@ with specialArgs;
 
   users.groups.docker.members = [ config.wsl.defaultUser ];
 
-  home-manager.users.${config.wsl.defaultUser} = { ... }: {
+  home-manager.users.${config.wsl.defaultUser} = {
     imports = [
-      ./wsl/${config.wsl.defaultUser}.nix
+      homeage.homeManagerModules.homeage
+      ./per-user/${config.wsl.defaultUser}
     ];
   };
 

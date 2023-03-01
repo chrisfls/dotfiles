@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
-  cfg = config.module.browser;
+  cfg = config.module.default-browser;
 in
 {
-  options.module.browser = {
-    enable = mkEnableOption "browser module";
+  options.module.default-browser = {
+    enable = mkEnableOption "default-browser module";
     name = mkOption { type = types.str; };
   };
 

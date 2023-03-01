@@ -3,6 +3,7 @@ with lib;
 with specialArgs;
 let
   cfg = config.module.fish;
+  bin = "${config.programs.fish.package}/bin/fish";
 in
 {
   imports = [
@@ -11,7 +12,6 @@ in
 
   options.module.fish = {
     enable = mkEnableOption "fish module";
-    bin = mkOption { type = types.nullOr types.str; };
     wsl = {
       enable = mkEnableOption "fish wsl module";
       desktop = mkOption { type = types.nullOr types.str; };
@@ -23,22 +23,12 @@ in
     (mkIf cfg.enable {
       module.bash.enable = true;
 
-      home.packages = with pkgs; [
-        fish
-        fishPlugins.autopair-fish # probably not needed
-        fishPlugins.colored-man-pages
-        fishPlugins.done # probably never used
-        fishPlugins.foreign-env # probably not needed
-        fishPlugins.sponge
-        fishPlugins.tide
-      ];
-
       home.file =
         {
           ".profile".text = ''
             if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z "$BASH_EXECUTION_STRING" ]]
             then
-              exec ${cfg.bin}
+              exec ${bin}
             fi
           '';
         };
@@ -57,27 +47,22 @@ in
                 "";
           in
           ''
-            set -g SHELL "${cfg.bin}"
+            set -g SHELL "${bin}"
             ${(builtins.readFile ./shell_init.fish)}
           '';
-        functions = {
-          shell = ''
-            # prefer using direnv as using nix-shell directly is slow
-            # also depends on any-nix-shell to maintain current shell
-            nix-shell shell.nix $argv[1..-1]
-          '';
-          develop = ''
-            nix develop "/etc/nixos/shells/$argv[1]" -c fish $argv[2..-1];
-          '';
-        };
+        plugins = [
+          { name = "autopair-fish"; src = pkgs.fishPlugins.autopair-fish.src; }
+          { name = "colored-man-pages"; src = pkgs.fishPlugins.colored-man-pages.src; }
+          { name = "done"; src = pkgs.fishPlugins.done.src; } # probably never used
+          { name = "foreign-env"; src = pkgs.fishPlugins.foreign-env.src; } # probably not needed
+          { name = "sponge"; src = pkgs.fishPlugins.sponge.src; }
+          { name = "tide"; src = pkgs.fishPlugins.tide.src; }
+        ];
       };
     })
 
     (mkIf (cfg.enable && cfg.wsl.enable) {
       programs.fish = {
-        shellAliases = {
-          "neovide" = " /mnt/c/Users/kress/scoop/shims/neovide.exe --wsl";
-        };
         functions = {
           code = ''
             if count $argv >/dev/null
