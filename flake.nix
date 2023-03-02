@@ -25,14 +25,18 @@
       url = "github:jordanisaacs/homeage";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-secrets = {
+      url = "git+ssh://git@github.com/kress95/nix-secrets?ref=main";
+      flake = false;
+    };
   };
 
   outputs = { self, ... }@inputs:
     with inputs;
     let
       specialArgs = {
-        inherit (inputs) nixpkgs home-manager agenix homeage;
-        keys = import "./secrets/keys.nix";
+        inherit (inputs) nixpkgs home-manager agenix homeage nix-secrets;
+        keys = import "${nix-secrets}/keys.nix";
       };
     in
     {

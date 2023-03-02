@@ -116,6 +116,23 @@
         "type": "github"
       }
     },
+    "nix-secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1677729243,
+        "narHash": "sha256-d+1HKTp3dd77lOldHfFnlX0Mdwx1Gwe3AjkdQ7Ze340=",
+        "ref": "main",
+        "rev": "2bd897430222c0e14079b4b0b15db4a85ae8f124",
+        "revCount": 3,
+        "type": "git",
+        "url": "ssh://git@github.com/kress95/nix-secrets"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "ssh://git@github.com/kress95/nix-secrets"
+      }
+    },
     "nixos-wsl": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -140,11 +157,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1677622273,
-        "narHash": "sha256-LUqCVhzxr7EVY+SzW1uTXaMoVRUR2OP4Fr/tmJV7lHE=",
+        "lastModified": 1677655566,
+        "narHash": "sha256-I8G8Lmpp3YduYl4+pkiIJFGT1WKw+8ZMH2QwANkTu2U=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "995edc972ad3a1e291ac22d74b9610821357175f",
+        "rev": "ae8bdd2de4c23b239b5a771501641d2ef5e027d0",
         "type": "github"
       },
       "original": {
@@ -159,6 +176,7 @@
         "agenix": "agenix",
         "home-manager": "home-manager",
         "homeage": "homeage",
+        "nix-secrets": "nix-secrets",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs"
       }

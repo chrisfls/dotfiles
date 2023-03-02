@@ -1,5 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, specialArgs, ... }:
 with lib;
+with specialArgs;
 let
   cfg = config.module.non-nixos;
 in

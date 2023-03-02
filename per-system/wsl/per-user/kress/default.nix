@@ -33,9 +33,9 @@ with specialArgs;
       enable = true;
       identities = [ ".ssh/id_ed25519" ];
       file = {
-        "paack/.secretrc" = "paack/.secretrc.age";
-        ".envrc" = ".envrc.age";
-        ".npmrc" = ".npmrc.age";
+        "paack/.secretrc" = "${config.home.username}/paack/.secretrc.age";
+        ".envrc" = "${config.home.username}/.envrc.age";
+        ".npmrc" = "${config.home.username}/.npmrc.age";
       };
     };
     paack.enable = true;
@@ -49,7 +49,7 @@ with specialArgs;
   programs.fish = {
     shellAliases = {
       "f" = "explorer";
-      "rebuild-sys" = "sudo nixos-rebuild switch --override-input nix-secrets /etc/nixos/secrets -v && rebuild-home -v";
+      "rebuild-sys" = "sudo nixos-rebuild switch -v && rebuild-home -v";
       "rebuild-home" = "eval (cat /etc/systemd/system/home-manager-$USER.service | sed -n 's/ExecStart=//p')";
     };
   };

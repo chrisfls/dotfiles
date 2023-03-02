@@ -3,6 +3,7 @@ with lib;
 let
   cfg = config.module.direnv;
   bin = "${pkgs.direnv}/bin/direnv";
+  direnvAllow = (path: "$DRY_RUN_CMD sh -c 'if [ -f \"${path}/.envrc\" ]; then ${bin} allow \"${path}\"; fi;'");
 in
 {
   imports = [
@@ -23,8 +24,8 @@ in
     
     home.activation = {
       direnvAllow = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD ${bin} allow $HOME
-        $DRY_RUN_CMD ${bin} allow $HOME/paack
+        ${direnvAllow "$HOME"}
+        ${direnvAllow "$HOME/paack"}
       '';
     };
   };

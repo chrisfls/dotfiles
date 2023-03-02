@@ -33,9 +33,9 @@
       enable = true;
       identities = [ ".ssh/id_ed25519" ];
       file = {
-        "paack/.secretrc" = "paack/.secretrc.age";
-        ".envrc" = ".envrc.age";
-        ".npmrc" = ".npmrc.age";
+        "paack/.secretrc" = "${config.home.username}/paack/.secretrc.age";
+        ".envrc" = "${config.home.username}/.envrc.age";
+        ".npmrc" = "${config.home.username}/.npmrc.age";
       };
     };
     non-nixos.enable = true;
