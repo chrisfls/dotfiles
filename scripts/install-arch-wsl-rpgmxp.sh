@@ -6,7 +6,7 @@ if [ "$(id -u)" = "0" ]; then
   set -x
 
   echo "[network]" >> /etc/hostname
-  echo "hostname = arch" >> /etc/hostname
+  echo "hostname = arch-wsl-rpgmxp" >> /etc/hostname
   
   echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
 
