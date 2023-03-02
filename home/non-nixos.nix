@@ -13,6 +13,7 @@ in
     home.packages = with pkgs; [ 
       agenix.packages."${system}".default
       cachix
+      openssh
     ];
   };
 }
