@@ -12,7 +12,14 @@ in
   config = mkIf cfg.enable {
     home = {
       inherit (cfg) username; homeDirectory = "/home/${cfg.username}";
+      file = {
+        "gitlab/.keep".text = "";
+      };
+      sessionPath = [
+        "$HOME/.local/bin"
+      ];
     };
+
     systemd.user.startServices = "sd-switch";
   };
 }

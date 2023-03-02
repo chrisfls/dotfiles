@@ -24,7 +24,7 @@ in
           {
             name = toString source;
             value = {
-              source = builtins.toPath "${nix-secrets}/users/${nixosConfig.networking.hostName}/${config.module.home.username}/${source}";
+              source = ../secrets/users/${nixosConfig.networking.hostName}/${config.module.home.username}/${source};
               copies = [ "/home/${config.module.home.username}/${target}" ];
             };
           }

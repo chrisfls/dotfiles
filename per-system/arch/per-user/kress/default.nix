@@ -1,5 +1,4 @@
-{ config, pkgs, lib, specialArgs, ... }:
-with specialArgs;
+{ config, pkgs, specialArgs, ... }: with specialArgs;
 {
   imports = [
     ../../../../home
@@ -8,6 +7,7 @@ with specialArgs;
     ../../../../home/fish
     ../../../../home/git.nix
     ../../../../home/homeage.nix
+    ../../../../home/non-nixos.nix
     ../../../../home/paack
     ../../../../home/warp.nix
     ../../../../home/wsl
@@ -38,22 +38,15 @@ with specialArgs;
         ".npmrc" = ".npmrc.age";
       };
     };
+    non-nixos.enable = true;
     paack.enable = true;
     warp.enable = true;
-    wsl = {
-      enable = true;
-      vscode.enable = true;
-    };
+    wsl.enable = true;
   };
 
-  programs.fish = {
-    shellAliases = {
-      "f" = "explorer";
-      "rebuild-sys" = "sudo nixos-rebuild switch --override-input nix-secrets /etc/nixos/secrets -v && rebuild-home -v";
-      "rebuild-home" = "eval (cat /etc/systemd/system/home-manager-$USER.service | sed -n 's/ExecStart=//p')";
-    };
-  };
-
+  # let home manager install and manage itself
+  programs.home-manager.enable = true;
+  
   # before changing this value read the documentation for this option
   home.stateVersion = "22.11";
 }

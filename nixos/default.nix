@@ -80,7 +80,9 @@
     useUserPackages = true;
     extraSpecialArgs = specialArgs // {
       distro = "NixOS";
-      nixosConfig = config;
+      nixosConfig = {
+        networking = { hostName = config.networking.hostName; };
+      };
     };
   };
 }
