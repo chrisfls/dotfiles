@@ -74,4 +74,12 @@ else
   echo "$ pacman -Rsnc git"
   echo ""
   echo "To finish the setup."
+  echo ""
+  echo "To fix the error “warning: Nix search path entry '/nix/var/nix/profiles/per-user/root/channels' does not exist, ignoring”"
+  echo "Run the following command as root:"
+  echo ""
+  echo "$ nix-channel --update"
+  echo ""
+  echo "Refer to 'https://wiki.archlinux.org/title/Nix' for help with other issues."
+  echo ":)"
 fi
