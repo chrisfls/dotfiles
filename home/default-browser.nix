@@ -10,6 +10,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      xdg-utils
+      desktop-file-utils
+    ];
+
     xdg = {
       enable = true;
       mimeApps = {

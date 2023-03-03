@@ -2,6 +2,7 @@
 {
   imports = [
     ../../../../home
+    ../../../../home/default-browser.nix
     ../../../../home/dev.nix
     ../../../../home/direnv.nix
     ../../../../home/fish
@@ -14,6 +15,10 @@
   ];
 
   module = {
+    default-browser = {
+      enable = true;
+      name = "chromium-browser.desktop";
+    };
     dev.enable = true;
     direnv.enable = true;
     fish = {
@@ -42,6 +47,15 @@
     paack.enable = true;
     warp.enable = true;
     wsl.enable = true;
+  };
+
+  programs.fish = {
+    shellAliases = {
+      "f" = "explorer";
+      "rebuild-sys" = "sudo pacman -Sy --needed archlinux-keyring && sudo powerpill -Su && rebuild-home";
+      "rebuild-home" = "home-manager switch --flake '/etc/nixos'";
+      "cleanup" = "nix-env --delete-generations old && nix-store --gc";
+    };
   };
 
   # let home manager install and manage itself

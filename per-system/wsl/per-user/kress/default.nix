@@ -3,6 +3,7 @@ with specialArgs;
 {
   imports = [
     ../../../../home
+    ../../../../home/default-browser.nix
     ../../../../home/dev.nix
     ../../../../home/direnv.nix
     ../../../../home/fish
@@ -14,6 +15,10 @@ with specialArgs;
   ];
 
   module = {
+    default-browser = {
+      enable = true;
+      name = "chromium-browser.desktop";
+    };
     dev.enable = true;
     direnv.enable = true;
     fish = {
@@ -45,6 +50,10 @@ with specialArgs;
       vscode.enable = true;
     };
   };
+  
+  home.packages = with pkgs; [
+    chromium
+  ];
 
   programs.fish = {
     shellAliases = {
