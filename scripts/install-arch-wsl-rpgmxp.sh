@@ -5,25 +5,56 @@ if [ "$(id -u)" = "0" ]; then
 
   set -x
 
-  echo "[network]" >> /etc/hostname
-  echo "hostname = arch-wsl-rpgmxp" >> /etc/hostname
+  # change hostname
+  echo "[network]" >> /etc/wsl.conf
+  echo "hostname = arch-wsl-rpgmxp" >> /etc/wsl.conf
   
+  # enable sudo for wheel group
   echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
 
-  pacman -Sy archlinux-keyring && pacman -Su
-  pacman -Syu nix git
+  # install chaotic aur
+  pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
+  pacman-key --lsign-key FBA220DFC880C036
+  pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+  echo "" >> /etc/pacman.conf
+  echo "[chaotic-aur]" >> /etc/pacman.conf
+  echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
 
+  # enable pacman progress bar
+  sudo sed -i '/# Misc options/a ILoveCandy' /etc/pacman.conf
+
+  # update archlinux keyring and install powerpill
+  pacman -Sy archlinux-keyring && pacman -Su powerpill
+
+  # install packages:
+  # - pacman-contrib (permanently)
+  # - cloudflare-warp-bin (permanently)
+  # - chromium (permanently), needed to configure warp
+  # - nix (permantently)
+  # - git (temporarely), needed to clone nix-configs
+  sudo pacman -Sy && sudo powerpill -Su cloudflare-warp-bin chromium nix git
+
+  # enable warp
+  sudo systemctl enable --now warp-svc.service
+
+  # configure nix
   systemctl enable nix-daemon.service
   echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
   echo "export NIX_PATH=/nix/var/nix/profiles/per-user/root/channels" >> /etc/bash.bashrc
+  nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
+  nix-channel --update
 
+  # setup root password
   passwd
 
+  # create kress user
   useradd -m -G wheel,nix-users -s /bin/bash kress
   echo "trusted-users = root kress" | sudo tee -a /etc/nix/nix.conf
 
+  # setup kress password
   passwd kress
 
+  # make folder for nix config and make kress own it
   mkdir /etc/nixos
   chown -R kress /etc/nixos
 
@@ -39,41 +70,36 @@ if [ "$(id -u)" = "0" ]; then
   echo ""
   echo "\> net stop lxssmanager && net start lxssmanager"
   echo ""
-  echo "Restart wsl and install your ssh keys at '/home/kress/.ssh'."
+  echo "Restart wsl and add your ssh keys to '/home/kress/.ssh/id_ed25519'."
   echo "After that, run this script again."
 else
   echo "--- USER SETUP ---"
 
   set -x
 
+  # load ssh keys
   chmod 400 ~/.ssh/id_ed25519
   eval "$(ssh-agent -s)"
   ssh-add ~/.ssh/id_ed25519
 
-  git clone --recurse-submodules git@github.com:kress95/nix-configs.git /etc/nixos
+  # clone nix config
+  git clone git@github.com:kress95/nix-configs.git /etc/nixos
 
-  mv /etc/nixos/.git ~/.system.git
-
+  # install home manager
   nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   nix-channel --update
-
   nix-shell '<home-manager>' -A install
+
+  # apply home manager config
+  home-manager switch --flake '/etc/nixos'
+
+  # uninstall temporary packages
+  sudo pacman -Rsnc git openssh
 
   set +x
 
   echo "--- USER SETUP DONE ---"
-  echo ""
-  echo "Now run:"
-  echo ""
-  echo "$ home-manager switch --flake '/etc/nixos'"
-  echo ""
-  echo ""
-  echo "If everything went fine you can uninstall git with:"
-  echo ""
-  echo "$ pacman -Rsnc git"
-  echo ""
-  echo "To finish the setup."
   echo ""
   echo "To fix the error “warning: Nix search path entry '/nix/var/nix/profiles/per-user/root/channels' does not exist, ignoring”"
   echo "Run the following command as root:"
