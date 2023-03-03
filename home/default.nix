@@ -11,7 +11,14 @@ in
 
   config = mkIf cfg.enable {
     home = {
-      inherit (cfg) username; homeDirectory = "/home/${cfg.username}";
+      inherit (cfg) username;
+      homeDirectory = "/home/${cfg.username}";
+      file = {
+        "gitlab/.keep".text = "";
+      };
+      sessionPath = [
+        "$HOME/.local/bin"
+      ];
     };
 
     home.packages = with pkgs; [
