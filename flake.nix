@@ -59,12 +59,12 @@
           };
           modules = [
             homeage.homeManagerModules.homeage
-            ./per-system/arch-wsl-rpgmxp/per-user/kress
+            ./per-system/arch-wsl-rmxp/per-user/kress
           ];
           extraSpecialArgs = specialArgs // {
             distro = "Arch";
             nixosConfig = {
-              networking = { hostName = "arch-wsl-rpgmxp"; };
+              networking = { hostName = "arch-wsl-rmxp"; };
             };
           };
         };
