@@ -7,7 +7,7 @@ if [ "$(id -u)" = "0" ]; then
 
   # change hostname
   echo "[network]" >> /etc/wsl.conf
-  echo "hostname = arch-wsl-rpgmxp" >> /etc/wsl.conf
+  echo "hostname = arch-wsl-rmxp" >> /etc/wsl.conf
   
   # enable sudo for wheel group
   echo "%wheel ALL=(ALL) ALL" > /etc/sudoers.d/wheel
@@ -24,15 +24,18 @@ if [ "$(id -u)" = "0" ]; then
   sudo sed -i '/# Misc options/a ILoveCandy' /etc/pacman.conf
 
   # update archlinux keyring and install powerpill
-  pacman -Sy archlinux-keyring && pacman -Su powerpill
+  pacman -Sy archlinux-keyring && pacman -Syu
 
   # install packages:
+  # - nix (permantently)
   # - pacman-contrib (permanently)
+  # - powerpill (permanently)
+  # - git (temporarely), needed to clone nix-configs
+  # - openssh (temporarely), needed to clone nix-configs
   # - cloudflare-warp-bin (permanently)
   # - chromium (permanently), needed to configure warp
-  # - nix (permantently)
-  # - git (temporarely), needed to clone nix-configs
-  sudo pacman -Sy && sudo powerpill -Su cloudflare-warp-bin chromium nix git
+  pacman -Syu nix pacman-contrib powerpill git openssh chromium cloudflare-warp-bin
+  
 
   # enable warp
   sudo systemctl enable --now warp-svc.service
@@ -41,7 +44,7 @@ if [ "$(id -u)" = "0" ]; then
   systemctl enable nix-daemon.service
   echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
   echo "export NIX_PATH=/nix/var/nix/profiles/per-user/root/channels" >> /etc/bash.bashrc
-  nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
+  nix-channel --add https://nixos.org/channels/nixpkgs-unstable
   nix-channel --update
 
   # setup root password
@@ -78,6 +81,8 @@ else
   set -x
 
   # load ssh keys
+  sudo chown kress ~/.ssh/id_ed25519
+  sudo chown kress ~/.ssh/id_ed25519.pub
   chmod 400 ~/.ssh/id_ed25519
   eval "$(ssh-agent -s)"
   ssh-add ~/.ssh/id_ed25519
@@ -86,7 +91,7 @@ else
   git clone git@github.com:kress95/nix-configs.git /etc/nixos
 
   # install home manager
-  nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
+  nix-channel --add https://nixos.org/channels/nixpkgs-unstable
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   nix-channel --update
   nix-shell '<home-manager>' -A install
