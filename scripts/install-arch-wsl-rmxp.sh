@@ -92,7 +92,7 @@ else
 
   # install home manager
   nix-channel --add https://nixos.org/channels/nixpkgs-unstable
-  nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  nix-channel --add "https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz" home-manager
   nix-channel --update
   nix-shell '<home-manager>' -A install
 
