@@ -52,9 +52,10 @@
   programs.fish = {
     shellAliases = {
       "f" = "explorer";
-      "rebuild-sys" = "sudo pacman -Sy --needed archlinux-keyring && sudo powerpill -Su && rebuild-home";
-      "rebuild-home" = "home-manager switch --flake '/etc/nixos'";
-      "cleanup" = "nix-env --delete-generations old && nix-store --gc";
+      "upgrade" = "sys-update && home-update";
+      "sys-update" = "sudo pacman -Sy --needed archlinux-keyring && sudo powerpill -Su && sudo paccache -r";
+      "home-update" = "home-manager switch --flake '/etc/nixos' && nix-env --delete-generations old && nix-store --gc";
+      "cleanup" = "sudo paccache -r && nix-env --delete-generations old && nix-store --gc";
     };
   };
 
