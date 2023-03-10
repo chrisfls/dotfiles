@@ -21,24 +21,27 @@ if [ "$(id -u)" = "0" ]; then
   echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
 
   # enable pacman progress bar
-  sudo sed -i '/# Misc options/a ILoveCandy' /etc/pacman.conf
+  sed -i '/# Misc options/a ILoveCandy' /etc/pacman.conf
 
   # update archlinux keyring and install powerpill
   pacman -Sy archlinux-keyring && pacman -Syu
 
   # install packages:
   # - nix (permantently)
+  # - ntp (permantently)
   # - pacman-contrib (permanently)
   # - powerpill (permanently)
   # - git (temporarely), needed to clone nix-configs
   # - openssh (temporarely), needed to clone nix-configs
   # - cloudflare-warp-bin (permanently)
   # - chromium (permanently), needed to configure warp
-  pacman -Syu nix pacman-contrib powerpill git openssh chromium cloudflare-warp-bin
-  
+  pacman -Syu nix ntp pacman-contrib powerpill git openssh chromium cloudflare-warp-bin
+
+  # enable ntp
+  systemctl enable --now ntpd.service
 
   # enable warp
-  sudo systemctl enable --now warp-svc.service
+  systemctl enable --now warp-svc.service
 
   # configure nix
   systemctl enable nix-daemon.service
@@ -52,7 +55,7 @@ if [ "$(id -u)" = "0" ]; then
 
   # create kress user
   useradd -m -G wheel,nix-users -s /bin/bash kress
-  echo "trusted-users = root kress" | sudo tee -a /etc/nix/nix.conf
+  echo "trusted-users = root kress" | tee -a /etc/nix/nix.conf
 
   # setup kress password
   passwd kress
