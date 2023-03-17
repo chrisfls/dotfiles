@@ -21,28 +21,20 @@ if not set -q git_setup
   echo "ssh setup done"
 end
 
-if not set -q warp_setup
-  # I wanted to copy stuff from /var/lib/cloudflare-warp to stop this ugly
-  # setup, but I don't want to change the cloudflare-warp.nix package...
-  echo "cloudflare warp setup init"
-  warp-cli register
-  warp-cli connect
-  warp-cli register
-  warp-cli teams-enroll paack
-  set --universal warp_setup true
-  echo "NOTE: Running curl https://www.cloudflare.com/cdn-cgi/trace/"
-  echo "      will still report that warp is off, don't fret over this."
-  echo "      For now, what matters is that git works :)"
-  echo "cloudflare warp setup done"
-end
-
-# if not set -q fix_vscode
-#   sed -i "s/a.execChildProcess(\"uname -m\")/\"$(uname -m)\"/g" $HOME/.vscode-server/extensions/ms-dotnettools.csharp-*-linux-x64/dist/extension.js
-#   set --universal fix_vscode true
+# if not set -q warp_setup
+#   # I wanted to copy stuff from /var/lib/cloudflare-warp to stop this ugly
+#   # setup, but I don't want to change the cloudflare-warp.nix package...
+#   echo "cloudflare warp setup init"
+#   warp-cli register
+#   warp-cli connect
+#   warp-cli register
+#   warp-cli teams-enroll paack
+#   set --universal warp_setup true
+#   echo "NOTE: Running curl https://www.cloudflare.com/cdn-cgi/trace/"
+#   echo "      will still report that warp is off, don't fret over this."
+#   echo "      For now, what matters is that git works :)"
+#   echo "cloudflare warp setup done"
 # end
-
-# silent direnv
-set -x DIRENV_LOG_FORMAT ""
 
 any-nix-shell fish --info-right | source
 direnv hook fish | source
