@@ -12,7 +12,7 @@ in
     programs.micro = {
       enable = true;
       settings = {
-        colorscheme = "solarized-tc";
+        colorscheme = "gruvbox-tc";
       };
     };
   };
