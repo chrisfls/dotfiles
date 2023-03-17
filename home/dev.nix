@@ -9,13 +9,15 @@ in
   };
   
   imports = [
+    ./bash
     ./fish
-    ./daily-use.nix
+    ./zellij
   ];
 
   config = mkIf cfg.enable {
+    module.bash.enable = true;
+    module.zellij.enable = true;
     module.fish.enable = true;
-    module.daily-use.enable = true;
     
     home.packages = with pkgs; [
       # tools
@@ -31,24 +33,6 @@ in
       ltex-ls
       adoptopenjdk-jre-openj9-bin-16
     ];
-
-    programs.zellij = {
-      enable = true;
-      settings = {
-        theme = "custom";
-        themes.custom.fg = "#F2E5BC";
-        themes.custom.bg = "#1D2021";
-        themes.custom.black = "#928374";
-        themes.custom.blue = "#458588";
-        themes.custom.cyan = "#689D6A";
-        themes.custom.green = "#B8BB26";
-        themes.custom.magenta = "#B16286";
-        themes.custom.orange = "#D25F1F";
-        themes.custom.red = "#CC241D";
-        themes.custom.white = "#A89984";
-        themes.custom.yellow = "#D79921";
-      };
-    };
 
     programs.fish = {
       shellAliases = {
