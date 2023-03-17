@@ -6,10 +6,6 @@ let
   bin = "${config.programs.fish.package}/bin/fish";
 in
 {
-  imports = [
-    ../bash
-  ];
-
   options.module.fish = {
     enable = mkEnableOption "fish module";
     wsl = {
@@ -21,18 +17,6 @@ in
 
   config = mkMerge [
     (mkIf cfg.enable {
-      module.bash.enable = true;
-
-      home.file =
-        {
-          ".profile".text = ''
-            if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z "$BASH_EXECUTION_STRING" ]]
-            then
-              exec ${bin}
-            fi
-          '';
-        };
-
       programs.fish = {
         enable = true;
         shellAliases = {
