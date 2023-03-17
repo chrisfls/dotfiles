@@ -25,6 +25,13 @@ in
       p7zip
       unrar
       unzip
+
+      # tooling
+      htop
+      traceroute
+      killall
+      neofetch
+      nix-index
     ];
 
     systemd.user.startServices = "sd-switch";
