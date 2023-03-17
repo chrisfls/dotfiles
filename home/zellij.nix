@@ -7,7 +7,7 @@ in
   options.module.zellij = {
     enable = mkEnableOption "zellij module";
     shell = mkOption {
-      type = types.string;
+      type = types.str;
       default = "fish";
     };
   };

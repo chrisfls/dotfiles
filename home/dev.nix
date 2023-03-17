@@ -11,7 +11,7 @@ in
   imports = [
     ./bash
     ./fish
-    ./zellij
+    ./zellij.nix
   ];
 
   config = mkIf cfg.enable {
