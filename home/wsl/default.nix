@@ -11,6 +11,10 @@ in
 
   config = mkMerge [
     (mkIf cfg.enable {
+      home.packages = with pkgs; [
+        wslu
+        wsl-open
+      ];
       home.file = {
         ".local/bin/cmd".source = ./cmd;
         ".local/bin/powershell".source = ./powershell;
