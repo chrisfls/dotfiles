@@ -36,17 +36,17 @@ in
       enable = true;
       settings = {
         theme = "custom";
-        themes.custom.fg = "#EBDBB2";
-        themes.custom.bg = "#000000";
+        themes.custom.fg = "#F2E5BC";
+        themes.custom.bg = "#1D2021";
         themes.custom.black = "#928374";
-        themes.custom.blue = "#99C6CA";
-        themes.custom.cyan = "#7EC16E";
+        themes.custom.blue = "#458588";
+        themes.custom.cyan = "#689D6A";
         themes.custom.green = "#B8BB26";
-        themes.custom.magenta = "#D3869B";
-        themes.custom.orange = "#F77537";
-        themes.custom.red = "#F42C3E";
-        themes.custom.white = "#EBDBB2";
-        themes.custom.yellow = "#FABD2F";
+        themes.custom.magenta = "#B16286";
+        themes.custom.orange = "#D25F1F";
+        themes.custom.red = "#CC241D";
+        themes.custom.white = "#A89984";
+        themes.custom.yellow = "#D79921";
       };
     };
 
