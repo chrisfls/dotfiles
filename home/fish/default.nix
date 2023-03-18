@@ -42,7 +42,15 @@ in
           let
             wsl =
               if cfg.wsl.enable then
-                "set -g w \"${cfg.wsl.desktop}/\""
+                ''
+                set -g w "${cfg.wsl.desktop}/"
+
+                function osc7_promp --on-event fish_prompt
+                  if grep -q Microsoft /proc/version
+                    printf "\033]7;file://%s\033\\" (wslpath -w "$PWD") 
+                  end
+                end
+                ''
               else
                 "";
           in
