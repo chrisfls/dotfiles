@@ -109,7 +109,7 @@ else
 
   echo "--- USER SETUP DONE ---"
   echo ""
-  echo "To fix the error “warning: Nix search path entry '/nix/var/nix/profiles/per-user/root/channels' does not exist, ignoring”"
+  echo "To fix the error “warning: Nix search path entry '/nix/var/nix/profiles/per-user/$USER/channels' does not exist, ignoring”"
   echo "Run the following command as root:"
   echo ""
   echo "$ nix-channel --update"
