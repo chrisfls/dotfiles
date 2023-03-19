@@ -1,8 +1,18 @@
 [
   {
+    "name": "Popping and Locking Black",
+    "foreground": "#F2E5BC",
+    "cursorColor": "#F2E5BC",
     "background": "#000000",
+    "selectionBackground": "#6A6B5D",
     "black": "#1D2021",
     "blue": "#458588",
+    "cyan": "#689D6A",
+    "green": "#98971A",
+    "purple": "#B16286",
+    "red": "#CC241D",
+    "white": "#A89984",
+    "yellow": "#D79921",
     "brightBlack": "#928374",
     "brightBlue": "#99C6CA",
     "brightCyan": "#7EC16E",
@@ -10,16 +20,6 @@
     "brightPurple": "#D3869B",
     "brightRed": "#F42C3E",
     "brightWhite": "#EBDBB2",
-    "brightYellow": "#FABD2F",
-    "cursorColor": "#F2E5BC",
-    "cyan": "#689D6A",
-    "foreground": "#F2E5BC",
-    "green": "#98971A",
-    "name": "Popping and Locking Black",
-    "purple": "#B16286",
-    "red": "#CC241D",
-    "selectionBackground": "#6A6B5D",
-    "white": "#A89984",
-    "yellow": "#D79921"
+    "brightYellow": "#FABD2F"
   }
 ]
