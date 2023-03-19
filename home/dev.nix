@@ -10,14 +10,16 @@ in
   
   imports = [
     ./bash
+    ./emacs
     ./fish
     ./zellij.nix
   ];
 
   config = mkIf cfg.enable {
     module.bash.enable = true;
-    module.zellij.enable = true;
+    module.emacs.enable = true;
     module.fish.enable = true;
+    module.zellij.enable = true;
     
     home.packages = with pkgs; [
       # tools

@@ -2,9 +2,10 @@
   description = "kress's NixOS Flake";
 
   nixConfig = {
+    trusted-users = [ "root" "kress" ];
+    extra-substituters = "https://cache.nixos.org https://nix-community.cachix.org";
+    extra-trusted-public-keys = "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
     extra-experimental-features = "nix-command flakes";
-    extra-substituters = "https://nrdxp.cachix.org https://nix-community.cachix.org";
-    extra-trusted-public-keys = "nrdxp.cachix.org-1:Fc5PSqY2Jm1TrWfm88l6cvGWwz3s93c6IOifQWnhNW4= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
   };
 
   inputs = {
@@ -35,7 +36,7 @@
     with inputs;
     let
       specialArgs = {
-        inherit (inputs) nixpkgs home-manager agenix homeage nix-secrets;
+        inherit (inputs) nixpkgs unstable home-manager agenix homeage nix-secrets;
         keys = import "${nix-secrets}/keys.nix";
       };
     in

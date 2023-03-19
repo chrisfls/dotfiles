@@ -8,7 +8,6 @@
     ../../../../home/fish
     ../../../../home/git.nix
     ../../../../home/homeage.nix
-    ../../../../home/kakoune.nix
     ../../../../home/non-nixos.nix
     ../../../../home/paack
     ../../../../home/warp.nix
@@ -44,7 +43,6 @@
         ".npmrc" = "${config.home.username}/.npmrc.age";
       };
     };
-    kakoune.enable = true;
     non-nixos.enable = true;
     paack.enable = true;
     warp.enable = true;

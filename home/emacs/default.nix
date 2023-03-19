@@ -1,0 +1,54 @@
+# I prefer using kruft to using `nix-community/nix-doom-emacs` for the
+# following reasons:
+#
+# 1. nix-doom-emacs rebuilds everything each time I change settings.
+# 2. nix-doom-emacs doesn't fetch packages from github by default,
+#    so I'd have to sync my packages.el with this file.
+# 3. I don't need to rebuild my home each time I change settings [1].
+{ config, lib, pkgs, ... }:
+with lib;
+let
+  cfg = config.module.emacs;
+  emacs = "${config.home.homeDirectory}/.config/emacs";
+  doom = "${emacs}/bin/doom";
+in
+{
+  options.module.emacs = {
+    enable = mkEnableOption "emacs module";
+    doomRev = mkOption {
+      type = types.str;
+      default = "22097b5a755a5b1d661e362a8441b61e37f777c9";
+    };
+  };
+
+  config = mkIf cfg.enable {
+    programs.emacs.enable = true;
+
+    # TODO; eval if xplr can replace nnn as a sidebar
+    programs.nnn = {
+      enable = false;
+    };
+
+    xdg = {
+      enable = true;
+      configFile  = {
+        # [1] If I ever stop using `mkOutOfStoreSymlink` this reason is out.
+        "doom".source = config.lib.file.mkOutOfStoreSymlink /etc/nixos/home/emacs/doom;
+      };
+    };
+  
+    programs.fish.shellAliases = {
+      "doom" = doom;
+    };
+    
+    home.activation = {
+      # ohgodwhy
+      doomSetup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        $DRY_RUN_CMD export PATH="$PATH:${pkgs.emacs}/bin:${pkgs.git}/bin"
+        $DRY_RUN_CMD sh -c 'if [ ! -d "${emacs}" ]; then git clone https://github.com/doomemacs/doomemacs.git "${emacs}"; fi;'
+        $DRY_RUN_CMD git -C "${emacs}" checkout ${cfg.doomRev}
+        $DRY_RUN_CMD ${doom} install -! --no-config
+      '';
+    };
+  };
+}
