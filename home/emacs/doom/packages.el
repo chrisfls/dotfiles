@@ -49,8 +49,6 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-(package! gruvbox-theme :pin "736729265bfe5e247cf1b48bcf996e56516b0d89")
-
 (package! nerd-fonts
   :pin "eb187fd3a356032f4796d92fbb12225d32c8d973"
   :recipe (:host github :repo "twlz0ne/nerd-fonts.el"))
