@@ -8,6 +8,7 @@ in
 {
   options.module.fish = {
     enable = mkEnableOption "fish module";
+    autostart = mkEnableOption "autostart fish module";
     wsl = {
       enable = mkEnableOption "fish wsl module";
       desktop = mkOption { type = types.nullOr types.str; };
@@ -29,10 +30,10 @@ in
                 ''
                 set -g w "${cfg.wsl.desktop}/"
 
-                function osc7_promp --on-event fish_prompt
-                  if grep -q Microsoft /proc/version
-                    printf "\033]7;file://%s\033\\" (wslpath -w "$PWD") 
-                  end
+                function storePathForWindowsTerminal --on-variable PWD
+                    if test -n "$WT_SESSION"
+                      printf "\e]9;9;%s\e\\" (wslpath -w "$PWD")
+                    end
                 end
                 ''
               else
@@ -41,6 +42,7 @@ in
           ''
             set -g SHELL "${bin}"
             ${(builtins.readFile ./shell_init.fish)}
+            ${wsl}
           '';
         plugins = [
           { name = "autopair-fish"; src = pkgs.fishPlugins.autopair-fish.src; }
@@ -50,6 +52,17 @@ in
           { name = "sponge"; src = pkgs.fishPlugins.sponge.src; }
           { name = "tide"; src = pkgs.fishPlugins.tide.src; }
         ];
+      };
+    })
+
+    (mkIf (cfg.enable && cfg.autostart) {
+      home.file = {
+        ".profile".text = ''
+        if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+        then
+          exec fish
+        fi
+        '';
       };
     })
 

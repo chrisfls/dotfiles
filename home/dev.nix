@@ -12,14 +12,17 @@ in
     ./bash
     ./emacs
     ./fish
-    ./zellij.nix
   ];
 
   config = mkIf cfg.enable {
-    module.bash.enable = true;
-    module.emacs.enable = true;
-    module.fish.enable = true;
-    module.zellij.enable = true;
+    module = {
+      bash.enable = true;
+      emacs.enable = true;
+      fish = {
+        enable = true;
+        autostart = true;
+      };
+    };
     
     home.packages = with pkgs; [
       # tools
@@ -41,7 +44,6 @@ in
         "e" = "code";
         "da" = "direnv allow";
         "g" = "git";
-        # "s" = "git --git-dir=$HOME/.system.git --work-tree=/etc/nixos";
       };
       functions = {
         shell = ''

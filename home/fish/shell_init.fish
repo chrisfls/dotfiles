@@ -1,6 +1,9 @@
 # TODO: embed this in fish config
 set fish_greeting ""
 
+any-nix-shell fish --info-right | source
+direnv hook fish | source
+
 if not set -q tide_setup
   echo "tide setup init"
   echo 1 2 1 1 2 1 y | tide configure >/dev/null
@@ -36,5 +39,11 @@ end
 #   echo "cloudflare warp setup done"
 # end
 
-any-nix-shell fish --info-right | source
-direnv hook fish | source
+function update_cwd_osc --on-variable PWD --description 'Notify terminals when $PWD changes'
+    if status --is-command-substitution || set -q INSIDE_EMACS
+        return
+    end
+    printf \e\]7\;file://%s%s\e\\ $hostname (string escape --style=url $PWD)
+end
+
+update_cwd_osc # Run once since we might have inherited PWD from a parent shell
