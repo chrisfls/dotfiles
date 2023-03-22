@@ -22,11 +22,18 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.emacs.enable = true;
+    programs.emacs = {
+      enable = true;
+      package = pkgs.emacs-nox;
+    };
 
-    # TODO; eval if xplr can replace nnn as a sidebar
+    # TODO: eval if xplr can replace nnn as a sidebar
+    home.packages = with pkgs; [
+      xplr
+    ];
+
     programs.nnn = {
-      enable = false;
+      enable = true;
     };
 
     xdg = {
