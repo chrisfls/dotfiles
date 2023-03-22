@@ -53,7 +53,7 @@
     shellAliases = {
       "f" = "explorer";
       "upgrade" = "sys-update && home-update";
-      "sys-update" = "sudo pacman -Sy --needed archlinux-keyring && sudo powerpill -Su && sudo paccache -r";
+      "sys-update" = "sudo pacman -Sy --needed archlinux-keyring chaotic-keyring && sudo powerpill -Su && sudo paccache -r";
       "home-update" = "home-manager switch --flake '/etc/nixos' && nix-env --delete-generations old && nix-store --gc";
       "cleanup" = "sudo paccache -r && nix-env --delete-generations old && nix-store --gc";
     };

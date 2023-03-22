@@ -24,7 +24,7 @@ if [ "$(id -u)" = "0" ]; then
   sed -i '/# Misc options/a ILoveCandy' /etc/pacman.conf
 
   # update archlinux keyring and install powerpill
-  pacman -Sy archlinux-keyring && pacman -Syu
+  pacman -Sy archlinux-keyring chaotic-keyring && pacman -Syu
 
   # install packages:
   # - nix (permantently)
