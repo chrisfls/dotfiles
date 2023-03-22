@@ -28,17 +28,15 @@ if [ "$(id -u)" = "0" ]; then
 
   # install packages:
   # - nix (permantently)
-  # - ntp (permantently)
   # - pacman-contrib (permanently)
   # - powerpill (permanently)
   # - git (temporarely), needed to clone nix-configs
   # - openssh (temporarely), needed to clone nix-configs
   # - cloudflare-warp-bin (permanently)
   # - chromium (permanently), needed to configure warp
-  pacman -Syu nix ntp pacman-contrib powerpill git openssh chromium cloudflare-warp-bin
+  pacman -Syu nix pacman-contrib powerpill git openssh chromium cloudflare-warp-bin
 
-  # enable ntp
-  systemctl enable --now ntpd.service
+  # TODO: fix datetime with https://unix.stackexchange.com/questions/737365/cant-override-a-systemd-units-conditionvirtualization-on-archlinux-on-distrod
 
   # enable warp
   systemctl enable --now warp-svc.service
