@@ -76,8 +76,8 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(use-package! all-the-icons-nerd-fonts
-  :after all-the-icons
-  :demand t
-  :config
-  (all-the-icons-nerd-fonts-prefer))
+;; (use-package! all-the-icons-nerd-fonts
+;;   :after all-the-icons nerd-fonts
+;;   :demand t
+;;   :config
+;;   (all-the-icons-nerd-fonts-prefer))
