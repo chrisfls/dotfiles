@@ -32,10 +32,6 @@ in
       xplr
     ];
 
-    programs.nnn = {
-      enable = true;
-    };
-
     xdg = {
       enable = true;
       configFile  = {
