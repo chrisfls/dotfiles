@@ -27,9 +27,12 @@ in
       package = pkgs.emacs-nox;
     };
 
-    # TODO: eval if xplr can replace nnn as a sidebar
     home.packages = with pkgs; [
-      xplr
+      ripgrep
+      fd
+      enchant # (spell +enchant)
+      wordnet # (lookup +offline)
+      sqlite # (magit +forge)
     ];
 
     xdg = {
@@ -50,7 +53,8 @@ in
         $DRY_RUN_CMD export PATH="$PATH:${pkgs.emacs}/bin:${pkgs.git}/bin"
         $DRY_RUN_CMD sh -c 'if [ ! -d "${emacs}" ]; then git clone https://github.com/doomemacs/doomemacs.git "${emacs}"; fi;'
         $DRY_RUN_CMD git -C "${emacs}" checkout ${cfg.doomRev}
-        $DRY_RUN_CMD ${doom} install -! --no-config
+        $DRY_RUN_CMD ${doom} install -! --no-config --no-hooks
+        $DRY_RUN_CMD ${doom} sync
       '';
     };
   };

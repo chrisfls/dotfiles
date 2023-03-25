@@ -27,6 +27,7 @@ in
       unzip
 
       # tooling
+      xplr
       htop
       traceroute
       killall
