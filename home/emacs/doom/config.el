@@ -94,7 +94,7 @@
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t))
 (setq treemacs-git-mode 'deferred)
-(setq treemacs-position 'right)
+;;(setq treemacs-position 'right)
 
 ;; meow settings
 (use-package! meow
