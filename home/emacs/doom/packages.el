@@ -56,3 +56,5 @@
 ;; (package! all-the-icons-nerd-fonts
 ;;   :pin "a66e9ed4682d59a04777a7e61578f4b2e74855e2"
 ;;   :recipe (:host github :repo "mohkale/all-the-icons-nerd-fonts"))
+
+(package! meow :pin "fb61ce5943d7ad11f4a7350e4b561947bbbaea71")
