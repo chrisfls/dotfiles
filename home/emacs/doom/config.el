@@ -192,3 +192,16 @@
    '("'" . repeat)
    '("<escape>" . ignore))
   (map! :map meow-keymap [remap describe-key] #'helpful-key))
+
+(setq-default display-fill-column-indicator-column 80)
+
+(add-hook! (text-mode prog-mode)
+  (display-fill-column-indicator-mode t))
+
+(add-hook! elm-mode
+  (setq-local display-fill-column-indicator-column 119)
+  (display-fill-column-indicator-mode t))
+
+(add-hook! fsharp-mode
+  (setq-local display-fill-column-indicator-column 99)
+  (display-fill-column-indicator-mode t))
