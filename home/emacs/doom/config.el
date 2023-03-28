@@ -205,3 +205,6 @@
 (add-hook! fsharp-mode
   (setq-local display-fill-column-indicator-column 99)
   (display-fill-column-indicator-mode t))
+
+(map! :map meow-normal-state-keymap
+  "n" #'avy-goto-char)
