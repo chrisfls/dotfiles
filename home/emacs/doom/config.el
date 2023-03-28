@@ -75,10 +75,6 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; keypad mode access with +leader
-;;(map! :leader)
-;;  "l" #'meow-keypad)
-
 ;; fix sidebar +- signs
 (with-eval-after-load 'doom-themes
   (unless (display-graphic-p)
@@ -192,21 +188,33 @@
    '("'" . repeat)
    '("<escape>" . ignore))
   (map! :map meow-keymap [remap describe-key] #'helpful-key)
-  (map! :leader
-    ;; Use SPC (0-9) for digit arguments.
-    ;; SPC j/k will run the original command in MOTION state.
-    "1" #'meow-digit-argument
-    "2" #'meow-digit-argument
-    "3" #'meow-digit-argument
-    "4" #'meow-digit-argument
-    "5" #'meow-digit-argument
-    "6" #'meow-digit-argument
-    "7" #'meow-digit-argument
-    "8" #'meow-digit-argument
-    "9" #'meow-digit-argument
-    "0" #'meow-digit-argument
-    "/" #'meow-keypad-describe-key
-    "?" #'meow-cheatsheet))
+  ;; integrate with doom leader:
+  (when nil 
+    (map! :map meow-normal-state-keymap
+      doom-leader-key doom-leader-map)
+    (map! :map meow-motion-state-keymap
+      doom-leader-key doom-leader-map)
+    (map! :map meow-beacon-state-keymap
+      doom-leader-key nil)
+    (map! :leader
+      ;; keypad mode access with +leader
+      "l" #'meow-keypad
+      ;; SPC j/k will run the original command in MOTION state.
+      "j" "H-j"
+      "k" "H-k"
+      ;; Use SPC (0-9) for digit arguments.
+      "1" #'meow-digit-argument
+      "2" #'meow-digit-argument
+      "3" #'meow-digit-argument
+      "4" #'meow-digit-argument
+      "5" #'meow-digit-argument
+      "6" #'meow-digit-argument
+      "7" #'meow-digit-argument
+      "8" #'meow-digit-argument
+      "9" #'meow-digit-argument
+      "0" #'meow-digit-argument
+      "/" #'meow-keypad-describe-key
+      "?" #'meow-cheatsheet)))
 
 (setq-default display-fill-column-indicator-column 80)
 
