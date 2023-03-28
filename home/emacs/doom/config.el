@@ -191,7 +191,22 @@
    '("z" . meow-pop-selection)
    '("'" . repeat)
    '("<escape>" . ignore))
-  (map! :map meow-keymap [remap describe-key] #'helpful-key))
+  (map! :map meow-keymap [remap describe-key] #'helpful-key)
+  (map! :leader
+    ;; Use SPC (0-9) for digit arguments.
+    ;; SPC j/k will run the original command in MOTION state.
+    "1" #'meow-digit-argument
+    "2" #'meow-digit-argument
+    "3" #'meow-digit-argument
+    "4" #'meow-digit-argument
+    "5" #'meow-digit-argument
+    "6" #'meow-digit-argument
+    "7" #'meow-digit-argument
+    "8" #'meow-digit-argument
+    "9" #'meow-digit-argument
+    "0" #'meow-digit-argument
+    "/" #'meow-keypad-describe-key
+    "?" #'meow-cheatsheet))
 
 (setq-default display-fill-column-indicator-column 80)
 
