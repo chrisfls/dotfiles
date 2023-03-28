@@ -86,11 +86,12 @@
   "<mouse-5>" (cmd! (scroll-up 2)))
 
 ;; treemacs configs
-(with-eval-after-load 'treemacs
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t))
-(setq treemacs-git-mode 'deferred)
-;;(setq treemacs-position 'right)
+(when (modulep! :ui treemacs)
+  (with-eval-after-load 'treemacs
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t))
+  (setq treemacs-git-mode 'deferred)
+  (setq treemacs-position 'right))
 
 ;; meow settings
 (use-package! meow
@@ -102,8 +103,6 @@
   :config
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
   (setq meow-cheatsheet-physical-layout meow-cheatsheet-physical-layout-iso)
-  ;; keypad indicator for terminal
-  (unless (display-graphic-p) (setq meow-cursor-type-keypad 'hbar))
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
    '("k" . meow-prev)
@@ -187,34 +186,60 @@
    '("z" . meow-pop-selection)
    '("'" . repeat)
    '("<escape>" . ignore))
-  (map! :map meow-keymap [remap describe-key] #'helpful-key)
-  ;; integrate with doom leader:
-  (when nil 
-    (map! :map meow-normal-state-keymap
-      doom-leader-key doom-leader-map)
-    (map! :map meow-motion-state-keymap
-      doom-leader-key doom-leader-map)
-    (map! :map meow-beacon-state-keymap
-      doom-leader-key nil)
-    (map! :leader
-      ;; keypad mode access with +leader
-      "l" #'meow-keypad
-      ;; SPC j/k will run the original command in MOTION state.
-      "j" "H-j"
-      "k" "H-k"
-      ;; Use SPC (0-9) for digit arguments.
-      "1" #'meow-digit-argument
-      "2" #'meow-digit-argument
-      "3" #'meow-digit-argument
-      "4" #'meow-digit-argument
-      "5" #'meow-digit-argument
-      "6" #'meow-digit-argument
-      "7" #'meow-digit-argument
-      "8" #'meow-digit-argument
-      "9" #'meow-digit-argument
-      "0" #'meow-digit-argument
-      "/" #'meow-keypad-describe-key
-      "?" #'meow-cheatsheet)))
+  ;; custom settings
+  (setq my-meow-exit-with-cg 'insert) ; 'insert 'insert-and-beacon
+  (setq my-meow-bindings t)
+  (setq my-meow-remap-help t)
+  (setq my-meow-use-doom-leader nil)
+  ;; keypad indicator for terminal
+  (unless (display-graphic-p)
+    (setq meow-cursor-type-keypad 'hbar))
+  ;; remap help
+  (map! :map meow-keymap [remap describe-key] ; C-h k
+    :when my-meow-remap-help
+    #'helpful-key)
+  ;; exit from insert mode with C-g
+  (map! :map meow-insert-state-keymap
+    :when (memq my-meow-exit-with-cg '(insert insert-and-beacon))
+    "C-g" #'meow-insert-exit)
+  ;; exit from beacon mode with C-g
+  (map! :map meow-beacon-state-keymap
+    :when (eq my-meow-exit-with-cg 'insert-and-beacon)
+    "C-g" #'meow-grab)
+  ;; integrate with doom leader key
+  (map! :map meow-normal-state-keymap
+    :when my-meow-use-doom-leader
+    doom-leader-key doom-leader-map)
+  (map! :map meow-motion-state-keymap
+    :when my-meow-use-doom-leader
+    doom-leader-key doom-leader-map)
+  (map! :map meow-beacon-state-keymap
+    :when my-meow-use-doom-leader
+    doom-leader-key nil)
+  (map! :leader
+    :when my-meow-use-doom-leader
+    ;; keypad mode access with +leader
+    "l" #'meow-keypad
+    ;; SPC j/k will run the original command in MOTION state.
+    "j" "H-j"
+    "k" "H-k"
+    ;; Use SPC (0-9) for digit arguments.
+    "1" #'meow-digit-argument
+    "2" #'meow-digit-argument
+    "3" #'meow-digit-argument
+    "4" #'meow-digit-argument
+    "5" #'meow-digit-argument
+    "6" #'meow-digit-argument
+    "7" #'meow-digit-argument
+    "8" #'meow-digit-argument
+    "9" #'meow-digit-argument
+    "0" #'meow-digit-argument
+    "/" #'meow-keypad-describe-key
+    "?" #'meow-cheatsheet)
+  ;; custom keybindings
+  (map! :map meow-normal-state-keymap
+    :when my-meow-bindings
+    "n" #'avy-goto-char))
 
 (setq-default display-fill-column-indicator-column 80)
 
@@ -228,6 +253,3 @@
 (add-hook! fsharp-mode
   (setq-local display-fill-column-indicator-column 99)
   (display-fill-column-indicator-mode t))
-
-(map! :map meow-normal-state-keymap
-  "n" #'avy-goto-char)
