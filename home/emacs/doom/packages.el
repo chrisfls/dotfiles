@@ -58,3 +58,6 @@
 ;;   :recipe (:host github :repo "mohkale/all-the-icons-nerd-fonts"))
 
 (package! meow :pin "fb61ce5943d7ad11f4a7350e4b561947bbbaea71")
+
+;; disable multiple-cursors
+(package! js2-refactor :disable t)
