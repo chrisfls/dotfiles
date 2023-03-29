@@ -239,7 +239,7 @@
   ;; custom keybindings
   (map! :map meow-normal-state-keymap
     :when my-meow-bindings
-    "Q" #'avy-goto-char)
+    "Q" #'avy-goto-char))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -248,7 +248,7 @@
   "<mouse-4>" (cmd! (scroll-down 2))
   "<mouse-5>" (cmd! (scroll-up 2)))
 
-(setq completion-styles '(initials orderless basic)
+(setq completion-styles '(initials flex orderless basic)
       read-file-name-completion-ignore-case t
       avy-style 'de-bruijn)
 
