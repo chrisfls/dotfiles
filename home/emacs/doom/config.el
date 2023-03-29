@@ -33,7 +33,7 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-gruvbox)
-(setq doom-gruvbox-dark-variant 'hard)
+(setq doom-gruvbox-dark-variant "hard")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -75,26 +75,23 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; fix sidebar +- signs
-(with-eval-after-load 'doom-themes
-  (unless (display-graphic-p)
-    (setq doom-themes-treemacs-theme "Default")))
-
-;; fix mouse scroll wheel
-(map! :unless (display-graphic-p)
-  "<mouse-4>" (cmd! (scroll-down 2))
-  "<mouse-5>" (cmd! (scroll-up 2)))
-
-;; treemacs configs
-(when (modulep! :ui treemacs)
-  (with-eval-after-load 'treemacs
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t))
+;; treemacs
+(use-package! treemacs
+  :when (modulep! :ui treemacs)
+  :init
   (setq treemacs-git-mode 'deferred)
-  (setq treemacs-position 'right))
+  (setq treemacs-position 'right)
+  :config
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  ;; fix sidebar +- signs
+  (with-eval-after-load 'doom-themes
+    (unless (display-graphic-p)
+      (setq doom-themes-treemacs-theme "Default"))))
 
-;; meow settings
+;; meow
 (use-package! meow
+  :when t
   :demand t
   :init
   (meow-global-mode +1)
@@ -241,15 +238,31 @@
     :when my-meow-bindings
     "n" #'avy-goto-char))
 
-(setq-default display-fill-column-indicator-column 80)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; fix mouse scroll wheel
+(map! :unless (display-graphic-p)
+  "<mouse-4>" (cmd! (scroll-down 2))
+  "<mouse-5>" (cmd! (scroll-up 2)))
+
+(setq completion-styles '(initials orderless basic))
+(setq read-file-name-completion-ignore-case t)
+
+;; adaptive-wrap
+(+global-word-wrap-mode +1)
+
+;; visual-fill-column
+(setq-default display-fill-column-indicator-column 79)
+
+(defun my/fill-column-indicator (col)
+  (setq-local display-fill-column-indicator-column col)
+  (display-fill-column-indicator-mode t))
 
 (add-hook! (text-mode prog-mode)
-  (display-fill-column-indicator-mode t))
+  (my/fill-column-indicator 79))
 
 (add-hook! elm-mode
-  (setq-local display-fill-column-indicator-column 119)
-  (display-fill-column-indicator-mode t))
+  (my/fill-column-indicator 119))
 
 (add-hook! fsharp-mode
-  (setq-local display-fill-column-indicator-column 99)
-  (display-fill-column-indicator-mode t))
+  (my/fill-column-indicator 99))
