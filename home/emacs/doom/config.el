@@ -98,8 +98,11 @@
   ;; make cursor change work on wt
   (defun meow--set-cursor-type (type) (setq cursor-type type))
   :config
-  (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
-  (setq meow-cheatsheet-physical-layout meow-cheatsheet-physical-layout-iso)
+  (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
+        meow-cheatsheet-physical-layout meow-cheatsheet-physical-layout-iso
+        meow-expand-hint-remove-delay 10.0
+        meow-keypad-describe-delay 0.0
+        meow-use-enhanced-selection-effect t)
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
    '("k" . meow-prev)
@@ -236,7 +239,7 @@
   ;; custom keybindings
   (map! :map meow-normal-state-keymap
     :when my-meow-bindings
-    "n" #'avy-goto-char))
+    "Q" #'avy-goto-char)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -245,8 +248,9 @@
   "<mouse-4>" (cmd! (scroll-down 2))
   "<mouse-5>" (cmd! (scroll-up 2)))
 
-(setq completion-styles '(initials orderless basic))
-(setq read-file-name-completion-ignore-case t)
+(setq completion-styles '(initials orderless basic)
+      read-file-name-completion-ignore-case t
+      avy-style 'de-bruijn)
 
 ;; adaptive-wrap
 (+global-word-wrap-mode +1)
