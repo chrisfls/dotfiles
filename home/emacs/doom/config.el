@@ -91,7 +91,7 @@
 
 ;; meow
 (use-package! meow
-  :when t
+  :when nil
   :demand t
   :init
   (meow-global-mode +1)
@@ -239,7 +239,32 @@
   ;; custom keybindings
   (map! :map meow-normal-state-keymap
     :when my-meow-bindings
-    "Q" #'avy-goto-char))
+    "Q" #'meow-universal-argument
+    "n" #'avy-goto-char
+    ""))
+
+(defun my/dashboard-draw-ascii-banner-fn ()
+  (let* ((banner
+          '("                                                         "
+            " ______     __    __     ______     ______     ______    "
+            "/\\  ___\\   /\\ \"-./  \\   /\\  __ \\   /\\  ___\\   /\\  ___\\   "
+            "\\ \\  __\\   \\ \\ \\-./\\ \\  \\ \\  __ \\  \\ \\ \\____  \\ \\___  \\  "
+            " \\ \\_____\\  \\ \\_\\ \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\/\\_____\\ "
+            "  \\/_____/   \\/_/  \\/_/   \\/_/\\/_/   \\/_____/   \\/_____/ "
+            "                                                         "))
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat
+                 line (make-string (max 0 (- longest-line (length line)))
+                                   32)))
+               "\n"))
+     'face 'doom-dashboard-banner)))
+
+(setq +doom-dashboard-ascii-banner-fn #'my/dashboard-draw-ascii-banner-fn)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -248,7 +273,8 @@
   "<mouse-4>" (cmd! (scroll-down 2))
   "<mouse-5>" (cmd! (scroll-up 2)))
 
-(setq completion-styles '(initials flex orderless basic)
+(setq completion-styles '(orderless)
+      orderless-matching-styles '(orderless-flex orderless-literal orderless-regexp)
       read-file-name-completion-ignore-case t
       avy-style 'de-bruijn)
 
