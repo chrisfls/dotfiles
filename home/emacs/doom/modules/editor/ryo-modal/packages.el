@@ -14,6 +14,9 @@
 (package! region-boundaries
   :recipe (:local-repo "./commands"))
 
+(package! repeat-nth
+  :recipe (:local-repo "./commands"))
+
 (package! save-kmacro
   :recipe (:local-repo "./commands"))
 

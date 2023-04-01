@@ -1,3 +1,4 @@
+;; TODO: if possible stop terminating macros on any warning
 
 (defvar saved-kmacro nil)
 
@@ -22,5 +23,7 @@
       (setq defining-kbd-macro nil)
     (start-kbd-macro nil)))
 
+    ;; (let ((debug-on-error nil))
+    ;;   (start-kbd-macro nil))))
 
 (provide 'save-kmacro)

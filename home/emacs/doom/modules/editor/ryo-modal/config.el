@@ -18,6 +18,7 @@
 (use-package! char-occurrence)
 (use-package! open-line)
 (use-package! region-boundaries)
+(use-package! repeat-nth)
 (use-package! save-kmacro)
 (use-package! save-point)
 (use-package! secondary-selection)
@@ -32,21 +33,19 @@
   :demand t
   :bind
   ("<escape>" . ryo-modal-mode)
-  ("ESC" . ryo-modal-mode)
   :config
   (ryo-modal-keys
-    ("<escape>" ignore :norepeat t)
-    ;; TODO: suffixes
-    ("0" "M-0" :norepeat t)
-    ("1" "M-1" :norepeat t)
-    ("2" "M-2" :norepeat t)
-    ("3" "M-3" :norepeat t)
-    ("4" "M-4" :norepeat t)
-    ("5" "M-5" :norepeat t)
-    ("6" "M-6" :norepeat t)
-    ("7" "M-7" :norepeat t)
-    ("8" "M-8" :norepeat t)
-    ("9" "M-9" :norepeat t)
+    ("<escape>" keyboard-escape-quit)
+    ("0" repeat-ten :norepeat t)
+    ("1" ryo-modal-repeat :norepeat t)
+    ("2" repeat-two :norepeat t)
+    ("3" repeat-three :norepeat t)
+    ("4" repeat-four :norepeat t)
+    ("5" repeat-five :norepeat t)
+    ("6" repeat-six :norepeat t)
+    ("7" repeat-seven :norepeat t)
+    ("8" repeat-eight :norepeat t)
+    ("9" repeat-nine :norepeat t)
     ;;; movement
     ("l" forward-char :name "forward char")
     ("L" end-of-line :norepeat t :name "end-of line")
@@ -100,7 +99,6 @@
     ("R" swap-grab-content :name "swap grab content")
     ("Y" sync-grab-content :norepeat t :name "sync grab content")
     ;;; macros
-    ;; TODO: stop terminating macros on any warning
     ("m" start-or-save-kmacro :norepeat t :name "start or save kmacro")
     ("e" execute-saved-kmacro :name "execute saved kmacro")
     ("M" start-or-cancel-kmacro :norepeat t :name "start or cancel kmacro")
