@@ -1,4 +1,3 @@
-
 (use-package! smartparens)
 
 ;;; movements

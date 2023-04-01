@@ -1,4 +1,3 @@
-
 (defun go-to-end-of-region ()
   (interactive)
   (when (region-active-p)

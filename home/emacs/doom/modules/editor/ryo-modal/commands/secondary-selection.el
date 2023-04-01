@@ -1,4 +1,3 @@
-
 (defun cancel-grap ()
   (delete-overlay mouse-secondary-overlay)
   (setq mouse-secondary-start (make-marker))

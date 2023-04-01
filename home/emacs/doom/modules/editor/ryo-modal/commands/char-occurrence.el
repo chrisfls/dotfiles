@@ -1,4 +1,3 @@
-
 (defun go-to-char-forward (&optional arg char)
   (interactive "p\ncGo to char (forward): ")
   (setq arg (or arg 1))
