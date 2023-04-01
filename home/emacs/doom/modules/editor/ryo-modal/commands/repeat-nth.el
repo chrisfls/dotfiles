@@ -1,4 +1,4 @@
-(use-package! ryo-modal-repeat)
+(use-package! ryo-modal)
 
 (defun repeat-two ()
   (interactive)
