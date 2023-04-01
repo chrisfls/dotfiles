@@ -10,10 +10,11 @@
     (exchange-point-and-mark)
     (backward-char)))
 
-(defun deactivate-mark-command ()
+(defun toggle-mark ()
   (interactive)
   (if (region-active-p)
-      (deactivate-mark)))
+      (deactivate-mark)
+      (set-mark-command)))
 
 (defun mark-whole-line-to-next (&optional arg)
   (interactive)
