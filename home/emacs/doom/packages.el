@@ -59,3 +59,5 @@
 
 ;; disable multiple-cursors
 (package! js2-refactor :disable t)
+
+(package! dired-sidebar :pin "5569d3b53585f5413cf87a694650d0fd6e040803")

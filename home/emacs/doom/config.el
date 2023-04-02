@@ -75,7 +75,6 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; treemacs
 (use-package! treemacs
   :when (modulep! :ui treemacs)
   :init
@@ -88,6 +87,29 @@
   (with-eval-after-load 'doom-themes
     (unless (display-graphic-p)
       (setq doom-themes-treemacs-theme "Default"))))
+
+(use-package! which-key
+  :config
+  (setq which-key-show-early-on-C-h t)
+  (setq which-key-idle-delay 0.05)
+  (setq which-key-idle-secondary-delay 0.05)
+  (setq which-key-popup-type 'side-window)
+  (setq which-key-side-window-location 'right))
+
+(use-package! dired-sidebar
+  :commands (dired-sidebar-toggle-sidebar dired-sidebar-find-file)
+  :bind
+  ("<f9>" . dired-sidebar-toggle-sidebar)
+  ("<C-f9>" . dired-sidebar-find-file)
+  :config
+  (setq dired-sidebar-should-follow-file t)
+  (setq dired-sidebar-recenter-cursor-on-tui-update t)
+  (setq dired-sidebar-use-one-instance t))
+
+(map! :leader
+  (:prefix-map ("o" . "open")
+    :desc "Project sidebar"               "p" #'dired-sidebar-toggle-sidebar
+    :desc "Find file in project rsidebar" "P" #'dired-sidebar-find-file))
 
 (defun my/dashboard-draw-ascii-banner-fn ()
   (let* ((banner
