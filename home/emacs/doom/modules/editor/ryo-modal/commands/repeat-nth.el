@@ -1,5 +1,3 @@
-(use-package! ryo-modal)
-
 (defvar ryo-modal-repeating nil
   "Whether `ryo-modal-repeat' is currently repeating.")
 

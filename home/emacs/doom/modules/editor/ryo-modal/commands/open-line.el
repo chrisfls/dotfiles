@@ -1,6 +1,4 @@
-(use-package! smartparens
-  :commands
-  sp-newline)
+(use-package! smartparens)
 
 (defun open-line-down ()
   (interactive)

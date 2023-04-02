@@ -1,5 +1,3 @@
-(use-package! ryo-modal)
-
 (defun toggle-recording-macro ()
   (interactive)
   (if defining-kbd-macro

@@ -73,7 +73,7 @@
     ("F" avy-goto-char :norepeat t)
     ("t" go-till-char-forward :norepeat t :name "go till char forward") ; internal repeat
     ("v" isearch-forward-regexp :name "search forward")
-    ("n" isearch-repeat-forward :name "search repeat forward")
+    ("n" isearch-repeat-forward-regexp :norepeat t :name "search repeat forward") ; internal repeat
     ("." save-point :norepeat t :name "save point position")
     ("z" point-undo :name "backward point")
     ;;; mark
@@ -105,7 +105,7 @@
           ("f" go-to-char-backward :norepeat t :name "go to char backward") ; internal repeat
           ("t" go-till-char-backward :norepeat t :name "go till char backward") ; internal repeat
           ("v" isearch-backward-regexp :norepeat t :name "search backward")
-          ("n" isearch-repeat-backward :name "search repeat backward")
+          ("n" isearch-repeat-backward-regexp :norepeat t :name "search repeat backward") ; internal repeat
           ("." restore-point :norepeat t :name "restore point")
           ("z" point-redo :name "forward point")
           ("s" mark-whole-line-to-previous :name "mark whole line to previous")
