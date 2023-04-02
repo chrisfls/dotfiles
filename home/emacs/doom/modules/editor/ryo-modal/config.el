@@ -62,7 +62,7 @@
   :config
   (setq-default cursor-type 'bar)
   (setq-default blink-cursor-blinks 0)
-  (setq ryo-modal-cursor-type 'hbar)
+  (setq ryo-modal-cursor-type 'block)
   (ryo-modal-keys
     ("<escape>" keyboard-escape-quit)
     ("0" repeat-ten :norepeat t)
@@ -100,8 +100,9 @@
           ("b" beginning-of-buffer)))
     ("t" go-to-char-forward :norepeat t) ; internal repeat
     ("T" avy-goto-char :norepeat t)
-    ("f" isearch-forward-regexp)
-    ("n" isearch-repeat-forward-regexp :norepeat t) ; internal repeat
+    ("f" isearch-region-forward) ; internal repeat
+    ("n" isearch-repeat-forward-region :norepeat t) ; internal repeat
+    ("N" isearch-exit :norepeat t)
     ("." restore-point :norepeat t)
     ("z" point-undo)
     ;;; mark
@@ -118,6 +119,7 @@
     ("I" open-line-up :exit t :norepeat t)
     ("d" delete-forward-char-or-region)
     ("c" delete-char :exit t :norepeat t)
+    ("C" recenter :norepeat t)
     ("x" delete-backward-char-or-kill-region)
     ("y" kill-ring-save)
     ("p" yank)
@@ -126,14 +128,14 @@
     ("r" swap-grab)
     ("R" sync-grab-content :norepeat t )
     ;;; macros
-    ("m" toggle-recording-macro :norepeat t )
+    ("m" start-or-cancel-macro :norepeat t )
     ("M" start-or-save-macro :norepeat t )
     ("e" execute-macro :norepeat t) ; internal repeat
     ;;; reverse
     ("-" (("O" sp-beginning-of-previous-sexp)
           ("t" go-to-char-backward :norepeat t) ; internal repeat
-          ("f" isearch-backward-regexp :norepeat t)
-          ("n" isearch-repeat-backward-regexp :norepeat t) ; internal repeat
+          ("f" isearch-region-backward :norepeat t) ; internal repeat
+          ("n" isearch-repeat-backward-region :norepeat t) ; internal repeat
           ("." save-point :norepeat t)
           ("z" point-redo)
           ("s" mark-whole-line-to-previous)

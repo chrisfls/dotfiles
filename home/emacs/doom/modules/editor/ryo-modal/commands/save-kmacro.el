@@ -1,22 +1,23 @@
-(defun toggle-recording-macro ()
-  (interactive)
-  (if defining-kbd-macro
-      (progn 
-        (end-kbd-macro)
-        (message "Paused macro recording."))
-    (start-kbd-macro nil)
-    (if last-kbd-macro
-        (message "Resumed macro recording.")
-        (message "Started macro recording."))))
-
 (defun start-or-save-macro ()
   (interactive)
   (if defining-kbd-macro
       (progn
         (end-kbd-macro)
-        (kmacro-push-ring)
-        (message "Ended macro recording."))
-    (setq last-kbd-macro nil)
+        (message "Saved macro recording."))
+    (when last-kbd-macro
+      (kmacro-push-ring))
+    (start-kbd-macro nil)
+    (message "Started macro recording.")))
+
+(defun start-or-cancel-macro ()
+  (interactive)
+  (if defining-kbd-macro
+      (let ((prev-kbd-macro last-kbd-macro))
+        (end-kbd-macro)
+        (setq last-kbd-macro prev-kbd-macro)
+        (message "Cancelled macro recording."))
+    (when last-kbd-macro
+      (kmacro-push-ring))
     (start-kbd-macro nil)
     (message "Started macro recording.")))
 

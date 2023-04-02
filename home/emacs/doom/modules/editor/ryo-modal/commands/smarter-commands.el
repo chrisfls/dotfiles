@@ -32,16 +32,56 @@
 
 ;;; search
 
-(defun isearch-repeat-forward-regexp ()
+(defun isearch-region-forward ()
   (interactive)
   (setq ryo-modal--last-command-prefix-arg nil)
-  (setq ryo-modal--last-command #'isearch-forward-regexp)
-  (if isearch-regexp (isearch-repeat-forward) (isearch-forward-regexp)))
+  (setq ryo-modal--last-command #'isearch-repeat-forward)
+  (if (use-region-p)
+      (progn
+        (setq isearch-forward t)
+        (setq isearch-regexp nil)
+        (setq isearch-string (buffer-substring (region-beginning) (region-end)))
+        (deactivate-mark))
+    (isearch-forward-regexp)))
 
-(defun isearch-repeat-backward-regexp ()
+(defun isearch-region-backward ()
   (interactive)
   (setq ryo-modal--last-command-prefix-arg nil)
-  (setq ryo-modal--last-command #'isearch-backward-regexp)
-  (if isearch-regexp (isearch-repeat-backward) (isearch-backward-regexp)))
+  (setq ryo-modal--last-command #'isearch-repeat-backward)
+  (if (use-region-p)
+      (progn
+        (setq isearch-forward nil)
+        (setq isearch-regexp nil)
+        (setq isearch-string (buffer-substring (region-beginning) (region-end)))
+        (deactivate-mark))
+    (isearch-backward-regexp)))
+
+(defun isearch-repeat-forward-region ()
+  (interactive)
+  (setq ryo-modal--last-command-prefix-arg nil)
+  (setq ryo-modal--last-command #'isearch-repeat-forward)
+  (if (or isearch-regexp isearch-string)
+      (isearch-repeat-forward)
+    (if (use-region-p)
+        (progn
+          (setq isearch-forward t)
+          (setq isearch-regexp nil)
+          (setq isearch-string (buffer-substring (region-beginning) (region-end)))
+          (deactivate-mark))
+      (isearch-forward-regexp))))
+
+(defun isearch-repeat-backward-region ()
+  (interactive)
+  (setq ryo-modal--last-command-prefix-arg nil)
+  (setq ryo-modal--last-command #'isearch-repeat-backward)
+  (if (or isearch-regexp isearch-string)
+      (isearch-repeat-backward)
+    (if (use-region-p)
+        (progn
+          (setq isearch-forward nil)
+          (setq isearch-regexp nil)
+          (setq isearch-string (buffer-substring (region-beginning) (region-end)))
+          (deactivate-mark))
+      (isearch-backward-regexp))))
 
 (provide 'smarter-commands)
