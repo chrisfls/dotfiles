@@ -69,9 +69,9 @@
           ("s" backward-sentence :name "backward sentence")
           ("d" beginning-of-defun :name "beginning of defun")
           ("b" beginning-of-buffer :name "beginning of buffer")))
-    ("f" go-to-char-forward :name "go to char forward") ;; add repeat support
+    ("f" go-to-char-forward :norepeat t :name "go to char forward") ; TODO: repeat
     ("F" avy-goto-char :norepeat t)
-    ("t" go-till-char-forward :name "go till char forward") ;; add repeat support
+    ("t" go-till-char-forward :norepeat t :name "go till char forward") ; TODO: repeat
     ("v" isearch-forward-regexp :name "search forward")
     ("n" isearch-repeat-forward :name "search repeat forward")
     ("." save-point :norepeat t :name "save point position")
@@ -90,7 +90,7 @@
     ("d" delete-forward-char-or-region :name "delete")
     ("c" delete-char :exit t :norepeat t :name "change")
     ("x" delete-backward-char-or-kill-region :name "kill")
-    ("y" kill-ring-save :norepeat t :name "save") ; maybe allow repeat
+    ("y" kill-ring-save :name "save")
     ("p" yank :name "paste")
     ("," join-line :name "join line")
     ("u" undo :name "undo")
@@ -99,11 +99,11 @@
     ;;; macros
     ("m" toggle-recording-macro :norepeat t :name "toggle recording macro")
     ("M" start-or-save-macro :norepeat t :name "start or save macro")
-    ("e" execute-macro :norepeat t :name "execute macro") ; sets repeat internally
+    ("e" execute-macro :norepeat t :name "execute macro") ; internal repeat
     ;;; reverse
     ("-" (("O" sp-beginning-of-previous-sexp :name "beginning of previous sexp")
-          ("f" go-to-char-backward :name "go to char backward") ;; add repeat support
-          ("t" go-till-char-backward :name "go till char backward") ;; add repeat support
+          ("f" go-to-char-backward :norepeat t :name "go to char backward") ;; TODO: repeat
+          ("t" go-till-char-backward :norepeat t :name "go till char backward") ;; TODO: repeat
           ("v" isearch-backward-regexp :norepeat t :name "search backward")
           ("n" isearch-repeat-backward :name "search repeat backward")
           ("." restore-point :norepeat t :name "restore point")
