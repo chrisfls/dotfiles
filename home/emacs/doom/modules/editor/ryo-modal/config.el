@@ -18,7 +18,7 @@
 (use-package! char-occurrence)
 (use-package! open-line)
 (use-package! region-boundaries)
-(use-package! repeat-nth)
+(use-package! repeat-nth :demand t)
 (use-package! save-kmacro)
 (use-package! save-point)
 (use-package! secondary-selection)
@@ -69,9 +69,9 @@
           ("s" backward-sentence :name "backward sentence")
           ("d" beginning-of-defun :name "beginning of defun")
           ("b" beginning-of-buffer :name "beginning of buffer")))
-    ("f" go-to-char-forward :norepeat t :name "go to char forward") ; TODO: repeat
+    ("f" go-to-char-forward :norepeat t :name "go to char forward") ; internal repeat
     ("F" avy-goto-char :norepeat t)
-    ("t" go-till-char-forward :norepeat t :name "go till char forward") ; TODO: repeat
+    ("t" go-till-char-forward :norepeat t :name "go till char forward") ; internal repeat
     ("v" isearch-forward-regexp :name "search forward")
     ("n" isearch-repeat-forward :name "search repeat forward")
     ("." save-point :norepeat t :name "save point position")
@@ -102,8 +102,8 @@
     ("e" execute-macro :norepeat t :name "execute macro") ; internal repeat
     ;;; reverse
     ("-" (("O" sp-beginning-of-previous-sexp :name "beginning of previous sexp")
-          ("f" go-to-char-backward :norepeat t :name "go to char backward") ;; TODO: repeat
-          ("t" go-till-char-backward :norepeat t :name "go till char backward") ;; TODO: repeat
+          ("f" go-to-char-backward :norepeat t :name "go to char backward") ; internal repeat
+          ("t" go-till-char-backward :norepeat t :name "go till char backward") ; internal repeat
           ("v" isearch-backward-regexp :norepeat t :name "search backward")
           ("n" isearch-repeat-backward :name "search repeat backward")
           ("." restore-point :norepeat t :name "restore point")

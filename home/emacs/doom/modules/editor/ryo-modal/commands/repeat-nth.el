@@ -1,5 +1,17 @@
 (use-package! ryo-modal)
 
+(defvar ryo-modal-repeating nil
+  "Whether `ryo-modal-repeat' is currently repeating.")
+
+(defun my-ryo-modal-repeat-advice (orig-fun &rest args)
+  "Advice function to set `ryo-modal-repeating' to t during execution of `ryo-modal-repeat'."
+  (setq ryo-modal-repeating t)
+  (unwind-protect
+      (apply orig-fun args)
+    (setq ryo-modal-repeating nil)))
+
+(advice-add 'ryo-modal-repeat :around #'my-ryo-modal-repeat-advice)
+
 (defun repeat-two ()
   (interactive)
   (ryo-modal-repeat)
