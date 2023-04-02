@@ -26,6 +26,32 @@
 (use-package! text-object)
 
 ;;;
+;;; modeline
+;;;
+
+(defun doom-modeline--evil-ryo ()
+  "The current ryo-modal state which is enabled by the command `ryo-modal-mode'."
+  (cond 
+    ;; visual
+    ((and ryo-modal-mode (use-region-p))
+      (doom-modeline--modal-icon "VISUAL" 'doom-modeline-evil-visual-state "Ryo modal" "add_circle" "✪"))
+    ;; normal
+    (ryo-modal-mode
+      (doom-modeline--modal-icon "NORMAL" 'doom-modeline-evil-normal-state "Ryo modal" "add_circle" "✪"))
+    ;; insert
+    (t
+      (doom-modeline--modal-icon "INSERT" 'doom-modeline-evil-insert-state "Holy mode"))))
+
+(use-package! doom-modeline
+  :config
+  (doom-modeline-def-segment modals
+    (when doom-modeline-modal
+      (concat
+        (doom-modeline-spc)
+        (doom-modeline--evil-ryo)
+        (doom-modeline-spc)))))
+
+;;;
 ;;; bindings
 ;;;
 
@@ -34,6 +60,9 @@
   :bind
   ("<escape>" . ryo-modal-mode)
   :config
+  (setq-default cursor-type 'bar)
+  (setq-default blink-cursor-blinks 0)
+  (setq ryo-modal-cursor-type 'hbar)
   (ryo-modal-keys
     ("<escape>" keyboard-escape-quit)
     ("0" repeat-ten :norepeat t)
