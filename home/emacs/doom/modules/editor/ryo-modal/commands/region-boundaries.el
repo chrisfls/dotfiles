@@ -7,10 +7,10 @@
 
 (defun go-to-beginning-of-region ()
   (interactive)
-  (when (region-active-p)
-    (when (> (point) (mark))
-      (exchange-point-and-mark))
-    (backward-char)
-    (deactivate-mark)))
+  (if (region-active-p)
+      (when (> (point) (mark))
+        (exchange-point-and-mark))
+    (backward-char))
+  (deactivate-mark))
 
 (provide 'region-boundaries)

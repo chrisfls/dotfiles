@@ -69,16 +69,16 @@
           ("s" backward-sentence :name "backward sentence")
           ("d" beginning-of-defun :name "beginning of defun")
           ("b" beginning-of-buffer :name "beginning of buffer")))
-    ("f" go-to-char-forward :norepeat t :name "go to char forward") ; internal repeat
-    ("F" avy-goto-char :norepeat t)
-    ("t" go-till-char-forward :norepeat t :name "go till char forward") ; internal repeat
-    ("v" isearch-forward-regexp :name "search forward")
+    ("t" go-to-char-forward :norepeat t :name "go to char forward") ; internal repeat
+    ("T" avy-goto-char :norepeat t)
+    ("f" isearch-forward-regexp :name "search forward")
     ("n" isearch-repeat-forward-regexp :norepeat t :name "search repeat forward") ; internal repeat
     ("." save-point :norepeat t :name "save point position")
     ("z" point-undo :name "backward point")
     ;;; mark
-    ;; ("S-SPC" set-mark-sexp :norepeat t :name "set mark sexp")
-    ("g" toggle-mark :name "toggle mark")
+    ("v" toggle-mark :name "toggle mark")
+    ("V" set-mark-sexp :norepeat t :name "set mark sexp")
+    ("g" "C-g" :name "keyboard escape")
     ("G" grab-region :name "grab region")
     (";" exchange-point-and-mark :name "reverse point and mark")
     ("s" mark-whole-line-to-next :name "mark whole line to next")
@@ -102,9 +102,8 @@
     ("e" execute-macro :norepeat t :name "execute macro") ; internal repeat
     ;;; reverse
     ("-" (("O" sp-beginning-of-previous-sexp :name "beginning of previous sexp")
-          ("f" go-to-char-backward :norepeat t :name "go to char backward") ; internal repeat
-          ("t" go-till-char-backward :norepeat t :name "go till char backward") ; internal repeat
-          ("v" isearch-backward-regexp :norepeat t :name "search backward")
+          ("t" go-to-char-backward :norepeat t :name "go to char backward") ; internal repeat
+          ("f" isearch-backward-regexp :norepeat t :name "search backward")
           ("n" isearch-repeat-backward-regexp :norepeat t :name "search repeat backward") ; internal repeat
           ("." restore-point :norepeat t :name "restore point")
           ("z" point-redo :name "forward point")
