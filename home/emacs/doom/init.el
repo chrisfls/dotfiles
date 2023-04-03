@@ -135,7 +135,7 @@
        ;;fortran 
        (fsharp +lsp)
        ;;fstar 
-       ;;gdscript 
+       gdscript
        ;;(go +lsp)
        ;;(graphql +lsp)
        ;;(haskell +lsp)
