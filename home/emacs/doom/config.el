@@ -32,8 +32,8 @@
 ;; There are two ways to load a theme. Both assume thOIe theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-gruvbox)
-(setq doom-gruvbox-dark-variant "hard")
+(setq doom-theme 'doom-gruvbox
+      doom-gruvbox-dark-variant "hard")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -132,10 +132,10 @@
 
 ;;; treemacs
 
-(setq treemacs-git-mode 'deferred)
-(setq treemacs-width 30)
-(setq treemacs-recenter-after-file-follow t)
-(setq treemacs-recenter-after-tag-follow t)
+(setq treemacs-git-mode 'deferred
+      treemacs-width 30
+      treemacs-recenter-after-file-follow t
+      treemacs-recenter-after-tag-follow t)
 
 (after! treemacs
   (treemacs-follow-mode t)
@@ -150,11 +150,11 @@
 
 (use-package! which-key
   :config
-  (setq which-key-show-early-on-C-h t)
-  (setq which-key-idle-delay 0.05)
-  (setq which-key-idle-secondary-delay 0.05)
-  (setq which-key-popup-type 'side-window)
-  (setq which-key-side-window-location 'right)
+  (setq which-key-show-early-on-C-h t
+        which-key-idle-delay 0.05
+        which-key-idle-secondary-delay 0.05
+        which-key-popup-type 'side-window
+        which-key-side-window-location 'right)
   (push '((nil . "ryo:.*:") . (nil . "")) which-key-replacement-alist))
 
 ;;; all-the-icons-nerd-fonts
@@ -165,23 +165,6 @@
 ;;   :demand t
 ;;   :config
 ;;   (all-the-icons-nerd-fonts-prefer))
-
-;;; dired-sidebar
-
-;; (use-package! dired-sidebar
-;;   :commands (dired-sidebar-toggle-sidebar dired-sidebar-find-file)
-;;   :bind
-;;   ("<f9>" . dired-sidebar-toggle-sidebar)
-;;   ("<C-f9>" . dired-sidebar-find-file)
-;;   :config
-;;   (setq dired-sidebar-should-follow-file t)
-;;   (setq dired-sidebar-recenter-cursor-on-tui-update t)
-;;   (setq dired-sidebar-use-one-instance t))
-
-;; (map! :leader
-;;     (:prefix-map ("o" . "open")
-;;       :desc "Project sidebar"               "p" #'dired-sidebar-toggle-sidebar
-;;       :desc "Find file in project rsidebar" "P" #'dired-sidebar-find-file))
 
 ;;; undo-tree
 
@@ -321,22 +304,13 @@
           ("s" mark-whole-line-to-previous)
           ("u" undo-tree-redo)
           ("r" swap-grab-content)
-          ("R" sync-region-content :norepeat t)
-          ;; ("m" kmacro-cycle-ring-next :norepeat t) ; FIXME: REMOVE
-          ;; ("M" kmacro-cycle-ring-previous :norepeat t) ; FIXME: REMOVE
-         ))))
+          ("R" sync-region-content :norepeat t)))))
 
-;; (defun simulate-key-press (key)
-;;   `(lambda () (interactive)
-;;     (setq prefix-arg current-prefix-arg)
-;;     (setq unread-command-events (listify-key-sequence (read-kbd-macro ,key)))))
-;; (map! :map ryo-modal-mode-map
-;;   "SPC" (simulate-key-press (kbd "C-c"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq completion-styles '(orderless)
-      ;; orderless-matching-styles '(orderless-flex orderless-literal orderless-regexp)
+      orderless-matching-styles '(orderless-flex orderless-literal orderless-regexp)
       read-file-name-completion-ignore-case t
       avy-style 'de-bruijn)
 
