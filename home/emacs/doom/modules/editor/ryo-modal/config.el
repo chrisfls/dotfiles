@@ -51,6 +51,10 @@
         (doom-modeline--evil-ryo)
         (doom-modeline-spc)))))
 
+(use-package! which-key
+  :config
+  (push '((nil . "ryo:.*:") . (nil . "")) which-key-replacement-alist))
+
 ;;;
 ;;; bindings
 ;;;
@@ -75,6 +79,9 @@
     ("7" repeat-seven :norepeat t)
     ("8" repeat-eight :norepeat t)
     ("9" repeat-nine :norepeat t)
+    ;;; ergonomics
+    ("C-@" "M-x" :norepeat t)
+    ("C-SPC" "M-x" :norepeat t)
     ;;; movement
     ("l" forward-char)
     ("L" end-of-line)
@@ -126,10 +133,10 @@
     ("," join-line)
     ("u" undo)
     ("r" swap-grab)
-    ("R" sync-grab-content :norepeat t )
+    ("R" sync-grab-content :norepeat t)
     ;;; macros
-    ("m" start-or-cancel-macro :norepeat t )
-    ("M" start-or-save-macro :norepeat t )
+    ("m" start-or-cancel-macro :norepeat t)
+    ("M" start-or-save-macro :norepeat t)
     ("e" execute-macro :norepeat t) ; internal repeat
     ;;; reverse
     ("-" (("O" sp-beginning-of-previous-sexp)
@@ -143,4 +150,6 @@
           ("r" swap-grab-content)
           ("R" sync-region-content :norepeat t)
           ("M" kmacro-cycle-ring-next :norepeat t)
-          ("M" kmacro-cycle-ring-previous :norepeat t)))))
+          ("M" kmacro-cycle-ring-previous :norepeat t))))
+  (map! :map ryo-modal-mode-map
+    doom-leader-key doom-leader-map))
