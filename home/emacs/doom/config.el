@@ -204,7 +204,6 @@
 (use-package! region-boundaries)
 (use-package! repeat-nth :demand t)
 (use-package! save-kmacro)
-(use-package! save-point)
 (use-package! secondary-selection)
 (use-package! smarter-commands)
 (use-package! text-object)
@@ -233,84 +232,106 @@
     ("8" repeat-eight :norepeat t)
     ("9" repeat-nine :norepeat t)
     ;;; ergonomics
-    ;; ("SPC" "C-c" :norepeat t)
-    ("C-@" "M-x" :norepeat t)
-    ("C-SPC" "M-x" :norepeat t)
+    ("C-@" "M-x" :norepeat t) ; [CTRL]
+    ("C-SPC" "M-x" :norepeat t) ; [CTRL]
     ;;; movement
     ("l" forward-char)
-    ("L" end-of-line)
+    ("L" end-of-line) ; [SHIFT]
     ("h" backward-char)
-    ("H" back-to-indentation-or-beginning-of-line)
+    ("H" back-to-indentation-or-beginning-of-line) ; [SHIFT]
     ("j" next-line)
-    ("J" scroll-down-command)
+    ("J" scroll-down-command) ; [SHIFT]
     ("k" previous-line)
-    ("K" scroll-up-command)
+    ("K" scroll-up-command) ; [SHIFT]
     ("w" forward-word)
-    ("W" sp-forward-symbol)
+    ("W" sp-forward-symbol) ; [SHIFT]
     ("b" backward-word)
-    ("B" sp-backward-symbol)
-    ("o" match-sexp)
-    ("O" sp-beginning-of-next-sexp)
+    ("B" sp-backward-symbol) ; [SHIFT]
+    ("o" match-sexp) ; TODO: "m"
+    ("O" sp-beginning-of-next-sexp) ; TODO: REMOVE?
     ("]" (("p" forward-paragraph)
-          ("s" forward-sentence)
           ("d" end-of-defun)
-          ("b" end-of-buffer)))
+          ("b" end-of-buffer)
+          ("w" backward-word)
+          ("l" sp-backward-symbol)
+          ;; ("r" backward-round)
+          ;; ("c" backward-curly)
+          ;; ("s" backward-square)
+          ))
     ("[" (("p" backward-paragraph)
-          ("s" backward-sentence)
           ("d" beginning-of-defun)
-          ("b" beginning-of-buffer)))
-    ("t" go-to-char-forward :norepeat t) ; internal repeat
-    ("T" avy-goto-char :norepeat t)
-    ("f" isearch-region-forward) ; internal repeat
-    ("n" isearch-repeat-forward-region :norepeat t) ; internal repeat
-    ("N" isearch-exit :norepeat t)
-    ("." restore-point :norepeat t)
+          ("b" beginning-of-buffer)
+          ("w" forward-word)
+          ("l" sp-forward-symbol)
+          ;; ("r" forward-round)
+          ;; ("c" forward-curly)
+          ;; ("s" forward-square)
+          ))
+    ;; ("," (("p" select-inner-paragraph)
+    ;;       ("d" select-inner-defun)
+    ;;       ("b" select-whole-buffer)
+    ;;       ("w" select-word)
+    ;;       ("l" symbol)
+    ;;       ("r" select-inner-round)
+    ;;       ("c" select-inner-curly)
+    ;;       ("s" select-inner-square)))
+    ;; ("." (("p" select-outer-paragraph)
+    ;;       ("d" select-outer-defun)
+    ;;       ("b" select-whole-buffer)
+    ;;       ("w" select-word)
+    ;;       ("l" symbol)
+    ;;       ("r" select-outer-round)
+    ;;       ("c" select-outer-curly)
+    ;;       ("s" select-outer-square)))
+    ("f" isearch-repeat-forward-region :norepeat t) ; [REPEATS] TODO: mix with isearch-forward-region
+    ("F" isearch-exit :norepeat t) ; [SHIFT]
+    ("n" go-to-char-forward :norepeat t) ; [REPEATS]
+    ("N" avy-goto-char :norepeat t) ; [SHIFT]
     ("z" point-undo)
     ;;; mark
-    ("v" toggle-mark)
-    ("V" set-mark-sexp :norepeat t)
+    ("SPC" toggle-mark)
     ("g" "C-g")
     ("G" grab-region)
     (";" exchange-point-and-mark)
     ("s" mark-whole-line-to-next)
     ;;; manipulation
     ("a" go-to-end-of-region :exit t :norepeat t)
-    ("A" open-line-down :exit t :norepeat t)
+    ("A" open-line-down :exit t :norepeat t) ; [SHIFT]
     ("i" go-to-beginning-of-region :exit t :norepeat t)
-    ("I" open-line-up :exit t :norepeat t)
-    ("d" delete-forward-char-or-region)
-    ("c" delete-char :exit t :norepeat t)
-    ("C" recenter :norepeat t)
+    ("I" open-line-up :exit t :norepeat t) ; [SHIFT]
+    ("d" delete-forward-char-or-region) 
+    ("c" delete-char :exit t :norepeat t) ; TODO: REMOVE?
+    ("C" recenter :norepeat t) ; [SHIFT]
     ("x" delete-backward-char-or-kill-region)
     ("y" kill-ring-save)
     ("p" yank)
-    ("," join-line)
+    ("," join-line) ; TOOD: "m" (under j which does the same thing in vim)
     ("u" undo-tree-undo)
-    ("r" swap-grab)
-    ("R" sync-grab-content :norepeat t)
+    ("r" swap-grab) ; TODO: 
+    ("R" sync-grab-content :norepeat t) ; [SHIFT]
     ;;; macros
-    ("m" start-or-cancel-macro :norepeat t)
-    ("M" start-or-save-macro :norepeat t)
-    ("e" execute-macro :norepeat t) ; internal repeat
+    ("m" start-or-cancel-macro :norepeat t) ; TODO: "r" (record)
+    ("M" start-or-save-macro :norepeat t) ; [SHIFT] TODO: "R"
+    ("e" execute-macro :norepeat t) ; [REPEATS]
     ;;; reverse
     ("-" (("O" sp-beginning-of-previous-sexp)
-          ("t" go-to-char-backward :norepeat t) ; internal repeat
-          ("f" isearch-region-backward :norepeat t) ; internal repeat
-          ("n" isearch-repeat-backward-region :norepeat t) ; internal repeat
-          ("." save-point :norepeat t)
+          ("f" isearch-repeat-backward-region :norepeat t) ; [REPEATS]
+          ("n" go-to-char-backward :norepeat t) ; [REPEATS]
           ("z" point-redo)
           ("s" mark-whole-line-to-previous)
           ("u" undo-tree-redo)
           ("r" swap-grab-content)
           ("R" sync-region-content :norepeat t)
-          ("M" kmacro-cycle-ring-next :norepeat t)
-          ("M" kmacro-cycle-ring-previous :norepeat t))))
-  (defun simulate-key-press (key)
-    `(lambda () (interactive)
-      (setq prefix-arg current-prefix-arg)
-      (setq unread-command-events (listify-key-sequence (read-kbd-macro ,key)))))
-  (map! :map ryo-modal-mode-map
-    "SPC" (simulate-key-press (kbd "C-c"))))
+          ;; ("m" kmacro-cycle-ring-next :norepeat t) ; FIXME: REMOVE
+          ;; ("M" kmacro-cycle-ring-previous :norepeat t) ; FIXME: REMOVE
+         ))))
+
+;; (defun simulate-key-press (key)
+;;   `(lambda () (interactive)
+;;     (setq prefix-arg current-prefix-arg)
+;;     (setq unread-command-events (listify-key-sequence (read-kbd-macro ,key)))))
+;; (map! :map ryo-modal-mode-map
+;;   "SPC" (simulate-key-press (kbd "C-c"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
