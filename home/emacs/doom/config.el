@@ -131,12 +131,9 @@
 
 ;;; treemacs
 
-(use-package! treemacs ; DISABLED
-  :when (modulep! :ui treemacs)
-  :init
-  (setq treemacs-git-mode 'deferred)
-  (setq treemacs-position 'right)
-  :config
+(setq treemacs-git-mode 'deferred)
+
+(after! treemacs
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   ;; fix sidebar +- signs
@@ -157,28 +154,29 @@
 
 ;;; all-the-icons-nerd-fonts
 
-(use-package! all-the-icons-nerd-fonts
-  :after all-the-icons
-  :demand t
-  :config
-  (all-the-icons-nerd-fonts-prefer))
+;; TODO: add style icon to nerd-mdi
+;; (use-package! all-the-icons-nerd-fonts
+;;   :after all-the-icons
+;;   :demand t
+;;   :config
+;;   (all-the-icons-nerd-fonts-prefer))
 
 ;;; dired-sidebar
 
-(use-package! dired-sidebar
-  :commands (dired-sidebar-toggle-sidebar dired-sidebar-find-file)
-  :bind
-  ("<f9>" . dired-sidebar-toggle-sidebar)
-  ("<C-f9>" . dired-sidebar-find-file)
-  :config
-  (setq dired-sidebar-should-follow-file t)
-  (setq dired-sidebar-recenter-cursor-on-tui-update t)
-  (setq dired-sidebar-use-one-instance t))
+;; (use-package! dired-sidebar
+;;   :commands (dired-sidebar-toggle-sidebar dired-sidebar-find-file)
+;;   :bind
+;;   ("<f9>" . dired-sidebar-toggle-sidebar)
+;;   ("<C-f9>" . dired-sidebar-find-file)
+;;   :config
+;;   (setq dired-sidebar-should-follow-file t)
+;;   (setq dired-sidebar-recenter-cursor-on-tui-update t)
+;;   (setq dired-sidebar-use-one-instance t))
 
-(map! :leader
-    (:prefix-map ("o" . "open")
-      :desc "Project sidebar"               "p" #'dired-sidebar-toggle-sidebar
-      :desc "Find file in project rsidebar" "P" #'dired-sidebar-find-file))
+;; (map! :leader
+;;     (:prefix-map ("o" . "open")
+;;       :desc "Project sidebar"               "p" #'dired-sidebar-toggle-sidebar
+;;       :desc "Find file in project rsidebar" "P" #'dired-sidebar-find-file))
 
 ;;; undo-tree
 

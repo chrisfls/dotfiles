@@ -57,7 +57,7 @@
   :recipe (:host github :repo "twlz0ne/nerd-fonts.el"))
 
 (package! all-the-icons-nerd-fonts
-  :pin "a66e9ed4682d59a04777a7e61578f4b2e74855e2"
+  :pin "37ef9cb316bf3013975f3ebdbdf6364777e967bd"
   :recipe (:host github :repo "mohkale/all-the-icons-nerd-fonts"))
 
 (package! dired-sidebar :pin "5569d3b53585f5413cf87a694650d0fd6e040803")
