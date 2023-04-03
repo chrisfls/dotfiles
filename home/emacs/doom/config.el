@@ -96,6 +96,12 @@
   (setq which-key-popup-type 'side-window)
   (setq which-key-side-window-location 'right))
 
+(use-package! all-the-icons-nerd-fonts
+  :after all-the-icons
+  :demand t
+  :config
+  (all-the-icons-nerd-fonts-prefer))
+
 (use-package! dired-sidebar
   :commands (dired-sidebar-toggle-sidebar dired-sidebar-find-file)
   :bind

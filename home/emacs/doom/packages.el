@@ -49,13 +49,13 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-;; (package! nerd-fonts
-;;   :pin "eb187fd3a356032f4796d92fbb12225d32c8d973"
-;;   :recipe (:host github :repo "twlz0ne/nerd-fonts.el"))
+(package! nerd-fonts
+  :pin "eb187fd3a356032f4796d92fbb12225d32c8d973"
+  :recipe (:host github :repo "twlz0ne/nerd-fonts.el"))
 
-;; (package! all-the-icons-nerd-fonts
-;;   :pin "a66e9ed4682d59a04777a7e61578f4b2e74855e2"
-;;   :recipe (:host github :repo "mohkale/all-the-icons-nerd-fonts"))
+(package! all-the-icons-nerd-fonts
+  :pin "a66e9ed4682d59a04777a7e61578f4b2e74855e2"
+  :recipe (:host github :repo "mohkale/all-the-icons-nerd-fonts"))
 
 ;; disable multiple-cursors
 (package! js2-refactor :disable t)
