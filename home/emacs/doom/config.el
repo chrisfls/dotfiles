@@ -133,10 +133,14 @@
 ;;; treemacs
 
 (setq treemacs-git-mode 'deferred)
+(setq treemacs-width 30)
+(setq treemacs-recenter-after-file-follow t)
+(setq treemacs-recenter-after-tag-follow t)
 
 (after! treemacs
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
+  (treemacs-git-commit-diff-mode t)
   ;; fix sidebar +- signs
   (with-eval-after-load 'doom-themes
     (unless (display-graphic-p)
