@@ -115,7 +115,7 @@
     "The current ryo-modal state which is enabled by the command `ryo-modal-mode'."
     (cond 
       ;; visual
-      ((and ryo-modal-mode (use-region-p))
+      ((and ryo-modal-mode mark-active)
         (doom-modeline--modal-icon "VISUAL" 'doom-modeline-evil-visual-state "Ryo modal" "add_circle" "✪"))
       ;; normal
       (ryo-modal-mode
