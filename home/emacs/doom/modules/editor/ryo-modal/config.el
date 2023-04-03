@@ -86,7 +86,7 @@ KEY must be given in `kbd' notation."
     ("8" repeat-eight :norepeat t)
     ("9" repeat-nine :norepeat t)
     ;;; ergonomics
-    ("SPC" "C-c" :norepeat t)
+    ;; ("SPC" "C-c" :norepeat t)
     ("C-@" "M-x" :norepeat t)
     ("C-SPC" "M-x" :norepeat t)
     ;;; movement
@@ -159,4 +159,4 @@ KEY must be given in `kbd' notation."
           ("M" kmacro-cycle-ring-next :norepeat t)
           ("M" kmacro-cycle-ring-previous :norepeat t))))
   (map! :map ryo-modal-mode-map
-    "SPC" (simulate-key-press (kbd doom-leader-alt-key))))
+    "SPC" (simulate-key-press (kbd "C-c"))))
