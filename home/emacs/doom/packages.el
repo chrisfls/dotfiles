@@ -49,6 +49,9 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+;; disable multiple-cursors
+(package! js2-refactor :disable t)
+
 (package! nerd-fonts
   :pin "eb187fd3a356032f4796d92fbb12225d32c8d973"
   :recipe (:host github :repo "twlz0ne/nerd-fonts.el"))
@@ -57,7 +60,40 @@
   :pin "a66e9ed4682d59a04777a7e61578f4b2e74855e2"
   :recipe (:host github :repo "mohkale/all-the-icons-nerd-fonts"))
 
-;; disable multiple-cursors
-(package! js2-refactor :disable t)
-
 (package! dired-sidebar :pin "5569d3b53585f5413cf87a694650d0fd6e040803")
+
+(package! ryo-modal :pin "b9e6a0f33b9e2aeb6088accd23ed312083d8f707")
+
+(package! point-undo :pin "d875c94522ad6430294c37d627e332d726221e02")
+
+;; local modules
+
+(package! evil-core
+  :recipe (:local-repo "./my"))
+
+(package! char-occurrence
+  :recipe (:local-repo "./my/commands"))
+
+(package! open-line
+  :recipe (:local-repo "./my/commands"))
+
+(package! region-boundaries
+  :recipe (:local-repo "./my/commands"))
+
+(package! repeat-nth
+  :recipe (:local-repo "./my/commands"))
+
+(package! save-kmacro
+  :recipe (:local-repo "./my/commands"))
+
+(package! save-point
+  :recipe (:local-repo "./my/commands"))
+
+(package! secondary-selection
+  :recipe (:local-repo "./my/commands"))
+
+(package! smarter-commands
+  :recipe (:local-repo "./my/commands"))
+
+(package! text-object
+  :recipe (:local-repo "./my/commands"))
