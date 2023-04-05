@@ -155,11 +155,12 @@
       isearch-allow-scroll t
       isearch-lazy-highlight-initial-delay 0)
 
+(setq-default cursor-type 'bar
+              blink-cursor-blinks 0
+              display-fill-column-indicator-column 79)
+
 ;; adaptive-wrap
 (+global-word-wrap-mode +1)
-
-;; visual-fill-column
-(setq-default display-fill-column-indicator-column 79)
 
 (defun my/fill-column-indicator (col)
   (setq-local display-fill-column-indicator-column col)
