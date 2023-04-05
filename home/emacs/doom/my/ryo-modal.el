@@ -104,10 +104,10 @@
     ("<escape>" ignore) ; toggle ryo in minibuffer
     ;;; MOVE
     ;;; ----
-    ("h" backward-char) ; ↓
-    ("j" next-line)     ; ↑
-    ("k" previous-line) ; →
-    ("l" forward-char)  ; ←
+    ("h" backward-char) ; ←
+    ("j" next-line)     ; ↓
+    ("k" previous-line) ; ↑
+    ("l" forward-char)  ; →
     ;; ---
     ("H" my/back-to-indentation-or-bol) ; home      *shift
     ("J" scroll-down-command)           ; page up   *shift
