@@ -100,7 +100,6 @@
     ("0" my/ryo-modal-repeat-ten))
   ;;---
   (ryo-modal-keys
-
     ;;; ---
     ;;; MOVE
     ;;; ---
@@ -167,7 +166,7 @@
     ("n" my/char-forward :norepeat t)          ; next char     *repeat
     ("-" (("n" my/char-backward :norepeat t))) ; previous char *repeat
 
-    ("N" avy-goto-char :norepeat t)  ; goto char
+    ("N" avy-goto-char :norepeat t)  ; goto char *shift
 
     ;;; ---
     ;;; isearch
@@ -182,18 +181,18 @@
     ("f" my/isearch-forward-region)          ; search-region-forward
     ("-" (("f" my/isearch-backward-region))) ; search-region-backward
 
-    ("F" isearch-query-replace :norepeat t) ; search and replace
-    ("-" (("F" isearch-exit :norepeat t)))    ; cancel search
+    ("F" isearch-query-replace :norepeat t) ; search and replace *shift
+    ("-" (("F" isearch-exit :norepeat t)))  ; cancel search      *shift
 
     ;;; ---
     ;;; MARK
     ;;; ---
 
-    ("v" set-mark-command)                   ; start mark
-    ("-" (("v" my/deactivate-mark-command))) ; deactivate mark
+    ("SPC" set-mark-command)                   ; start mark
+    ("-" (("SPC" my/deactivate-mark-command))) ; deactivate mark
 
-    ("V" my/expand-region)           ; expand region   *shift
-    ("-" (("V" my/contract-region))) ; contract region *shift
+    ("v" my/expand-region)           ; expand region
+    ("-" (("v" my/contract-region))) ; contract region
 
     (";" exchange-point-and-mark) ; flip mark direction
     
@@ -257,9 +256,9 @@
     ("u" undo-tree-undo)         ; undo
     ("-" (("u" undo-tree-redo))) ; redo
 
-    ("z" point-undo)         ; undo movement
-    ("-" (("z" point-redo))) ; redo movement
-
+    ("U" point-undo)         ; undo movement
+    ("-" (("U" point-redo))) ; redo movement
+  
     ;;; ---
     ;;; MISC
     ;;; ---
@@ -268,4 +267,18 @@
     ("M" my/save-or-execute-macro :norepeat t) ; save/execute macro  *shift *repeat
 
     ; recenter buffer
-    ("c" recenter :norepeat t)))
+    ("c" recenter :norepeat t))
+  ;; forgot shift? no problem
+  (ryo-modal-keys
+    ("_" (("o" sp-backward-sexp)
+          ("O" sp-backward-up-sexp)
+          ("n" my/char-backward :norepeat t)
+          ("f" my/isearch-backward-region)
+          ("F" isearch-exit :norepeat t)
+          ("SPC" my/deactivate-mark-command)
+          ("v" my/contract-region)
+          ("s" my/mark-line-backward)
+          ("G" my/cancel-grab)
+          ("R" my/sync-region-content)
+          ("u" undo-tree-redo)
+          ("U" point-redo)))))
