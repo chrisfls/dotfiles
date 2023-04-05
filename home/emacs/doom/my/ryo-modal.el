@@ -64,30 +64,31 @@
 (load! "repeat")
 (load! "search")
 
-(use-package! ryo-modal
-  :bind ("<escape>" . ryo-modal-mode)
-  :hook ((text-mode prog-mode isearch-mode) . ryo-modal-mode)
-  :demand t
+(use-package! ryo-modal :demand t
+  :init
+  (define-global-minor-mode ryo-global-mode ryo-modal-mode
+    (lambda ()
+      (unless (minibufferp)
+        (ryo-modal-mode 1))))
+  (ryo-global-mode)
   :config
-  (setq-default cursor-type 'bar
-                blink-cursor-blinks 0)
   (setq ryo-modal-cursor-type 'block)
-  ;;---
-  (ryo-modal-keys
-    (:norepeat t)
-
-    ;;; ---
-    ;;; BASE
-    ;;; ---
-
-    ("<escape>" "C-g") ; cancel
-    ("C-@" "M-x")      ; *ctrl
-    ("C-SPC" "M-x")    ; *ctrl
-
-    ;;; ---
+  ;;; BINDINGS
+  ;;; ========
+  (map!
+    ("<escape>" #'ryo-modal-mode)
+    ;;; WINDOW
+    ;;; ------
+    ("S-C-h" #'shrink-window-horizontally)
+    ("S-C-j" #'shrink-window)
+    ("S-C-k" #'enlarge-window)
+    ("S-C-l" #'enlarge-window-horizontally))
+  ;;; ----
+  (ryo-modal-keys (:norepeat t)
+    ("C-@" "M-x")   ; M-x with C-SPC *ctrl
+    ("C-SPC" "M-x") ; M-x with C-SPC *ctrl
     ;;; REPEAT
-    ;;; ---
-
+    ;;; ------
     ("1" ryo-modal-repeat)
     ("2" my/ryo-modal-repeat-two)
     ("3" my/ryo-modal-repeat-three)
@@ -98,49 +99,35 @@
     ("8" my/ryo-modal-repeat-eight)
     ("9" my/ryo-modal-repeat-nine)
     ("0" my/ryo-modal-repeat-ten))
-  ;;---
+  ;;; ---
   (ryo-modal-keys
-    ;;; ---
+    ("<escape>" ignore) ; toggle ryo in minibuffer
     ;;; MOVE
-    ;;; ---
-
-    ;; char
-
+    ;;; ----
     ("h" backward-char) ; ↓
     ("j" next-line)     ; ↑
     ("k" previous-line) ; →
     ("l" forward-char)  ; ←
-
-    ;; extreme
-
+    ;; ---
     ("H" my/back-to-indentation-or-bol) ; home      *shift
     ("J" scroll-down-command)           ; page up   *shift
     ("K" scroll-up-command)             ; page down *shift
     ("L" end-of-line)                   ; end       *shift
-
-    ;; word
-
+    ;; ---
     ("b" backward-word) ; ← word
     ("w" forward-word)  ; → word
-
-    ;; symbol
-
+    ;; ---
     ("B" sp-backward-symbol) ; ← symbol *shift
     ("W" sp-forward-symbol)  ; → symbol *shift
-
-    ;; pairs
-    
+    ;; ---
     (":" my/exchange-point-and-pairs) ; toggle matching pairs *shift
-    
-    ;; sexp
-
+    ;; ---
     ("o" sp-forward-sexp)          ; next sexp
     ("-" (("o" sp-backward-sexp))) ; previous sexp
-
-    ;; depth
+    ;; ---
     ("O" sp-down-sexp)                ; next sexp down   *shift
     ("-" (("O" sp-backward-up-sexp))) ; previous sexp up *shift
-
+    ;; ---
     ("[" (("w" backward-word)
           ("l" sp-backward-symbol)
           ("e" backward-sentence)
@@ -150,8 +137,9 @@
           ("d" beginning-of-defun)
           ("r" my/backward-round)
           ("c" my/backward-curly)
-          ("s" my/backward-square)))
-
+          ("s" my/backward-square)
+          ("a" my/backward-angle)))
+    ;; ---
     ("]" (("w" forward-word)
           ("l" sp-forward-symbol)
           ("e" forward-sentence)
@@ -161,50 +149,39 @@
           ("d" end-of-defun)
           ("r" my/forward-round)
           ("c" my/forward-curly)
-          ("s" my/forward-square)))
-
+          ("s" my/forward-square)
+          ("a" my/forward-angle)))
+    ;; ---
     ("n" my/char-forward :norepeat t)          ; next char     *repeat
     ("-" (("n" my/char-backward :norepeat t))) ; previous char *repeat
-
+    ;; ---
     ("N" avy-goto-char :norepeat t)  ; goto char *shift
-
-    ;;; ---
     ;;; isearch
-    ;;; ---
-
-    ("C-f" isearch-forward)  ; search-forward  *ctrl
-    ("C-r" isearch-backward) ; search-backward *ctrl
-
-    ("C-M-s" isearch-forward-regexp)  ; search-forward-regexp  *ctrl *alt
-    ("C-M-r" isearch-backward-regexp) ; search-backward-regexp *ctrl *alt
-
+    ;;; -------
     ("f" my/isearch-forward-region)          ; search-region-forward
     ("-" (("f" my/isearch-backward-region))) ; search-region-backward
-
+    ;; ---
     ("F" isearch-query-replace :norepeat t) ; search and replace *shift
     ("-" (("F" isearch-exit :norepeat t)))  ; cancel search      *shift
-
-    ;;; ---
     ;;; MARK
-    ;;; ---
-
-    ("SPC" set-mark-command)                   ; start mark
-    ("-" (("SPC" my/deactivate-mark-command))) ; deactivate mark
-
-    ("v" my/expand-region)           ; expand region
-    ("-" (("v" my/contract-region))) ; contract region
-
+    ;;; ----
+    ("v" set-mark-command)                   ; start mark
+    ("-" (("v" my/deactivate-mark-command))) ; deactivate mark
+    ;; ---
+    ("V" my/expand-region)           ; expand region
+    ("-" (("V" my/contract-region))) ; contract region
+    ;; ---
     (";" exchange-point-and-mark) ; flip mark direction
-    
-    ("s" my/mark-line-forward)           ; select line down
+    ;; ---
+    ("s" my/mark-line-forward)          ; select line down
     ("-" (("s" my/mark-line-backward))) ; select line up
-
+    ;; ---
     ("," (("q" my/mark-inside-quotes)
           ("d" my/mark-inside-defun)
           ("r" my/mark-inside-round)
           ("c" my/mark-inside-curly)
           ("s" my/mark-inside-square)))
-
+    ;; ---
     ("." (("w" my/mark-word)
           ("l" my/mark-symbol)
           ("e" my/mark-sentence)
@@ -215,62 +192,46 @@
           ("r" my/mark-outside-round)
           ("c" my/mark-outside-curly)
           ("s" my/mark-outside-square)))
- 
-    ;;; ---
     ;;; GRAB
-    ;;; ---
-
+    ;;; ----
     ("g" my/unmark-and-cancel-grab) ; unselect all
     ("G" my/grab-region)            ; new grab / cancel grab *shift
     ("-" (("G" my/cancel-grab)))    ; cancel grab            *shift
-
+    ;; ---
     ("r" my/swap-grab)                   ; swap grab
     ("-" (("r" my/sync-grab-content)))   ; sync grab content   *shift
-
+    ;; ---
     ("R" my/swap-grab-content)           ; swap grab content *shift
     ("-" (("R" my/sync-region-content))) ; sync region content *shift
-
-    ;;; ---
     ;;; EXIT
-    ;;; ---
-
+    ;;; ----
     ("i" my/beginning-of-region :exit t) ; insert before region
     ("a" my/end-of-region :exit t)       ; insert after region
-
+    ;; ---
     ("I" my/open-line-up :exit t)   ; insert line up   *shift
     ("A" my/open-line-down :exit t) ; insert line down *shift
-
-    ;;; ---
     ;;; ACTION
-    ;;; ---
-
-    ;; basics
-
+    ;;; ------
     ("x" my/kill-region-or-backward-char) ; cut
     ("y" kill-ring-save)                  ; copy
     ("p" yank)                            ; paste
     ("d" delete-char)                     ; delete
-    ("\\" join-line)                      ; join line ; TODO: deprecate?
-
-    ;; undo/redo
-
+    ("\\" join-line)                      ; join line *deprecate
+    ;; ---
     ("u" undo-tree-undo)         ; undo
     ("-" (("u" undo-tree-redo))) ; redo
-
+    ;; ---
     ("U" point-undo)         ; undo movement
     ("-" (("U" point-redo))) ; redo movement
-  
-    ;;; ---
     ;;; MISC
-    ;;; ---
-
+    ;;; ----
     ("m" my/start-or-cancel-macro :norepeat t) ; start/cancel macro
     ("M" my/start-or-save-macro :norepeat t)   ; save/execute macro  *shift
     ("e" my/execute-macro :norepeat t)         ; save/execute macro  *repeat
-
-    ; recenter buffer
+    ;; recenter buffer
     ("c" recenter :norepeat t))
-  ;; forgot shift? no problem
+  ;;; UNDERSCORE
+  ;;; ==========
   (ryo-modal-keys
     ("_" (("o" sp-backward-sexp)
           ("O" sp-backward-up-sexp)
@@ -284,4 +245,28 @@
           ("r" my/sync-grab-content)
           ("R" my/sync-region-content)
           ("u" undo-tree-redo)
-          ("U" point-redo)))))
+          ("U" point-redo))))
+    ;;; FALLBACK
+    ;;; ========
+    (map! :leader
+      ("j" "H-j")
+      ("k" "H-k"))
+    ;;; ISEARCH
+    ;;; =======
+    (ryo-modal-keys (:mode 'isearch-mode)
+      ("TAB" isearch-complete-edit)
+      ("f" isearch-forward-exit-minibuffer)
+      ("-" (("r" isearch-reverse-exit-minibuffer)))
+      ("p" isearch-yank-char-in-minibuffer))
+    ;; ---
+    (ryo-modal-keys
+      ("C-f" isearch-forward)  ; search-forward  *ctrl
+      ("C-r" isearch-backward) ; search-backward *ctrl
+      ;; ---
+      ("C-M-s" isearch-forward-regexp)    ; search-forward-regexp  *ctrl *alt
+      ("C-M-r" isearch-backward-regexp))) ; search-backward-regexp *ctrl *alt
+;; ;;; LEADER w
+;; ;;; ========
+;; (map! :leader :prefix "w"
+;;   ("h" #'split-window-vertically)
+;;   ("v" #'split-window-horizontally))

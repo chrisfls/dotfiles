@@ -53,6 +53,14 @@
   (interactive)
   (my/char-forward-step "]"))
 
+(defun my/backward-angle ()
+  (interactive)
+  (my/char-backward-step "<"))
+
+(defun my/forward-angle ()
+  (interactive)
+  (my/char-forward-step ">"))
+
 (defvar saved-char nil)
 
 (defun my/char-forward ()
