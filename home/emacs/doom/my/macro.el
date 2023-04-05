@@ -24,4 +24,4 @@
         (ignore-errors (execute-kbd-macro last-kbd-macro))
         (message "Executed macro."))
       (setq ryo-modal--last-command-prefix-arg saved-prefix)
-      (setq ryo-modal--last-command #'execute-macro))))
+      (setq ryo-modal--last-command #'my/save-or-execute-macro))))
