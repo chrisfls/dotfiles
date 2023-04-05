@@ -12,16 +12,23 @@
     (start-kbd-macro nil)
     (message "Started macro recording.")))
 
-(defun my/save-or-execute-macro ()
+(defun my/start-or-save-macro ()
   (interactive)
   (if defining-kbd-macro
       (progn
         (end-kbd-macro)
         (message "Saved macro recording."))
-    (let ((saved-prefix last-prefix-arg))
-      (if (null last-kbd-macro)
-          (error "No recorded macro.")
-        (ignore-errors (execute-kbd-macro last-kbd-macro))
-        (message "Executed macro."))
-      (setq ryo-modal--last-command-prefix-arg saved-prefix)
-      (setq ryo-modal--last-command #'my/save-or-execute-macro))))
+    (when last-kbd-macro
+      (kmacro-push-ring))
+    (start-kbd-macro nil)
+    (message "Started macro recording.")))
+
+(defun my/execute-macro ()
+  (interactive)
+  (let ((saved-prefix last-prefix-arg))
+    (if (null last-kbd-macro)
+        (error "No recorded macro.")
+      (ignore-errors (execute-kbd-macro last-kbd-macro))
+      (message "Executed macro."))
+    (setq ryo-modal--last-command-prefix-arg saved-prefix)
+    (setq ryo-modal--last-command #'my/execute-macro)))

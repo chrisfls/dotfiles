@@ -60,8 +60,6 @@
   (setq saved-char (if (or (not ryo-modal-repeating) (null saved-char))
                        (read-char "Go to char: ")
                        saved-char))
-  (setq ryo-modal--last-command-prefix-arg nil)
-  (setq ryo-modal--last-command #'my/char-forward)
   (my/char-forward-step (string saved-char)))
 
 (defun my/char-backward ()
@@ -69,6 +67,4 @@
   (setq saved-char (if (or (not ryo-modal-repeating) (null saved-char))
                        (read-char "Go to char (backward): ")
                        saved-char))
-  (setq ryo-modal--last-command-prefix-arg nil)
-  (setq ryo-modal--last-command #'my/char-backward)
   (my/char-backward-step (string saved-char)))

@@ -120,13 +120,13 @@
 
     ;; word
 
-    ("w" backward-word) ; ← word
-    ("e" forward-word)  ; → word
+    ("b" backward-word) ; ← word
+    ("w" forward-word)  ; → word
 
     ;; symbol
 
-    ("W" sp-backward-symbol) ; ← symbol *shift
-    ("E" sp-forward-symbol)  ; → symbol *shift
+    ("B" sp-backward-symbol) ; ← symbol *shift
+    ("W" sp-forward-symbol)  ; → symbol *shift
 
     ;; pairs
     
@@ -197,7 +197,7 @@
     (";" exchange-point-and-mark) ; flip mark direction
     
     ("s" my/mark-line-forward)           ; select line down
-    ("-"  (("s" my/mark-line-backward))) ; select line up
+    ("-" (("s" my/mark-line-backward))) ; select line up
 
     ("," (("q" my/mark-inside-quotes)
           ("d" my/mark-inside-defun)
@@ -224,9 +224,10 @@
     ("G" my/grab-region)            ; new grab / cancel grab *shift
     ("-" (("G" my/cancel-grab)))    ; cancel grab            *shift
 
-    ("r" my/swap-grab-content) ; swap grab
+    ("r" my/swap-grab)                   ; swap grab
+    ("-" (("r" my/sync-grab-content)))   ; sync grab content   *shift
 
-    ("R" my/sync-grab-content)           ; sync grab content   *shift
+    ("R" my/swap-grab-content)           ; swap grab content *shift
     ("-" (("R" my/sync-region-content))) ; sync region content *shift
 
     ;;; ---
@@ -263,8 +264,9 @@
     ;;; MISC
     ;;; ---
 
-    ("m" my/start-or-cancel-macro :norepeat t) ; record/cancel macro
-    ("M" my/save-or-execute-macro :norepeat t) ; save/execute macro  *shift *repeat
+    ("m" my/start-or-cancel-macro :norepeat t) ; start/cancel macro
+    ("M" my/start-or-save-macro :norepeat t)   ; save/execute macro  *shift
+    ("e" my/execute-macro :norepeat t)         ; save/execute macro  *repeat
 
     ; recenter buffer
     ("c" recenter :norepeat t))
@@ -279,6 +281,7 @@
           ("v" my/contract-region)
           ("s" my/mark-line-backward)
           ("G" my/cancel-grab)
+          ("r" my/sync-grab-content)
           ("R" my/sync-region-content)
           ("u" undo-tree-redo)
           ("U" point-redo)))))
