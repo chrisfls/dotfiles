@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (defvar ryo-modal-repeating nil
   "Whether `ryo-modal-repeat' is currently repeating.")
 
@@ -10,49 +12,47 @@
 
 (advice-add 'ryo-modal-repeat :around #'my-ryo-modal-repeat-advice)
 
-(defun repeat-two ()
+(defun my/ryo-modal-repeat-two ()
   (interactive)
   (ryo-modal-repeat)
   (ryo-modal-repeat))
 
-(defun repeat-three ()
+(defun my/ryo-modal-repeat-three ()
   (interactive)
-  (repeat-two)
+  (my/ryo-modal-repeat-two)
   (ryo-modal-repeat))
 
-(defun repeat-four ()
+(defun my/ryo-modal-repeat-four ()
   (interactive)
-  (repeat-three)
+  (my/ryo-modal-repeat-three)
   (ryo-modal-repeat))
 
-(defun repeat-five ()
+(defun my/ryo-modal-repeat-five ()
   (interactive)
-  (repeat-four)
+  (my/ryo-modal-repeat-four)
   (ryo-modal-repeat))
 
-(defun repeat-six ()
+(defun my/ryo-modal-repeat-six ()
   (interactive)
-  (repeat-five)
+  (my/ryo-modal-repeat-five)
   (ryo-modal-repeat))
 
-(defun repeat-seven ()
+(defun my/ryo-modal-repeat-seven ()
   (interactive)
-  (repeat-six)
+  (my/ryo-modal-repeat-six)
   (ryo-modal-repeat))
 
-(defun repeat-eight ()
+(defun my/ryo-modal-repeat-eight ()
   (interactive)
-  (repeat-seven)
+  (my/ryo-modal-repeat-seven)
   (ryo-modal-repeat))
 
-(defun repeat-nine ()
+(defun my/ryo-modal-repeat-nine ()
   (interactive)  
-  (repeat-eight)
+  (my/ryo-modal-repeat-eight)
   (ryo-modal-repeat))
 
-(defun repeat-ten ()
+(defun my/ryo-modal-repeat-ten ()
   (interactive)
-  (repeat-nine)
+  (my/ryo-modal-repeat-nine)
   (ryo-modal-repeat))
-
-(provide 'repeat-nth)

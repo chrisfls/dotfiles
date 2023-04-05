@@ -107,29 +107,6 @@
   "<mouse-4>" (cmd! (scroll-down 2))
   "<mouse-5>" (cmd! (scroll-up 2)))
 
-;;; doom-modeline
-
-(use-package! doom-modeline
-  :config
-  (defun doom-modeline--evil-ryo ()
-    "The current ryo-modal state which is enabled by the command `ryo-modal-mode'."
-    (cond 
-      ;; visual
-      ((and ryo-modal-mode mark-active)
-        (doom-modeline--modal-icon "VISUAL" 'doom-modeline-evil-visual-state "Ryo modal" "add_circle" "✪"))
-      ;; normal
-      (ryo-modal-mode
-        (doom-modeline--modal-icon "NORMAL" 'doom-modeline-evil-normal-state "Ryo modal" "add_circle" "✪"))
-      ;; insert
-      (t
-        (doom-modeline--modal-icon "INSERT" 'doom-modeline-evil-insert-state "Holy mode"))))
-  (doom-modeline-def-segment modals
-    (when doom-modeline-modal
-      (concat
-        (doom-modeline-spc)
-        (doom-modeline--evil-ryo)
-        (doom-modeline-spc)))))
-
 ;;; treemacs
 
 (setq treemacs-git-mode 'deferred
@@ -137,14 +114,15 @@
       treemacs-recenter-after-file-follow t
       treemacs-recenter-after-tag-follow t)
 
-(after! treemacs
+(use-package! treemacs
+  :after doom-themes
+  :config
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-git-commit-diff-mode t)
   ;; fix sidebar +- signs
-  (with-eval-after-load 'doom-themes
-    (unless (display-graphic-p)
-      (setq doom-themes-treemacs-theme "Default"))))
+  (unless (display-graphic-p)
+    (setq doom-themes-treemacs-theme "Default")))
 
 ;;; which-key
 
@@ -154,8 +132,7 @@
         which-key-idle-delay 0.05
         which-key-idle-secondary-delay 0.05
         which-key-popup-type 'side-window
-        which-key-side-window-location 'right)
-  (push '((nil . "ryo:.*:") . (nil . "")) which-key-replacement-alist))
+        which-key-side-window-location 'right))
 
 ;;; all-the-icons-nerd-fonts
 
@@ -166,153 +143,17 @@
 ;;   :config
 ;;   (all-the-icons-nerd-fonts-prefer))
 
-;;; undo-tree
-
-(use-package! undo-tree
-  :demand t
-  :init)
-
-;;; point-undo
-
-(use-package! point-undo
-  :demand t
-  :init)
-
-;;; smartparens
-(use-package! smartparens)
-
-;;; my commands
-(use-package! char-occurrence)
-(use-package! open-line)
-(use-package! region-boundaries)
-(use-package! repeat-nth :demand t)
-(use-package! save-kmacro)
-(use-package! secondary-selection)
-(use-package! smarter-commands)
-(use-package! text-object)
-
 ;;; ryo-modal
-(use-package! ryo-modal
-  :demand t
-  :bind
-  ("<escape>" . ryo-modal-mode)
-  :config
-  (require 'evil-core)
-  (evil-esc-mode 1)
-  (setq-default cursor-type 'bar)
-  (setq-default blink-cursor-blinks 0)
-  (setq ryo-modal-cursor-type 'block)
-  (ryo-modal-keys
-    ("<escape>" keyboard-escape-quit)
-    ("0" repeat-ten :norepeat t)
-    ("1" ryo-modal-repeat :norepeat t)
-    ("2" repeat-two :norepeat t)
-    ("3" repeat-three :norepeat t)
-    ("4" repeat-four :norepeat t)
-    ("5" repeat-five :norepeat t)
-    ("6" repeat-six :norepeat t)
-    ("7" repeat-seven :norepeat t)
-    ("8" repeat-eight :norepeat t)
-    ("9" repeat-nine :norepeat t)
-    ;;; ergonomics
-    ("C-@" "M-x" :norepeat t) ; [CTRL]
-    ("C-SPC" "M-x" :norepeat t) ; [CTRL]
-    ;;; movement
-    ("l" forward-char)
-    ("L" end-of-line) ; [SHIFT]
-    ("h" backward-char)
-    ("H" back-to-indentation-or-beginning-of-line) ; [SHIFT]
-    ("j" next-line)
-    ("J" scroll-down-command) ; [SHIFT]
-    ("k" previous-line)
-    ("K" scroll-up-command) ; [SHIFT]
-    ("w" forward-word)
-    ("W" sp-forward-symbol) ; [SHIFT]
-    ("b" backward-word)
-    ("B" sp-backward-symbol) ; [SHIFT]
-    ("o" match-sexp) ; TODO: "m"
-    ("O" sp-beginning-of-next-sexp) ; TODO: REMOVE?
-    ("]" (("p" forward-paragraph)
-          ("d" end-of-defun)
-          ("b" end-of-buffer)
-          ("w" backward-word)
-          ("l" sp-backward-symbol)
-          ;; ("r" backward-round)
-          ;; ("c" backward-curly)
-          ;; ("s" backward-square)
-          ))
-    ("[" (("p" backward-paragraph)
-          ("d" beginning-of-defun)
-          ("b" beginning-of-buffer)
-          ("w" forward-word)
-          ("l" sp-forward-symbol)
-          ;; ("r" forward-round)
-          ;; ("c" forward-curly)
-          ;; ("s" forward-square)
-          ))
-    ;; ("," (("p" select-inner-paragraph)
-    ;;       ("d" select-inner-defun)
-    ;;       ("b" select-whole-buffer)
-    ;;       ("w" select-word)
-    ;;       ("l" symbol)
-    ;;       ("r" select-inner-round)
-    ;;       ("c" select-inner-curly)
-    ;;       ("s" select-inner-square)))
-    ;; ("." (("p" select-outer-paragraph)
-    ;;       ("d" select-outer-defun)
-    ;;       ("b" select-whole-buffer)
-    ;;       ("w" select-word)
-    ;;       ("l" symbol)
-    ;;       ("r" select-outer-round)
-    ;;       ("c" select-outer-curly)
-    ;;       ("s" select-outer-square)))
-    ("f" isearch-repeat-forward-region :norepeat t) ; [REPEATS] TODO: mix with isearch-forward-region
-    ("F" isearch-exit :norepeat t) ; [SHIFT]
-    ("n" go-to-char-forward :norepeat t) ; [REPEATS]
-    ("N" avy-goto-char :norepeat t) ; [SHIFT]
-    ("z" point-undo)
-    ;;; mark
-    ("SPC" toggle-mark)
-    ("g" "C-g")
-    ("G" grab-region)
-    (";" exchange-point-and-mark)
-    ("s" mark-whole-line-to-next)
-    ;;; manipulation
-    ("a" go-to-end-of-region :exit t :norepeat t)
-    ("A" open-line-down :exit t :norepeat t) ; [SHIFT]
-    ("i" go-to-beginning-of-region :exit t :norepeat t)
-    ("I" open-line-up :exit t :norepeat t) ; [SHIFT]
-    ("d" delete-forward-char-or-region) 
-    ("c" delete-char :exit t :norepeat t) ; TODO: REMOVE?
-    ("C" recenter :norepeat t) ; [SHIFT]
-    ("x" delete-backward-char-or-kill-region)
-    ("y" kill-ring-save)
-    ("p" yank)
-    ("," join-line) ; TOOD: "m" (under j which does the same thing in vim)
-    ("u" undo-tree-undo)
-    ("r" swap-grab) ; TODO: 
-    ("R" sync-grab-content :norepeat t) ; [SHIFT]
-    ;;; macros
-    ("m" start-or-cancel-macro :norepeat t) ; TODO: "r" (record)
-    ("M" start-or-save-macro :norepeat t) ; [SHIFT] TODO: "R"
-    ("e" execute-macro :norepeat t) ; [REPEATS]
-    ;;; reverse
-    ("-" (("O" sp-beginning-of-previous-sexp)
-          ("f" isearch-repeat-backward-region :norepeat t) ; [REPEATS]
-          ("n" go-to-char-backward :norepeat t) ; [REPEATS]
-          ("z" point-redo)
-          ("s" mark-whole-line-to-previous)
-          ("u" undo-tree-redo)
-          ("r" swap-grab-content)
-          ("R" sync-region-content :norepeat t)))))
-
+(load! "my/ryo-modal")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq completion-styles '(orderless)
       orderless-matching-styles '(orderless-flex orderless-literal orderless-regexp)
       read-file-name-completion-ignore-case t
-      avy-style 'de-bruijn)
+      avy-style 'de-bruijn
+      isearch-allow-scroll t
+      isearch-lazy-highlight-initial-delay 0)
 
 ;; adaptive-wrap
 (+global-word-wrap-mode +1)
@@ -325,8 +166,7 @@
   (display-fill-column-indicator-mode t))
 
 (add-hook! (text-mode prog-mode)
-  (my/fill-column-indicator 79)
-  (ryo-modal-mode))
+  (my/fill-column-indicator 79))
 
 (add-hook! elm-mode
   (my/fill-column-indicator 119))

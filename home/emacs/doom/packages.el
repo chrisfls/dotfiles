@@ -66,34 +66,4 @@
 
 (package! point-undo :pin "d875c94522ad6430294c37d627e332d726221e02")
 
-;; local modules
-
-(package! evil-core
-  :recipe (:local-repo "./my"))
-
-(package! char-occurrence
-  :recipe (:local-repo "./my/commands"))
-
-(package! open-line
-  :recipe (:local-repo "./my/commands"))
-
-(package! region-boundaries
-  :recipe (:local-repo "./my/commands"))
-
-(package! repeat-nth
-  :recipe (:local-repo "./my/commands"))
-
-(package! save-kmacro
-  :recipe (:local-repo "./my/commands"))
-
-(package! save-point
-  :recipe (:local-repo "./my/commands"))
-
-(package! secondary-selection
-  :recipe (:local-repo "./my/commands"))
-
-(package! smarter-commands
-  :recipe (:local-repo "./my/commands"))
-
-(package! text-object
-  :recipe (:local-repo "./my/commands"))
+(package! expand-region :pin "b70feaa644310dc2d599dc277cd20a1f2b6446ac")

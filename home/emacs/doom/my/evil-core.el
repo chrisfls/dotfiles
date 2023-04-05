@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (defvar evil-esc-mode nil
   "Non-nil if `evil-esc-mode' is enabled.")
 
@@ -98,5 +100,3 @@ mapping will always be the ESC prefix map."
           (setq last-kbd-macro (vconcat last-kbd-macro [escape]))
           (start-kbd-macro t t)))
     map))
-
-(provide 'evil-core)
