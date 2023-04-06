@@ -4,13 +4,6 @@
 
 (evil-esc-mode 1)
 
-;;; undo-tree
-
-(use-package! undo-tree
-  :demand t
-  :init
-  (undo-tree-mode t))
-
 ;;; point-undo
 
 (use-package! point-undo
@@ -21,7 +14,9 @@
 
 (use-package! which-key
   :config
-  (push '((nil . "ryo:.*:") . (nil . "")) which-key-replacement-alist))
+  (push '((nil . "ryo:.*:") . (nil . "")) which-key-replacement-alist)
+  :init
+  (which-key-mode))
 
 ;;; doom-modeline
 
@@ -133,7 +128,7 @@
           ("e" backward-sentence)
           ("p" backward-paragraph)
           ("b" beginning-of-buffer)
-          ;; ("q" my/backward-quotes) ; TODO: implement
+          ;; ("q" my/backward-quotes) ; TODO: implement?
           ("d" beginning-of-defun)
           ("r" my/backward-round)
           ("c" my/backward-curly)
@@ -145,7 +140,7 @@
           ("e" forward-sentence)
           ("p" forward-paragraph)
           ("b" end-of-buffer)
-          ;; ("q" my/backward-quotes) ; TODO: implement
+          ;; ("q" my/backward-quotes) ; TODO: implement?
           ("d" end-of-defun)
           ("r" my/forward-round)
           ("c" my/forward-curly)
@@ -165,11 +160,11 @@
     ("-" (("F" isearch-exit :norepeat t)))  ; cancel search      *shift
     ;;; MARK
     ;;; ----
-    ("v" set-mark-command)                   ; start mark
-    ("-" (("v" my/deactivate-mark-command))) ; deactivate mark
+    ("SPC" set-mark-command)                   ; start mark
+    ("-" (("SPC" my/deactivate-mark-command))) ; deactivate mark
     ;; ---
-    ("V" my/expand-region)           ; expand region
-    ("-" (("V" my/contract-region))) ; contract region
+    ("v" my/expand-region)           ; expand region
+    ("-" (("v" my/contract-region))) ; contract region
     ;; ---
     (";" exchange-point-and-mark) ; flip mark direction
     ;; ---
@@ -218,8 +213,8 @@
     ("d" delete-char)                     ; delete
     ("\\" join-line)                      ; join line *deprecate
     ;; ---
-    ("u" undo-tree-undo)         ; undo
-    ("-" (("u" undo-tree-redo))) ; redo
+    ("u" undo)              ; undo
+    ("-" (("u" undo-redo))) ; redo
     ;; ---
     ("U" point-undo)         ; undo movement
     ("-" (("U" point-redo))) ; redo movement
@@ -244,7 +239,7 @@
           ("G" my/cancel-grab)
           ("r" my/sync-grab-content)
           ("R" my/sync-region-content)
-          ("u" undo-tree-redo)
+          ("u" undo-redo)
           ("U" point-redo))))
     ;;; FALLBACK
     ;;; ========
