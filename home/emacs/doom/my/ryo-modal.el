@@ -79,10 +79,10 @@
     ("<escape>" #'ryo-modal-mode)
     ;;; WINDOW
     ;;; ------
-    ("S-C-h" #'shrink-window-horizontally)
-    ("S-C-j" #'shrink-window)
-    ("S-C-k" #'enlarge-window)
-    ("S-C-l" #'enlarge-window-horizontally))
+    ("C-H" #'shrink-window-horizontally)
+    ("C-J" #'shrink-window)
+    ("C-K" #'enlarge-window)
+    ("C-L" #'enlarge-window-horizontally))
   ;;; ----
   (ryo-modal-keys (:norepeat t)
     ("C-@" "M-x")   ; M-x with C-SPC *ctrl
@@ -265,8 +265,3 @@
       ;; ---
       ("C-M-s" isearch-forward-regexp)    ; search-forward-regexp  *ctrl *alt
       ("C-M-r" isearch-backward-regexp))) ; search-backward-regexp *ctrl *alt
-;; ;;; LEADER w
-;; ;;; ========
-;; (map! :leader :prefix "w"
-;;   ("h" #'split-window-vertically)
-;;   ("v" #'split-window-horizontally))
