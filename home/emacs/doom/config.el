@@ -132,7 +132,7 @@
         which-key-idle-delay 0.05
         which-key-idle-secondary-delay 0.05
         which-key-popup-type 'side-window
-        which-key-side-window-location 'right))
+        which-key-side-window-location '(right bottom)))
 
 ;;; all-the-icons-nerd-fonts
 
