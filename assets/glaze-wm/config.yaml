@@ -1,0 +1,293 @@
+# gruvbox dark:              "#282828"
+# gruvbox dark hard:         "#1B1B1B"
+# popping and locking:       "#181921" "#1D2021"
+# popping and locking black: "#000000" "#1D2021"
+
+general:
+  show_floating_on_top: false
+  
+gaps:
+  inner_gap: 32 # 24 # 16 # 8 
+  outer_gap: 32 # 24 # 16 # 8 
+
+bar:
+  height: "32px"
+  position: "top"
+  opacity: 1.0
+  background: "transparent"
+  foreground: "#EBDBB2" # popping and locking and gruvbox
+  # foreground: "#F2E5BC" # popping and locking black (cursor)
+  font_family: "Cascadia Code"
+  font_size: "13px"
+  border_width: "0px 0px 1px 0px"
+  # border_color: "#282828" # gruvbox dark
+  # border_color: "#1B1B1B" # gruvbox dark hard
+  # border_color: "#181921" # popping and locking
+  border_color: "#000000" # popping and locking black
+  padding: "4px 6px"
+
+  components_left:
+    - type: "workspaces"
+      # focused_workspace_background: "#282828" # gruvbox dark
+      # focused_workspace_background: "#1B1B1B" # gruvbox dark hard
+      # focused_workspace_background: "#181921" # popping and locking
+      focused_workspace_background: "#000000" # popping and locking black
+      displayed_workspace_background: "transparent"
+      default_workspace_background: "transparent"
+      default_workspace_foreground: "#A89984"
+      margin: "0 6px 0 0"
+    - type: "binding mode"
+      # background: "#282828" # gruvbox dark
+      # background: "#1B1B1B" # gruvbox dark hard
+      # background: "#181921" # popping and locking
+      background: "#000000" # popping and locking black
+      margin: "0 6px"
+      padding: "0 8px"
+
+  components_center:
+    - type: "window title"
+      margin: "0 6px"
+
+  components_right:
+    - type: "tiling direction"
+      # background: "#282828" # gruvbox dark
+      # background: "#1B1B1B" # gruvbox dark hard
+      # background: "#181921" # popping and locking
+      background: "#000000" # popping and locking black
+      margin: "0 6px"
+      padding: "0 8px"
+    - type: "battery"
+      label_draining: "{battery_level}% ▼ "
+      label_power_saver: "{battery_level}% ↯ "
+      label_charging: "{battery_level}% ▲ "
+      margin: "0 6px"
+    - type: "clock"
+      time_formatting: "dddd · yyyy-MM-dd · HH:mm:ss"
+      margin: "0 6px 0 0px"
+
+workspaces:
+  - name: "1"
+    bind_to_monitor: 2
+  - name: "2"
+    bind_to_monitor: 2
+  - name: "3"
+    bind_to_monitor: 2
+  - name: "4"
+    bind_to_monitor: 2
+  - name: "5"
+    bind_to_monitor: 2
+  - name: "6"
+    bind_to_monitor: 1
+  - name: "7"
+    bind_to_monitor: 1
+  - name: "8"
+    bind_to_monitor: 1
+  - name: "9"
+    bind_to_monitor: 1
+  - name: "0"
+    bind_to_monitor: 1
+
+window_rules:
+  # make all float by default 
+  - command: "set floating"
+    match_process_name: "*"
+
+  # ignore windows that require admin privileges to manage:
+  - command: "ignore"
+    match_process_name: "Taskmgr"
+  - command: "ignore"
+    match_process_name: "regedit"
+  - command: "ignore"
+    match_process_name: "PowerToys.Settings"
+
+  # some tile by default
+  - command: "set tiling"
+    match_title: "/.+\\s\\- Visual Studio Code/"
+  - command: "set tiling"
+    match_process_name: "WindowsTerminal"
+  - command: "set tiling"
+    match_title: "thorium"
+    match_title: "/.+\\s\\- Thorium/"
+  - command: "set tiling"
+    match_title: "/.+\\s\\- Microsoft Edge/"
+  - command: "set tiling"
+    match_title: "/.+\\s\\- Notepad/"
+  - command: "set tiling"
+    match_title: "/.+\\s\\- Notepad\\+\\+/"
+
+  # floating by default:
+  - command: "set floating"
+    match_class_name: "#32770" # system dialogs
+
+  # fix border for some apps:
+  - command: "resize borders 0px -7px -7px -7px"
+    match_process_name: "steam"
+
+binding_modes:
+
+  # resize mode:
+  - name: "resize"
+    keybindings:
+      - command: "resize width -2%"
+        bindings: ["H", "Left"]
+      - command: "resize width +2%"
+        bindings: ["L", "Right"]
+      - command: "resize height +2%"
+        bindings: ["K", "Up"]
+      - command: "resize height -2%"
+        bindings: ["J", "Down"]
+      - command: "binding mode none"
+        bindings: ["Escape", "Enter", "Space"]
+
+keybindings:
+  #
+  # basics
+  #
+
+  # focus
+  - command: "focus left"
+    bindings: ["LWin+Control+Left"]
+  - command: "focus right"
+    bindings: ["LWin+Control+Right"]
+  - command: "focus up"
+    bindings: ["LWin+Control+Up"]
+  - command: "focus down"
+    bindings: ["LWin+Control+Down"]
+
+  # move
+  - command: "move left"
+    bindings: ["LWin+Control+Shift+Left"]
+  - command: "move right"
+    bindings: ["LWin+Control+Shift+Right"]
+  - command: "move up"
+    bindings: ["LWin+Control+Shift+Up"]
+  - command: "move down"
+    bindings: ["LWin+Control+Shift+Down"]
+
+  # workspace focus
+  - command: "focus workspace 1"
+    binding: "LWin+Control+F1"
+  - command: "focus workspace 2"
+    binding: "LWin+Control+F2"
+  - command: "focus workspace 3"
+    binding: "LWin+Control+F3"
+  - command: "focus workspace 4"
+    binding: "LWin+Control+F4"
+  - command: "focus workspace 5"
+    binding: "LWin+Control+F5"
+  - command: "focus workspace 6"
+    binding: "LWin+Control+F6"
+  - command: "focus workspace 7"
+    binding: "LWin+Control+F7"
+  - command: "focus workspace 8"
+    binding: "LWin+Control+F8"
+  - command: "focus workspace 9"
+    binding: "LWin+Control+F9"
+  - command: "focus workspace 0"
+    binding: "LWin+Control+F10"
+
+  # focus last workspace with focus
+  - command: "focus workspace recent"
+    binding: "LWin+Control+F13"
+
+  # move to workspace focus
+  - command: "move to workspace 1"
+    binding: "LWin+Control+Shift+1"
+  - command: "move to workspace 2"
+    binding: "LWin+Control+Shift+2"
+  - command: "move to workspace 3"
+    binding: "LWin+Control+Shift+3"
+  - command: "move to workspace 4"
+    binding: "LWin+Control+Shift+4"
+  - command: "move to workspace 5"
+    binding: "LWin+Control+Shift+5"
+  - command: "move to workspace 6"
+    binding: "LWin+Control+Shift+6"
+  - command: "move to workspace 7"
+    binding: "LWin+Control+Shift+7"
+  - command: "move to workspace 8"
+    binding: "LWin+Control+Shift+8"
+  - command: "move to workspace 9"
+    binding: "LWin+Control+Shift+9"
+  - command: "move to workspace 0"
+    binding: "LWin+Control+Shift+0"
+
+  #
+  # mode swap
+  #
+
+  # to resize mode
+  - command: "binding mode resize" # originally "toggle focus mode"
+    binding: "LWin+Control+F14" # stop opening narrator mode
+  
+  #
+  # decoration actions
+  #
+
+  # minimize window
+  - command: "set minimized"
+    binding: "LWin+Control+F21"
+
+  # toggle maximized window
+  - command: "toggle maximized"
+    binding: "LWin+Control+F17"
+
+  # close window
+  - command: "close"
+    binding: "LWin+Control+F18"
+
+  #
+  # tiling misc
+  #
+
+  # toggle floating focus
+  - command: "toggle focus mode"
+    binding: "LWin+Control+Space"
+  
+  # toggle floating window
+  - command: "toggle floating"
+    binding: "LWin+Control+F16"
+    
+  # tiling direction vertical
+  - command: "tiling direction toggle"
+    binding: "LWin+Control+F19"
+
+  #
+  # glazewm
+  # 
+
+  # reload
+  - command: "reload config"
+    binding: "LWin+Control+Shift+F12"
+
+  # quit
+  - command: "exit wm"
+    binding: "LWin+Control+Shift+Escape"
+
+  #
+  # launchers
+  #
+
+  # launch explorer
+  - command: "exec explorer"
+    binding: "LWin+Control+F11"
+
+  # launch terminal
+  - command: exec wt --profile "{8e510365-d81d-426c-9b28-dfb96a7a6a85}"
+    binding: "LWin+Control+Back"
+
+  # launch terminal
+  - command: exec wt
+    binding: "LWin+Control+Shift+Back"
+
+  # launch screenclip
+  - command: "exec explorer ms-screenclip:"
+    binding: "LWin+Control+Shift+F14"
+
+  # launch main ide
+  - command: exec 'C:\Program Files\Microsoft VS Code\Code.exe'
+    binding: "LWin+Control+F15"
+
+  # launch browser
+  - command: exec 'C:\Users\kress\AppData\Local\Thorium\Application\thorium.exe'
+    binding: "LWin+Control+F20"
