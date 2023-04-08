@@ -19,15 +19,17 @@ function doom {
 }
 
 $bash = "$(scoop prefix git)\bin\bash.exe"
-$doom = "$HOME\.emacs.d\bin\doom"
-$emacs = "$(scoop prefix emacs)\bin\emacs.exe"
+$doom = "$env:HOME\.emacs.d\bin\doom".Replace('\', '/').Replace("D:/", "/d/")
+$emacs = "$(scoop prefix emacs)\bin\emacs.exe".Replace('\', '/').Replace("D:/", "/d/")
 
 function doom {
-  & $emacs -c "\"$doom\" @args"
+  $arguments = $args -join ' '
+  Invoke-Expression "$bash -c `"$doom $arguments`""
 }
 
 function emacs {
-  & $emacs -c "\"$emacs\" @args"
+  $arguments = $args -join ' '
+  Invoke-Expression "$bash -c `"$emacs $arguments`""
 }
 
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
