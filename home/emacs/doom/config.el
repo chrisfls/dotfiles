@@ -75,6 +75,11 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+(set-frame-font "JetBrains Mono 12" nil t)
+(set-language-environment "UTF-8")
+
+(setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
+
 ;;; doom-dashboard
 
 (defun my/dashboard-draw-ascii-banner-fn ()
