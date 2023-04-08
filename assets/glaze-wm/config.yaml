@@ -192,7 +192,7 @@ keybindings:
 
   # focus last workspace with focus
   - command: "focus workspace recent"
-    binding: "LWin+Control+F13"
+    binding: "LWin+Control+F14"
 
   # move to workspace focus
   - command: "move to workspace 1"
@@ -222,7 +222,7 @@ keybindings:
 
   # to resize mode
   - command: "binding mode resize" # originally "toggle focus mode"
-    binding: "LWin+Control+F14" # stop opening narrator mode
+    binding: "LWin+Control+F15" # stop opening narrator mode
   
   #
   # decoration actions
@@ -230,15 +230,15 @@ keybindings:
 
   # minimize window
   - command: "set minimized"
-    binding: "LWin+Control+F21"
+    binding: "LWin+Control+F22"
 
   # toggle maximized window
   - command: "toggle maximized"
-    binding: "LWin+Control+F17"
+    binding: "LWin+Control+F18"
 
   # close window
   - command: "close"
-    binding: "LWin+Control+F18"
+    binding: "LWin+Control+F19"
 
   #
   # tiling misc
@@ -250,11 +250,11 @@ keybindings:
   
   # toggle floating window
   - command: "toggle floating"
-    binding: "LWin+Control+F16"
+    binding: "LWin+Control+F17"
     
   # tiling direction vertical
   - command: "tiling direction toggle"
-    binding: "LWin+Control+F19"
+    binding: "LWin+Control+F20"
 
   #
   # glazewm
@@ -282,7 +282,7 @@ keybindings:
 
   # launch terminal (default profile)
   - command: exec wt
-    binding: "LWin+Control+Shift+Back"
+    binding: "LWin+Control+F13"
 
   # launch screenclip
   - command: "exec explorer ms-screenclip:"
@@ -290,8 +290,8 @@ keybindings:
 
   # launch main ide
   - command: exec 'D:\Users\kress\scoop\apps\vscode\current\Code.exe'
-    binding: "LWin+Control+F15"
+    binding: "LWin+Control+F16"
 
   # launch browser
   - command: exec 'D:\Users\kress\scoop\apps\thorium-avx2\current\thorium.exe' --user-data-dir="D:\Users\kress\scoop\apps\thorium-avx2\current\User Data" --allow-outdated-plugins --disable-logging --disable-breakpad --enable-experimental-web-platform-features --new-canvas-2d-api
-    binding: "LWin+Control+F20"
+    binding: "LWin+Control+F21"
