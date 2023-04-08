@@ -102,9 +102,11 @@ window_rules:
 
   # some tile by default
   - command: "set tiling"
-    match_title: "/.+\\s\\- Visual Studio Code/"
+    match_title: "/.+\\s\\- Visual Studio Code$/"
   - command: "set tiling"
     match_process_name: "WindowsTerminal"
+  - command: "set tiling"
+    match_process_name: "emacs"
   - command: "set tiling"
     match_title: "thorium"
     match_title: "/.+\\s\\- Thorium/"
