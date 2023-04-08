@@ -67,7 +67,6 @@
         (ryo-modal-mode 1))))
   (ryo-global-mode)
   :config
-  (setq ryo-modal-cursor-type 'block)
   ;;; BINDINGS
   ;;; ========
   (map!

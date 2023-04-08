@@ -151,6 +151,16 @@
 ;;; ryo-modal
 (load! "my/ryo-modal")
 
+(setq ryo-modal-cursor-type 'hollow)
+(setq ryo-modal-cursor-color "white")
+(setq ryo-modal-default-cursor-color "white")
+(set-face-background 'cursor "white")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(map! :leader
+  ("d" #'treemacs-select-window))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq completion-styles '(orderless)
@@ -160,9 +170,13 @@
       isearch-allow-scroll t
       isearch-lazy-highlight-initial-delay 0)
 
-(setq-default cursor-type 'bar
-              blink-cursor-blinks 0
+
+(setq-default cursor-type '(bar . 4)
+              blink-cursor-blinks -1
               display-fill-column-indicator-column 79)
+
+;; gimme the blinks
+(blink-cursor-mode +1)
 
 ;; adaptive-wrap
 (+global-word-wrap-mode +1)
