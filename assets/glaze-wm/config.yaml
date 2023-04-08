@@ -7,24 +7,24 @@ general:
   show_floating_on_top: false
   
 gaps:
-  inner_gap: 32 # 24 # 16 # 8 
-  outer_gap: 32 # 24 # 16 # 8 
+  inner_gap: 24 # 32 # 24 # 16 # 8 
+  outer_gap: 24 # 32 # 24 # 16 # 8 
 
 bar:
-  height: "32px"
+  height: "28px"
   position: "top"
   opacity: 1.0
   background: "transparent"
   foreground: "#EBDBB2" # popping and locking and gruvbox
   # foreground: "#F2E5BC" # popping and locking black (cursor)
   font_family: "Cascadia Code"
-  font_size: "13px"
+  font_size: "11px"
   border_width: "0px 0px 1px 0px"
   # border_color: "#282828" # gruvbox dark
   # border_color: "#1B1B1B" # gruvbox dark hard
   # border_color: "#181921" # popping and locking
   border_color: "#000000" # popping and locking black
-  padding: "4px 6px"
+  padding: "2px 4px"
 
   components_left:
     - type: "workspaces"
@@ -41,12 +41,12 @@ bar:
       # background: "#1B1B1B" # gruvbox dark hard
       # background: "#181921" # popping and locking
       background: "#000000" # popping and locking black
-      margin: "0 6px"
-      padding: "0 8px"
+      margin: "0 4px"
+      padding: "0 6px"
 
   components_center:
     - type: "window title"
-      margin: "0 6px"
+      margin: "0 4px"
 
   components_right:
     - type: "tiling direction"
@@ -54,13 +54,13 @@ bar:
       # background: "#1B1B1B" # gruvbox dark hard
       # background: "#181921" # popping and locking
       background: "#000000" # popping and locking black
-      margin: "0 6px"
-      padding: "0 8px"
+      margin: "0 4px"
+      padding: "0 6px"
     - type: "battery"
       label_draining: "{battery_level}% ▼ "
       label_power_saver: "{battery_level}% ↯ "
       label_charging: "{battery_level}% ▲ "
-      margin: "0 6px"
+      margin: "0 4px"
     - type: "clock"
       time_formatting: "dddd · yyyy-MM-dd · HH:mm:ss"
       margin: "0 6px 0 0px"
@@ -102,11 +102,13 @@ window_rules:
 
   # some tile by default
   - command: "set tiling"
-    match_title: "/.+\\s\\- Visual Studio Code$/"
+    match_title: "/.*Visual Studio Code$/"
   - command: "set tiling"
     match_process_name: "WindowsTerminal"
   - command: "set tiling"
     match_process_name: "emacs"
+  - command: "set tiling"
+    match_process_name: "Aseprite"
   - command: "set tiling"
     match_title: "thorium"
     match_title: "/.+\\s\\- Thorium/"
@@ -194,25 +196,25 @@ keybindings:
 
   # move to workspace focus
   - command: "move to workspace 1"
-    binding: "LWin+Control+Shift+1"
+    binding: "LWin+Control+Shift+F1"
   - command: "move to workspace 2"
-    binding: "LWin+Control+Shift+2"
+    binding: "LWin+Control+Shift+F2"
   - command: "move to workspace 3"
-    binding: "LWin+Control+Shift+3"
+    binding: "LWin+Control+Shift+F3"
   - command: "move to workspace 4"
-    binding: "LWin+Control+Shift+4"
+    binding: "LWin+Control+Shift+F4"
   - command: "move to workspace 5"
-    binding: "LWin+Control+Shift+5"
+    binding: "LWin+Control+Shift+F5"
   - command: "move to workspace 6"
-    binding: "LWin+Control+Shift+6"
+    binding: "LWin+Control+Shift+F6"
   - command: "move to workspace 7"
-    binding: "LWin+Control+Shift+7"
+    binding: "LWin+Control+Shift+F7"
   - command: "move to workspace 8"
-    binding: "LWin+Control+Shift+8"
+    binding: "LWin+Control+Shift+F8"
   - command: "move to workspace 9"
-    binding: "LWin+Control+Shift+9"
+    binding: "LWin+Control+Shift+F9"
   - command: "move to workspace 0"
-    binding: "LWin+Control+Shift+0"
+    binding: "LWin+Control+Shift+F10"
 
   #
   # mode swap
@@ -274,11 +276,11 @@ keybindings:
   - command: "exec explorer"
     binding: "LWin+Control+F11"
 
-  # launch terminal
+  # launch terminal (wsl profile)
   - command: exec wt --profile "{8e510365-d81d-426c-9b28-dfb96a7a6a85}"
     binding: "LWin+Control+Back"
 
-  # launch terminal
+  # launch terminal (default profile)
   - command: exec wt
     binding: "LWin+Control+Shift+Back"
 
@@ -287,9 +289,9 @@ keybindings:
     binding: "LWin+Control+Shift+F14"
 
   # launch main ide
-  - command: exec 'C:\Program Files\Microsoft VS Code\Code.exe'
+  - command: exec 'D:\Users\kress\scoop\apps\vscode\current\Code.exe'
     binding: "LWin+Control+F15"
 
   # launch browser
-  - command: exec 'C:\Users\kress\AppData\Local\Thorium\Application\thorium.exe'
+  - command: exec 'D:\Users\kress\scoop\apps\thorium-avx2\current\thorium.exe' --user-data-dir="D:\Users\kress\scoop\apps\thorium-avx2\current\User Data" --allow-outdated-plugins --disable-logging --disable-breakpad --enable-experimental-web-platform-features --new-canvas-2d-api
     binding: "LWin+Control+F20"
