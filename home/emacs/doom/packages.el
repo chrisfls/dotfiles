@@ -60,8 +60,6 @@
   :pin "37ef9cb316bf3013975f3ebdbdf6364777e967bd"
   :recipe (:host github :repo "mohkale/all-the-icons-nerd-fonts"))
 
-(package! dired-sidebar :pin "5569d3b53585f5413cf87a694650d0fd6e040803")
-
 (package! ryo-modal :pin "b9e6a0f33b9e2aeb6088accd23ed312083d8f707")
 
 (package! point-undo :pin "d875c94522ad6430294c37d627e332d726221e02")
