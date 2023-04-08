@@ -286,7 +286,7 @@ keybindings:
 
   # launch screenclip
   - command: "exec explorer ms-screenclip:"
-    binding: "LWin+Control+Shift+F14"
+    binding: "LWin+Control+Shift+F15"
 
   # launch main ide
   - command: exec 'D:\Users\kress\scoop\apps\vscode\current\Code.exe'
