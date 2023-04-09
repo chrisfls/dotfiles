@@ -56,8 +56,9 @@ in
     })
 
     (mkIf (cfg.enable && cfg.autostart) {
-      home.file = {
-        ".profile".text = ''
+      programs.bash = {
+        enable = true;
+        profileExtra = ''
         if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
         then
           exec fish

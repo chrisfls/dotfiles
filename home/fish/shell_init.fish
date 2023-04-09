@@ -2,7 +2,6 @@
 set fish_greeting ""
 
 any-nix-shell fish --info-right | source
-direnv hook fish | source
 
 if not set -q tide_setup
   echo "tide setup init"

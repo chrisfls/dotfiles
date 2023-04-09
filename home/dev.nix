@@ -39,6 +39,12 @@ in
       adoptopenjdk-jre-openj9-bin-16
     ];
 
+    programs.zoxide = {
+      enable = true;
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+    };
+
     programs.fish = {
       shellAliases = {
         "e" = "code";

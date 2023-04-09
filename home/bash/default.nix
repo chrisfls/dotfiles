@@ -9,9 +9,25 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.file = {
-      ".bashrc".source = ./.bashrc;
-      ".bash_profile".source = ./.bash_profile;
+    programs.bash = {
+      enable = true;
+      bashrcExtra = ''
+      export PATH="$PATH:$HOME/.nix-profile/bin"
+      export DIRENV_LOG_FORMAT=""
+      '';
+      profileExtra = ''
+      # generic shell settings
+      [[ -f ~/.bashrc ]] && . ~/.bashrc
+
+      # interactive shell settings
+      export TERM="xterm-256color";
+      export COLORTERM=truecolor
+      export MICRO_TRUECOLOR=1
+
+      unset HISTFILE
+      '';
+      historyFileSize = 0;
+      historySize = 0;
     };
   };
 }
