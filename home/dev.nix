@@ -9,7 +9,7 @@ in
   };
   
   imports = [
-    ./bash
+    ./bash.nix
     ./emacs
     ./fish
   ];
