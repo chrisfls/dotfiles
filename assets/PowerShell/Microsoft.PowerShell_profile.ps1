@@ -31,3 +31,5 @@ Invoke-Expression (& {
 })
 
 Invoke-Expression (&starship init powershell)
+
+if(Test-Path function:/Update-Dotenv) { Dotenv\Update-Dotenv }
