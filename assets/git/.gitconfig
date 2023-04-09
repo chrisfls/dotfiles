@@ -16,7 +16,7 @@
         email = "2013206+kress95@users.noreply.github.com"
         name = "Chris"
 
-[includeIf "gitdir:%(prefix)/d/Users/kress/Desktop/gitlab/"]
+[includeIf "gitdir:%(prefix)/D:/Users/kress/Desktop/gitlab/"]
         path = ".gitlab.gitconfig"
 
 [credential "helperselector"]
