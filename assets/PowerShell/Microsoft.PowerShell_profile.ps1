@@ -1,6 +1,6 @@
 ﻿Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
-. $PSScriptRoot\Unset-Alias.ps1
+# . $PSScriptRoot\Unset-Alias.ps1
 
 Set-Alias g 'git'
 
@@ -21,9 +21,9 @@ function emacs {
   bash -c "`$HOME/.nix-profile/bin/emacs $arguments"
 }
 
-Add-WindowsPSModulePath
-Import-Module "$(scoop prefix ps-dotenv)\Dotenv"
-Enable-Dotenv
+# Add-WindowsPSModulePath
+# Import-Module "$(scoop prefix ps-dotenv)\Dotenv"
+# Enable-Dotenv
 
 Invoke-Expression (& {
     $hook = if ($PSVersionTable.PSVersion.Major -lt 6) { 'prompt' } else { 'pwd' }
@@ -32,4 +32,4 @@ Invoke-Expression (& {
 
 Invoke-Expression (&starship init powershell)
 
-if(Test-Path function:/Update-Dotenv) { Dotenv\Update-Dotenv }
+# if(Test-Path function:/Update-Dotenv) { Dotenv\Update-Dotenv }

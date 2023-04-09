@@ -6,6 +6,8 @@ New-Item -ItemType SymbolicLink `
 -Path "~/.config/starship.toml" `
 -Target (Resolve-Path -Path "..\..\..\..\assets\PowerShell\starship.toml")
 
+New-Item -ItemType Directory -Path "$MyDocuments\PowerShell"
+
 New-Item -ItemType SymbolicLink `
 -Path "$MyDocuments\PowerShell\Unset-Alias.ps1" `
 -Target (Resolve-Path -Path "..\..\..\..\assets\PowerShell\Unset-Alias.ps1")
