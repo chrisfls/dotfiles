@@ -7,6 +7,7 @@ if (Test-Path alias:cksum) { Remove-Alias -Name cksum -Scope Global }
 if (Test-Path alias:comm) { Remove-Alias -Name comm -Scope Global }
 if (Test-Path alias:cp) { Remove-Alias -Name cp -Scope Global }
 if (Test-Path alias:cut) { Remove-Alias -Name cut -Scope Global }
+if (Test-Path alias:curl) { Remove-Alias -Name curl -Scope Global }
 if (Test-Path alias:date) { Remove-Alias -Name date -Scope Global }
 if (Test-Path alias:df) { Remove-Alias -Name df -Scope Global }
 if (Test-Path alias:dircolors) { Remove-Alias -Name dircolors -Scope Global }
