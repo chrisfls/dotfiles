@@ -5,6 +5,7 @@ $SCOOP = $env:SCOOP
 $env:PSModulePath = "$SCOOP\modules;$PSModulePath"
 
 Set-Alias g 'git'
+Set-Alias ib 'Invoke-Build'
 
 # Shows navigable menu of all options when hitting Tab
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
