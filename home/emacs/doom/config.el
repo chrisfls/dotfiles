@@ -193,3 +193,6 @@
 
 (add-hook! fsharp-mode
   (my/fill-column-indicator 99))
+
+(add-hook! csharp-mode
+  (my/fill-column-indicator 119))

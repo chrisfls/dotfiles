@@ -120,7 +120,7 @@
        ;;common-lisp 
        ;;coq 
        ;;crystal 
-       ;;csharp 
+       csharp 
        ;;data 
        ;;(dart +flutter)
        ;;dhall
