@@ -20,9 +20,9 @@ in
       [[ -f ~/.bashrc ]] && . ~/.bashrc
 
       # interactive shell settings
-      export TERM="xterm-256color";
-      export COLORTERM=truecolor
-      export MICRO_TRUECOLOR=1
+      # export TERM="xterm-256color";
+      # export COLORTERM=truecolor
+      # export MICRO_TRUECOLOR=1
 
       unset HISTFILE
       '';

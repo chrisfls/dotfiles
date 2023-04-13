@@ -55,6 +55,7 @@
     TERM = "xterm-256color";
     COLORTERM = "truecolor";
     MICRO_TRUECOLOR = "1";
+    VTE_VERSION = "6003";
   };
 
   #
