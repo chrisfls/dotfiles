@@ -65,3 +65,6 @@
 (package! point-undo :pin "d875c94522ad6430294c37d627e332d726221e02")
 
 (package! expand-region :pin "b70feaa644310dc2d599dc277cd20a1f2b6446ac")
+
+(package! term-keys :pin "c6b01eed4c44ee45b8bbe7f2f2dee3b1f9119469"
+  :recipe (:host github :repo "CyberShadow/term-keys"))
