@@ -19,6 +19,18 @@ Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
 #   "`n$ESC[32m$(Get-Location)\$ESC[0m`r`n$("+"*(Get-Location -Stack).Count)$ESC[36mλ$ESC[0m "
 # }
 
+$prompt = ""
+
+function Invoke-Starship-PreCommand {
+    $current_location = $executionContext.SessionState.Path.CurrentLocation
+    if ($current_location.Provider.Name -eq "FileSystem") {
+        $ansi_escape = [char]27
+        $provider_path = $current_location.ProviderPath -replace "\\", "/"
+        $prompt = "$ansi_escape]7;file://${env:COMPUTERNAME}/${provider_path}$ansi_escape\"
+    }
+    $host.ui.Write($prompt)
+}
+
 function emacs {
   $arguments = $args -join ' '
   bash -c "`$HOME/.nix-profile/bin/emacs $arguments"
