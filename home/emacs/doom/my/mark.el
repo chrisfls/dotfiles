@@ -15,6 +15,14 @@
   (interactive)
   (deactivate-mark))
 
+(defun my/set-mark-if-inactive ()
+  (interactive)
+  (unless mark-active (set-mark (point))))
+  
+(defun my/deactivate-mark-if-active ()
+  (interactive)
+  (if mark-active (deactivate-mark)))
+
 (defun my/mark-word ()
   (interactive)
   (er/mark-word)

@@ -149,7 +149,7 @@
 ;;   (all-the-icons-nerd-fonts-prefer))
 
 ;;; ryo-modal
-(load! "my/modal")
+(load! "my/sublime")
 
 (setq ryo-modal-cursor-type 'hollow)
 (setq ryo-modal-cursor-color "white")
