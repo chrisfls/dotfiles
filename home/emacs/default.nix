@@ -28,6 +28,7 @@ in
     };
 
     home.packages = with pkgs; [
+      jetbrains-mono
       ripgrep
       fd
       enchant # (spell +enchant)
