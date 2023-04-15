@@ -129,70 +129,70 @@ binding_mode := "normal"
 #^+1::
   binding_mode := "normal"
   MoveToNamedWorkspace("1")
-  FocusNamedWorkspace("1")
+  ; FocusNamedWorkspace("1")
   return
 
 ;; #^+ F2
 #^+2::
   binding_mode := "normal"
   MoveToNamedWorkspace("2")
-  FocusNamedWorkspace("2")
+  ; FocusNamedWorkspace("2")
   return
 
 ;; #^+ F3
 #^+3::
   binding_mode := "normal"
   MoveToNamedWorkspace("3")
-  FocusNamedWorkspace("3")
+  ; FocusNamedWorkspace("3")
   return
 
 ;; #^+ F4
 #^+4::
   binding_mode := "normal"
   MoveToNamedWorkspace("4")
-  FocusNamedWorkspace("4")
+  ; FocusNamedWorkspace("4")
   return
 
 ;; #^+ F5
 #^+5::
   binding_mode := "normal"
   MoveToNamedWorkspace("5")
-  FocusNamedWorkspace("5")
+  ; FocusNamedWorkspace("5")
   return
 
 ;; #^+ F6
 #^+6::
   binding_mode := "normal"
   MoveToNamedWorkspace("6")
-  FocusNamedWorkspace("6")
+  ; FocusNamedWorkspace("6")
   return
 
 ;; #^+ F7
 #^+7::
   binding_mode := "normal"
   MoveToNamedWorkspace("7")
-  FocusNamedWorkspace("7")
+  ; FocusNamedWorkspace("7")
   return
 
 ;; #^+ F8
 #^+8::
   binding_mode := "normal"
   MoveToNamedWorkspace("8")
-  FocusNamedWorkspace("8")
+  ; FocusNamedWorkspace("8")
   return
 
 ;; #^+ F9
 #^+9::
   binding_mode := "normal"
   MoveToNamedWorkspace("9")
-  FocusNamedWorkspace("9")
+  ; FocusNamedWorkspace("9")
   return
 
 ;; #^+ F10
 #^+0::
   binding_mode := "normal"
   MoveToNamedWorkspace("0")
-  FocusNamedWorkspace("0")
+  ; FocusNamedWorkspace("0")
   return
 
 ;; FOCUS STUFF
