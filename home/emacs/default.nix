@@ -24,7 +24,7 @@ in
   config = mkIf cfg.enable {
     programs.emacs = {
       enable = true;
-      package = pkgs.emacs-nox;
+      package = pkgs.emacs-gtk;
     };
 
     home.packages = with pkgs; [
