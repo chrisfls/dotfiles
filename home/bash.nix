@@ -18,15 +18,14 @@ in
         COLORTERM = "truecolor";
         MICRO_TRUECOLOR = "1";
         VTE_VERSION = "6003";
+        DIRENV_LOG_FORMAT = "";
+        PATH = "$PATH:$HOME/.nix-profile/bin";
+        DISPLAY = "$(ip route list default | awk '{print $3}'):0";
+        LIBGL_ALWAYS_INDIRECT = "1";
       };
-      bashrcExtra = ''
-      export PATH="$PATH:$HOME/.nix-profile/bin"
-      export DIRENV_LOG_FORMAT=""
-      '';
       profileExtra = ''
       unset HISTFILE
       '';
-
       historyFileSize = 0;
       historySize = 0;
     };
