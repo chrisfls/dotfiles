@@ -32,7 +32,8 @@
 ;; There are two ways to load a theme. Both assume thOIe theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-gruvbox
+(setq doom-font "JetBrains Mono 13"
+      doom-theme 'doom-gruvbox
       doom-gruvbox-dark-variant "hard")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -75,7 +76,6 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(set-frame-font "JetBrains Mono 12" nil t)
 (set-language-environment "UTF-8")
 
 (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
