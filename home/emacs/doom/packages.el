@@ -65,7 +65,3 @@
 (package! point-undo :pin "d875c94522ad6430294c37d627e332d726221e02")
 
 (package! expand-region :pin "b70feaa644310dc2d599dc277cd20a1f2b6446ac")
-
-(package! wakib-keys
-  :pin "ed86134f91c532a38d2739dd15ea6cec879cbd8a"
-  :recipe (:host github :repo "darkstego/wakib-keys"))

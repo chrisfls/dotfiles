@@ -75,15 +75,15 @@ KEY"
   (make-composed-keymap (list (wakib-minor-mode-key-binding key) (local-key-binding (kbd key)) (global-key-binding (kbd key)))))
 
 (defun wakib-function-lookup(fun)
-  "Lookup FUN in C-k C-e maps and return shortcut in string format"
+  "Lookup FUN in C-k C-i maps and return shortcut in string format"
   (let ((ce-key (car (where-is-internal fun (list (wakib-key-binding "C-x")))))
-	(cd-key (car (where-is-internal fun (list (wakib-key-binding "C-c"))))))
-    (cond (cd-key (concat "C-k " (key-description cd-key)))
-	  (ce-key (concat "C-e " (key-description ce-key)))
+	(ck-key (car (where-is-internal fun (list (wakib-key-binding "C-c"))))))
+    (cond (ck-key (concat "C-k " (key-description ck-key)))
+	  (ce-key (concat "C-i " (key-description ce-key)))
 	  (t nil))))
 
 (defun wakib--get-command-keys (hash str start)
-  "Add all C-k C-e matches in string to hash."
+  "Add all C-k C-i matches in string to hash."
   (if (string-match "\\\\\\[\\([^\]]*\\)\\]" str start)
       (let* ((match (intern (match-string 1 str)))
 	     (match-pos (match-beginning 0))
@@ -170,7 +170,7 @@ Optional argument PREFIX adds prefix to command."
 			(cdr tail)
 			:keys (replace-regexp-in-string
 			       "^C-c" "C-k"
-			       (replace-regexp-in-string "^C-x" "C-e" keys))))
+			       (replace-regexp-in-string "^C-x" "C-i" keys))))
       (setcdr menu-item-list menu-item-copy))
     (when key
       (let ((shortcut (key-description key)))
@@ -183,7 +183,7 @@ Optional argument PREFIX adds prefix to command."
 	  (setcdr tail (plist-put
 			(cdr tail)
 			:keys (replace-regexp-in-string "^C-c" "C-k"
-							(replace-regexp-in-string "^C-x" "C-e" shortcut))))
+							(replace-regexp-in-string "^C-x" "C-i" shortcut))))
 	  (setcdr menu-item-list menu-item-copy))
 	 ;; since we already searched, memoize the key as a suggestion
 	 (t (setcdr tail (plist-put (cdr tail)
@@ -204,21 +204,21 @@ Optional argument PREFIX adds prefix to command."
 
 
 (defun wakib--replace-in-region (regex rep start-point end-point)
-  "Go through the output of describe bindings and replace C-c and C-x with C-k and C-e"
+  "Go through the output of describe bindings and replace C-c and C-x with C-k and C-i"
   (save-excursion
     (goto-char start-point)
     (while (re-search-forward regex end-point t)
       (replace-match rep))))
 
 (defun wakib--describe-bindings-advice (orig-fun buffer &optional prefix menus)
-  "Advice for describe-buffer-bindings to correctly show C-k and C-e bindings.
+  "Advice for describe-buffer-bindings to correctly show C-k and C-i bindings.
 Does not give the correct result if you explicitly search for C-c or C-x."
   (let ((start-point (point)))
     (cond ((not prefix)
 	   ;; Without prefix must change C-c and C-x
 	   (apply orig-fun buffer prefix menus)
 	   (wakib--replace-in-region "^C-c " "C-k " start-point (point))
-	   (wakib--replace-in-region "^C-x " "C-e " start-point (point)))
+	   (wakib--replace-in-region "^C-x " "C-i " start-point (point)))
 	  ;; Explicit search for C-k won't work if buffer passed isn't current buffer
 	  ((and (not (eq buffer (current-buffer)))(string-match-p "^C-k" (key-description prefix)))
 	   (apply orig-fun buffer
@@ -405,12 +405,12 @@ It returns the buffer."
 
 (defun wakib-define-keys (keymap keylist)
   "Add to KEYMAP all keys in KEYLIST.
-Then add C-k and C-e to KEYMAP"
+Then add C-k and C-i to KEYMAP"
   (interactive)
   (mapc (lambda (pair)
           (define-key keymap (kbd (car pair)) (cdr pair)))
         keylist)
-  (define-key keymap (kbd "C-e") (wakib-dynamic-binding "C-x"))
+  (define-key keymap (kbd "C-i") (wakib-dynamic-binding "C-x"))
   (define-key keymap (kbd "C-k") (wakib-dynamic-binding "C-c")))
 
 (defvar wakib-keylist
@@ -516,7 +516,7 @@ Then add C-k and C-e to KEYMAP"
 (define-minor-mode wakib-keys
   "This mode brings modern style keybindings to Emacs.
 Major changes is proper CUA key bindings by moving C-c and C-x to
-C-k and C-e respectively. This allow access to all the keybindings of
+C-k and C-i respectively. This allow access to all the keybindings of
 Emacs while not tripping up users who do not want a steep learning curve
 just to use their editor.
 

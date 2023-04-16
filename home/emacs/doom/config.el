@@ -140,7 +140,7 @@
         which-key-side-window-location '(right bottom)))
 
 ;;; ryo-modal
-(load! "my/wakib-keys")
+(load! "my/cua")
 
 (setq ryo-modal-cursor-type 'hollow)
 (setq ryo-modal-cursor-color "white")
