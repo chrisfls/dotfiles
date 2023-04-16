@@ -8,6 +8,6 @@ scoop bucket add versions
 scoop bucket add kress95 https://github.com/kress95/scoop-bucket
 scoop bucket add insomnia https://github.com/insomnimus/scoop-bucket
 scoop update
-scoop install adb anydesk audacity autohotkey1.1 dark Delugia-Nerd-Font-Complete deno discord ffmpeg gallery-dl git github godot hide-volume-osd innounp JetBrains-Mono JetBrainsMono-NF-Mono komorebi krita lmms micro moonlight notepadplusplus npiperelay obsidian picotorrent powertoys scoop-search starship sublime-text sudo taskbarx thorium-avx2 ungoogled-chromium vcredist2022 VcXsrv vlc volume2 vscode windows-terminal yt-dlp zoxide
+scoop install adb anydesk audacity dark Delugia-Nerd-Font-Complete deno discord ffmpeg gallery-dl git github glazewm godot hide-volume-osd innounp JetBrains-Mono JetBrainsMono-NF-Mono krita lmms micro moonlight notepadplusplus npiperelay obsidian picotorrent powertoys scoop-search starship sublime-text sudo taskbarx thorium-avx2 ungoogled-chromium vcredist2022 VcXsrv vlc volume2 vscode windows-terminal yt-dlp zoxide
 sudo scoop install --global asio4all-np equalizer-apo-np hide-volume-osd-np parsec-np steam
 echo "Now install other stuff from steam like aseprite"
