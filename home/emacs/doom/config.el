@@ -162,7 +162,6 @@
       isearch-allow-scroll t
       isearch-lazy-highlight-initial-delay 0)
 
-
 (setq-default cursor-type '(bar . 4)
               blink-cursor-blinks -1
               display-fill-column-indicator-column 79)
