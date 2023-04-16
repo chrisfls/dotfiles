@@ -294,14 +294,14 @@ binding_mode := "normal"
 
 ;; #^ F15
 #^S::
-  If (binding_mode = "resize")
-  {
-    binding_mode := "normal"
-  }
-  Else
-  {
-    binding_mode := "resize"
-  }
+  ; If (binding_mode = "resize")
+  ; {
+  ;   binding_mode := "normal"
+  ; }
+  ; Else
+  ; {
+  ;   binding_mode := "resize"
+  ; }
   Return
 
 ;; ACTIONS
