@@ -108,6 +108,8 @@ window_rules:
   - command: "set tiling"
     match_process_name: "emacs"
   - command: "set tiling"
+    match_process_name: "explorer"
+  - command: "set tiling"
     match_process_name: "vcxsrv.exe"
   - command: "set tiling"
     match_process_name: "Aseprite"
