@@ -170,51 +170,51 @@ keybindings:
 
   # workspace focus
   - command: "focus workspace 1"
-    binding: "LWin+Control+F1"
+    binding: "LWin+Control+1"
   - command: "focus workspace 2"
-    binding: "LWin+Control+F2"
+    binding: "LWin+Control+2"
   - command: "focus workspace 3"
-    binding: "LWin+Control+F3"
+    binding: "LWin+Control+3"
   - command: "focus workspace 4"
-    binding: "LWin+Control+F4"
+    binding: "LWin+Control+4"
   - command: "focus workspace 5"
-    binding: "LWin+Control+F5"
+    binding: "LWin+Control+5"
   - command: "focus workspace 6"
-    binding: "LWin+Control+F6"
+    binding: "LWin+Control+6"
   - command: "focus workspace 7"
-    binding: "LWin+Control+F7"
+    binding: "LWin+Control+7"
   - command: "focus workspace 8"
-    binding: "LWin+Control+F8"
+    binding: "LWin+Control+8"
   - command: "focus workspace 9"
-    binding: "LWin+Control+F9"
+    binding: "LWin+Control+9"
   - command: "focus workspace 0"
-    binding: "LWin+Control+F10"
+    binding: "LWin+Control+0"
 
   # focus last workspace with focus
   - command: "focus workspace recent"
-    binding: "LWin+Control+F14"
+    binding: "LWin+Control+Y"
 
   # move to workspace focus
   - command: "move to workspace 1"
-    binding: "LWin+Control+Shift+F1"
+    binding: "LWin+Control+Shift+1"
   - command: "move to workspace 2"
-    binding: "LWin+Control+Shift+F2"
+    binding: "LWin+Control+Shift+2"
   - command: "move to workspace 3"
-    binding: "LWin+Control+Shift+F3"
+    binding: "LWin+Control+Shift+3"
   - command: "move to workspace 4"
-    binding: "LWin+Control+Shift+F4"
+    binding: "LWin+Control+Shift+4"
   - command: "move to workspace 5"
-    binding: "LWin+Control+Shift+F5"
+    binding: "LWin+Control+Shift+5"
   - command: "move to workspace 6"
-    binding: "LWin+Control+Shift+F6"
+    binding: "LWin+Control+Shift+6"
   - command: "move to workspace 7"
-    binding: "LWin+Control+Shift+F7"
+    binding: "LWin+Control+Shift+7"
   - command: "move to workspace 8"
-    binding: "LWin+Control+Shift+F8"
+    binding: "LWin+Control+Shift+8"
   - command: "move to workspace 9"
-    binding: "LWin+Control+Shift+F9"
+    binding: "LWin+Control+Shift+9"
   - command: "move to workspace 0"
-    binding: "LWin+Control+Shift+F10"
+    binding: "LWin+Control+Shift+0"
 
   #
   # mode swap
@@ -222,7 +222,7 @@ keybindings:
 
   # to resize mode
   - command: "binding mode resize" # originally "toggle focus mode"
-    binding: "LWin+Control+F15" # stop opening narrator mode
+    binding: "LWin+Control+S" # stop opening narrator mode
   
   #
   # decoration actions
@@ -230,15 +230,15 @@ keybindings:
 
   # minimize window
   - command: "set minimized"
-    binding: "LWin+Control+F22"
+    binding: "LWin+Control+M"
 
   # toggle maximized window
   - command: "toggle maximized"
-    binding: "LWin+Control+F18"
+    binding: "LWin+Control+X"
 
   # close window
   - command: "close"
-    binding: "LWin+Control+F19"
+    binding: "LWin+Control+C"
 
   #
   # tiling misc
@@ -250,11 +250,11 @@ keybindings:
   
   # toggle floating window
   - command: "toggle floating"
-    binding: "LWin+Control+F17"
+    binding: "LWin+Control+F"
     
   # tiling direction vertical
   - command: "tiling direction toggle"
-    binding: "LWin+Control+F20"
+    binding: "LWin+Control+V"
 
   #
   # glazewm
@@ -262,7 +262,7 @@ keybindings:
 
   # reload
   - command: "reload config"
-    binding: "LWin+Control+Shift+F12"
+    binding: "LWin+Control+Shift+R"
 
   # quit
   - command: "exit wm"
@@ -274,7 +274,7 @@ keybindings:
 
   # launch explorer
   - command: "exec explorer"
-    binding: "LWin+Control+F11"
+    binding: "LWin+Control+E"
 
   # launch terminal (wsl profile)
   - command: exec wt --profile "{8e510365-d81d-426c-9b28-dfb96a7a6a85}"
@@ -282,16 +282,16 @@ keybindings:
 
   # launch terminal (default profile)
   - command: exec wt
-    binding: "LWin+Control+F13"
+    binding: "LWin+Control+T"
 
   # launch screenclip
   - command: "exec explorer ms-screenclip:"
-    binding: "LWin+Control+Shift+F15"
+    binding: "LWin+Control+Shift+S"
 
   # launch main ide
   - command: exec 'D:\Users\kress\scoop\apps\vscode\current\Code.exe'
-    binding: "LWin+Control+F16"
+    binding: "LWin+Control+D"
 
-  # launch browser
-  - command: exec 'D:\Users\kress\scoop\apps\thorium-avx2\current\thorium.exe' --user-data-dir="D:\Users\kress\scoop\apps\thorium-avx2\current\User Data" --allow-outdated-plugins --disable-logging --disable-breakpad --enable-experimental-web-platform-features --new-canvas-2d-api
-    binding: "LWin+Control+F21"
+  # launch browser'
+  - command: exec 'D:\'Users\kress\scoop\apps\thorium-avx2\current\thorium.exe' --user-data-dir="D:\Users\kress\scoop\apps\thorium-avx2\current\User Data" --allow-outdated-plugins --disable-logging --disable-breakpad --enable-experimental-web-platform-features --new-canvas-2d-api
+    binding: "LWin+Control+B"
