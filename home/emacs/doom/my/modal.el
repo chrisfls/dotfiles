@@ -45,7 +45,6 @@
   :custom
   (expand-region-fast-keys-enabled nil))
 
-(use-package! point-undo)
 (use-package! smartparens)
 
 ;;; ryo-modal

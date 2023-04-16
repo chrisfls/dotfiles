@@ -66,5 +66,6 @@
 
 (package! expand-region :pin "b70feaa644310dc2d599dc277cd20a1f2b6446ac")
 
-(package! term-keys :pin "c6b01eed4c44ee45b8bbe7f2f2dee3b1f9119469"
-  :recipe (:host github :repo "CyberShadow/term-keys"))
+(package! wakib-keys
+  :pin "ed86134f91c532a38d2739dd15ea6cec879cbd8a"
+  :recipe (:host github :repo "darkstego/wakib-keys"))

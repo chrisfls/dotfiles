@@ -139,17 +139,8 @@
         which-key-popup-type 'side-window
         which-key-side-window-location '(right bottom)))
 
-;;; all-the-icons-nerd-fonts
-
-;; TODO: add style icon to nerd-mdi
-;; (use-package! all-the-icons-nerd-fonts
-;;   :after all-the-icons
-;;   :demand t
-;;   :config
-;;   (all-the-icons-nerd-fonts-prefer))
-
 ;;; ryo-modal
-(load! "my/modal")
+(load! "my/wakib-keys")
 
 (setq ryo-modal-cursor-type 'hollow)
 (setq ryo-modal-cursor-color "white")
