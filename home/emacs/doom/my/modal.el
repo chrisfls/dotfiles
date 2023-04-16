@@ -66,6 +66,9 @@
         (ryo-modal-mode 1))))
   (ryo-global-mode)
   :config
+  (setq ryo-modal-cursor-type 'hollow
+        ryo-modal-cursor-color "white"
+        ryo-modal-default-cursor-color "white")
   ;;; BINDINGS
   ;;; ========
   (map!
@@ -243,7 +246,8 @@
     ;;; ========
     (map! :leader
       ("j" "H-j")
-      ("k" "H-k"))
+      ("k" "H-k")
+      ("d" #'treemacs-select-window))
     ;;; ISEARCH
     ;;; =======
     (ryo-modal-keys (:mode 'isearch-mode)

@@ -78,8 +78,6 @@
 
 (set-language-environment "UTF-8")
 
-(setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
-
 ;;; doom-dashboard
 
 (defun my/dashboard-draw-ascii-banner-fn ()
@@ -141,28 +139,22 @@
         which-key-popup-type 'side-window
         which-key-side-window-location '(right bottom)))
 
-
 ;;; ryo-modal
 (load! "my/cua")
 
-(setq ryo-modal-cursor-type 'hollow)
-(setq ryo-modal-cursor-color "white")
-(setq ryo-modal-default-cursor-color "white")
 (set-face-background 'cursor "white")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(map! :leader
-  ("d" #'treemacs-select-window))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(setq completion-styles '(orderless)
+(setq avy-style 'de-bruijn
+      completion-styles '(orderless)
+      isearch-allow-scroll t
+      isearch-lazy-highlight-initial-delay 0
       orderless-matching-styles '(orderless-flex orderless-literal orderless-regexp)
       read-file-name-completion-ignore-case t
-      avy-style 'de-bruijn
-      isearch-allow-scroll t
-      isearch-lazy-highlight-initial-delay 0)
+      scroll-error-top-bottom t
+      setq scroll-preserve-screen-position nil
+      vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
 
 (setq-default cursor-type '(bar . 4)
               blink-cursor-blinks -1
