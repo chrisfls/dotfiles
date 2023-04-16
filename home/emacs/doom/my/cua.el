@@ -25,7 +25,6 @@
 
 (define-key input-decode-map [?\C-i] [C-i])
 (define-key input-decode-map [?\C-m] [C-m])
-(define-key input-decode-map [?\C-M] [C-M])
 (define-key input-decode-map [?\C-\S-m] [C-S-m])
 
 (defun my/kill-region-or-whole-line (arg)
@@ -96,7 +95,8 @@
         ("C-S-f" . isearch-backward)
         ("M-f" . isearch-forward-regexp)
         ("M-S-f" . isearch-backward-regexp)
-        ("C-j" . goto-line)
+        ("C-j" . avy-goto-line)
+        ("C-S-j" . goto-line)
         ("M-j" . avy-goto-char)
         ;;
         ("C-z" . undo)
@@ -110,9 +110,9 @@
         ("C-S-b" . treemacs-select-window)
         ("C-n" . wakib-new-empty-buffer)
         ("<C-m>" . my/swap-grab)
-        ("<C-S-M>" . my/cancel-grab)
+        ("<C-S-m>" . my/cancel-grab)
         ("M-m" . my/swap-grab-content)
-        ("M-S-m" . my/sync-grab-content)
+        ("M-M" . my/sync-grab-content)
         ("C-;" . comment-line)
         ;;
         ("C-SPC" . my/unmark-and-cancel-grab)))
