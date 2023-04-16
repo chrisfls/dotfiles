@@ -33,7 +33,7 @@ function Invoke-Starship-PreCommand {
 
 function emacs {
   $arguments = $args -join ' '
-  bash -c "`$HOME/.nix-profile/bin/emacs $arguments"
+  bash -c "source ~/.bash_profile; `$HOME/.nix-profile/bin/emacs $arguments"
 }
 
 Invoke-Expression (& {
