@@ -126,6 +126,7 @@
   (treemacs-filewatch-mode t)
   (treemacs-git-commit-diff-mode t)
   (treemacs-hide-gitignored-files-mode t)
+  (treemacs-project-follow-mode t)
   ;; fix sidebar +- signs
   (unless (display-graphic-p)
     (setq doom-themes-treemacs-theme "Default")))
