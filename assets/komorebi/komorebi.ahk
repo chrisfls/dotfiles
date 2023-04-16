@@ -12,8 +12,8 @@ WindowHidingBehaviour("cloak")
 EnsureNamedWorkspaces(0, "6 7 8 9 0")
 EnsureNamedWorkspaces(1, "1 2 3 4 5")
 WatchConfiguration("enable")
-
-
+MonitorIndexPreference(0, 1262, 2160, 2541, 2960)
+MonitorIndexPreference(1,    0,    0, 3840, 2160)
 NamedWorkspacePadding("1", 12)
 NamedWorkspaceContainerPadding("1", 12)
 NamedWorkspacePadding("2", 12)
@@ -34,7 +34,6 @@ NamedWorkspacePadding("9", 12)
 NamedWorkspaceContainerPadding("9", 12)
 NamedWorkspacePadding("0", 12)
 NamedWorkspaceContainerPadding("0", 12)
-
 CompleteConfiguration()
 
 binding_mode := "normal"
