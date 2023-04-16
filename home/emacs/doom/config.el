@@ -139,6 +139,7 @@
         which-key-popup-type 'side-window
         which-key-side-window-location '(right bottom)))
 
+
 ;;; ryo-modal
 (load! "my/cua")
 

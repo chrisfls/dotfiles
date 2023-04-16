@@ -410,7 +410,7 @@ Then add C-k and C-i to KEYMAP"
   (mapc (lambda (pair)
           (define-key keymap (kbd (car pair)) (cdr pair)))
         keylist)
-  (define-key keymap (kbd "C-i") (wakib-dynamic-binding "C-x"))
+  (define-key keymap (kbd "<C-i>") (wakib-dynamic-binding "C-x"))
   (define-key keymap (kbd "C-k") (wakib-dynamic-binding "C-c")))
 
 (defvar wakib-keylist
