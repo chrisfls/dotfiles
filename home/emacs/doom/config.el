@@ -153,7 +153,7 @@
       orderless-matching-styles '(orderless-flex orderless-literal orderless-regexp)
       read-file-name-completion-ignore-case t
       scroll-error-top-bottom t
-      setq scroll-preserve-screen-position nil
+      scroll-preserve-screen-position nil
       vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
 
 (setq-default cursor-type '(bar . 4)
