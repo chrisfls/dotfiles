@@ -110,7 +110,7 @@ window_rules:
   - command: "set tiling"
     match_process_name: "explorer"
   - command: "set tiling"
-    match_process_name: "vcxsrv.exe"
+    match_process_name: "vcxsrv"
   - command: "set tiling"
     match_process_name: "Aseprite"
   - command: "set tiling"
