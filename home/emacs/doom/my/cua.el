@@ -83,6 +83,7 @@
         ("C-p" . find-file)
         ("C-S-p" . execute-extended-command)
         ("M-p" . switch-to-buffer)
+        ("M-S-p" . consult-recent-file)
         ;;
         ("C-a" . mark-whole-buffer)
         ("C-s" . save-buffer)
