@@ -383,7 +383,7 @@ binding_mode := "normal"
 ;; #^ F21
 #^B::
   binding_mode := "normal"
-  Run, D:\Users\kress\scoop\apps\thorium-avx2\current\thorium.exe --user-data-dir="D:\Users\kress\scoop\apps\thorium-avx2\current\User Data" --allow-outdated-plugins --disable-logging --disable-breakpad --enable-experimental-web-platform-features --new-canvas-2d-api
+  Run, D:\Users\kress\scoop\apps\thorium-avx2\current\thorium.exe --allow-outdated-plugins --disable-logging --disable-breakpad --enable-experimental-web-platform-features --new-canvas-2d-api
   Return
 
 ; TODO:
