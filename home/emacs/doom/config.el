@@ -32,7 +32,7 @@
 ;; There are two ways to load a theme. Both assume thOIe theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-font (font-spec :family "JetBrains Mono" :size 25)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 26)
       doom-theme 'doom-gruvbox
       doom-gruvbox-dark-variant "hard")
 
@@ -113,7 +113,7 @@
 ;;; treemacs
 
 (setq treemacs-git-mode 'deferred
-      treemacs-width 30
+      treemacs-width 35
       treemacs-recenter-after-file-follow t
       treemacs-recenter-after-tag-follow t)
 
@@ -154,7 +154,8 @@
       read-file-name-completion-ignore-case t
       scroll-error-top-bottom t
       scroll-preserve-screen-position nil
-      vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
+      vertico-posframe-poshandler #'posframe-poshandler-frame-top-center
+      left-margin-width 0)
 
 (setq-default cursor-type '(bar . 4)
               blink-cursor-blinks -1

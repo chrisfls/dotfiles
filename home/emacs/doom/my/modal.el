@@ -105,10 +105,10 @@
     ("k" previous-line) ; ↑
     ("l" forward-char)  ; →
     ;; ---
-    ("H" my/back-to-indentation-or-bol) ; home      *shift
-    ("J" scroll-down-command)           ; page up   *shift
-    ("K" scroll-up-command)             ; page down *shift
-    ("L" end-of-line)                   ; end       *shift
+    ("H" doom/backward-to-bol-or-indent)          ; home      *shift
+    ("J" scroll-down-command)                     ; page up   *shift
+    ("K" scroll-up-command)                       ; page down *shift
+    ("L" doom/forward-to-last-non-comment-or-eol) ; end       *shift
     ;; ---
     ("b" backward-word) ; ← word
     ("w" forward-word)  ; → word

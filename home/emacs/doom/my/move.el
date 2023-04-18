@@ -1,12 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-(defun my/back-to-indentation-or-bol ()
-  (interactive)
-  (if (bolp)
-      (back-to-indentation)
-    (if (= (point) (progn (back-to-indentation) (point)))
-        (beginning-of-line))))
-
 (defun my/exchange-point-and-pairs ()
   (interactive)
   (let ((pos (point)))
