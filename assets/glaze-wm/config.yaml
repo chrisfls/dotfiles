@@ -77,20 +77,20 @@ workspaces:
   - name: "5"
     bind_to_monitor: 2
   - name: "6"
-    bind_to_monitor: 1
+    bind_to_monitor: 2
   - name: "7"
-    bind_to_monitor: 1
+    bind_to_monitor: 2
   - name: "8"
-    bind_to_monitor: 1
+    bind_to_monitor: 2
   - name: "9"
-    bind_to_monitor: 1
+    bind_to_monitor: 2
   - name: "0"
     bind_to_monitor: 1
 
 window_rules:
   # make all float by default 
-  - command: "set floating"
-    match_process_name: "*"
+  # - command: "set floating"
+  #   match_process_name: "*"
 
   # ignore windows that require admin privileges to manage:
   - command: "ignore"
@@ -101,26 +101,26 @@ window_rules:
     match_process_name: "PowerToys.Settings"
 
   # some tile by default
-  - command: "set tiling"
-    match_title: "/.*Visual Studio Code$/"
-  - command: "set tiling"
-    match_process_name: "WindowsTerminal"
-  - command: "set tiling"
-    match_process_name: "emacs"
-  - command: "set tiling"
-    match_process_name: "explorer"
-  - command: "set tiling"
-    match_process_name: "vcxsrv"
-  - command: "set tiling"
-    match_process_name: "Aseprite"
-  - command: "set tiling"
-    match_title: "/.+\\s\\- Thorium/"
-  - command: "set tiling"
-    match_title: "/.+\\s\\- Microsoft Edge/"
-  - command: "set tiling"
-    match_title: "/.+\\s\\- Notepad/"
-  - command: "set tiling"
-    match_title: "/.+\\s\\- Notepad\\+\\+/"
+  # - command: "set tiling"
+  #   match_title: "/.*Visual Studio Code$/"
+  # - command: "set tiling"
+  #   match_process_name: "WindowsTerminal"
+  # - command: "set tiling"
+  #   match_process_name: "emacs"
+  # - command: "set tiling"
+  #   match_process_name: "explorer"
+  # - command: "set tiling"
+  #   match_process_name: "vcxsrv"
+  # - command: "set tiling"
+  #   match_process_name: "Aseprite"
+  # - command: "set tiling"
+  #   match_title: "/.+\\s\\- Thorium/"
+  # - command: "set tiling"
+  #   match_title: "/.+\\s\\- Microsoft Edge/"
+  # - command: "set tiling"
+  #   match_title: "/.+\\s\\- Notepad/"
+  # - command: "set tiling"
+  #   match_title: "/.+\\s\\- Notepad\\+\\+/"
 
   # floating by default:
   - command: "set floating"
@@ -411,5 +411,5 @@ keybindings:
     binding: "LWin+Control+D"
 
   # launch browser'
-  - command: exec 'D:\'Users\kress\scoop\apps\thorium-avx2\current\thorium.exe' --allow-outdated-plugins --disable-logging --disable-breakpad --enable-experimental-web-platform-features --new-canvas-2d-api
+  - command: exec 'D:\Users\kress\scoop\apps\thorium-avx2-np\current\thorium.exe' --allow-outdated-plugins --disable-logging --disable-breakpad --enable-experimental-web-platform-features --new-canvas-2d-api
     binding: "LWin+Control+B"

@@ -53,10 +53,6 @@
         },
         {
             "command": "unbound",
-            "keys": "ctrl+shift+a"
-        },
-        {
-            "command": "unbound",
             "keys": "ctrl+shift+pgup"
         },
         {
@@ -137,10 +133,6 @@
         },
         {
             "command": "unbound",
-            "keys": "ctrl+shift+v"
-        },
-        {
-            "command": "unbound",
             "keys": "alt+space"
         },
         {
@@ -170,10 +162,6 @@
         {
             "command": "unbound",
             "keys": "enter"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+shift+c"
         },
         {
             "command": "unbound",
@@ -277,10 +265,6 @@
         },
         {
             "command": "unbound",
-            "keys": "win+ctrl+alt+f"
-        },
-        {
-            "command": "unbound",
             "keys": "win+ctrl+f11"
         },
         {
@@ -293,15 +277,47 @@
         },
         {
             "command": "unbound",
-            "keys": "win+ctrl+alt+c"
-        },
-        {
-            "command": "unbound",
             "keys": "win+ctrl+alt+y"
         },
         {
             "command": "unbound",
             "keys": "win+ctrl+alt+s"
+        },
+        {
+            "command": "unbound",
+            "keys": "win+ctrl+alt+f18"
+        },
+        {
+            "command": "unbound",
+            "keys": "win+ctrl+alt+f13"
+        },
+        {
+            "command": "unbound",
+            "keys": "win+ctrl+alt+shift+c"
+        },
+        {
+            "command": "unbound",
+            "keys": "win+ctrl+alt+n"
+        },
+        {
+            "command": "unbound",
+            "keys": "win+ctrl+alt+a"
+        },
+        {
+            "command": "unbound",
+            "keys": "win+ctrl+alt+m"
+        },
+        {
+            "command": "unbound",
+            "keys": "win+ctrl+alt+f17"
+        },
+        {
+            "command": "unbound",
+            "keys": "win+ctrl+alt+f14"
+        },
+        {
+            "command": "unbound",
+            "keys": "win+ctrl+alt+space"
         },
         {
             "command": "duplicateTab",
@@ -310,10 +326,9 @@
         {
             "command": 
             {
-                "action": "moveTab",
-                "direction": "forward"
+                "action": "prevTab"
             },
-            "keys": "win+ctrl+alt+shift+right"
+            "keys": "win+ctrl+alt+left"
         },
         {
             "command": 
@@ -326,9 +341,10 @@
         {
             "command": 
             {
-                "action": "prevTab"
+                "action": "moveTab",
+                "direction": "forward"
             },
-            "keys": "win+ctrl+alt+left"
+            "keys": "win+ctrl+alt+shift+right"
         },
         {
             "command": 
@@ -338,22 +354,15 @@
             "keys": "win+ctrl+alt+right"
         },
         {
+            "command": "markMode",
+            "keys": "ctrl+space"
+        },
+        {
             "command": 
             {
                 "action": "closeTab"
             },
-            "keys": "win+ctrl+alt+f18"
-        },
-        {
-            "command": "markMode",
-            "keys": "win+ctrl+alt+m"
-        },
-        {
-            "command": 
-            {
-                "action": "commandPalette"
-            },
-            "keys": "win+ctrl+alt+space"
+            "keys": "win+ctrl+alt+c"
         },
         {
             "command": "openNewTabDropdown",
@@ -362,26 +371,33 @@
         {
             "command": 
             {
-                "action": "copy",
-                "singleLine": false
+                "action": "commandPalette"
             },
-            "keys": "win+ctrl+alt+f13"
-        },
-        {
-            "command": "paste",
             "keys": "win+ctrl+alt+p"
         },
         {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "ctrl+shift+c"
+        },
+        {
+            "command": "paste",
+            "keys": "ctrl+shift+v"
+        },
+        {
             "command": "find",
-            "keys": "win+ctrl+alt+n"
+            "keys": "win+ctrl+alt+f"
         },
         {
             "command": "toggleFullscreen",
-            "keys": "win+ctrl+alt+f17"
+            "keys": "win+ctrl+alt+x"
         },
         {
             "command": "selectAll",
-            "keys": "win+ctrl+alt+a"
+            "keys": "ctrl+shift+a"
         },
         {
             "command": 
@@ -393,7 +409,7 @@
         },
         {
             "command": "toggleFocusMode",
-            "keys": "win+ctrl+alt+f14"
+            "keys": "win+ctrl+alt+z"
         }
     ],
     "copyFormatting": "none",
@@ -436,11 +452,11 @@
             },
             {
                 "colorScheme": "Cobalt2",
+                "commandline": "pwsh.exe -nologo",
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "icon": "ms-appx:///ProfileIcons/{574e775e-4f2a-5b96-ac1e-a2962a402336}.png",
                 "name": "PowerShell",
-                "commandline": "pwsh.exe -nologo",
                 "source": "Windows.Terminal.PowershellCore",
                 "startingDirectory": "D:\\Users\\kress\\Desktop"
             },
