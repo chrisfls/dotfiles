@@ -10,14 +10,12 @@ in
   
   imports = [
     ./bash.nix
-    ./emacs
     ./fish
   ];
 
   config = mkIf cfg.enable {
     module = {
       bash.enable = true;
-      emacs.enable = true;
       fish = {
         enable = true;
         autostart = true;
@@ -37,6 +35,7 @@ in
       # languagetool
       ltex-ls
       adoptopenjdk-jre-openj9-bin-16
+      nodejs-16_x
     ];
 
     programs.zoxide = {
