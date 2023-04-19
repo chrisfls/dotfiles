@@ -32,8 +32,11 @@ function Invoke-Starship-PreCommand {
 }
 
 function emacs {
-  $arguments = $args -join ' '
-  bash -c "source ~/.bash_profile; `$HOME/.nix-profile/bin/emacs $arguments"
+    bash -c "source ~/.bash_profile; `$HOME/.nix-profile/bin/emacs $($args -join ' ')"
+}
+
+function wslrun {
+    bash --login -c \"direnv exec . $($args -join ' ')\"
 }
 
 Invoke-Expression (& {
