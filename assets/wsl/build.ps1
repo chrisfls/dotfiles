@@ -1,10 +1,10 @@
 scoop reset gcc
 
-rm git.exe -Force -EA SilentlyContinue
+Remove-Item git.exe -Force -EA SilentlyContinue 2>$null
 gcc wslrun.c -o git.exe -D EXEC_NAME="`"git`""
 
-rm node.exe -Force -EA SilentlyContinue
+Remove-Item node.exe -Force -EA SilentlyContinue 2>$null
 gcc wslrun.c -o node.exe -D EXEC_NAME="`"node`""
 
-rm npm.exe -Force -EA SilentlyContinue
+Remove-Item npm.exe -Force -EA SilentlyContinue 2>$null
 gcc wslrun.c -o npm.exe -D EXEC_NAME="`"npm`""
