@@ -1,0 +1,12 @@
+(("compat" . "2748abd7c7135fe5d873020061b2d58a66b8d505")
+ ("el-get" . "22c83206bab10100fdee03cb2d5b97c8c24eff0e")
+ ("emacs-async" . "34feabe1142863a2c96f75afda1a2ae4aa0813f6")
+ ("emacsmirror-mirror" . "a6e6b495d5ef8954c6cae4d25db9b1519a6d22fa")
+ ("gnu-elpa-mirror" . "dcae75cb069e4826d9ad2199dec6eca3a7977eff")
+ ("melpa" . "989fc42a867d37e12d35ac38423e1d8828b9be59")
+ ("nongnu-elpa" . "0120f3dfe80cffe0c3016080d9205d12be3b741d")
+ ("orderless" . "e6784026717a8a6a7dcd0bf31fd3414f148c542e")
+ ("straight.el" . "039e5c9a9b5c00749602afb41341e9e77ba09429")
+ ("use-package" . "77945e002f11440eae72d8730d3de218163d551e")
+ ("vertico" . "22903523f675a7f70853ac7effc886c5d8a93803"))
+:gamma
