@@ -1,0 +1,5 @@
+auto-save-list
+eln-cache
+/straight/*
+!/straight/versions/
+!/straight/versions/default.el
