@@ -9,9 +9,12 @@ int main(int argc, char **argv) {
   args[0] = '\0';
 
   for (int i = 1; i < argc; i++) {
-    args = (char *) realloc(args, strlen(args) + strlen(argv[i]) + 1);
-    strcat(args, argv[i]);
+    char *path = (char *) malloc(strlen(argv[i]) * 3 + 1);
+    sprintf(path, "$(wslpath \\\"%s\\\")", argv[i]);
+    args = (char *) realloc(args, strlen(args) + strlen(path) + 1);
+    strcat(args, path);
     strcat(args, " ");
+    free(path);
   }
 
   char *command = (char *) malloc(strlen(args) + strlen(EXEC_NAME) + 50);
