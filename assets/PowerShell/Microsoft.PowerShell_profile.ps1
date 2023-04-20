@@ -36,7 +36,7 @@ function emacs {
 }
 
 function wslrun {
-    bash --login -c \"direnv exec . $($args -join ' ')\"
+    bash --login -c "direnv exec . $($args -join ' ')"
 }
 
 Invoke-Expression (& {
