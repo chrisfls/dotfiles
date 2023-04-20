@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Chris F"
+      user-mail-address "2013206+kress95@users.noreply.github.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -32,13 +32,17 @@
 ;; There are two ways to load a theme. Both assume thOIe theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-font (font-spec :family "JetBrains Mono" :size 26)
-      doom-theme 'doom-gruvbox
-      doom-gruvbox-dark-variant "hard")
+(setq doom-theme 'doom-gruvbox
+      doom-gruvbox-dark-variant "hard"
+      doom-font (font-spec :family "JetBrains Mono" :size 26)
+      doom-variable-pitch-font (font-spec :family "JetBrains Mono" :size 26)
+      doom-big-font (font-spec :family "JetBrains Mono" :size 26)
+      doom-unicode-font (font-spec :family "JetBrains Mono" :size 26)
+      doom-serif-font (font-spec :family "JetBrains Mono" :size 26))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'absolute)
+(setq display-line-numbers-type t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -76,109 +80,14 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(set-language-environment "UTF-8")
-
-;;; doom-dashboard
-
-(defun my/dashboard-draw-ascii-banner-fn ()
-  (let* ((banner
-          '("                                           "
-            "███████╗███╗   ███╗ █████╗  ██████╗███████╗"
-            "██╔════╝████╗ ████║██╔══██╗██╔════╝██╔════╝"
-            "█████╗  ██╔████╔██║███████║██║     ███████╗"
-            "██╔══╝  ██║╚██╔╝██║██╔══██║██║     ╚════██║"
-            "███████╗██║ ╚═╝ ██║██║  ██║╚██████╗███████║"
-            "╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝"
-            "                                           "))
-         (longest-line (apply #'max (mapcar #'length banner))))
-    (put-text-property
-     (point)
-     (dolist (line banner (point))
-       (insert (+doom-dashboard--center
-                +doom-dashboard--width
-                (concat
-                 line (make-string (max 0 (- longest-line (length line)))
-                                   32)))
-               "\n"))
-     'face 'doom-dashboard-banner)))
-
-(setq +doom-dashboard-ascii-banner-fn #'my/dashboard-draw-ascii-banner-fn)
-
-;;; fix scroll wheel
-
-(map! :unless (display-graphic-p)
-  "<mouse-4>" (cmd! (scroll-down 2))
-  "<mouse-5>" (cmd! (scroll-up 2)))
-
-;;; treemacs
-
-(setq treemacs-git-mode 'deferred
-      treemacs-width 35
-      treemacs-recenter-after-file-follow t
-      treemacs-recenter-after-tag-follow t)
-
-(use-package! treemacs
-  :after doom-themes
-  :config
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-  (treemacs-git-commit-diff-mode t)
-  (treemacs-hide-gitignored-files-mode t)
-  (treemacs-project-follow-mode t)
-  ;; fix sidebar +- signs
-  (unless (display-graphic-p)
-    (setq doom-themes-treemacs-theme "Default")))
-
-;;; which-key
-
-(use-package! which-key
-  :config
-  (setq which-key-show-early-on-C-h t
-        which-key-idle-delay 0.05
-        which-key-idle-secondary-delay 0.05
-        which-key-popup-type 'side-window
-        which-key-side-window-location '(right bottom)))
-
-;;; ryo-modal
-(load! "my/cua")
-
-(set-face-background 'cursor "white")
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(setq avy-style 'de-bruijn
-      completion-styles '(orderless)
-      isearch-allow-scroll t
-      isearch-lazy-highlight-initial-delay 0
-      orderless-matching-styles '(orderless-flex orderless-literal orderless-regexp)
-      read-file-name-completion-ignore-case t
-      scroll-error-top-bottom t
-      scroll-preserve-screen-position nil
-      vertico-posframe-poshandler #'posframe-poshandler-frame-top-center
-      left-margin-width 0)
-
-(setq-default cursor-type '(bar . 4)
-              blink-cursor-blinks -1
-              display-fill-column-indicator-column 79)
-
-;; gimme the blinks
-(blink-cursor-mode +1)
-
-;; adaptive-wrap
-(+global-word-wrap-mode +1)
-
-(defun my/fill-column-indicator (col)
-  (setq-local display-fill-column-indicator-column col)
-  (display-fill-column-indicator-mode t))
-
 (add-hook! (text-mode prog-mode)
-  (my/fill-column-indicator 79))
+  (my/ruler 79))
 
 (add-hook! elm-mode
-  (my/fill-column-indicator 119))
+  (my/ruler 119))
 
 (add-hook! fsharp-mode
-  (my/fill-column-indicator 99))
+  (my/ruler 99))
 
 (add-hook! csharp-mode
-  (my/fill-column-indicator 119))
+  (my/ruler 119))
