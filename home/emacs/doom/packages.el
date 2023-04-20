@@ -65,3 +65,5 @@
 (package! point-undo :pin "d875c94522ad6430294c37d627e332d726221e02")
 
 (package! expand-region :pin "b70feaa644310dc2d599dc277cd20a1f2b6446ac")
+
+(package! circadian :pin "52e336d9bb66cfd6d6dc5b9213ea21796ac873d4")

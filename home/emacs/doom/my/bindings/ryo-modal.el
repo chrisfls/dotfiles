@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
-(load! "evil-core")
+(load! "../evil-core")
 
 (evil-esc-mode 1)
 
@@ -49,14 +49,14 @@
 
 ;;; ryo-modal
 
-(load! "exit")
-(load! "grab")
-(load! "macro")
-(load! "mark")
-(load! "move")
-(load! "perform")
-(load! "repeat")
-(load! "search")
+(load! "../commands/exit")
+(load! "../commands/grab")
+(load! "../commands/macro")
+(load! "../commands/mark")
+(load! "../commands/move")
+(load! "../commands/perform")
+(load! "../ryo-modal/repeat")
+(load! "../commands/search")
 
 (use-package! ryo-modal :demand t
   :init

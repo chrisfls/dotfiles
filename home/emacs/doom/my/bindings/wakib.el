@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
-(load! "evil-core")
+(load! "../evil-core")
 
 (evil-esc-mode 1)
 
@@ -16,10 +16,10 @@
   :init
   (which-key-mode))
 
-(load! "grab")
-(load! "macro")
-(load! "search")
-(load! "wakib-keys")
+(load! "../commands/grab")
+(load! "../commands/macro")
+(load! "../commands/search")
+(load! "wakib/wakib-keys")
 
 ;;; wakib-keys
 
