@@ -7,5 +7,6 @@ mkShell {
     nodejs-16_x # vscode's nodejs version for elm lsp
     yarn
     python39 # needed by pack
+    google-cloud-sdk # needed by monorepo
   ];
 }
