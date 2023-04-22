@@ -10,15 +10,15 @@ with lib;
 let
   cfg = config.module.emacs;
   emacs = "${config.home.homeDirectory}/.config/emacs";
-  doom = "${emacs}/bin/doom";
+  # doom = "${emacs}/bin/doom";
 in
 {
   options.module.emacs = {
     enable = mkEnableOption "emacs module";
-    doomRev = mkOption {
-      type = types.str;
-      default = "22097b5a755a5b1d661e362a8441b61e37f777c9";
-    };
+    # doomRev = mkOption {
+    #   type = types.str;
+    #   default = "22097b5a755a5b1d661e362a8441b61e37f777c9";
+    # };
   };
 
   config = mkIf cfg.enable {
@@ -41,24 +41,26 @@ in
     xdg = {
       enable = true;
       configFile  = {
+        "emacs".source = config.lib.file.mkOutOfStoreSymlink /etc/nixos/home/emacs/custom;
         # [1] If I ever stop using `mkOutOfStoreSymlink` this reason is out.
-        "doom".source = config.lib.file.mkOutOfStoreSymlink /etc/nixos/home/emacs/doom;
+        # "doom".source = config.lib.file.mkOutOfStoreSymlink /etc/nixos/home/emacs/doom;
       };
     };
   
     programs.fish.shellAliases = {
-      "doom" = doom;
+      "emacsb" = "emacs --build";
+      # "doom" = doom;
     };
     
-    home.activation = {
-      # ohgodwhy
-      doomSetup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD export PATH="$PATH:${pkgs.emacs}/bin:${pkgs.git}/bin"
-        $DRY_RUN_CMD sh -c 'if [ ! -d "${emacs}" ]; then git clone https://github.com/doomemacs/doomemacs.git "${emacs}"; fi;'
-        $DRY_RUN_CMD git -C "${emacs}" checkout ${cfg.doomRev}
-        $DRY_RUN_CMD ${doom} install -! --no-config --no-hooks
-        $DRY_RUN_CMD ${doom} sync
-      '';
-    };
+    # home.activation = {
+    #   # ohgodwhy
+    #   doomSetup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    #     $DRY_RUN_CMD export PATH="$PATH:${pkgs.emacs}/bin:${pkgs.git}/bin"
+    #     $DRY_RUN_CMD sh -c 'if [ ! -d "${emacs}" ]; then git clone https://github.com/doomemacs/doomemacs.git "${emacs}"; fi;'
+    #     $DRY_RUN_CMD git -C "${emacs}" checkout ${cfg.doomRev}
+    #     $DRY_RUN_CMD ${doom} install -! --no-config --no-hooks
+    #     $DRY_RUN_CMD ${doom} sync
+    #   '';
+    # };
   };
 }
