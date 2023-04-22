@@ -251,15 +251,15 @@ binding_modes:
   - name: "resize"
     keybindings:
       - command: "resize width -2%"
-        bindings: ["H", "Left"]
-      - command: "resize width +2%"
-        bindings: ["L", "Right"]
-      - command: "resize height +2%"
-        bindings: ["K", "Up"]
+        bindings: ["B", "Left"]
       - command: "resize height -2%"
-        bindings: ["J", "Down"]
+        bindings: ["N", "Down"]
+      - command: "resize height +2%"
+        bindings: ["P", "Up"]
+      - command: "resize width +2%"
+        bindings: ["F", "Right"]
       - command: "binding mode none"
-        bindings: ["Escape", "Enter", "Space"]
+        bindings: ["G", "Escape", "Enter", "Space"]
 
 keybindings:
   #
@@ -268,23 +268,23 @@ keybindings:
 
   # focus
   - command: "focus left"
-    bindings: ["LWin+Control+Left"]
-  - command: "focus right"
-    bindings: ["LWin+Control+Right"]
-  - command: "focus up"
-    bindings: ["LWin+Control+Up"]
+    bindings: ["LWin+Control+B", "LWin+Control+Left"]
   - command: "focus down"
-    bindings: ["LWin+Control+Down"]
+    bindings: ["LWin+Control+N", "LWin+Control+Down"]
+  - command: "focus up"
+    bindings: ["LWin+Control+P", "LWin+Control+Up"]
+  - command: "focus right"
+    bindings: ["LWin+Control+F", "LWin+Control+Right"]
 
   # move
   - command: "move left"
-    bindings: ["LWin+Control+Shift+Left"]
-  - command: "move right"
-    bindings: ["LWin+Control+Shift+Right"]
-  - command: "move up"
-    bindings: ["LWin+Control+Shift+Up"]
+    bindings: ["LWin+Control+Shift+B", "LWin+Control+Shift+Left"]
   - command: "move down"
-    bindings: ["LWin+Control+Shift+Down"]
+    bindings: ["LWin+Control+Shift+N", "LWin+Control+Shift+Down"]
+  - command: "move up"
+    bindings: ["LWin+Control+Shift+P", "LWin+Control+Shift+Up"]
+  - command: "move right"
+    bindings: ["LWin+Control+Shift+F", "LWin+Control+Shift+Right"]
 
   # workspace focus
   - command: "focus workspace 1"
@@ -310,7 +310,7 @@ keybindings:
 
   # focus last workspace with focus
   - command: "focus workspace recent"
-    binding: "LWin+Control+Y"
+    binding: "LWin+Control+R"
 
   # move to workspace focus
   - command: "move to workspace 1"
@@ -368,7 +368,7 @@ keybindings:
   
   # toggle floating window
   - command: "toggle floating"
-    binding: "LWin+Control+F"
+    binding: "LWin+Control+O"
     
   # tiling direction vertical
   - command: "tiling direction toggle"
@@ -410,6 +410,6 @@ keybindings:
   - command: exec 'D:\Users\kress\scoop\apps\vscode\current\Code.exe'
     binding: "LWin+Control+D"
 
-  # launch browser'
+  # launch browser
   - command: exec 'D:\Users\kress\scoop\apps\thorium-avx2-np\current\thorium.exe' --allow-outdated-plugins --disable-logging --disable-breakpad --enable-experimental-web-platform-features --new-canvas-2d-api
-    binding: "LWin+Control+B"
+    binding: "LWin+Control+W"
