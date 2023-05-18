@@ -259,7 +259,7 @@ binding_modes:
       - command: "resize width +2%"
         bindings: ["F", "Right"]
       - command: "binding mode none"
-        bindings: ["G", "Escape", "Enter", "Space"]
+        bindings: ["G", "Escape", "Enter", "Space", "LWin+Control+S", "LWin+Control+Shift+S"]
 
 keybindings:
   #
