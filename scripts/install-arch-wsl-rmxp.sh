@@ -34,8 +34,10 @@ if [ "$(id -u)" = "0" ]; then
   # - git (temporarely), needed to clone nix-configs
   # - openssh (temporarely), needed to clone nix-configs
   # - cloudflare-warp-bin (permanently)
+  # - docker (permanently)
+  # - docker-compose (permanently)
   # - chromium (permanently), needed to configure warp
-  pacman -Syu nix dconf pacman-contrib powerpill git openssh chromium cloudflare-warp-bin
+  pacman -Syu chromium cloudflare-warp-bin  dconf docker docker-compose git nix openssh pacman-contrib powerpill
 
   # TODO: fix datetime with https://unix.stackexchange.com/questions/737365/cant-override-a-systemd-units-conditionvirtualization-on-archlinux-on-distrod
 
@@ -43,6 +45,7 @@ if [ "$(id -u)" = "0" ]; then
   systemctl enable --now warp-svc.service
 
   # configure nix
+  systemctl enable docker.service
   systemctl enable nix-daemon.service
   echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
   echo "export NIX_PATH=/nix/var/nix/profiles/per-user/root/channels" >> /etc/bash.bashrc
@@ -53,7 +56,7 @@ if [ "$(id -u)" = "0" ]; then
   passwd
 
   # create kress user
-  useradd -m -G wheel,nix-users -s /bin/bash kress
+  useradd -m -G wheel,docker,nix-users -s /bin/bash kress
   echo "trusted-users = root kress" | tee -a /etc/nix/nix.conf
 
   # setup kress password
