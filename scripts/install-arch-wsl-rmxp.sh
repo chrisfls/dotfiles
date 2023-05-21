@@ -37,7 +37,7 @@ if [ "$(id -u)" = "0" ]; then
   # - docker (permanently)
   # - docker-compose (permanently)
   # - chromium (permanently), needed to configure warp
-  pacman -Syu chromium cloudflare-warp-bin  dconf docker docker-compose git nix openssh pacman-contrib powerpill
+  pacman -Syu chromium cloudflare-warp-bin dconf docker docker-compose git nix openssh pacman-contrib powerpill
 
   # TODO: fix datetime with https://unix.stackexchange.com/questions/737365/cant-override-a-systemd-units-conditionvirtualization-on-archlinux-on-distrod
 
