@@ -48,7 +48,7 @@ if [ "$(id -u)" = "0" ]; then
   systemctl enable docker.service
   systemctl enable nix-daemon.service
   echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
-  echo "export NIX_PATH=/nix/var/nix/profiles/per-user/root/channels" >> /etc/bash.bashrc
+
   nix-channel --add https://nixos.org/channels/nixpkgs-unstable
   nix-channel --update
 
