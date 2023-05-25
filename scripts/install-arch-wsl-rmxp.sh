@@ -49,7 +49,8 @@ if [ "$(id -u)" = "0" ]; then
   systemctl enable nix-daemon.service
   echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
 
-  nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+  nix-channel --add https://nixos.org/channels/nixos-22.11 nixpkgs
+  nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
   nix-channel --update
 
   # setup root password
