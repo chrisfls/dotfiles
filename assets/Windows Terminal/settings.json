@@ -338,9 +338,10 @@
         {
             "command": 
             {
-                "action": "prevTab"
+                "action": "moveTab",
+                "direction": "forward"
             },
-            "keys": "win+ctrl+alt+p"
+            "keys": "win+ctrl+alt+f"
         },
         {
             "command": 
@@ -353,10 +354,13 @@
         {
             "command": 
             {
-                "action": "moveTab",
-                "direction": "forward"
+                "action": "prevTab"
             },
-            "keys": "win+ctrl+alt+f"
+            "keys": "win+ctrl+alt+p"
+        },
+        {
+            "command": "markMode",
+            "keys": "ctrl+space"
         },
         {
             "command": 
@@ -364,10 +368,6 @@
                 "action": "nextTab"
             },
             "keys": "win+ctrl+alt+n"
-        },
-        {
-            "command": "markMode",
-            "keys": "ctrl+space"
         },
         {
             "command": 
@@ -408,6 +408,10 @@
             "keys": "f11"
         },
         {
+            "command": "toggleFocusMode",
+            "keys": "win+ctrl+alt+z"
+        },
+        {
             "command": "selectAll",
             "keys": "ctrl+shift+a"
         },
@@ -418,10 +422,6 @@
                 "index": 4294967295
             },
             "keys": "win+ctrl+alt+r"
-        },
-        {
-            "command": "toggleFocusMode",
-            "keys": "win+ctrl+alt+z"
         }
     ],
     "copyFormatting": "none",
@@ -431,6 +431,12 @@
     "firstWindowPreference": "defaultProfile",
     "language": "en-US",
     "launchMode": "focus",
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles": 
     {
         "defaults": 
@@ -484,6 +490,11 @@
                 "hidden": true,
                 "name": "Azure Cloud Shell",
                 "source": "Windows.Terminal.Azure"
+            },
+            {
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "Command Prompt"
             }
         ]
     },
@@ -905,6 +916,50 @@
         }
     ],
     "tabSwitcherMode": "disabled",
-    "themes": [],
+    "themes": 
+    [
+        {
+            "name": "legacyDark",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "dark",
+                "useMica": false
+            }
+        },
+        {
+            "name": "legacyLight",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "light",
+                "useMica": false
+            }
+        },
+        {
+            "name": "legacySystem",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "system",
+                "useMica": false
+            }
+        }
+    ],
     "windowingBehavior": "useNew"
 }
