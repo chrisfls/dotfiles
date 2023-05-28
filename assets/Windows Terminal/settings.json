@@ -338,10 +338,9 @@
         {
             "command": 
             {
-                "action": "moveTab",
-                "direction": "forward"
+                "action": "prevTab"
             },
-            "keys": "win+ctrl+alt+f"
+            "keys": "win+ctrl+alt+p"
         },
         {
             "command": 
@@ -354,13 +353,10 @@
         {
             "command": 
             {
-                "action": "prevTab"
+                "action": "moveTab",
+                "direction": "forward"
             },
-            "keys": "win+ctrl+alt+p"
-        },
-        {
-            "command": "markMode",
-            "keys": "ctrl+space"
+            "keys": "win+ctrl+alt+f"
         },
         {
             "command": 
@@ -370,6 +366,10 @@
             "keys": "win+ctrl+alt+n"
         },
         {
+            "command": "markMode",
+            "keys": "ctrl+space"
+        },
+        {
             "command": 
             {
                 "action": "closeTab"
@@ -377,15 +377,15 @@
             "keys": "win+ctrl+alt+c"
         },
         {
-            "command": "openNewTabDropdown",
-            "keys": "win+ctrl+alt+i"
-        },
-        {
             "command": 
             {
                 "action": "commandPalette"
             },
             "keys": "win+ctrl+alt+x"
+        },
+        {
+            "command": "openNewTabDropdown",
+            "keys": "win+ctrl+alt+i"
         },
         {
             "command": 
@@ -449,7 +449,7 @@
             "experimental.retroTerminalEffect": false,
             "font": 
             {
-                "face": "JetBrainsMono NFM",
+                "face": "JetBrainsMono Nerd Font Mono",
                 "size": 13.0,
                 "weight": "normal"
             },
