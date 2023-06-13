@@ -8,7 +8,7 @@ general:
   
 gaps:
   inner_gap: 24 # 32 # 24 # 16 # 8 
-  outer_gap: 24 # 32 # 24 # 16 # 8 
+  outer_gap: 4 # 32 # 24 # 16 # 8 
 
 bar:
   height: "28px"
