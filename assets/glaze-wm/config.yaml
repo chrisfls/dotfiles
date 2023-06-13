@@ -67,7 +67,7 @@ bar:
 
 workspaces:
   - name: "1"
-    bind_to_monitor: 2
+    bind_to_monitor: 1
   - name: "2"
     bind_to_monitor: 2
   - name: "3"
@@ -85,7 +85,7 @@ workspaces:
   - name: "9"
     bind_to_monitor: 2
   - name: "0"
-    bind_to_monitor: 1
+    bind_to_monitor: 2
 
 window_rules:
   # make all float by default 
