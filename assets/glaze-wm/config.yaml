@@ -251,13 +251,13 @@ binding_modes:
   - name: "resize"
     keybindings:
       - command: "resize width -2%"
-        bindings: ["B", "Left"]
+        bindings: ["Left"]
       - command: "resize height -2%"
-        bindings: ["N", "Down"]
+        bindings: ["Down"]
       - command: "resize height +2%"
-        bindings: ["P", "Up"]
+        bindings: ["Up"]
       - command: "resize width +2%"
-        bindings: ["F", "Right"]
+        bindings: ["Right"]
       - command: "binding mode none"
         bindings: ["G", "Escape", "Enter", "Space", "LWin+Control+S", "LWin+Control+Shift+S"]
 
@@ -268,23 +268,23 @@ keybindings:
 
   # focus
   - command: "focus left"
-    bindings: ["LWin+Control+B", "LWin+Control+Left"]
+    bindings: ["LWin+Control+Left"]
   - command: "focus down"
-    bindings: ["LWin+Control+N", "LWin+Control+Down"]
+    bindings: ["LWin+Control+Down"]
   - command: "focus up"
-    bindings: ["LWin+Control+P", "LWin+Control+Up"]
+    bindings: ["LWin+Control+Up"]
   - command: "focus right"
-    bindings: ["LWin+Control+F", "LWin+Control+Right"]
+    bindings: ["LWin+Control+Right"]
 
   # move
   - command: "move left"
-    bindings: ["LWin+Control+Shift+B", "LWin+Control+Shift+Left"]
+    bindings: ["LWin+Control+Shift+Left"]
   - command: "move down"
-    bindings: ["LWin+Control+Shift+N", "LWin+Control+Shift+Down"]
+    bindings: ["LWin+Control+Shift+Down"]
   - command: "move up"
-    bindings: ["LWin+Control+Shift+P", "LWin+Control+Shift+Up"]
+    bindings: ["LWin+Control+Shift+Up"]
   - command: "move right"
-    bindings: ["LWin+Control+Shift+F", "LWin+Control+Shift+Right"]
+    bindings: ["LWin+Control+Shift+Right"]
 
   # workspace focus
   - command: "focus workspace 1"
