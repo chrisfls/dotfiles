@@ -1,5 +1,6 @@
 $Wsh = New-Object -comObject WScript.Shell
 $Link = $Wsh.CreateShortcut("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\komorebi.lnk")
+# TODO: fix scoop prefix komorebi
 $Link.TargetPath = "$(scoop prefix komorebi)\komorebic.exe"
 $Link.Arguments = "start --await-configuration"
 $Link.IconLocation = "$(scoop prefix komorebi)\komorebic.exe"

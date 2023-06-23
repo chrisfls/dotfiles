@@ -375,6 +375,7 @@ binding_mode := "normal"
   Return
 
 ;; #^ F16
+;; TODO: fix shortcut
 #^D::
   binding_mode := "normal"
   Run, D:\Users\kress\scoop\apps\vscode\current\Code.exe

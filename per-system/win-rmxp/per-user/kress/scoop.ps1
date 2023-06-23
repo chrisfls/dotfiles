@@ -1,6 +1,6 @@
-scoop install aria2 7zip git
-scoop config aria2-warning-enabled false
-scoop install 
+# REVIEW: can I remove 7zip?
+scoop install 7zip git
+
 scoop bucket add extras
 scoop bucket add nerd-fonts
 scoop bucket add nonportable
@@ -10,7 +10,7 @@ scoop bucket add insomnia https://github.com/insomnimus/scoop-bucket
 scoop update
 
 # cli
-scoop install 7zip
+# scoop install 7zip
 scoop install 7zip19.00-helper
 scoop install adb
 scoop install bzip2

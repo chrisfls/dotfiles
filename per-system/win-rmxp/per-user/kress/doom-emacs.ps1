@@ -23,6 +23,7 @@ $Wsh = New-Object -comObject WScript.Shell
 $Link = $Wsh.CreateShortcut("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Doom Emacs.lnk")
 $Link.TargetPath = "$(scoop prefix git)\bin\bashw.exe"
 $Link.Arguments = "-c runemacs"
+# TODO: fix scoop prefix emacs
 $Link.IconLocation = "$(scoop prefix emacs)\bin\runemacs.exe"
 $Link.WorkingDirectory = [Environment]::GetFolderPath("Desktop")
 $Link.Save()
