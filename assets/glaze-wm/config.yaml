@@ -407,7 +407,7 @@ keybindings:
     binding: "LWin+Control+Shift+S"
 
   # launch main ide
-  - command: exec 'D:\Users\kress\scoop\apps\vscode\current\Code.exe'
+  - command: exec 'C:\Users\kress\AppData\Local\Programs\Microsoft VS Code\Code.exe'
     binding: "LWin+Control+D"
 
   # launch browser
