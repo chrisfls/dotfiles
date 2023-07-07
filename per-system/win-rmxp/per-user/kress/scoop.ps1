@@ -37,6 +37,8 @@ scoop install starship
 scoop install sudo
 scoop install tar
 scoop install unzip
+scoop install virtual-desktop
+scoop install windows-virtual-desktop-helper
 scoop install yt-dlp
 scoop install zoxide
 
