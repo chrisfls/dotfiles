@@ -332,15 +332,30 @@
             "keys": "win+ctrl+alt+down"
         },
         {
+            "command": "unbound",
+            "keys": "win+ctrl+backspace"
+        },
+        {
+            "command": "unbound",
+            "keys": "win+ctrl+alt+t"
+        },
+        {
             "command": "duplicateTab",
             "keys": "win+ctrl+alt+backspace"
         },
         {
             "command": 
             {
-                "action": "prevTab"
+                "action": "moveTab",
+                "direction": "forward"
             },
-            "keys": "win+ctrl+alt+p"
+            "keys": "win+ctrl+alt+f"
+        },
+        {
+            "command": 
+            {
+                "action": "quakeMode"
+            }
         },
         {
             "command": 
@@ -353,10 +368,9 @@
         {
             "command": 
             {
-                "action": "moveTab",
-                "direction": "forward"
+                "action": "prevTab"
             },
-            "keys": "win+ctrl+alt+f"
+            "keys": "win+ctrl+alt+p"
         },
         {
             "command": 
@@ -377,15 +391,15 @@
             "keys": "win+ctrl+alt+c"
         },
         {
+            "command": "openNewTabDropdown",
+            "keys": "win+ctrl+alt+i"
+        },
+        {
             "command": 
             {
                 "action": "commandPalette"
             },
             "keys": "win+ctrl+alt+x"
-        },
-        {
-            "command": "openNewTabDropdown",
-            "keys": "win+ctrl+alt+i"
         },
         {
             "command": 
@@ -408,12 +422,12 @@
             "keys": "f11"
         },
         {
-            "command": "toggleFocusMode",
-            "keys": "win+ctrl+alt+z"
-        },
-        {
             "command": "selectAll",
             "keys": "ctrl+shift+a"
+        },
+        {
+            "command": "toggleFocusMode",
+            "keys": "win+ctrl+alt+z"
         },
         {
             "command": 
@@ -424,25 +438,29 @@
             "keys": "win+ctrl+alt+r"
         }
     ],
+    "alwaysOnTop": false,
+    "alwaysShowTabs": true,
+    "centerOnLaunch": true,
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
     "disableAnimations": false,
     "firstWindowPreference": "defaultProfile",
     "language": "en-US",
-    "launchMode": "focus",
+    "launchMode": "default",
     "newTabMenu": 
     [
         {
             "type": "remainingProfiles"
         }
     ],
+    "newTabPosition": "afterCurrentTab",
     "profiles": 
     {
         "defaults": 
         {
             "adjustIndistinguishableColors": "indexed",
-            "altGrAliasing": false,
+            "altGrAliasing": true,
             "antialiasingMode": "cleartype",
             "colorScheme": "Campbell",
             "cursorShape": "bar",
@@ -454,7 +472,9 @@
                 "weight": "normal"
             },
             "intenseTextStyle": "all",
+            "opacity": 100,
             "padding": "0",
+            "useAcrylic": false,
             "useAtlasEngine": true
         },
         "list": 
@@ -915,7 +935,11 @@
             "yellow": "#808000"
         }
     ],
-    "tabSwitcherMode": "disabled",
+    "showTabsInTitlebar": true,
+    "snapToGridOnResize": false,
+    "startOnUserLogin": false,
+    "tabSwitcherMode": "mru",
+    "tabWidthMode": "titleLength",
     "themes": 
     [
         {
@@ -961,5 +985,6 @@
             }
         }
     ],
+    "useAcrylicInTabRow": false,
     "windowingBehavior": "useNew"
 }

@@ -4,7 +4,7 @@
 # popping and locking black: "#000000" "#1D2021"
 
 general:
-  show_floating_on_top: false
+  show_floating_on_top: true
   
 gaps:
   inner_gap: 24 # 32 # 24 # 16 # 8 
@@ -99,7 +99,9 @@ window_rules:
     match_process_name: "regedit"
   - command: "ignore"
     match_process_name: "PowerToys.Settings"
-
+  - command: set floating
+    match_process_name: WindowsTerminal
+    
   # some tile by default
   # - command: "set tiling"
   #   match_title: "/.*Visual Studio Code$/"
