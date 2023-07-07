@@ -124,6 +124,11 @@ Loop 9 {
     Run "explorer ms-screenclip:"
 }
 
+^+#s::
+{
+    Run "explorer ms-screenclip:"
+}
+
 ^#d::
 {
     Run "C:\Users\kress\AppData\Local\Programs\Microsoft VS Code\Code.exe"
