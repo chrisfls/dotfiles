@@ -24,6 +24,7 @@ winget install -e --id Obsidian.Obsidian
 winget install -e --id Parsec.Parsec
 winget install -e --id PicoTorrent.PicoTorrent
 winget install -e --id Pierre.Museeks
+winget install -e --id Soulseek.SoulseekQt
 winget install -e --id SublimeHQ.SublimeMerge
 winget install -e --id SublimeHQ.SublimeText.4
 winget install -e --id Valve.Steam
