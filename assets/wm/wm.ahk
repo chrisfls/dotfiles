@@ -11,7 +11,7 @@ Loop 9 {
 
 ^+#1::
 {
-  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /maw:0 /s:0"
+  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /gd:0 /maw /s:0"
 }
 
 ^#2::
@@ -21,7 +21,7 @@ Loop 9 {
 
 ^+#2::
 {
-  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /maw:1 /s:1"
+  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /gd:1 /maw /s:1"
 }
 
 ^#3::
@@ -31,7 +31,7 @@ Loop 9 {
 
 ^+#3::
 {
-  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /maw:2 /s:2"
+  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /gd:2 /maw /s:2"
 }
 
 ^#4::
@@ -41,7 +41,7 @@ Loop 9 {
 
 ^+#4::
 {
-  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /maw:3 /s:3"
+  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /gd:3 /maw /s:3"
 }
 
 ^#5::
@@ -51,7 +51,7 @@ Loop 9 {
 
 ^+#5::
 {
-  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /maw:4 /s:4"
+  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /gd:4 /maw /s:4"
 }
 
 ^#6::
@@ -61,7 +61,7 @@ Loop 9 {
 
 ^+#6::
 {
-  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /maw:5 /s:5"
+  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /gd:5 /maw /s:5"
 }
 
 ^#7::
@@ -71,7 +71,7 @@ Loop 9 {
 
 ^+#7::
 {
-  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /maw:6 /s:6"
+  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /gd:6 /maw /s:6"
 }
 
 ^#8::
@@ -81,7 +81,7 @@ Loop 9 {
 
 ^+#8::
 {
-  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /maw:7 /s:7"
+  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /gd:7 /maw /s:7"
 }
 
 ^#9::
@@ -91,7 +91,7 @@ Loop 9 {
 
 ^+#9::
 {
-  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /maw:8 /s:8"
+  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /gd:8 /maw /s:8"
 }
 
 ^#0::
@@ -101,5 +101,5 @@ Loop 9 {
 
 ^+#0::
 {
-  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /maw:9 /s:9"
+  Run "D:\Users\kress\scoop\apps\virtual-desktop\current\VirtualDesktopw.exe /gd:9 /maw /s:9"
 }
