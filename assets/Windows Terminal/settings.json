@@ -8,7 +8,7 @@
             {
                 "action": "globalSummon"
             },
-            "keys": "win+t"
+            "keys": "win+sc(41)"
         },
         {
             "command": "unbound",
@@ -61,10 +61,6 @@
         {
             "command": "unbound",
             "keys": "ctrl+numpad0"
-        },
-        {
-            "command": "unbound",
-            "keys": "win+sc(41)"
         },
         {
             "command": "unbound",
