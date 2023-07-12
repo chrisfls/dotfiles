@@ -1,5 +1,6 @@
 winget install -e --id AnyDeskSoftwareGmbH.AnyDesk
 winget install -e --id Audacity.Audacity
+winget install -e --id AutoHotkey.AutoHotkey                                              
 winget install -e --id Discord.Discord
 winget install -e --id eloston.ungoogled-chromium
 winget install -e --id GIMP.GIMP
@@ -21,10 +22,14 @@ winget install -e --id Microsoft.WindowsTerminal
 winget install -e --id MoonlightGameStreamingProject.Moonlight
 winget install -e --id Notepad++.Notepad++
 winget install -e --id Obsidian.Obsidian
+winget install -e --id Ovenoboyo.Moosync
 winget install -e --id Parsec.Parsec
 winget install -e --id PicoTorrent.PicoTorrent
 winget install -e --id Pierre.Museeks
+winget install -e --id RamenSoftware.7+TaskbarTweaker
+winget install -e --id Shabinder.SpotiFlyer
 winget install -e --id Soulseek.SoulseekQt
+winget install -e --id staniel359.muffon
 winget install -e --id SublimeHQ.SublimeMerge
 winget install -e --id SublimeHQ.SublimeText.4
 winget install -e --id Valve.Steam
