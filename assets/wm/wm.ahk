@@ -111,17 +111,12 @@
 
 #t::
 {
-  Run "wt --profile `"{8e510365-d81d-426c-9b28-dfb96a7a6a85}`""
+  Run "wt"
 }
 
 #Backspace::
 {
   Run "wt --profile `"{8e510365-d81d-426c-9b28-dfb96a7a6a85}`""
-}
-
-#w::
-{
-    Run "wt"
 }
 
 #s::
