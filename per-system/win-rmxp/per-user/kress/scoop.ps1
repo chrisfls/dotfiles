@@ -10,28 +10,28 @@ scoop bucket add insomnia https://github.com/insomnimus/scoop-bucket
 scoop update
 
 # cli
+# scoop install dark
+# scoop install dotnet-sdk-preview
+# scoop install gcc
+# scoop install innounp
+# scoop install just
+# scoop install llvm
+# scoop install mkvtoolnix
+# scoop install nodejs16
+# scoop install npiperelay
+# scoop install ps-dotenv
 scoop install 7zip
 scoop install 7zip19.00-helper
 scoop install adb
 scoop install bzip2
 scoop install curl
-# scoop install dark
 scoop install deno
-scoop install dotnet-sdk-preview
 scoop install dprint
 scoop install ffmpeg
 scoop install gallery-dl
-# scoop install gcc
 scoop install git
 scoop install gzip
-# scoop install innounp
-# scoop install just
-# scoop install llvm
 scoop install micro
-# scoop install mkvtoolnix
-# scoop install nodejs16
-# scoop install npiperelay
-# scoop install ps-dotenv
 scoop install scoop-search
 scoop install starship
 scoop install sudo
