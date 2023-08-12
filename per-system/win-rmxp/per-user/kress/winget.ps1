@@ -22,6 +22,7 @@ winget install -e --id Logitech.LogiBolt
 winget install -e --id Logitech.OptionsPlus
 winget install -e --id marha.VcXsrv
 winget install -e --id MichaelTippach.ASIO4ALL
+winget install -e --id Microsoft.DotNet.SDK.Preview
 winget install -e --id Microsoft.PowerShell
 winget install -e --id Microsoft.PowerToys
 winget install -e --id Microsoft.VisualStudio.2022.Community
