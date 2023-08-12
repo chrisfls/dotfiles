@@ -27,6 +27,7 @@ winget install -e --id Microsoft.PowerShell
 winget install -e --id Microsoft.PowerToys
 winget install -e --id Microsoft.VisualStudio.2022.Community
 winget install -e --id Microsoft.VisualStudioCode
+winget install -e --id Microsoft.VisualStudioCode
 winget install -e --id Microsoft.WindowsSDK.10.0.22000
 winget install -e --id Microsoft.WindowsTerminal
 winget install -e --id MoonlightGameStreamingProject.Moonlight
