@@ -32,6 +32,7 @@ scoop install gallery-dl
 scoop install git
 scoop install gzip
 scoop install micro
+scoop install nirsoft/soundvolumeview
 scoop install scoop-search
 scoop install starship
 scoop install sudo
