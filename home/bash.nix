@@ -20,8 +20,8 @@ in
         VTE_VERSION = "6003";
         DIRENV_LOG_FORMAT = "";
         PATH = "$PATH:$HOME/.nix-profile/bin";
-        DISPLAY = "$(ip route list default | awk '{print $3}'):0";
-        LIBGL_ALWAYS_INDIRECT = "1";
+        # DISPLAY = "$(ip route list default | awk '{print $3}'):0";
+        # LIBGL_ALWAYS_INDIRECT = "1";
       };
       profileExtra = ''
       unset HISTFILE

@@ -47,7 +47,6 @@ in
         plugins = [
           { name = "autopair-fish"; src = pkgs.fishPlugins.autopair-fish.src; }
           { name = "colored-man-pages"; src = pkgs.fishPlugins.colored-man-pages.src; }
-          { name = "done"; src = pkgs.fishPlugins.done.src; } # probably never used
           { name = "foreign-env"; src = pkgs.fishPlugins.foreign-env.src; } # probably not needed
           { name = "sponge"; src = pkgs.fishPlugins.sponge.src; }
           { name = "tide"; src = pkgs.fishPlugins.tide.src; }
