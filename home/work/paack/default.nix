@@ -3,7 +3,7 @@ with specialArgs;
 let
   envrc = "Desktop/work/.envrc";
   devenv = "Desktop/work/devenv";
-  copy = orig: dest:
+  copy = orig: dest: # TODO: extract this functionality to a module
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       $DRY_RUN_CMD cp -u ${builtins.toPath orig} ${dest}
       $DRY_RUN_CMD chmod 400 ${dest}
