@@ -1,0 +1,44 @@
+{ config, lib, pkgs, specialArgs, ... }:
+with specialArgs;
+let
+  envrc = "Desktop/work/.envrc";
+  devenv = "Desktop/work/devenv";
+  copy = orig: dest:
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      $DRY_RUN_CMD cp -u ${builtins.toPath orig} ${dest}
+      $DRY_RUN_CMD chmod 400 ${dest}
+    '';
+in
+{
+  programs.git = {
+    includes = [
+      {
+        condition = "gitdir:${config.home.homeDirectory}/work/";
+        contents = {
+          user.name = ssot.contact.work.name;
+          user.email = ssot.contact.work.email;
+        };
+      }
+    ];
+  };
+
+  home.file = {
+    "${envrc}".source = ../../../devenv/.envrc;
+    "${devenv}.yaml".source = ./devenv.yaml;
+  };
+
+  homeage.file = {
+    secret-envrc = {
+      source = ./dot-envrc.secret.age;
+      symlinks = [ "${envrc}.secret" ];
+    };
+  };
+
+  programs.direnv.config = {
+    whitelist.exact = [ "${config.home.homeDirectory}/${envrc}" ];
+  };
+
+  home.activation = {
+    paackWorkFlake = copy ./devenv.nix "${devenv}.nix";
+  };
+}

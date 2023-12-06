@@ -1,4 +1,4 @@
-{ config, pkgs, lib, specialArgs, ... }:
+{ config, pkgs, lib, specialArgs, flakes, ... }:
 with specialArgs;
 {
   programs.nix-index.enable = true;
@@ -105,10 +105,11 @@ with specialArgs;
     # nix
     any-nix-shell
     cachix
+    flakes.devenv.packages.${pkgs.system}.devenv
     nixpkgs-fmt
 
     # edit secrets
-    flakes.agenix.packages."${pkgs.system}".default
+    flakes.agenix.packages.${pkgs.system}.default
 
     # languagetool
     ltex-ls
