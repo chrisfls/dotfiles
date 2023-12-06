@@ -21,9 +21,9 @@
     devenv.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
     devenv.inputs.flake-compat.follows = "flake-compat";
 
-    nixGL.url = "github:guibou/nixGL";
-    nixGL.inputs.nixpkgs.follows = "nixpkgs";
-    nixGL.inputs.flake-utils.follows = "flake-utils";
+    nixgl.url = "github:guibou/nixGL";
+    nixgl.inputs.nixpkgs.follows = "nixpkgs";
+    nixgl.inputs.flake-utils.follows = "flake-utils";
 
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -41,12 +41,12 @@
     extra-substituters = "https://nix-community.cachix.org https://devenv.cachix.org";
   };
 
-  outputs = { nixpkgs, devenv, home-manager, homeage, systems, ... }@inputs:
+  outputs = { nixpkgs, devenv, home-manager, systems, ... }@inputs:
     with inputs;
     let
       ssot = import ./ssot.nix;
       specialArgs = {
-        inherit ssot homeage;
+        inherit ssot;
         flakes = inputs;
       };
       forEachSystem = nixpkgs.lib.genAttrs (import systems);
@@ -62,6 +62,7 @@
           modules = [
             ./home/all
             ./home/desk
+            ./home/desk/arch.nix
             ./home/dev
             ./home/work/paack
             ./home/${ssot.users.arch-rmxp.kress.id}.nix

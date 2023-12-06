@@ -210,7 +210,7 @@
         "type": "github"
       }
     },
-    "nixGL": {
+    "nixgl": {
       "inputs": {
         "flake-utils": [
           "flake-utils"
@@ -317,7 +317,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "homeage": "homeage",
-        "nixGL": "nixGL",
+        "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
         "pre-commit-hooks": "pre-commit-hooks",
         "systems": "systems"

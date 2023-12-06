@@ -1,7 +1,6 @@
-{ config, pkgs, specialArgs, ... }:
-with specialArgs;
+{ config, pkgs, flakes, ... }:
 {
-  imports = [ homeage.homeManagerModules.homeage ];
+  imports = [ flakes.homeage.homeManagerModules.homeage ];
 
   homeage = {
     identityPaths = [ ".ssh/id_ed25519" ];
