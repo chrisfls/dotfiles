@@ -13,6 +13,11 @@ in
 
   programs.bash.sessionVariables.XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
 
+
+  xdg.configFile = {
+    "hypr/hyprland.conf".source = ./hyprland.conf;
+  };
+
   # programs.bash.profileExtra = ''
   #   source <(
   #     nixGLIntel /bin/bash -c "\
