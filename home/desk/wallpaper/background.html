@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <!--
+  #1C1D26 - Dark Gunmetal
+  #f2e5bc - Sand Dollar
+  #d79921 - Tiger's Eye
+  #f9f5d7 - Creamy Vanilla
+  #458588 - Teal Blue
+  #f42c3e - Cherry Red
+  #7ec16e - Moss Green
+  #99c6ca - Powder Blue
+  #b16286 - Rosy Brown
+  #fabd2f - Sunflower Yellow
+  #60daff47 - Sky Blue (with transparency)
+  #506899 - Steel Blue
+  #d3869b - Dusky Pink
+  #fe8019 - Pumpkin Orange
+  #b8bb26 - Avocado Green
+  #d65d0e - Rusty Orange
+  #ebdbb2 - Sandstone
+  -->
+
+  <style>
+    :root {
+      --dark-gunmetal: #1C1D26;
+      --sand-dollar: #f2e5bc;
+      --tigers-eye: #d79921;
+      --creamy-vanilla: #f9f5d7;
+      --teal-blue: #458588;
+      --cherry-red: #f42c3e;
+      --moss-green: #7ec16e;
+      --powder-blue: #99c6ca;
+      --rosy-brown: #b16286;
+      --sunflower-yellow: #fabd2f;
+      --sky-blue-transparent: #60daff47;
+      --steel-blue: #506899;
+      --dusky-pink: #d3869b;
+      --pumpkin-orange: #fe8019;
+      --avocado-green: #b8bb26;
+      --rusty-orange: #d65d0e;
+      --sandstone: #ebdbb2;
+    }
+
+    #bg {
+      width: 1920px;
+      height: 1080px;
+      background: #181921;
+      background-image:
+        radial-gradient(ellipse at  0% 0%, var(--powder-blue), transparent),
+        radial-gradient(ellipse at 100% 100%, var(--steel-blue), transparent),
+        url(noise.svg);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="bg"></div>
+</body>
+
+</html>

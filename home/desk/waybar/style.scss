@@ -7,7 +7,7 @@
 window#waybar {
     /* global bg */
     background: $background;
-    border-bottom: solid 1px #000;
+    border-bottom: solid 1px $absoluteBlack;
 
     /* font */
     color: $foreground;
@@ -17,7 +17,7 @@ window#waybar {
 
 tooltip {
     background: $background;
-    border: solid 1px #000;
+    border: solid 1px $absoluteBlack;
     border-radius: 2px;
 }
 
@@ -117,7 +117,6 @@ tooltip {
 /********************************************************************
  * keyboard_state
  ********************************************************************/
-
 
 #keyboard_state {
     /* font */
@@ -264,40 +263,12 @@ tooltip {
     padding: 0px 8px;
     margin: 0px 4px;
 }
+
 #wireplumber.muted {
     /* font */
     color: $blue;
-}
-
-/* TODO: remove */
-
-#pulseaudio-slider {
-    margin-right: 8px;
-}
-
-#pulseaudio-slider slider {
     /* layout */
-    min-height: 0px;
-    min-width: 0px;
-}
-
-#pulseaudio-slider trough {
-    /* colors */
-    background-color: $black;
-
-    /* layout */
-    min-height: 4px;
-    min-width: 64px;
-    border-radius: 4px;
-}
-
-#pulseaudio-slider highlight {
-    /* colors */
-    background-color: $blue;
-
-    /* layout */
-    min-width: 4px;
-    border-radius: 4px;
+    border-top: solid 2px $blue;
 }
 
 /********************************************************************
@@ -333,20 +304,3 @@ tooltip {
         10px 0px 8px;
     margin: 0px 4px;
 }
-
-/*
-#clock.hours {
-    margin-left: 8px;
-}
-#clock.minutes {
-    margin-left: 8px;
-}
-#clock.seconds {
-    margin-left: 8px;
-}
-
-#custom-clock-separator {
-    margin-top: -18px;
-    margin-bottom: -14px;
-    margin-left: 4px;
-}*/
