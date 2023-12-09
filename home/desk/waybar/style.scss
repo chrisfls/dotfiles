@@ -1,0 +1,352 @@
+* {
+    all: unset;
+}
+
+/* trdl */
+
+window#waybar {
+    /* global bg */
+    background: $background;
+    border-bottom: solid 1px #000;
+
+    /* font */
+    color: $foreground;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+tooltip {
+    background: $background;
+    border: solid 1px #000;
+    border-radius: 2px;
+}
+
+/********************************************************************
+ * workspaces
+ ********************************************************************/
+
+#workspaces {
+    /* font */
+    font-size: 16px;
+
+    /* layout */
+    margin: 0px 8px 4px 8px;
+}
+
+#workspaces button {
+    /* font */
+    color: $brightBlack;
+    font-size: 12px;
+
+    /* layout */
+    padding: 0px 8px;
+    margin-top: 2px;
+}
+
+#workspaces button.active {
+    /* font */
+    color: $foreground;
+    font-weight: 700;
+
+    /* layout */
+    border-top: solid 2px $foreground;
+    margin-top: 0px;
+}
+
+#workspaces button.visible {
+    /* font */
+    color: $foreground;
+    font-weight: 700;
+}
+
+#workspaces button.urgent {
+    /* font */
+    color: $red;
+}
+
+
+/********************************************************************
+ * window title
+ ********************************************************************/
+
+#window {
+    /* font */
+    font-size: 14px;
+    color: $foreground;
+
+    /* layout */
+    border-top: solid 2px $foreground;
+    padding: 0px 8px;
+    margin: 0px 4px;
+}
+
+#waybar.empty #window {
+    border-top: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+/********************************************************************
+ * submap
+ ********************************************************************/
+
+#submap {
+    /* font */
+    font-size: 14px;
+    color: $foreground;
+
+    /* layout */
+    border-top: solid 2px $foreground;
+    padding: 0px 8px;
+    margin: 0px 4px;
+}
+
+
+/********************************************************************
+ * tray
+ ********************************************************************/
+
+#tray {
+    /* layout */
+    border-top: solid 2px $white;
+    padding: 0px 8px;
+    margin: 0px 4px;
+}
+
+/********************************************************************
+ * keyboard_state
+ ********************************************************************/
+
+
+#keyboard_state {
+    /* font */
+    font-size: 14px;
+    color: $brightGreen;
+
+    /* layout */
+    border-top: solid 2px $brightGreen;
+    padding: 0px
+        /* TODO: review */
+        12px 0px
+        /* TODO: review */
+        4px;
+    margin: 0px 4px;
+}
+
+/*#keyboard-state
+#keyboard-state label
+#keyboard-state label.locked*/
+
+/********************************************************************
+ * temperature
+ ********************************************************************/
+
+#temperature {
+    /* font */
+    font-size: 14px;
+    color: $brightRed;
+
+    /* layout */
+    border-top: solid 2px $brightRed;
+    padding: 0px 4px;
+    margin: 0px 4px;
+}
+
+/********************************************************************
+ * cpu
+ ********************************************************************/
+
+#cpu {
+    /* font */
+    font-size: 14px;
+    color: $brightGreen;
+
+    /* layout */
+    border-top: solid 2px $brightGreen;
+    padding: 0px
+        /* TODO: review */
+        12px 0px
+        /* TODO: review */
+        4px;
+    margin: 0px 4px;
+}
+
+/********************************************************************
+ * memory
+ ********************************************************************/
+
+#memory {
+    /* font */
+    font-size: 14px;
+    color: $brightYellow;
+
+    /* layout */
+    border-top: solid 2px $brightYellow;
+    padding: 0px
+        /* TODO: review */
+        12px 0px
+        /* TODO: review */
+        4px;
+    margin: 0px 4px;
+}
+
+
+/********************************************************************
+ * disk
+ ********************************************************************/
+
+#disk {
+    /* font */
+    font-size: 14px;
+    color: $brightPurple;
+
+    /* layout */
+    border-top: solid 2px $brightPurple;
+    padding: 0px
+        /* TODO: review */
+        12px 0px
+        /* TODO: review */
+        4px;
+    margin: 0px 4px;
+}
+
+/********************************************************************
+ * network
+ ********************************************************************/
+
+#network {
+    /* font */
+    font-size: 14px;
+    color: $brightCyan;
+
+    /* layout */
+    border-top: solid 2px $brightCyan;
+    padding: 0px
+        /* TODO: review */
+        12px 0px
+        /* TODO: review */
+        4px;
+    margin: 0px 4px;
+}
+
+
+/********************************************************************
+ * disk
+ ********************************************************************/
+
+#bluetooth {
+    /* font */
+    font-size: 14px;
+    color: $brightBlue;
+
+    /* layout */
+    border-top: solid 2px $brightBlue;
+    padding: 0px
+        /* TODO: review */
+        12px 0px
+        /* TODO: review */
+        4px;
+    margin: 0px 4px;
+}
+
+/********************************************************************
+ * media
+ ********************************************************************/
+
+#wireplumber {
+    /* font */
+    font-size: 14px;
+    color: $brightBlue;
+
+    /* layout */
+    border-top: solid 2px $brightBlue;
+    padding: 0px 8px;
+    margin: 0px 4px;
+}
+#wireplumber.muted {
+    /* font */
+    color: $blue;
+}
+
+/* TODO: remove */
+
+#pulseaudio-slider {
+    margin-right: 8px;
+}
+
+#pulseaudio-slider slider {
+    /* layout */
+    min-height: 0px;
+    min-width: 0px;
+}
+
+#pulseaudio-slider trough {
+    /* colors */
+    background-color: $black;
+
+    /* layout */
+    min-height: 4px;
+    min-width: 64px;
+    border-radius: 4px;
+}
+
+#pulseaudio-slider highlight {
+    /* colors */
+    background-color: $blue;
+
+    /* layout */
+    min-width: 4px;
+    border-radius: 4px;
+}
+
+/********************************************************************
+ * calendar
+ ********************************************************************/
+
+#clock.date {
+    /* font */
+    font-size: 14px;
+    color: $foreground;
+
+    /* layout */
+    border-top: solid 2px $foreground;
+    padding: 0px
+        /* TODO: review */
+        14px 0px 8px;
+    margin: 0px 4px;
+}
+
+/********************************************************************
+ * clock
+ ********************************************************************/
+
+#clock.time {
+    /* font */
+    font-size: 14px;
+    color: $foreground;
+
+    /* layout */
+    border-top: solid 2px $foreground;
+    padding: 0px
+        /* TODO: review */
+        10px 0px 8px;
+    margin: 0px 4px;
+}
+
+/*
+#clock.hours {
+    margin-left: 8px;
+}
+#clock.minutes {
+    margin-left: 8px;
+}
+#clock.seconds {
+    margin-left: 8px;
+}
+
+#custom-clock-separator {
+    margin-top: -18px;
+    margin-bottom: -14px;
+    margin-left: 4px;
+}*/
