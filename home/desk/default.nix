@@ -10,9 +10,15 @@ in
 
   home.packages = with pkgs; [
     rofi-wayland
+
+    hyprpaper
+    wl-clipboard
+
+    # screenshot
+    grimblast
+
     dunst # notifications
     pamixer # used by bar
-    hyprpaper
 
     libsForQt5.audiotube
 
@@ -49,7 +55,7 @@ in
         mainBar = {
           layer = "top";
           height = 24;
-          exclusive = false;
+          exclusive = true;
           margin-left = 16;
           margin-right = 16;
           modules-left = [
