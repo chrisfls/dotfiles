@@ -2,7 +2,7 @@
   description = "kress's NixOS Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
 
     systems.url = "github:nix-systems/default";
 
@@ -25,7 +25,7 @@
     nixgl.inputs.nixpkgs.follows = "nixpkgs";
     nixgl.inputs.flake-utils.follows = "flake-utils";
 
-    home-manager.url = "github:nix-community/home-manager/release-23.05";
+    home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     agenix.url = "github:ryantm/agenix";
@@ -61,10 +61,11 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
             ./home/all
-            ./home/desk
-            ./home/desk/arch.nix
             ./home/dev
-            ./home/work/paack
+            ./home/dev-paack
+            ./home/dev-game
+            ./home/desk
+            ./home/desk-arch
             ./home/${ssot.users.arch-rmxp.kress.id}.nix
           ];
           extraSpecialArgs = specialArgs;
