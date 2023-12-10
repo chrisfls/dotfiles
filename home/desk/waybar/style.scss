@@ -2,305 +2,237 @@
     all: unset;
 }
 
-/* trdl */
-
 window#waybar {
-    /* global bg */
-    background: $background;
-    border-bottom: solid 1px $absoluteBlack;
-
-    /* font */
+    background-color: transparent;
     color: $foreground;
     font-size: 16px;
     font-weight: 400;
+    min-height: 24px;
+}
+
+window#waybar>box {
+    background: $absoluteBlack;
+    border-radius: 0px 0px 4px 4px;
+    box-shadow: 0px 2px 10px -2px rgba(0, 0, 0, 0.5);
+    margin: 0px;
+    min-height: 24px;
+    padding: 0px 4px;
 }
 
 tooltip {
     background: $background;
+    border-radius: 4px;
     border: solid 1px $absoluteBlack;
-    border-radius: 2px;
 }
 
 /********************************************************************
- * workspaces
+ * WORKSPACES
  ********************************************************************/
 
 #workspaces {
-    /* font */
     font-size: 16px;
-
-    /* layout */
-    margin: 0px 8px 4px 8px;
 }
 
 #workspaces button {
-    /* font */
     color: $brightBlack;
     font-size: 12px;
-
-    /* layout */
-    padding: 0px 8px;
     margin-top: 2px;
+    padding: 0px 8px;
 }
 
 #workspaces button.active {
-    /* font */
+    border-top: solid 2px $foreground;
     color: $foreground;
     font-weight: 700;
-
-    /* layout */
-    border-top: solid 2px $foreground;
     margin-top: 0px;
 }
 
 #workspaces button.visible {
-    /* font */
     color: $foreground;
     font-weight: 700;
 }
 
 #workspaces button.urgent {
-    /* font */
     color: $red;
 }
 
-
 /********************************************************************
- * window title
+ * WINDOW TITLE
  ********************************************************************/
 
 #window {
-    /* font */
-    font-size: 14px;
-    color: $foreground;
-
-    /* layout */
     border-top: solid 2px $foreground;
-    padding: 0px 8px;
+    color: $foreground;
+    font-size: 14px;
     margin: 0px 4px;
+    padding: 0px 8px;
 }
 
 #waybar.empty #window {
     border-top: none;
-    padding: 0px;
     margin: 0px;
+    padding: 0px;
 }
 
-
 /********************************************************************
- * submap
+ * SUBMAP
  ********************************************************************/
 
 #submap {
-    /* font */
-    font-size: 14px;
-    color: $foreground;
-
-    /* layout */
     border-top: solid 2px $foreground;
-    padding: 0px 8px;
+    color: $foreground;
+    font-size: 14px;
     margin: 0px 4px;
+    padding: 0px 12px 0px 8px;
 }
 
-
 /********************************************************************
- * tray
+ * TRAY
  ********************************************************************/
 
 #tray {
-    /* layout */
     border-top: solid 2px $white;
+    margin: 0px 4px;
     padding: 0px 8px;
-    margin: 0px 4px;
 }
 
 /********************************************************************
- * keyboard_state
- ********************************************************************/
-
-#keyboard_state {
-    /* font */
-    font-size: 14px;
-    color: $brightGreen;
-
-    /* layout */
-    border-top: solid 2px $brightGreen;
-    padding: 0px
-        /* TODO: review */
-        12px 0px
-        /* TODO: review */
-        4px;
-    margin: 0px 4px;
-}
-
-/*#keyboard-state
-#keyboard-state label
-#keyboard-state label.locked*/
-
-/********************************************************************
- * temperature
+ * TEMPERATURE
  ********************************************************************/
 
 #temperature {
-    /* font */
-    font-size: 14px;
-    color: $brightRed;
-
-    /* layout */
     border-top: solid 2px $brightRed;
-    padding: 0px 4px;
+    color: $brightRed;
+    font-size: 14px;
     margin: 0px 4px;
+    padding: 0px 4px;
 }
 
 /********************************************************************
- * cpu
+ * CPU
  ********************************************************************/
 
 #cpu {
-    /* font */
-    font-size: 14px;
-    color: $brightGreen;
-
-    /* layout */
     border-top: solid 2px $brightGreen;
-    padding: 0px
-        /* TODO: review */
-        12px 0px
-        /* TODO: review */
-        4px;
+    color: $brightGreen;
+    font-size: 14px;
     margin: 0px 4px;
+    /* TODO: review */
+    padding: 0px 12px 0px 4px;
 }
 
 /********************************************************************
- * memory
+ * MEMORY
  ********************************************************************/
 
 #memory {
-    /* font */
-    font-size: 14px;
-    color: $brightYellow;
-
-    /* layout */
     border-top: solid 2px $brightYellow;
-    padding: 0px
-        /* TODO: review */
-        12px 0px
-        /* TODO: review */
-        4px;
+    color: $brightYellow;
+    font-size: 14px;
     margin: 0px 4px;
+    /* TODO: review */
+    padding: 0px 12px 0px 4px;
 }
 
-
 /********************************************************************
- * disk
+ * DISK
  ********************************************************************/
 
 #disk {
-    /* font */
-    font-size: 14px;
-    color: $brightPurple;
-
-    /* layout */
     border-top: solid 2px $brightPurple;
-    padding: 0px
-        /* TODO: review */
-        12px 0px
-        /* TODO: review */
-        4px;
+    color: $brightPurple;
+    font-size: 14px;
     margin: 0px 4px;
+    /* TODO: review */
+    padding: 0px 12px 0px 4px;
 }
 
 /********************************************************************
- * network
+ * NETWORK
  ********************************************************************/
 
 #network {
-    /* font */
-    font-size: 14px;
-    color: $brightCyan;
-
-    /* layout */
     border-top: solid 2px $brightCyan;
-    padding: 0px
-        /* TODO: review */
-        12px 0px
-        /* TODO: review */
-        4px;
+    color: $brightCyan;
+    font-size: 14px;
     margin: 0px 4px;
+    /* TODO: review */
+    padding: 0px 12px 0px 4px;
 }
 
-
 /********************************************************************
- * disk
+ * BLUETOOTH
  ********************************************************************/
 
 #bluetooth {
-    /* font */
-    font-size: 14px;
-    color: $brightBlue;
-
-    /* layout */
     border-top: solid 2px $brightBlue;
-    padding: 0px
-        /* TODO: review */
-        12px 0px
-        /* TODO: review */
-        4px;
+    color: $brightBlue;
+    font-size: 14px;
     margin: 0px 4px;
+    /* TODO: review */
+    padding: 0px 12px 0px 4px;
 }
 
 /********************************************************************
- * media
+ * KEYBOARD-STATE
+ ********************************************************************/
+
+#keyboard-state {
+    border-top: solid 2px $brightPurple;
+    color: $brightPurple;
+    font-size: 14px;
+    margin: 0px 4px;
+    padding: 0px 4px;
+}
+
+#keyboard-state label {
+    color: $purple;
+    margin: 0px 4px;
+}
+
+#keyboard-state label.locked {
+    color: $brightPurple;
+}
+
+/********************************************************************
+ * MEDIA
  ********************************************************************/
 
 #wireplumber {
-    /* font */
-    font-size: 14px;
-    color: $brightBlue;
-
-    /* layout */
     border-top: solid 2px $brightBlue;
-    padding: 0px 8px;
+    color: $brightBlue;
+    font-size: 14px;
     margin: 0px 4px;
+    padding: 0px 8px;
 }
 
 #wireplumber.muted {
-    /* font */
-    color: $blue;
-    /* layout */
     border-top: solid 2px $blue;
+    color: $blue;
 }
 
 /********************************************************************
- * calendar
+ * CALENDAR
  ********************************************************************/
 
 #clock.date {
-    /* font */
-    font-size: 14px;
-    color: $foreground;
-
-    /* layout */
     border-top: solid 2px $foreground;
-    padding: 0px
-        /* TODO: review */
-        14px 0px 8px;
+    color: $foreground;
+    font-size: 14px;
     margin: 0px 4px;
+    /* TODO: review */
+    padding: 0px 14px 0px 8px;
 }
 
 /********************************************************************
- * clock
+ * CLOCK
  ********************************************************************/
 
 #clock.time {
-    /* font */
-    font-size: 14px;
-    color: $foreground;
-
-    /* layout */
     border-top: solid 2px $foreground;
-    padding: 0px
-        /* TODO: review */
-        10px 0px 8px;
-    margin: 0px 4px;
+    color: $foreground;
+    font-size: 14px;
+    margin: 0px 0px 0px 4px;
+    /* TODO: review */
+    padding: 0px 8px;
 }

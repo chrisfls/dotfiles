@@ -51,10 +51,20 @@
       background-image:
         radial-gradient(ellipse at  0% 0%, var(--powder-blue), transparent),
         radial-gradient(ellipse at 100% 100%, var(--steel-blue), transparent),
+        linear-gradient(to right, rgba(28,29,38,0.9), rgba(28,29,38,0.9)),
         url(noise.svg);
+      filter: contrast(150%) brightness(150%);
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
+    }
+    #bg::after {
+      content: "";
+      position: absolute;
+      width: inherit;
+      height: inherit;
+      background: #1C1D26;
+      opacity: 50%;
     }
   </style>
 </head>
