@@ -116,6 +116,34 @@ with specialArgs;
     adoptopenjdk-jre-openj9-bin-16
   ];
 
+
+  # (patchDesktop vscodium "d" "\^Exec=\\\\(.\*\\\\)Discord" "Exec=\\\\1Discord --enable-features=UseOzonePlatform --ozone-platform=wayland")
+
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscodium;
+    extensions = with pkgs.vscode-extensions; [
+      editorconfig.editorconfig
+      waderyan.gitblame
+      bbenoist.nix
+      b4dm4n.vscode-nixpkgs-fmt
+    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      {
+        name = "yuck";
+        publisher = "eww-yuck";
+        version = "0.0.3";
+        sha256 = "sha256-DITgLedaO0Ifrttu+ZXkiaVA7Ua5RXc4jXQHPYLqrcM=";
+      }
+      {
+        
+        name = "default-keys-windows";
+        publisher = "smcpeak";
+        version = "0.0.10";
+        sha256 = "sha256-v1JY5ZGWOfF14H235Y9CLlPwIvmNwCeRhIkdmcgCCFU=";
+      }
+    ];
+  };
+
   home.activation =
     let
       bin = "${pkgs.direnv}/bin/direnv";
@@ -134,5 +162,13 @@ with specialArgs;
       "warp/accepted-teams-tos.txt".text = "yes\n";
       "warp/accepted-tos.txt".text = "yes\n";
     };
+    configFile = {
+      "electron25-flags.conf".text = ''
+        --enable-features=WaylandWindowDecorations
+        --ozone-platform-hint=auto
+      '';
+    };
   };
+  
+  
 }
