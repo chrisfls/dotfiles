@@ -10,8 +10,9 @@ in
 
   home.packages = with pkgs; [
     rofi-wayland
-
     hyprpaper
+    networkmanagerapplet
+
     wl-clipboard
 
     # screenshot
@@ -39,6 +40,8 @@ in
     lxqt.lxqt-policykit
     lxqt.lxqt-openssh-askpass
   ];
+
+  #Iwayland.windowManager.hyprland.package
 
   programs.waybar =
     let
@@ -188,6 +191,7 @@ in
             tooltip-format-wifi = "{essid} {icon}${u "\\ue621"} {bandwidthUpBits}${u "\\ue621"} {bandwidthDownBytes} ${u "\\udb82\\udfce"} ";
             tooltip-format-ethernet = "{bandwidthUpBits}${u "\\ue621"} {bandwidthDownBytes} ${u "\\udb82\\udfce"} ";
             tooltip-format-disconnected = "Disconnected";
+            on-click = "gtk-launch nm-connection-editor.desktop";
           };
           bluetooth = {
             format = "{status} ${u "\\uf294"}";
@@ -198,6 +202,7 @@ in
             tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
             tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
             tooltip-format-enumerate-connected-battery = "{device_alias}\t{device_address}\t{device_battery_percentage}%";
+            on-click = "bluedevil-wizard";
           };
           # KEYBOARD -------- ---- -- -
           keyboard-state = {
@@ -234,6 +239,7 @@ in
               (u "\\uf028")
             ];
             on-click = "pamixer -t";
+            on-click-right = "gtk-launch pavucontrol-qt.desktop";
             max-volume = 100;
             scroll-step = 5;
           };
@@ -284,6 +290,8 @@ in
     extraConfig = with themes.popping-and-locking-black; ''
       shell fish
       editor micro
+
+      background_opacity 0.75
 
       background  ${background}
       foreground  ${foreground}
