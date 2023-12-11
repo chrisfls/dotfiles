@@ -16,6 +16,16 @@ with specialArgs;
 
   xdg.enable = true;
 
+  # TODO:
+  # bluedevil
+  # brave
+  # breeze
+  # cameractrls
+  # logseq
+  # qt6-wayland
+  # udiskie
+  # udiskie
+
   home.packages = with pkgs; [
     rofi-wayland
     hyprpaper
