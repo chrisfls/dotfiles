@@ -1,6 +1,4 @@
 {
-  themes = import ./themes.nix;
-
   replaceVars = attrs: str:
     builtins.replaceStrings
       (map (key: "\$${key}") (builtins.attrNames attrs))

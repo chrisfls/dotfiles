@@ -1,8 +1,6 @@
 { config, lib, specialArgs, ... }:
 with specialArgs;
 {
-  options.theme = lib.mkOption { };
-
   config.programs.waybar = with config.theme; {
     enable = true;
     settings = {

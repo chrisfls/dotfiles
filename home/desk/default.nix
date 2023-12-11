@@ -2,12 +2,13 @@
 with specialArgs;
 {
   imports = [
+    ./themes.nix
     ./waybar/waybar.nix
     ./hypr/hyprland.nix
     ./kitty/kitty.nix
   ];
 
-  theme = themes.popping-and-locking;
+  theme = config.themes.popping-and-locking;
 
   fonts.fontconfig.enable = true;
 
