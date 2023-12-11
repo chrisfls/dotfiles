@@ -1,6 +1,7 @@
 { config, lib, specialArgs, ... }:
 with specialArgs;
 {
+  # do not extract a file: importing from json breaks desk-arch
   config.programs.waybar = with config.theme; {
     enable = true;
     settings = {
@@ -226,6 +227,6 @@ with specialArgs;
         };
       };
     };
-    style = replaceVars config.theme (builtins.readFile ./style.scss);
+    style = my.replaceVars config.theme (builtins.readFile ./style.scss);
   };
 }
