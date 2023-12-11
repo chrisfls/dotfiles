@@ -24,7 +24,7 @@ in
   ];
 
   programs.waybar.package = wrapGL "waybar" pkgs.waybar;
-  wayland.windowManager.hyprland.package = wrapGL "Hyprland" pkgs.hyprland;
+  # wayland.windowManager.hyprland.package = wrapGL "hyprland" pkgs.hyprland;
   programs.kitty.package = wrapGL "kitty" pkgs.kitty;
 
   programs.bash.sessionVariables.XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";

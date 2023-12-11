@@ -1,4 +1,4 @@
-{ config, pkgs, flakes, ... }:
+{ config, flakes, pkgs, ... }:
 {
   imports = [ flakes.homeage.homeManagerModules.homeage ];
 

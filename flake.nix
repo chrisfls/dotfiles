@@ -45,7 +45,8 @@
     with inputs;
     let
       ssot = import ./ssot.nix;
-      specialArgs = {
+      utils = import ./utils.nix;
+      specialArgs = utils // {
         inherit ssot;
         flakes = inputs;
       };
