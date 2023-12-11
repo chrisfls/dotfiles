@@ -2,7 +2,6 @@
 with specialArgs;
 {
   config = {
-    # TODO: probably stop using home manager (why even bother?)
     programs.kitty = {
       enable = true;
       shellIntegration.enableFishIntegration = true;

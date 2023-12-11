@@ -3,9 +3,9 @@ with specialArgs;
 {
   imports = [
     ./themes.nix
-    ./waybar/waybar.nix
-    ./hypr/hyprland.nix
-    ./kitty/kitty.nix
+    ./waybar
+    ./hypr
+    ./kitty
   ];
 
   theme = config.themes.popping-and-locking;

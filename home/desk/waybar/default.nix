@@ -2,7 +2,7 @@
 with specialArgs;
 {
   # do not extract a file: importing from json breaks desk-arch
-  config.programs.waybar = with config.theme; {
+  config.programs.waybar = let u = my.u; in with config.theme; {
     enable = true;
     settings = {
       mainBar = {
