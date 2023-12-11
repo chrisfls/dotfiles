@@ -18,16 +18,16 @@ let
     };
 in
 {
+  programs.waybar.package = wrapGL "waybar" pkgs.waybar;
+  programs.kitty.package = wrapGL "kitty" pkgs.kitty;
+  programs.bash.sessionVariables.XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
+
   home.packages = [
     overlay.nixgl.nixGLIntel
     overlay.nixgl.nixVulkanIntel
+    (wrapGL "Hyprland" pkgs.hyprland)
   ];
 
-  programs.waybar.package = wrapGL "waybar" pkgs.waybar;
-  # wayland.windowManager.hyprland.package = wrapGL "hyprland" pkgs.hyprland;
-  programs.kitty.package = wrapGL "kitty" pkgs.kitty;
-
-  programs.bash.sessionVariables.XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
 
   xdg.configFile = {
     #"hypr/hyprland.conf".source = ./hyprland.conf;
