@@ -45,11 +45,14 @@
     with inputs;
     let
       ssot = import ./ssot.nix;
-      utils = import ./utils.nix;
-      specialArgs = utils // {
-        inherit ssot;
+
+      my = import ./my.nix nixpkgs;
+
+      specialArgs = {
+        inherit ssot my;
         flakes = inputs;
       };
+
       forEachSystem = nixpkgs.lib.genAttrs (import systems);
     in
     {
