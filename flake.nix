@@ -64,13 +64,13 @@
         "${ssot.users.arch-rmxp.kress.id}" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
-            ./home/all
+            ./home/all.nix
             ./home/dev
             ./home/dev-paack
             ./home/dev-game
             ./home/desk
             ./home/desk-arch
-            ./home/${ssot.users.arch-rmxp.kress.id}.nix
+            ./user/${ssot.users.arch-rmxp.kress.id}.nix
           ];
           extraSpecialArgs = specialArgs;
         };

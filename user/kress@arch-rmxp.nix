@@ -27,7 +27,7 @@
       NIXOS_OZONE_WL = 1;
       QT_SCALE_FACTOR = 1;
       XCURSOR_THEME = "breeze_cursors";
-      XCURSOR_SIZE = 48;
+      XCURSOR_SIZE = "24";
     };
   };
 
