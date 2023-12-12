@@ -50,6 +50,7 @@ in
       libsForQt5.networkmanager-qt
 
       brave
+      microsoft-edge
 
       # theme
       qt-theme
@@ -86,9 +87,9 @@ in
     };
 
     home.pointerCursor = {
-      name = "Breeze";
+      name = "breeze_cursors";
       package = qt-theme;
-      size = 32;
+      size = 24;
       gtk.enable = true;
     };
 
@@ -124,7 +125,7 @@ in
         };
         kcminputrc.text = lib.generators.toINI { } {
           Mouse = {
-            cursorTheme = "Breeze";
+            cursorTheme = "breeze_cursors";
             cursorSize = 24;
           };
         };
