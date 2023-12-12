@@ -12,15 +12,24 @@
     monitor=eDP-1,disable
     monitor=HDMI-A-1,preferred,auto,auto
 
-    env = ELM_SCALE,1
-    env = GDK_SCALE,1
-    env = NIXOS_OZONE_WL,1
-    env = QT_SCALE_FACTOR,1
-    env = XCURSOR_THEME,breeze_cursors
-    env = XCURSOR_SIZE,48
-
     exec-once = hyprctl setcursor breeze_cursors 24pt
   '';
+
+  homeage = {
+    identityPaths = [ ".ssh/id_ed25519" ];
+    installationType = "systemd";
+  };
+
+  programs.bash = {
+    sessionVariables = {
+      ELM_SCALE = 1;
+      GDK_SCALE = 1;
+      NIXOS_OZONE_WL = 1;
+      QT_SCALE_FACTOR = 1;
+      XCURSOR_THEME = "breeze_cursors";
+      XCURSOR_SIZE = 48;
+    };
+  };
 
   # let home manager install and manage itself
   programs.home-manager.enable = true;
