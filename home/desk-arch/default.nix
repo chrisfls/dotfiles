@@ -1,31 +1,49 @@
-{ flakes, pkgs, ... }:
+{ flakes, lib, pkgs, ... }:
 let
   overlay = import flakes.nixpkgs {
     system = pkgs.system;
     overlays = [ flakes.nixgl.overlay ];
   };
 
-  wrapGL = name: pkg:
+  wrap = pkg: { name, package, ... }@args:
+    let
+      exe =
+        lib.attrsets.attrByPath [ "exe" ]
+          (pkgs.lib.meta.getExe package)
+          args;
+    in
     pkgs.writeShellApplication {
       inherit name;
-      text = "${pkgs.lib.meta.getExe overlay.nixgl.nixGLIntel} ${pkgs.lib.meta.getExe pkg}";
+      text = "${pkgs.lib.meta.getExe pkg} ${exe}";
     };
 
-  wrapVulkan = name: pkg:
-    pkgs.writeShellApplication {
-      inherit name;
-      text = "${pkgs.lib.meta.getExe overlay.nixgl.nixVulkanIntel} ${pkgs.lib.meta.getExe pkg}";
-    };
+  wrapGL =
+    wrap overlay.nixgl.nixGLIntel;
+
+  wrapVulkan =
+    wrap overlay.nixgl.nixVulkanIntel;
 in
 {
-  programs.waybar.package = wrapGL "waybar" pkgs.waybar;
-  programs.kitty.package = wrapGL "kitty" pkgs.kitty;
+  programs.waybar.package = wrapGL {
+    name = "waybar";
+    package = pkgs.waybar;
+  };
+
+  programs.kitty.package = wrapGL {
+    name = "kitty";
+    package = pkgs.kitty;
+  };
+
   programs.bash.sessionVariables.XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
 
   home.packages = [
     overlay.nixgl.nixGLIntel
     overlay.nixgl.nixVulkanIntel
-    (wrapGL "Hyprland" pkgs.hyprland)
+    (wrapGL {
+      name = "Hyprland";
+      package = pkgs.hyprland;
+    })
+    # (wrapGL "brave" pkgs.brave)
   ];
 
 

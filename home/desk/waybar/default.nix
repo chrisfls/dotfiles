@@ -9,8 +9,8 @@ with specialArgs;
         layer = "top";
         height = 24;
         exclusive = true;
-        margin-left = 16;
-        margin-right = 16;
+        margin-left = 0;
+        margin-right = 0;
         modules-left = [
           "hyprland/workspaces"
           "hyprland/submap"
@@ -92,6 +92,7 @@ with specialArgs;
             "<span color='${red}'>▇</span>"
             "<span color='${red}'>█</span>"
           ];
+          on-click = "bash -c \"kitty --session none sh -c btop\"";
         };
         temperature = {
           format = "{temperatureC}°C ${u "\\uf2c7"}";
