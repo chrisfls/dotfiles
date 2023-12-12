@@ -23,7 +23,7 @@ in
   };
 
   home.file = {
-    "${envrc}".source = ../../devenv/.envrc;
+    "${envrc}".source = ../../assets/.envrc;
     "${devenv}.yaml".source = ./devenv.yaml;
   };
 
