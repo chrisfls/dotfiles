@@ -38,8 +38,8 @@ rec {
       email = "664520-kress95@users.noreply.gitlab.com";
     };
     work = {
-      name = "Christian Ferraz";
-      email = "christian.ferraz@paack.co";
+      name = contact.name;
+      email = contact.email;
     };
   };
 }

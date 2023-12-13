@@ -66,7 +66,7 @@
           modules = [
             ./home/all.nix
             ./home/dev
-            ./home/dev-paack
+            ./home/work
             ./home/dev-game
             ./home/desk
             ./home/desk-arch
