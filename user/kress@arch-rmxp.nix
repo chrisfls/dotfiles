@@ -3,6 +3,14 @@ let
   ssot = specialArgs.extra.ssot;
 in
 {
+  imports = [
+    ../home/presets/non-nixos.nix
+    ../home/presets/development.nix
+    ../home/presets/desktop.nix
+    ../home/presets/work.nix
+    ../home/presets/gamedev.nix
+  ];
+
   /*
   programs.waybar.settings.mainBar.output = [ "HDMI-A-1" ];
 
