@@ -50,7 +50,6 @@ in
       libsForQt5.networkmanager-qt
 
       brave
-      microsoft-edge
 
       # theme
       qt-theme
