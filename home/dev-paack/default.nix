@@ -27,13 +27,6 @@ in
     "${devenv}.yaml".source = ./devenv.yaml;
   };
 
-  homeage.file = {
-    secret-envrc = {
-      source = ./dot-envrc.secret.age;
-      symlinks = [ "${envrc}.secret" ];
-    };
-  };
-
   programs.direnv.config = {
     whitelist.exact = [ "${config.home.homeDirectory}/${envrc}" ];
   };
