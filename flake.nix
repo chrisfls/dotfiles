@@ -42,18 +42,16 @@
   };
 
   outputs = { nixpkgs, devenv, home-manager, systems, ... }@inputs:
-    with inputs;
     let
-      ssot = import ./ssot.nix;
-
-      my = import ./my.nix nixpkgs;
-
-      specialArgs = {
-        inherit ssot my;
-        flakes = inputs;
-      };
-
+      attrsets = import ./extra/attrsets.nix nixpkgs;
+      hm = import ./extra/hm.nix nixpkgs;
+      ssot = import ./extra/ssot.nix;
+      string = import ./extra/string.nix;
       forEachSystem = nixpkgs.lib.genAttrs (import systems);
+      homeSpecialArgs = {
+        inherit inputs;
+        extra = { inherit attrsets hm ssot string; };
+      };
     in
     {
       packages = forEachSystem (system: {
@@ -63,16 +61,8 @@
       homeConfigurations = {
         "${ssot.users.arch-rmxp.kress.id}" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            ./home/all.nix
-            ./home/dev
-            ./home/work
-            ./home/dev-game
-            ./home/desk
-            ./home/desk-arch
-            ./user/${ssot.users.arch-rmxp.kress.id}.nix
-          ];
-          extraSpecialArgs = specialArgs;
+          modules = [ ./home/${ssot.users.arch-rmxp.kress.id}.nix ];
+          extraSpecialArgs = homeSpecialArgs;
         };
       };
     };
