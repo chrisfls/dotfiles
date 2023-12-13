@@ -47,21 +47,20 @@
       hm = import ./extra/hm.nix nixpkgs;
       ssot = import ./extra/ssot.nix;
       string = import ./extra/string.nix;
-      forEachSystem = nixpkgs.lib.genAttrs (import systems);
       homeSpecialArgs = {
         inherit inputs;
         extra = { inherit attrsets hm ssot string; };
       };
+      forEachSystem = nixpkgs.lib.genAttrs (import systems);
     in
     {
       packages = forEachSystem (system: {
         devenv = devenv.packages.${system}.devenv;
       });
-
       homeConfigurations = {
         "${ssot.users.arch-rmxp.kress.id}" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/${ssot.users.arch-rmxp.kress.id}.nix ];
+          modules = [ ./user/${ssot.users.arch-rmxp.kress.id}.nix ];
           extraSpecialArgs = homeSpecialArgs;
         };
       };
