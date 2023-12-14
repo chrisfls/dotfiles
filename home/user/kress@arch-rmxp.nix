@@ -66,23 +66,6 @@ in
 
   # services.autorandr.enable = true;
 
-  /*
-    programs.waybar.settings.mainBar.output = [ "HDMI-A-1" ];
-
-    xdg.configFile."hypr/hyprland.conf".text = ''
-    monitor=eDP-1,disable
-    monitor=HDMI-A-1,preferred,auto,auto
-
-    exec-once = hyprctl setcursor breeze_cursors 24pt
-    '';
-
-    homeage = {
-    identityPaths = [ ".ssh/id_ed25519" ];
-    installationType = "systemd";
-    };
-  */
-
-
   home.username = ssot.users.arch-rmxp.kress.username;
   home.homeDirectory = ssot.users.arch-rmxp.kress.home;
 

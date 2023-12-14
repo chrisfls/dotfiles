@@ -6,7 +6,7 @@ in
   imports = [
     ../i3wm.nix
     ../lxqt.nix
-    ../theme.nix
+    ./desktop/theme.nix
   ];
 
   config = {
