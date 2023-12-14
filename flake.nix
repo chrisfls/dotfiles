@@ -44,11 +44,12 @@
   outputs = { nixpkgs, devenv, home-manager, systems, ... }@inputs:
     let
       attrsets = import ./special/attrsets.nix nixpkgs;
+      color-schemes = import ./special/color-schemes.nix;
       hm = import ./special/hm.nix nixpkgs;
       ssot = import ./special/ssot.nix;
       string = import ./special/string.nix;
       homeSpecialArgs = {
-        inherit inputs attrsets hm ssot string;
+        inherit inputs attrsets color-schemes hm ssot string;
       };
       forEachSystem = nixpkgs.lib.genAttrs (import systems);
     in

@@ -1,13 +1,16 @@
 { pkgs, ... }:
+let
+  ext = pkgs.vscode-extensions;
+in
 {
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
-    extensions = with pkgs.vscode-extensions; [
-      editorconfig.editorconfig
-      waderyan.gitblame
-      bbenoist.nix
-      b4dm4n.vscode-nixpkgs-fmt
+    extensions = [
+      ext.editorconfig.editorconfig
+      ext.waderyan.gitblame
+      ext.bbenoist.nix
+      ext.b4dm4n.vscode-nixpkgs-fmt
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "yuck";

@@ -1,23 +1,23 @@
 { config, inputs, pkgs, ... }:
 {
   imports = [
-    ../console.nix
+    ../shell.nix
     ../agenix.nix
     ../codium.nix
   ];
 
   config = {
-    home.packages = with pkgs; [
+    home.packages = [
       # nix-shell / nix flake develop
-      any-nix-shell
-      which
+      pkgs.any-nix-shell
+      pkgs.which
 
       # devenv
-      cachix
+      pkgs.cachix
       inputs.devenv.packages.${pkgs.system}.devenv
 
       # misc
-      nixpkgs-fmt
+      pkgs.nixpkgs-fmt
     ];
 
     programs.fish.shellInit = "any-nix-shell fish --info-right | source";

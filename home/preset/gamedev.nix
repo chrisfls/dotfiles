@@ -5,11 +5,11 @@
   ];
 
   config = {
-    home.packages = with pkgs; [
-      aseprite
-      krita
-      tiled
-      lmms
+    home.packages = [
+      pkgs.aseprite
+      pkgs.krita
+      pkgs.tiled
+      pkgs.lmms
     ];
 
     nixpkgs.config.allowUnfree = true;

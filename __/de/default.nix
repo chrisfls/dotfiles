@@ -31,7 +31,6 @@ in
 
       # tooling
       alsa-utils
-      wl-clipboard
       pamixer # change volume from waybar
 
       # shell
