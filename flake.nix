@@ -59,7 +59,7 @@
       homeConfigurations = {
         "${ssot.users.arch-rmxp.kress.id}" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./user/${ssot.users.arch-rmxp.kress.id}.nix ];
+          modules = [ ./home/user/${ssot.users.arch-rmxp.kress.id}.nix ];
           extraSpecialArgs = homeSpecialArgs;
         };
       };
