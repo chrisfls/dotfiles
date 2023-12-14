@@ -27,7 +27,6 @@ in
     # qt6-wayland
     # udiskie
     # udiskie
-
     home.packages = with pkgs; [
 
       # tooling

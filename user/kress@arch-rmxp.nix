@@ -1,6 +1,6 @@
 { config, pkgs, specialArgs, ... }:
 let
-  ssot = specialArgs.extra.ssot;
+  ssot = specialArgs.ssot;
 in
 {
   imports = [
@@ -9,22 +9,23 @@ in
     ../home/presets/desktop.nix
     ../home/presets/work.nix
     ../home/presets/gamedev.nix
+    ../home/cloudflare-warp.nix
   ];
 
   /*
-  programs.waybar.settings.mainBar.output = [ "HDMI-A-1" ];
+    programs.waybar.settings.mainBar.output = [ "HDMI-A-1" ];
 
-  xdg.configFile."hypr/hyprland.conf".text = ''
+    xdg.configFile."hypr/hyprland.conf".text = ''
     monitor=eDP-1,disable
     monitor=HDMI-A-1,preferred,auto,auto
 
     exec-once = hyprctl setcursor breeze_cursors 24pt
-  '';
+    '';
 
-  homeage = {
+    homeage = {
     identityPaths = [ ".ssh/id_ed25519" ];
     installationType = "systemd";
-  };
+    };
   */
 
 

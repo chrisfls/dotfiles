@@ -11,7 +11,5 @@ in
     overlay.nixgl.nixVulkanIntel
   ];
 
-  programs.bash.sessionVariables.XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
-
   targets.genericLinux.enable = true;
 }
