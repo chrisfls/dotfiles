@@ -14,6 +14,8 @@ in
     ../cloudflare-warp.nix
   ];
 
+  home.keyboard.layout = "br";
+
   programs.autorandr = {
     enable = true;
     profiles = {

@@ -41,8 +41,11 @@
     extra-substituters = "https://nix-community.cachix.org https://devenv.cachix.org";
   };
 
-  outputs = { nixpkgs, devenv, home-manager, systems, ... }@inputs:
+  outputs = { nixpkgs, home-manager, ... }@inputs:
     let
+      forEachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
+
+      # specialArgs / extraSpecialArgs
       attrsets = import ./special/attrsets.nix nixpkgs;
       color-schemes = import ./special/color-schemes.nix;
       hm = import ./special/hm.nix nixpkgs;
@@ -51,15 +54,17 @@
       homeSpecialArgs = {
         inherit inputs attrsets color-schemes hm ssot string;
       };
-      forEachSystem = nixpkgs.lib.genAttrs (import systems);
     in
     {
       packages = forEachSystem (system: {
-        devenv = devenv.packages.${system}.devenv;
+        devenv = inputs.devenv.packages.${system}.devenv;
       });
       homeConfigurations = {
         "${ssot.users.arch-rmxp.kress.id}" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          pkgs = import inputs.nixpkgs {
+            system = "x86_64-linux";
+            overlays = [ inputs.nixgl.overlay ];
+          };
           modules = [ ./home/user/${ssot.users.arch-rmxp.kress.id}.nix ];
           extraSpecialArgs = homeSpecialArgs;
         };

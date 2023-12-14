@@ -4,17 +4,18 @@ let
   ssot = specialArgs.ssot;
 in
 {
+  home.sessionVariables = {
+    EDITOR = "micro";
+    TERM = "xterm-256color";
+    COLORTERM = "truecolor";
+    MICRO_TRUECOLOR = "1";
+    VTE_VERSION = "6003";
+    DIRENV_LOG_FORMAT = "";
+  };
+
   programs.bash = {
     enable = true;
     enableVteIntegration = true;
-    sessionVariables = {
-      EDITOR = "micro";
-      TERM = "xterm-256color";
-      COLORTERM = "truecolor";
-      MICRO_TRUECOLOR = "1";
-      VTE_VERSION = "6003";
-      DIRENV_LOG_FORMAT = "";
-    };
     profileExtra = "unset HISTFILE";
     historyFileSize = 0;
     historySize = 0;

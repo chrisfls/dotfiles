@@ -1,14 +1,8 @@
-{ inputs, lib, pkgs, ... }:
-let
-  overlay = import inputs.nixpkgs {
-    system = pkgs.system;
-    overlays = [ inputs.nixgl.overlay ];
-  };
-in
+{ pkgs, ... }:
 {
   home.packages = [
-    overlay.nixgl.nixGLIntel
-    overlay.nixgl.nixVulkanIntel
+    pkgs.nixgl.nixGLIntel
+    pkgs.nixgl.nixVulkanIntel
   ];
 
   targets.genericLinux.enable = true;

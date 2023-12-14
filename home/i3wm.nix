@@ -1,4 +1,4 @@
-{ config, lib, pkgs , ... }:
+{ config, lib, pkgs, ... }:
 let
   xorg = pkgs.xorg;
   i3 = config.xsession.windowManager.i3;
@@ -10,148 +10,169 @@ in
     pkgs.autotiling
     pkgs.picom
   ];
-  
-  home.file.".xinitrc".text = "exec ${i3.package}/bin/i3";
 
-  xsession.windowManager.i3 = {
+  home.file.".xinitrc" = {
+    executable = true;
+    text = ''#!/bin/sh
+
+# last if block from /etc/X11/xinit/xinitrc
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+ for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+  [ -x "$f" ] && . "$f"
+ done
+ unset f
+fi
+
+exec ${i3.package}/bin/i3
+'';
+  };
+
+  xsession = {
     enable = true;
 
-    config = {
+    windowManager.i3 = {
+      enable = true;
 
-      startup = [
-        # { command = "autotiling"; always = true; notification = false; }
-        { command = "nixGLIntel picom"; always = true; notification = false; }
-      ];
+      config = {
 
-      modifier = "Mod4";
+        menu = "rofi -show drun";
+        terminal = "nixGLIntel wezterm";
 
-      ################# ######## #### ## #
-      # BINDINGS
-      ################# ######## #### ## #
+        startup = [
+          # { command = "autotiling"; always = true; notification = false; }
+          { command = "nixGLIntel picom"; always = true; notification = false; }
+        ];
 
-      keybindings = {
+        modifier = "Mod4";
 
-        # MISC
-        ######## #### ## #
+        ################# ######## #### ## #
+        # BINDINGS
+        ################# ######## #### ## #
 
-        "${mod}+Shift+c" = "reload";
-        "${mod}+Shift+r" = "restart";
-        "${mod}+Shift+e" =
-          "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
+        keybindings = {
 
-        # APPLICATIONS
-        ######## #### ## #23
+          # MISC
+          ######## #### ## #
 
-        "${mod}+colon" = "exec ${cfg.terminal}";
-        "${mod}+BackSpace" = "exec ${cfg.terminal}";
-        "${mod}+Return" = "exec ${cfg.menu}";
+          "${mod}+Shift+c" = "reload";
+          "${mod}+Shift+r" = "restart";
+          "${mod}+Shift+e" =
+            "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
 
-        # WINDOW CONTROLS
-        ######## #### ## #
+          # APPLICATIONS
+          ######## #### ## #23
 
-        "${mod}+c" = "kill";
+          "${mod}+colon" = "exec ${cfg.terminal}";
+          "${mod}+BackSpace" = "exec ${cfg.terminal}";
+          "${mod}+Return" = "exec ${cfg.menu}";
 
-        "${mod}+r" = "mode resize";
+          # WINDOW CONTROLS
+          ######## #### ## #
 
-        "${mod}+m" = "fullscreen toggle";
+          "${mod}+c" = "kill";
 
-        "${mod}+s" = "layout toggle split";
+          "${mod}+r" = "mode resize";
 
-        "${mod}+g" = "layout tabbed";
+          "${mod}+m" = "fullscreen toggle";
 
-        "${mod}+f" = "floating toggle";
+          "${mod}+s" = "layout toggle split";
 
-        "${mod}+space" = "focus mode_toggle";
+          "${mod}+g" = "layout tabbed";
 
-        #"${mod}+h" = "split h";
-        "${mod}+v" = "split toggle";
+          "${mod}+f" = "floating toggle";
 
-        "${mod}+a" = "focus parent";
+          "${mod}+space" = "focus mode_toggle";
 
-        # FOCUS
-        ######## #### ## #
+          #"${mod}+h" = "split h";
+          "${mod}+v" = "split toggle";
 
-        # focus with hjkl
-        "${mod}+h" = "focus left";
-        "${mod}+j" = "focus down";
-        "${mod}+k" = "focus up";
-        "${mod}+l" = "focus right";
+          "${mod}+a" = "focus parent";
 
-        # focus with arrow keys
-        "${mod}+Left" = "focus left";
-        "${mod}+Down" = "focus down";
-        "${mod}+Up" = "focus up";
-        "${mod}+Right" = "focus right";
+          # FOCUS
+          ######## #### ## #
 
-        # MOVEMENT
-        ######## #### ## #
+          # focus with hjkl
+          "${mod}+h" = "focus left";
+          "${mod}+j" = "focus down";
+          "${mod}+k" = "focus up";
+          "${mod}+l" = "focus right";
 
-        # move with hjkl
-        "${mod}+Shift+h" = "move left";
-        "${mod}+Shift+j" = "move down";
-        "${mod}+Shift+k" = "move up";
-        "${mod}+Shift+l" = "move right";
+          # focus with arrow keys
+          "${mod}+Left" = "focus left";
+          "${mod}+Down" = "focus down";
+          "${mod}+Up" = "focus up";
+          "${mod}+Right" = "focus right";
 
-        # move with arrow keys
-        "${mod}+Shift+Left" = "move left";
-        "${mod}+Shift+Down" = "move down";
-        "${mod}+Shift+Up" = "move up";
-        "${mod}+Shift+Right" = "move right";
+          # MOVEMENT
+          ######## #### ## #
 
-        # WORKSPACES
-        ######## #### ## #
+          # move with hjkl
+          "${mod}+Shift+h" = "move left";
+          "${mod}+Shift+j" = "move down";
+          "${mod}+Shift+k" = "move up";
+          "${mod}+Shift+l" = "move right";
 
-        # switch to workspace
-        "${mod}+1" = "workspace number 1";
-        "${mod}+2" = "workspace number 2";
-        "${mod}+3" = "workspace number 3";
-        "${mod}+4" = "workspace number 4";
-        "${mod}+5" = "workspace number 5";
-        "${mod}+6" = "workspace number 6";
-        "${mod}+7" = "workspace number 7";
-        "${mod}+8" = "workspace number 8";
-        "${mod}+9" = "workspace number 9";
-        "${mod}+0" = "workspace number 10";
+          # move with arrow keys
+          "${mod}+Shift+Left" = "move left";
+          "${mod}+Shift+Down" = "move down";
+          "${mod}+Shift+Up" = "move up";
+          "${mod}+Shift+Right" = "move right";
 
-        # switch to workspace
-        "${mod}+Shift+1" = "move container to workspace number 1";
-        "${mod}+Shift+2" = "move container to workspace number 2";
-        "${mod}+Shift+3" = "move container to workspace number 3";
-        "${mod}+Shift+4" = "move container to workspace number 4";
-        "${mod}+Shift+5" = "move container to workspace number 5";
-        "${mod}+Shift+6" = "move container to workspace number 6";
-        "${mod}+Shift+7" = "move container to workspace number 7";
-        "${mod}+Shift+8" = "move container to workspace number 8";
-        "${mod}+Shift+9" = "move container to workspace number 9";
-        "${mod}+Shift+0" = "move container to workspace number 10";
+          # WORKSPACES
+          ######## #### ## #
 
-        # control scratchpad
-        "${mod}+apostrophe" = "scratchpad show";
-        "${mod}+Shift+apostrophe" = "move scratchpad";
-      };
+          # switch to workspace
+          "${mod}+1" = "workspace number 1";
+          "${mod}+2" = "workspace number 2";
+          "${mod}+3" = "workspace number 3";
+          "${mod}+4" = "workspace number 4";
+          "${mod}+5" = "workspace number 5";
+          "${mod}+6" = "workspace number 6";
+          "${mod}+7" = "workspace number 7";
+          "${mod}+8" = "workspace number 8";
+          "${mod}+9" = "workspace number 9";
+          "${mod}+0" = "workspace number 10";
 
-      modes = {
+          # switch to workspace
+          "${mod}+Shift+1" = "move container to workspace number 1";
+          "${mod}+Shift+2" = "move container to workspace number 2";
+          "${mod}+Shift+3" = "move container to workspace number 3";
+          "${mod}+Shift+4" = "move container to workspace number 4";
+          "${mod}+Shift+5" = "move container to workspace number 5";
+          "${mod}+Shift+6" = "move container to workspace number 6";
+          "${mod}+Shift+7" = "move container to workspace number 7";
+          "${mod}+Shift+8" = "move container to workspace number 8";
+          "${mod}+Shift+9" = "move container to workspace number 9";
+          "${mod}+Shift+0" = "move container to workspace number 10";
 
-        # RESIZE
-        ######## #### ## #
+          # control scratchpad
+          "${mod}+apostrophe" = "scratchpad show";
+          "${mod}+Shift+apostrophe" = "move scratchpad";
+        };
 
-        resize = {
-          # resize with hjkl
-          "h" = "resize shrink width 10 px or 10 ppt";
-          "j" = "resize grow height 10 px or 10 ppt";
-          "k" = "resize shrink height 10 px or 10 ppt";
-          "l" = "resize grow width 10 px or 10 ppt";
+        modes = {
 
-          # resize with arrow keys
-          "Left" = "resize shrink width 10 px or 10 ppt";
-          "Down" = "resize grow height 10 px or 10 ppt";
-          "Up" = "resize shrink height 10 px or 10 ppt";
-          "Right" = "resize grow width 10 px or 10 ppt";
+          # RESIZE
+          ######## #### ## #
 
-          # quit resize
-          "Escape" = "mode default";
-          "Return" = "mode default";
-          "${mod}+r" = "mode default";
+          resize = {
+            # resize with hjkl
+            "h" = "resize shrink width 10 px or 10 ppt";
+            "j" = "resize grow height 10 px or 10 ppt";
+            "k" = "resize shrink height 10 px or 10 ppt";
+            "l" = "resize grow width 10 px or 10 ppt";
+
+            # resize with arrow keys
+            "Left" = "resize shrink width 10 px or 10 ppt";
+            "Down" = "resize grow height 10 px or 10 ppt";
+            "Up" = "resize shrink height 10 px or 10 ppt";
+            "Right" = "resize grow width 10 px or 10 ppt";
+
+            # quit resize
+            "Escape" = "mode default";
+            "Return" = "mode default";
+            "${mod}+r" = "mode default";
+          };
         };
       };
     };
