@@ -1,12 +1,15 @@
 { config, lib, pkgs, ... }:
 let
   lxqt = pkgs.lxqt;
+
+  nixgl-enable = config.targets.genericLinux.enable;
 in
 {
   imports = [
     ../desktop/wm.nix
     ../desktop/theme.nix
     ../desktop/shell.nix
+    ../nixgl.nix
   ];
 
   config = {
@@ -30,6 +33,9 @@ in
       # unless no issues with gpu accel are found
       enable = true;
     };
+
+    extra.nixGL.enable = nixgl-enable;
+    extra.nixVulkan.enable = nixgl-enable;
   };
 }
 

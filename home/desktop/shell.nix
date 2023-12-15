@@ -17,38 +17,29 @@ in
     ../nixgl.nix
   ];
 
-  config = lib.mkMerge [
-    {
-      home.packages = [
-        xdg-desktop-portal
-        notifications
-        polkit-agent
-        gui-sudo
-        ssh-askpass
-        file-manager
-        volume-mixer
-        system-monitor
-        clipboard-manager
-        screenshot
-      ];
-    }
+  config = {
+    home.packages = [
+      xdg-desktop-portal
+      notifications
+      polkit-agent
+      gui-sudo
+      ssh-askpass
+      file-manager
+      volume-mixer
+      system-monitor
+      clipboard-manager
+      screenshot
+    ];
 
-    (lib.mkIf config.targets.genericLinux.enable {
-      extra.nixGL = {
-        enable = true;
-        overlay = {
-          lxqt = {
-            lxqt-sudo = [ "lxqt-sudo" ];
-            pavucontrol-qt = [ "pavucontrol-qt" ];
-            pcmanfm-qt = [ "pcmanfm-qt" ];
-            qlipper = [ "qlipper" ];
-            qps = [ "qps" ];
-            screengrab = [ "screengrab" ];
-          };
-        };
+    extra.nixGL.overlay = {
+      lxqt = {
+        lxqt-sudo = [ "lxqt-sudo" ];
+        pavucontrol-qt = [ "pavucontrol-qt" ];
+        pcmanfm-qt = [ "pcmanfm-qt" ];
+        qlipper = [ "qlipper" ];
+        qps = [ "qps" ];
+        screengrab = [ "screengrab" ];
       };
-
-      extra.nixVulkan.enable = true;
-    })
-  ];
+    };
+  };
 }
