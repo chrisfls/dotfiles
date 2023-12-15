@@ -46,7 +46,7 @@
       forEachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
 
       # specialArgs / extraSpecialArgs
-      attrsets = import ./special/attrsets.nix nixpkgs;
+      attrsets = import ./special/attrsets.nix;
       color-schemes = import ./special/color-schemes.nix;
       hm = import ./special/hm.nix nixpkgs;
       ssot = import ./special/ssot.nix;

@@ -1,4 +1,3 @@
-{ ... }:
 let
   replaceStrings = builtins.replaceStrings;
   map = builtins.map;
