@@ -22,6 +22,11 @@ in
         pkgs.brave
       ];
 
+      extra.qt-theme.enable = true;
+      extra.gtk-theme.enable = true;
+      extra.icon-theme.enable = true;
+      extra.cursor-theme.enable = true;
+
       programs.rofi = {
         enable = true;
       };
