@@ -18,7 +18,7 @@ in
 
         exe = lib.mkOption {
           type = lib.types.package;
-          default = lib.getEXE self.package;
+          default = lib.getExe self.package;
           description = "Main binary";
         };
       };
@@ -38,8 +38,11 @@ in
 
   config =
     let
-      program-config = program:
-        lib.mkIf program.enable { home.packages = [ program.package ]; };
+      program-config = program: lib.mkIf program.enable {
+        home.packages = [ program.package ];
+
+        /*targets.genericLinux.enable*/
+      };
     in
     lib.mkMerge [
       (program-config cfg.xdg-desktop-portal)
