@@ -72,7 +72,7 @@ in
 
       kvantum-theme = lib.mkOption {
         type = lib.types.str;
-        default = "KvArcDark";
+        default = "ArcDark";
         description = ''
           Other decent kvantum themes:
 
@@ -100,7 +100,7 @@ in
 
       name = lib.mkOption {
         type = lib.types.str;
-        default = "Arc-Darker";
+        default = "Arc-Dark";
       };
 
       package = lib.mkOption {
@@ -128,7 +128,7 @@ in
 
       name = lib.mkOption {
         type = lib.types.str;
-        default = "Breeze_Snow";
+        default = "breeze_cursors";
       };
 
       size = lib.mkOption {
@@ -196,15 +196,10 @@ in
       qt = {
         enable = true;
         platformTheme = "qtct";
-        style = {
-          name = "kvantum";
-          # probably redundant
-          package = [
-            pkgs.libsForQt5.qtstyleplugin-kvantum
-            pkgs.qt6Packages.qtstyleplugin-kvantum
-          ];
-        };
+        style.name = "kvantum";
       };
+
+      home.packages = [ cfg.qt-theme.package ];
 
       xdg = {
         enable = true;
