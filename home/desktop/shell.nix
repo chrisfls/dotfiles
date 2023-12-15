@@ -1,59 +1,63 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 let
-  cfg = config.extra;
+  lxqt = pkgs.lxqt;
+  xdg-desktop-portal = lxqt.xdg-desktop-portal-lxqt;
+  notifications = lxqt.lxqt-notificationd;
+  polkit-agent = lxqt.lxqt-policykit;
+  gui-sudo = lxqt.lxqt-sudo;
+  ssh-askpass = lxqt.lxqt-openssh-askpass;
+  file-manager = lxqt.pcmanfm-qt;
+  volume-mixer = lxqt.pavucontrol-qt;
+  system-monitor = lxqt.qps;
+  clipboard-manager = lxqt.qlipper;
+  screenshot = lxqt.screengrab;
 in
 {
-  options.extra =
-    let
-      lxqt = pkgs.lxqt;
+  imports = [
+    ../nixgl.nix
+  ];
 
-      program-with-exe = self: default: {
-        enable = lib.mkEnableOption "Program configuration";
-
-        package = lib.mkOption {
-          type = lib.types.package;
-          default = default;
-          description = "Package used";
-        };
-
-        exe = lib.mkOption {
-          type = lib.types.package;
-          default = lib.getExe self.package;
-          description = "Main binary";
-        };
-      };
-    in
-    {
-      xdg-desktop-portal = program-with-exe cfg.xdg-desktop-portal lxqt.xdg-desktop-portal-lxqt;
-      notifications = program-with-exe cfg.notifications lxqt.lxqt-notificationd;
-      polkit-agent = program-with-exe cfg.polkit-agent lxqt.lxqt-policykit;
-      gui-sudo = program-with-exe cfg.gui-sudo lxqt.lxqt-sudo;
-      ssh-askpass = program-with-exe cfg.ssh-askpass lxqt.lxqt-openssh-askpass;
-      file-manager = program-with-exe cfg.file-manager lxqt.pcmanfm-qt;
-      volume-mixer = program-with-exe cfg.volume-mixer lxqt.pavucontrol-qt;
-      system-monitor = program-with-exe cfg.system-monitor lxqt.qps;
-      clipboard-manager = program-with-exe cfg.clipboard-manager lxqt.qlipper;
-      screenshot = program-with-exe cfg.screenshot lxqt.screengrab;
-    };
-
-  config =
-    let
-      program-config = program: lib.mkIf program.enable {
-        home.packages = [ program.package ];
-
-        /*targets.genericLinux.enable*/
-      };
-    in
-    lib.mkMerge [
-      (program-config cfg.xdg-desktop-portal)
-      (program-config cfg.notifications)
-      (program-config cfg.polkit-agent)
-      (program-config cfg.gui-sudo)
-      (program-config cfg.ssh-askpass)
-      (program-config cfg.file-manager)
-      (program-config cfg.volume-mixer)
-      (program-config cfg.system-monitor)
-      (program-config cfg.clipboard-manager)
-      (program-config cfg.screenshot)
+  config = {
+    home.packages = [
+      xdg-desktop-portal
+      #notifications
+      #polkit-agent
+      #gui-sudo
+      #ssh-askpass
+      file-manager
+      #volume-mixer
+      #system-monitor
+      #clipboard-manager
+      #screenshot
     ];
+
+    extra.nixGL.wrap = {
+      #"${notifications}".enable = true;
+      #"${polkit-agent}".enable = true;
+      #"${gui-sudo}".enable = true;
+      #"${ssh-askpass}".enable = true;
+      "lxqt.pcmanfm-qt" = {
+        enable = true;
+        targets = [ "pcmanfm-qt" ];
+      };
+      #"${volume-mixer}".enable = true;
+      #"${system-monitor}".enable = true;
+      #"${clipboard-manager}".enable = true;
+      #"${screenshot}".enable = true;
+    };
+  };
 }
+/*
+  nixpkgs.overlays = [
+      (self: super: {
+        lxqt.xdg-desktop-portal-lxqt = wrapGL super.lxqt.xdg-desktop-portal-lxqt;
+        lxqt.lxqt-notificationd = wrapGL super.lxqt.lxqt-notificationd;
+        lxqt.lxqt-policykit = wrapGL super.lxqt.lxqt-policykit;
+        lxqt.lxqt-sudo = wrapGL super.lxqt.lxqt-sudo;
+        lxqt.lxqt-openssh-askpass = wrapGL super.lxqt.lxqt-openssh-askpass;
+        lxqt.pcmanfm-qt = wrapGL super.lxqt.pcmanfm-qt;
+        lxqt.pavucontrol-qt = wrapGL super.lxqt.pavucontrol-qt;
+        lxqt.qps = wrapGL super.lxqt.qps;
+        lxqt.qlipper = wrapGL super.lxqt.qlipper;
+        lxqt.screengrab = wrapGL super.lxqt.screengrab;
+      })*/

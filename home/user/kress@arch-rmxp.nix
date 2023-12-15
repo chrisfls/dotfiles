@@ -9,7 +9,6 @@ in
     ../preset/non-nixos.nix
     ../preset/development.nix
     ../preset/desktop.nix
-    ../preset/non-nixos-desktop.nix
     ../preset/work.nix
     ../preset/gamedev.nix
     ../cloudflare-warp.nix
@@ -66,6 +65,9 @@ in
       };
     };
   };
+
+  extra.nixGL.enable = true;
+  extra.nixVulkan.enable = true;
 
   # services.autorandr.enable = true;
 

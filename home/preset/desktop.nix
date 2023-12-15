@@ -30,20 +30,6 @@ in
       # unless no issues with gpu accel are found
       enable = true;
     };
-
-    extra = {
-      xdg-desktop-portal.enable = true;
-      notifications.enable = true;
-      polkit-agent.enable = true;
-      gui-sudo.enable = true;
-      ssh-askpass.enable = true;
-      file-manager.enable = true;
-      volume-mixer.enable = true;
-      system-monitor.enable = true;
-      clipboard-manager.enable = true;
-      screenshot.enable = true;
-    };
-
   };
 }
 
