@@ -7,7 +7,6 @@ in
     ../desktop/wm.nix
     ../desktop/theme.nix
     ../desktop/shell.nix
-    ../nixgl.nix
   ];
 
   config = lib.mkMerge [
