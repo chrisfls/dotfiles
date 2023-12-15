@@ -1,3 +1,4 @@
+# WARNING: this is really old and doesn't work
 { config, pkgs, specialArgs, ... }:
 with specialArgs;
 {

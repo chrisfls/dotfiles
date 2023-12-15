@@ -95,3 +95,37 @@ in
     enableFishIntegration = true;
   };
 }
+/* 
+    openssh
+
+    home.packages = with pkgs; [
+      p7zip
+      unrar
+      unzip
+
+      # tooling
+      xplr
+      htop
+      traceroute
+      killall
+      neofetch
+      nix-index
+    ];
+    
+        home.packages = with pkgs; [
+      # tools
+      wget
+      jq
+      which
+
+      # nix
+      nixpkgs-fmt
+      any-nix-shell
+
+      # languagetool
+      ltex-ls
+      adoptopenjdk-jre-openj9-bin-16
+      nodejs-16_x
+    ];
+    
+     */

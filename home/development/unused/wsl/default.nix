@@ -1,3 +1,4 @@
+# WARNING: this module is old and probably doesn't work
 { config, pkgs, lib, ... }:
 with lib;
 let
