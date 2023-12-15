@@ -2,54 +2,32 @@
 let
   cfg = config.extra;
 
-  wrap = lib.mkOption {
-    type = lib.types.attrs; /*Of (lib.types.submodule {
-      options.enable = lib.mkEnableOption "Enable wrapper for this package";
-      options.targets = lib.mkOption {
-        type = lib.types.nullOr (lib.types.listOf lib.types.str);
-        description = "List of executables to wrap.";
-        default = null;
-      };
-    });*/
-    default = { };
-  };
-
-  expand = nixgl: final: prev: name: entry:
+  recurse = nixgl: final: prev: path: targets:
     let
-      path = lib.strings.splitString "." name;
-
       pkg =
         lib.attrsets.getAttrFromPath path prev;
 
-      write = a: pkgs.writeShellScriptBin a "#!/bin/sh\n${nixgl} ${pkg}/bin/${a}\n";
+      write = bin:
+        pkgs.writeShellScriptBin bin "#!/bin/sh\n${nixgl} ${pkg}/bin/${bin}\n";
 
-      targets =
-        lib.attrsets.attrByPath [ "targets" ]
-          [ (lib.getExe pkg) ]
-          entry;
-
+      targets' =
+        if targets == [ ] then
+          [ (builtins.baseNameOf (lib.getExe pkg)) ]
+        else
+          targets;
     in
-    if entry.enable then
-      lib.attrsets.updateManyAttrsByPath
-        [
-          {
-            inherit path;
-            update = old:
-              (pkgs.symlinkJoin {
-                inherit name;
-                paths =
-                  (builtins.map write targets)
-                  ++ [ pkg ];
-              });
-          }
-        ]
-        prev
+    (pkgs.symlinkJoin {
+      name = lib.strings.concatStringsSep "." path;
+      paths = (builtins.map write targets') ++ [ pkg ];
+    });
 
-    else
-      { };
-
-  overlay = { package, wrap, ... }: final: prev:
-    lib.attrsets.concatMapAttrs (expand (lib.getExe package) final prev) wrap;
+  overlay = { package, overlay, ... }: final: prev:
+    lib.mkMerge [
+      prev
+      (lib.attrsets.mapAttrsRecursive
+        (recurse (lib.getExe package) final prev)
+        overlay)
+    ];
 in
 {
   options.extra = {
@@ -59,7 +37,10 @@ in
         type = lib.types.package;
         default = pkgs.nixgl.nixGLIntel;
       };
-      wrap = wrap;
+      overlay = lib.mkOption {
+        type = lib.types.attrs;
+        default = { };
+      };
     };
 
     nixVulkan = {
@@ -68,16 +49,17 @@ in
         type = lib.types.package;
         default = pkgs.nixgl.nixVulkanIntel;
       };
-      wrap = wrap;
+      overlay = lib.mkOption {
+        type = lib.types.attrs;
+        default = { };
+      };
     };
   };
 
   config = lib.mkMerge [
     (lib.mkIf cfg.nixGL.enable {
       home.packages = [ cfg.nixGL.package ];
-      nixpkgs.overlays = [
-        (overlay cfg.nixGL)
-      ];
+      nixpkgs.overlays = [ (overlay cfg.nixGL) ];
     })
 
     (lib.mkIf cfg.nixVulkan.enable {

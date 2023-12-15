@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, specialArgs, ... }:
 let
   lxqt = pkgs.lxqt;
   xdg-desktop-portal = lxqt.xdg-desktop-portal-lxqt;
@@ -31,15 +31,12 @@ in
       #screenshot
     ];
 
-    extra.nixGL.wrap = {
+    extra.nixGL.overlay = {
       #"${notifications}".enable = true;
       #"${polkit-agent}".enable = true;
       #"${gui-sudo}".enable = true;
       #"${ssh-askpass}".enable = true;
-      "lxqt.pcmanfm-qt" = {
-        enable = true;
-        targets = [ "pcmanfm-qt" ];
-      };
+      lxqt.pcmanfm-qt = [ "pcmanfm-qt" ];
       #"${volume-mixer}".enable = true;
       #"${system-monitor}".enable = true;
       #"${clipboard-manager}".enable = true;
