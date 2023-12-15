@@ -4,9 +4,9 @@ let
 in
 {
   imports = [
-    ../i3wm.nix
-    ../lxqt.nix
-    ./desktop/widgets-theme.nix
+    ../desktop/wm.nix
+    ../desktop/theme.nix
+    ../desktop/shell.nix
   ];
 
   config = {
