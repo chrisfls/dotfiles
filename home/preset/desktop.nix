@@ -1,8 +1,6 @@
 { config, lib, pkgs, ... }:
 let
   lxqt = pkgs.lxqt;
-
-  nixgl-enable = config.targets.genericLinux.enable;
 in
 {
   imports = [
@@ -12,37 +10,41 @@ in
     ../nixgl.nix
   ];
 
-  config = {
-    home.packages = [
-      pkgs.alsa-utils
-      pkgs.pamixer
+  config = lib.mkMerge [
+    {
+      home.packages = [
+        pkgs.alsa-utils
+        pkgs.pamixer
 
-      # management
-      pkgs.arandr
+        # management
+        pkgs.arandr
 
-      # browser
-      pkgs.brave
-    ];
+        # browser
+        pkgs.brave
+      ];
 
-    programs.rofi = {
-      enable = true;
-    };
-
-    programs.wezterm = {
-      # maybe migrate to foot after https://codeberg.org/dnkl/foot/issues/57
-      # unless no issues with gpu accel are found
-      enable = true;
-    };
-
-    extra.nixGL = {
-      enable = nixgl-enable;
-      overlay = {
-        brave = [ "brave" ];
+      programs.rofi = {
+        enable = true;
       };
-    };
 
-    extra.nixVulkan.enable = nixgl-enable;
-  };
+      programs.wezterm = {
+        # maybe migrate to foot after https://codeberg.org/dnkl/foot/issues/57
+        # unless no issues with gpu accel are found
+        enable = true;
+      };
+    }
+
+    (lib.mkIf config.targets.genericLinux.enable {
+      extra.nixGL = {
+        enable = true;
+        overlay = {
+          brave = [ "brave" ];
+        };
+      };
+
+      extra.nixVulkan.enable = true;
+    })
+  ];
 }
 
 /*
