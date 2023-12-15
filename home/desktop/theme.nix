@@ -78,7 +78,7 @@ in
     };
 
     gtk-theme = {
-      enable = lib.mkEnableOption "description";
+      enable = lib.mkEnableOption "Manage gtk themes";
 
       name = lib.mkOption {
         type = lib.types.str;
@@ -92,7 +92,7 @@ in
     };
 
     icon-theme = {
-      enable = lib.mkEnableOption "description";
+      enable = lib.mkEnableOption "Manage icon themes";
 
       name = lib.mkOption {
         type = lib.types.str;
@@ -106,7 +106,7 @@ in
     };
 
     cursor-theme = {
-      enable = lib.mkEnableOption "description";
+      enable = lib.mkEnableOption "Manage cursor themes";
 
       name = lib.mkOption {
         type = lib.types.str;
