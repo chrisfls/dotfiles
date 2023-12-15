@@ -42,6 +42,22 @@ in
       enable = true;
       createDirectories = true;
     };
+
+    # -*- HERE BE DRAGONS -*-
+    #
+    # Setting themes in KDE is a mess.
+    # The following files are changed by the systemsettings app:
+    #
+    #   - kcminputrc
+    #   - kdedefaults/kcminputrc
+    #   - kdedefaults/kdeglobals
+    #   - kdedefaults/kscreenlockerrc
+    #   - kdedefaults/ksplashrc
+    #   - kdedefaults/kwinrc
+    #   - kdedefaults/package
+    #   - kdedefaults/plasmarc
+    #   - kdeglobals
+    #   - kwinrc
     configFile = {
       breezerc.text = toINI {
         Style.TabBarDrawCenteredTabs = true;
