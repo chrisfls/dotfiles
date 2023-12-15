@@ -1,19 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
-# kvantum themes: 
-# https://github.com/EliverLara/Nordic
-# https://github.com/PapirusDevelopmentTeam/arc-kde
-# https://github.com/vinceliuice/WhiteSur-kde
-# https://github.com/PapirusDevelopmentTeam/materia-kde
-# https://github.com/catppuccin/Kvantum
-# https://github.com/vinceliuice/Colloid-kde
-# https://github.com/HimDek/Utterly-Nord-Plasma
-# https://github.com/EliverLara/Andromeda-KDE
-# https://github.com/HimDek/Utterly-Sweet-Plasma
-# https://github.com/HimDek/Utterly-Round-Plasma-Style
 let
   breeze = pkgs.libsForQt5.breeze-qt5;
-
-
   toINI = lib.generators.toINI { };
 in
 {
@@ -48,11 +35,6 @@ in
       defaultCursor = name;
     };
   };
-
-  home.packages = [
-    pkgs.libsForQt5.qtstyleplugin-kvantum
-    pkgs.qt6Packages.qtstyleplugin-kvantum
-  ];
 
   xdg = {
     enable = true;
