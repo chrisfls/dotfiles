@@ -1,3 +1,4 @@
+# THIS IS REALLY OLD AND DOESN'T WORK
 { config, pkgs, lib, nixpkgs, specialArgs, ... }: with specialArgs;
 {
   nix = {
