@@ -17,17 +17,15 @@ let
           targets;
     in
     (pkgs.symlinkJoin {
-      name = lib.strings.concatStringsSep "." path;
+      name = "${lib.strings.concatStringsSep "." path}-${builtins.baseNameOf nixgl}";
       paths = (builtins.map write targets') ++ [ pkg ];
     });
 
   overlay = { package, overlay, ... }: final: prev:
-    lib.mkMerge [
-      prev
+    lib.attrsets.recursiveUpdate prev
       (lib.attrsets.mapAttrsRecursive
         (recurse (lib.getExe package) final prev)
-        overlay)
-    ];
+        overlay);
 in
 {
   options.extra = {
@@ -64,6 +62,7 @@ in
 
     (lib.mkIf cfg.nixVulkan.enable {
       home.packages = [ cfg.nixVulkan.package ];
+      nixpkgs.overlays = [ (overlay cfg.nixVulkan) ];
     })
   ];
 }

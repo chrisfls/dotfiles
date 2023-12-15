@@ -1,4 +1,4 @@
-{ pkgs, specialArgs, ... }:
+{ config, lib, pkgs, specialArgs, ... }:
 let
   lxqt = pkgs.lxqt;
   xdg-desktop-portal = lxqt.xdg-desktop-portal-lxqt;
@@ -17,44 +17,38 @@ in
     ../nixgl.nix
   ];
 
-  config = {
-    home.packages = [
-      xdg-desktop-portal
-      #notifications
-      #polkit-agent
-      #gui-sudo
-      #ssh-askpass
-      file-manager
-      #volume-mixer
-      #system-monitor
-      #clipboard-manager
-      #screenshot
-    ];
+  config = lib.mkMerge [
+    {
+      home.packages = [
+        xdg-desktop-portal
+        notifications
+        polkit-agent
+        gui-sudo
+        ssh-askpass
+        file-manager
+        volume-mixer
+        system-monitor
+        clipboard-manager
+        screenshot
+      ];
+    }
 
-    extra.nixGL.overlay = {
-      #"${notifications}".enable = true;
-      #"${polkit-agent}".enable = true;
-      #"${gui-sudo}".enable = true;
-      #"${ssh-askpass}".enable = true;
-      lxqt.pcmanfm-qt = [ "pcmanfm-qt" ];
-      #"${volume-mixer}".enable = true;
-      #"${system-monitor}".enable = true;
-      #"${clipboard-manager}".enable = true;
-      #"${screenshot}".enable = true;
-    };
-  };
+    (lib.mkIf config.targets.genericLinux.enable {
+      extra.nixGL = {
+        enable = true;
+        overlay = {
+          lxqt = {
+            lxqt-sudo = [ "lxqt-sudo" ];
+            pavucontrol-qt = [ "pavucontrol-qt" ];
+            pcmanfm-qt = [ "pcmanfm-qt" ];
+            qlipper = [ "qlipper" ];
+            qps = [ "qps" ];
+            screengrab = [ "screengrab" ];
+          };
+        };
+      };
+
+      extra.nixVulkan.enable = true;
+    })
+  ];
 }
-/*
-  nixpkgs.overlays = [
-      (self: super: {
-        lxqt.xdg-desktop-portal-lxqt = wrapGL super.lxqt.xdg-desktop-portal-lxqt;
-        lxqt.lxqt-notificationd = wrapGL super.lxqt.lxqt-notificationd;
-        lxqt.lxqt-policykit = wrapGL super.lxqt.lxqt-policykit;
-        lxqt.lxqt-sudo = wrapGL super.lxqt.lxqt-sudo;
-        lxqt.lxqt-openssh-askpass = wrapGL super.lxqt.lxqt-openssh-askpass;
-        lxqt.pcmanfm-qt = wrapGL super.lxqt.pcmanfm-qt;
-        lxqt.pavucontrol-qt = wrapGL super.lxqt.pavucontrol-qt;
-        lxqt.qps = wrapGL super.lxqt.qps;
-        lxqt.qlipper = wrapGL super.lxqt.qlipper;
-        lxqt.screengrab = wrapGL super.lxqt.screengrab;
-      })*/
