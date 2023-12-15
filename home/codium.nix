@@ -27,4 +27,7 @@ in
       }
     ];
   };
+
+  extra.nixGL.overlay = { vscodium = [ ]; };
+
 }
