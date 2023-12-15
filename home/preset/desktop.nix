@@ -34,7 +34,13 @@ in
       enable = true;
     };
 
-    extra.nixGL.enable = nixgl-enable;
+    extra.nixGL = {
+      enable = nixgl-enable;
+      overlay = {
+        brave = [ "brave" ];
+      };
+    };
+
     extra.nixVulkan.enable = nixgl-enable;
   };
 }
