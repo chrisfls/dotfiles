@@ -26,6 +26,7 @@ in
       extra.gtk-theme.enable = true;
       extra.icon-theme.enable = true;
       extra.cursor-theme.enable = true;
+      extra.font.enable = true;
 
       programs.rofi = {
         enable = true;

@@ -48,11 +48,10 @@
       # specialArgs / extraSpecialArgs
       attrsets = import ./special/attrsets.nix;
       color-schemes = import ./special/color-schemes.nix;
-      hm = import ./special/hm.nix nixpkgs;
       ssot = import ./special/ssot.nix;
       string = import ./special/string.nix;
       homeSpecialArgs = {
-        inherit inputs attrsets color-schemes hm ssot string;
+        inherit inputs attrsets color-schemes ssot string;
       };
     in
     {
@@ -66,6 +65,7 @@
             overlays = [ inputs.nixgl.overlay ];
           };
           modules = [
+            ./home/module/copy-file.nix
             ./home/module/nixgl.nix
             ./home/user/${ssot.users.arch-rmxp.kress.id}.nix
           ];
