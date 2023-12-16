@@ -2,7 +2,9 @@
 
 let
   cfg = config.extra;
+
   toINI = lib.generators.toINI { };
+
   toQtct = pkg:
     let
       name = builtins.baseNameOf (lib.getExe pkg);
@@ -155,7 +157,7 @@ in
       general = {
         name = lib.mkOption {
           type = lib.types.str;
-          default = "Overpass";
+          default = "Noto Sans";
         };
 
         size = lib.mkOption {
@@ -165,14 +167,14 @@ in
 
         package = lib.mkOption {
           type = lib.types.package;
-          default = pkgs.overpass;
+          default = pkgs.noto-fonts;
         };
       };
 
       fixed = {
         name = lib.mkOption {
           type = lib.types.str;
-          default = "Overpass Mono";
+          default = "Noto Sans Mono";
         };
 
         size = lib.mkOption {
@@ -182,17 +184,23 @@ in
 
         package = lib.mkOption {
           type = lib.types.package;
-          default = pkgs.overpass;
+          default = pkgs.noto-fonts;
         };
       };
 
       extra = lib.mkOption {
         type = lib.types.listOf lib.types.package;
         default = [
-          pkgs.noto-fonts
+          # good heading fonts
+          pkgs.overpass
+          pkgs.montserrat
+
+          # terminal fonts
+          # pkgs.nerdfonts
+
+          # programming fonts
           pkgs.jetbrains-mono
           pkgs.cascadia-code
-          # pkgs.nerdfonts
         ];
       };
     };
