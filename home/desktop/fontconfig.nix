@@ -8,6 +8,7 @@ in
     ./scale.nix
   ];
 
+  # TODO: abstract this away
   config = {
     xresources.properties = {
       "Xft.dpi" = dpi;
@@ -19,7 +20,6 @@ in
       "Xft.rgba" = "rgb";
     };
 
-    # TODO: derive this from the item above before
     xdg.configFile."fontconfig/fonts.conf".text = ''
       <?xml version="1.0" encoding="UTF-8"?>
       <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
