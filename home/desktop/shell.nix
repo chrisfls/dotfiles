@@ -1,39 +1,190 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
   lxqt = pkgs.lxqt;
-  xdg-desktop-portal = lxqt.xdg-desktop-portal-lxqt;
-  notifications = lxqt.lxqt-notificationd;
-  polkit-agent = lxqt.lxqt-policykit;
-  gui-sudo = lxqt.lxqt-sudo;
-  ssh-askpass = lxqt.lxqt-openssh-askpass;
-  file-manager = lxqt.pcmanfm-qt;
-  volume-mixer = lxqt.pavucontrol-qt;
-  system-monitor = lxqt.qps;
-  clipboard-manager = lxqt.qlipper;
-  screenshot = lxqt.screengrab;
+
+  cfg = config.extra.shell;
+
+  defaultCmd = { packages, ... }: builtins.baseNameOf (lib.getExe (builtins.head packages));
 in
 {
-  home.packages = [
-    xdg-desktop-portal
-    notifications
-    polkit-agent
-    gui-sudo
-    ssh-askpass
-    file-manager
-    volume-mixer
-    system-monitor
-    clipboard-manager
-    screenshot
-  ];
+  options.extra.shell = {
+    xdg-desktop-portal = {
+      enable = lib.mkEnableOption "Enable xdg-desktop-portal";
 
-  extra.nixGL.overlay = {
-    lxqt = {
-      lxqt-sudo = [ "lxqt-sudo" ];
-      pavucontrol-qt = [ "pavucontrol-qt" ];
-      pcmanfm-qt = [ "pcmanfm-qt" ];
-      qlipper = [ "qlipper" ];
-      qps = [ "qps" ];
-      screengrab = [ "screengrab" ];
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = defaultCmd cfg.xdg-desktop-portal;
+      };
+
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ lxqt.xdg-desktop-portal-lxqt ];
+      };
+    };
+
+    notifications = {
+      enable = lib.mkEnableOption "Enable notifications";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = defaultCmd cfg.notifications;
+      };
+
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ lxqt.lxqt-notificationd ];
+      };
+    };
+
+    polkit-agent = {
+      enable = lib.mkEnableOption "Enable polkit-agent";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = defaultCmd cfg.polkit-agent;
+      };
+
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ lxqt.lxqt-policykit ];
+      };
+    };
+
+    gui-sudo = {
+      enable = lib.mkEnableOption "Enable gui-sudo";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = defaultCmd cfg.gui-sudo;
+      };
+
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ lxqt.lxqt-sudo ];
+      };
+    };
+
+    ssh-askpass = {
+      enable = lib.mkEnableOption "Enable ssh-askpass";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = defaultCmd cfg.ssh-askpass;
+      };
+
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ lxqt.lxqt-openssh-askpass ];
+      };
+    };
+
+    file-manager = {
+      enable = lib.mkEnableOption "Enable file-manager";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = defaultCmd cfg.file-manager;
+      };
+
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ lxqt.pcmanfm-qt ];
+      };
+    };
+
+    volume-mixer = {
+      enable = lib.mkEnableOption "Enable volume-mixer";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = defaultCmd cfg.volume-mixer;
+      };
+
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ lxqt.pavucontrol-qt ];
+      };
+    };
+
+    system-monitor = {
+      enable = lib.mkEnableOption "Enable system-monitor";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = defaultCmd cfg.system-monitor;
+      };
+
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ lxqt.qps ];
+      };
+    };
+
+    clipboard-manager = {
+      enable = lib.mkEnableOption "Enable clipboard-manager";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = defaultCmd cfg.clipboard-manager;
+      };
+
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ lxqt.qlipper ];
+      };
+    };
+
+    screenshot = {
+      enable = lib.mkEnableOption "Enable screenshot";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = "shotgun - | xclip -t 'image/png' -selection clipboard";
+      };
+
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ pkgs.shotgun pkgs.xclip ];
+      };
+    };
+
+    screenshot-alt = {
+      enable = lib.mkEnableOption "Enable screenshot-alt";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = "shotgun -g \"$(hacksaw -s 2)\" - | xclip -t 'image/png' -selection clipboard";
+      };
+
+      packages = lib.mkOption {
+        type = lib.types.listOf lib.types.package;
+        default = [ pkgs.shotgun pkgs.hacksaw pkgs.xclip ];
+      };
     };
   };
+
+  config = lib.mkMerge [
+    {
+      extra.nixGL.overlay = {
+        lxqt = {
+          lxqt-sudo = [ "lxqt-sudo" ];
+          pavucontrol-qt = [ "pavucontrol-qt" ];
+          pcmanfm-qt = [ "pcmanfm-qt" ];
+          qlipper = [ "qlipper" ];
+          qps = [ "qps" ];
+        };
+      };
+    }
+    (with cfg.xdg-desktop-portal; lib.mkIf enable { home.packages = packages; })
+    (with cfg.notifications; lib.mkIf enable { home.packages = packages; })
+    (with cfg.polkit-agent; lib.mkIf enable { home.packages = packages; })
+    (with cfg.gui-sudo; lib.mkIf enable { home.packages = packages; })
+    (with cfg.ssh-askpass; lib.mkIf enable { home.packages = packages; })
+    (with cfg.file-manager; lib.mkIf enable { home.packages = packages; })
+    (with cfg.volume-mixer; lib.mkIf enable { home.packages = packages; })
+    (with cfg.system-monitor; lib.mkIf enable { home.packages = packages; })
+    (with cfg.clipboard-manager; lib.mkIf enable { home.packages = packages; })
+    (with cfg.screenshot; lib.mkIf enable { home.packages = packages; })
+    (with cfg.screenshot-alt; lib.mkIf enable { home.packages = packages; })
+  ];
 }

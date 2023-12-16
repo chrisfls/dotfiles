@@ -29,6 +29,17 @@ in
       extra.icon-theme.enable = true;
       extra.cursor-theme.enable = true;
       extra.font.enable = true;
+      extra.shell.xdg-desktop-portal.enable = true;
+      extra.shell.notifications.enable = true;
+      extra.shell.polkit-agent.enable = true;
+      extra.shell.gui-sudo.enable = true;
+      extra.shell.ssh-askpass.enable = true;
+      extra.shell.file-manager.enable = true;
+      extra.shell.volume-mixer.enable = true;
+      extra.shell.system-monitor.enable = true;
+      extra.shell.clipboard-manager.enable = true;
+      extra.shell.screenshot.enable = true;
+      extra.shell.screenshot-alt.enable = true;
 
       programs.rofi = {
         enable = true;
