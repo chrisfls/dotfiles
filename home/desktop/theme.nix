@@ -1,4 +1,5 @@
 { config, lib, pkgs, specialArgs, ... }:
+
 let
   cfg = config.extra;
   toINI = lib.generators.toINI { };
@@ -75,6 +76,7 @@ in
         default = "kvantum-dark";
       };
 
+      # REVIEW: evaluate replacing ArcDark with materia kde
       kvantum-theme = lib.mkOption {
         type = lib.types.str;
         default = "ArcDark";
@@ -119,12 +121,12 @@ in
 
       name = lib.mkOption {
         type = lib.types.str;
-        default = "breeze-dark";
+        default = "Papirus-Dark";
       };
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.libsForQt5.breeze-icons;
+        default = pkgs.papirus-icon-theme;
       };
     };
 
