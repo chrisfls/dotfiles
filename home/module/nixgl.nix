@@ -8,7 +8,7 @@ let
         lib.attrsets.getAttrFromPath path prev;
 
       write = bin:
-        pkgs.writeShellScriptBin bin "#!/bin/sh\n${nixgl} ${pkg}/bin/${bin}\n";
+        pkgs.writeShellScriptBin bin "${nixgl} ${pkg}/bin/${bin} $@\n";
 
       targets' =
         if targets == [ ] then
