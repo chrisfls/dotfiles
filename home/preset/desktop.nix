@@ -5,9 +5,13 @@ let
 in
 {
   imports = [
-    ../desktop/wm.nix
-    ../desktop/theme.nix
+    ../desktop/browser.nix
+    ../desktop/fontconfig.nix
+    ../desktop/scale.nix
     ../desktop/shell.nix
+    ../desktop/shell.nix
+    ../desktop/theme.nix
+    ../desktop/wm.nix
   ];
 
 

@@ -64,11 +64,6 @@ let
     };
 in
 {
-  imports = [
-    ./scale.nix
-    ./fontconfig.nix
-  ];
-
   options.extra = {
     qt-theme = {
       enable = lib.mkEnableOption "description";

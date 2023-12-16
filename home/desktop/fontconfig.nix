@@ -4,10 +4,6 @@ let
   dpi = cfg.dpi;
 in
 {
-  imports = [
-    ./scale.nix
-  ];
-
   # TODO: abstract this away
   config = {
     xresources.properties = {

@@ -9,3 +9,5 @@
           "application/xhtml+xml" = cfg.name;
           "application/x-extension-xhtml" = cfg.name;
           "application/x-extension-xht" = cfg.name; */
+{ ... }:
+{ }

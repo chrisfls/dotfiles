@@ -6,6 +6,7 @@ let
   icon-theme = pkgs.libsForQt5.breeze-icons;
 in
 {
+  # this was decided to be an antipattern
   imports = [
     ./themes.nix
     ./waybar
