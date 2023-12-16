@@ -68,6 +68,7 @@ in
 
   extra.nixGL.enable = true;
   extra.nixVulkan.enable = true;
+  extra.scale = 1.5;
 
   # services.autorandr.enable = true;
 

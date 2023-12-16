@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   lxqt = pkgs.lxqt;
+  cfg = config.extra;
 in
 {
   imports = [
@@ -8,6 +9,7 @@ in
     ../desktop/theme.nix
     ../desktop/shell.nix
   ];
+
 
   config = lib.mkMerge [
     {
@@ -37,6 +39,10 @@ in
         # unless no issues with gpu accel are found
         enable = true;
       };
+
+      fonts.fontconfig.enable = true;
+
+      services.xsettingsd.enable = true;
     }
 
     (lib.mkIf config.targets.genericLinux.enable {

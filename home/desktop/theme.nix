@@ -61,6 +61,11 @@ let
     };
 in
 {
+  imports = [
+    ./scale.nix
+    ./fontconfig.nix
+  ];
+
   options.extra = {
     qt-theme = {
       enable = lib.mkEnableOption "description";
@@ -133,7 +138,7 @@ in
 
       size = lib.mkOption {
         type = lib.types.int;
-        default = 24;
+        default = builtins.floor (24 * cfg.scale);
       };
 
       package = lib.mkOption {
@@ -153,7 +158,7 @@ in
 
         size = lib.mkOption {
           type = lib.types.int;
-          default = 12;
+          default = 9;
         };
 
         package = lib.mkOption {
@@ -170,7 +175,7 @@ in
 
         size = lib.mkOption {
           type = lib.types.int;
-          default = 12;
+          default = 9;
         };
 
         package = lib.mkOption {
@@ -236,8 +241,7 @@ in
 
     (lib.mkIf cfg.font.enable {
       home.packages = cfg.font.extra;
-      extra.copyFile."$XDG_CONFIG_HOME/fontconfig/fonts.conf" = ./theme/fontconfig.conf;
-      fonts.fontconfig.enable = true;
+
     })
 
     (lib.mkIf (cfg.gtk-theme.enable && cfg.font.enable) {
