@@ -9,6 +9,11 @@ in
     pkgs.xclip
   ];
 
+  extra.nixGL.overlay = {
+    shotgun = [ "shotgun" ];
+    slop = [ "slop" ];
+  };
+
   xdg.configFile."slop/guides.vert".text =
     ''
       #version 130
