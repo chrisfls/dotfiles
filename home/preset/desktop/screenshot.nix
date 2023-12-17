@@ -4,8 +4,8 @@ let
 in
 {
   home.packages = [
-    pkgs.shotgun # pkgs.maim
-    pkgs.slop # pkgs.hacksaw
+    pkgs.shotgun # or pkgs.maim
+    pkgs.slop    # or pkgs.hacksaw
     pkgs.xclip
   ];
 
