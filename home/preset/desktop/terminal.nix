@@ -1,8 +1,6 @@
 { pkgs, ... }:
 {
-  home.packages = [
-    pkgs.contour
-  ];
+  home.packages = [ pkgs.contour ];
 
   extra.nixGL.overlay.contour = [ "contour" ];
 
