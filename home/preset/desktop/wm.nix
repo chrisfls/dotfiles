@@ -2,13 +2,13 @@
 let
   xorg = pkgs.xorg;
   i3 = config.xsession.windowManager.i3;
-  cfg = config.xsession.windowManager.i3.config;
-  mod = cfg.modifier;
+  mod = config.xsession.windowManager.i3.config.modifier;
 in
 {
   home.packages = [
     pkgs.autotiling
     pkgs.picom
+    pkgs.xdg-desktop-portal
   ];
 
   home.file.".xinitrc" = {
@@ -33,13 +33,13 @@ fi
     windowManager.i3 = {
       enable = true;
 
-      config = {
+      config = rec {
 
         menu = "rofi -show drun";
         terminal = "nixGLIntel wezterm";
 
         startup = [
-          # { command = "autotiling"; always = true; notification = false; }
+          { command = "autotiling"; always = true; notification = false; }
           { command = "nixGLIntel picom"; always = true; notification = false; }
         ];
 
@@ -62,9 +62,16 @@ fi
           # APPLICATIONS
           ######## #### ## #23
 
-          "${mod}+colon" = "exec ${cfg.terminal}";
-          "${mod}+BackSpace" = "exec ${cfg.terminal}";
-          "${mod}+Return" = "exec ${cfg.menu}";
+          "${mod}+colon" = "exec ${terminal}";
+          "${mod}+BackSpace" = "exec ${terminal}";
+          "${mod}+Return" = "exec ${menu}";
+
+          # screenshot
+          "Print" = "exec ${config.extra.shell.screenshot.cmd}";
+          "Shift+Print" = "exec ${config.extra.shell.screenshot-alt.cmd}";
+
+          # windows compat
+          "${mod}+Shift+s" = "exec ${config.extra.shell.screenshot-alt.cmd}";
 
           # WINDOW CONTROLS
           ######## #### ## #
@@ -77,7 +84,7 @@ fi
 
           "${mod}+s" = "layout toggle split";
 
-          "${mod}+g" = "layout tabbed";
+          "${mod}+g" = "focus child; layout toggle tabbed split";
 
           "${mod}+f" = "floating toggle";
 
@@ -86,7 +93,7 @@ fi
           #"${mod}+h" = "split h";
           "${mod}+v" = "split toggle";
 
-          "${mod}+a" = "focus parent";
+          "${mod}+a" = "focus parent; split toggle";
 
           # FOCUS
           ######## #### ## #
@@ -107,10 +114,10 @@ fi
           ######## #### ## #
 
           # move with hjkl
-          "${mod}+Shift+h" = "move left";
-          "${mod}+Shift+j" = "move down";
-          "${mod}+Shift+k" = "move up";
-          "${mod}+Shift+l" = "move right";
+          "${mod}+Shift+h" = "mark swap; focus left; swap container with mark swap; unmark swap; focus left";
+          "${mod}+Shift+j" = "mark swap; focus down; swap container with mark swap; unmark swap; focus down";
+          "${mod}+Shift+k" = "mark swap; focus up; swap container with mark swap; unmark swap; focus up";
+          "${mod}+Shift+l" = "mark swap; focus right; swap container with mark swap; unmark swap; focus right";
 
           # move with arrow keys
           "${mod}+Shift+Left" = "move left";
