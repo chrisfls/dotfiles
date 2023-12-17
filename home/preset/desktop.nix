@@ -5,13 +5,13 @@ let
 in
 {
   imports = [
-    ../desktop/browser.nix
-    ../desktop/fontconfig.nix
-    ../desktop/scale.nix
-    ../desktop/shell.nix
-    ../desktop/shell.nix
-    ../desktop/theme.nix
-    ../desktop/wm.nix
+    ./desktop/browser.nix
+    ./desktop/fontconfig.nix
+    ./desktop/scale.nix
+    ./desktop/apps.nix
+    ./desktop/theme.nix
+    ./desktop/wm.nix
+    ./desktop/keybindings.nix
   ];
 
 
@@ -28,22 +28,55 @@ in
         pkgs.brave
       ];
 
+
+      home.file.".xinitrc" = {
+        executable = true;
+        text = ''
+          #!/bin/sh
+          # last if block from /etc/X11/xinit/xinitrc
+          if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+          for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+            [ -x "$f" ] && . "$f"
+          done
+          unset f
+          fi
+
+          [[ -f ~/.xsession ]] && . ~/.xsession
+        '';
+      };
+
+      xdg.configFile."xdg-desktop-portal/portals.conf".text = ''
+        [preferred]
+        default=gtk
+        org.freedesktop.impl.portal.FileChooser=lxqt
+      '';
+
+      xdg.configFile."systemd/user/xdg-desktop-portal.service.d/override.conf".text = ''
+        [Service]
+        Environment="XDG_CURRENT_DESKTOP=KDE"
+      '';
+
+      xsession.enable = true;
+
       extra.qt-theme.enable = true;
       extra.gtk-theme.enable = true;
       extra.icon-theme.enable = true;
       extra.cursor-theme.enable = true;
       extra.font.enable = true;
-      extra.shell.xdg-desktop-portal.enable = true;
-      extra.shell.notifications.enable = true;
-      extra.shell.polkit-agent.enable = true;
-      extra.shell.gui-sudo.enable = true;
-      extra.shell.ssh-askpass.enable = true;
-      extra.shell.file-manager.enable = true;
-      extra.shell.volume-mixer.enable = true;
-      extra.shell.system-monitor.enable = true;
-      extra.shell.clipboard-manager.enable = true;
-      extra.shell.screenshot.enable = true;
-      extra.shell.screenshot-alt.enable = true;
+      extra.shell = {
+        xdg-desktop-portal.enable = true;
+        notifications.enable = true;
+        polkit-agent.enable = true;
+        gui-sudo.enable = true;
+        ssh-askpass.enable = true;
+        file-manager.enable = true;
+        volume-mixer.enable = true;
+        system-monitor.enable = true;
+        clipboard-manager.enable = true;
+        screenshot.enable = true;
+        screenshot-alt.enable = true;
+        browser.enable = true;
+      };
 
       programs.rofi = {
         enable = true;

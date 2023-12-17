@@ -161,6 +161,48 @@ in
         default = [ pkgs.shotgun pkgs.hacksaw pkgs.xclip ];
       };
     };
+
+    browser = {
+      enable = lib.mkEnableOption "Enable browser";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = "brave";
+      };
+
+      package = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.brave;
+      };
+    };
+
+    terminal = {
+      enable = lib.mkEnableOption "Enable terminal";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = "contour";
+      };
+
+      package = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.contour;
+      };
+    };
+
+    launcher = {
+      enable = lib.mkEnableOption "Enable launcher";
+
+      cmd = lib.mkOption {
+        type = lib.types.str;
+        default = "rofi -show drun";
+      };
+
+      package = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.rofi;
+      };
+    };
   };
 
   config = lib.mkMerge [
@@ -173,6 +215,8 @@ in
           qlipper = [ "qlipper" ];
           qps = [ "qps" ];
         };
+        brave = [ "brave" ];
+        contour = [ "contour" ];
       };
     }
     (with cfg.xdg-desktop-portal; lib.mkIf enable { home.packages = packages; })
@@ -186,5 +230,7 @@ in
     (with cfg.clipboard-manager; lib.mkIf enable { home.packages = packages; })
     (with cfg.screenshot; lib.mkIf enable { home.packages = packages; })
     (with cfg.screenshot-alt; lib.mkIf enable { home.packages = packages; })
+    (with cfg.terminal; lib.mkIf enable { home.packages = [package]; })
+    (with cfg.browser; lib.mkIf enable { home.packages = [package]; })
   ];
 }
