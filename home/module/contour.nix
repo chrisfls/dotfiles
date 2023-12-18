@@ -49,11 +49,13 @@
 #    features: most of all
 #    protocol: both + windows
 ##
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, specialArgs, ... }:
 let
   cfg = config.extra.contour;
 
   scale = config.extra.scaling.scale;
+
+  theme = specialArgs.color-schemes.popping-and-locking-black;
 
   pkg = pkgs.contour;
 in
@@ -215,8 +217,9 @@ in
           # If nothing is specified, the users' default login shell will be used.
           # But you may as well log in to a remote host.
           # shell: "ssh ubuntu-vm"
-          # shell: "/bin/bash"
-          # arguments: ["some", "optional", "arguments", "for", "the", "shell"]
+          shell = "${pkgs.fish}/bin/fish";
+
+          # arguments = ["some" "optional" "arguments" "for" "the" "shell"];
 
           # Advanced value that is useful when CopyPreviousMarkRange is used
           # with multiline-prompts. This offset value is being added to the
@@ -228,11 +231,12 @@ in
           # Sets initial working directory when spawning a new terminal.
           # A leading ~ is expanded to the user's home directory.
           # Default value is the user's home directory.
-          initial_working_directory = "~";
+          initial_working_directory = "~/Desktop";
 
           # When this profile is *activated*, this flag decides
           # whether or not the title bar will be shown
-          show_title_bar = true;
+          show_title_bar = false;
+
           # When this profile is being *activated*, this flag decides
           # whether or not to put the terminal's screen into fullscreen mode.
           #
@@ -274,10 +278,10 @@ in
 
           history = {
             # Number of lines to preserve (-1 for infinite).
-            limit = 1000;
+            limit = 1000000;
 
             # Boolean indicating whether or not to scroll down to the bottom on screen updates.
-            auto_scroll_on_update = true;
+            auto_scroll_on_update = false;
 
             # Number of lines to scroll on ScrollUp & ScrollDown events.
             # Default: 3
@@ -288,6 +292,7 @@ in
           scrollbar = {
             # scroll bar position: Left, Right, Hidden (ignore-case)
             position = "right";
+
             # whether or not to hide the scrollbar when in alt-screen.
             hide_in_alt_screen = true;
           };
@@ -335,7 +340,7 @@ in
               # - CoreText    : selects CoreText engine (Mac OS/X only)
               # - OpenShaper  : selects OpenShaper (harfbuzz/freetype/fontconfig, avilable on all
               #                 platforms)
-              engine = "native";
+              engine = "OpenShaper";
             };
 
             # Uses builtin textures for pixel-perfect box drawing.
@@ -364,7 +369,7 @@ in
             regular = {
               # Font family defines the font family name, such as:
               # Fira Code", "Courier New", or "monospace" (default).
-              family = "Noto Sans Mono";
+              family = "Cascadia Code";
 
               # Font weight can be one of:
               #   thin, extra_light, light, demilight, book, normal,
@@ -386,14 +391,31 @@ in
 
             # If bold/italic/bold_italic are not explicitely specified, the regular font with
             # the respective weight and slant will be used.
-            #bold: "Hack"
-            #italic: "Hack"
-            #bold_italic: "Hack"
+
+            bold = {
+              family = "Cascadia Code";
+              weight = "bold";
+              slant = "normal";
+            };
+
+            italic = {
+              family = "Cascadia Code";
+              weight = "regular";
+              slant = "oblique";
+              features = [ "ss02" ];
+            };
+
+            bold_italic = {
+              family = "Cascadia Code";
+              weight = "bold";
+              slant = "oblique";
+              features = [ "ss02" ];
+            };
 
             # This is a special font to be used for displaying unicode symbols
             # that are to be rendered in emoji presentation.
             # Defaults to "emoji".
-            emoji = "emoji";
+            emoji = "Noto Color Emoji";
           };
 
           bold_is_bright = false;
@@ -409,7 +431,7 @@ in
             shape = "bar";
 
             # Determins whether or not the cursor will be blinking over time.
-            blinking = false;
+            blinking = true;
 
             # Blinking interval (in milliseconds) to use when cursor is blinking.
             blinking_interval = 500;
@@ -473,10 +495,10 @@ in
           # Default colors
           default = {
             # Default background color (this can be made transparent, see above).
-            background = "#1d1f21";
+            background = theme.background;
 
             # Default foreground text color.
-            foreground = "#d5d8d6";
+            foreground = theme.foreground;
           };
 
           # Background image support.
@@ -524,24 +546,26 @@ in
 
           # The text selection color can be customized here.
           # Leaving a value empty will default to the inverse of the content's color values.
-          # selection:
-          #     foreground: '#c0c0c0'
-          #     background: '#a000a0'
+          selection = {
+            # foreground = "#c0c0c0";
+            background = theme.selectionBackground;
+          };
 
           # Normal colors
           normal = {
-            black = "#1d1f21";
-            red = "#cc342b";
-            green = "#198844";
-            yellow = "#fba922";
-            blue = "#3971ed";
-            magenta = "#a36ac7";
-            cyan = "#3971ed";
-            white = "#c5c8c6";
+            black = theme.black;
+            red = theme.red;
+            green = theme.green;
+            yellow = theme.yellow;
+            blue = theme.blue;
+            magenta = theme.purple;
+            cyan = theme.cyan;
+            white = theme.white;
           };
 
           # Dim (faint) colors, if not set, they're automatically computed based on normal colors.
           dim = {
+            /*
             black = "#1d1f21";
             red = "#cc342b";
             green = "#198844";
@@ -550,18 +574,19 @@ in
             magenta = "#a36ac7";
             cyan = "#3971ed";
             white = "#c5c8c6";
+            */
           };
 
           # Bright colors
           bright = {
-            black = "#969896";
-            red = "#cc342b";
-            green = "#198844";
-            yellow = "#fba922";
-            blue = "#3971ed";
-            magenta = "#a36ac7";
-            cyan = "#3971ed";
-            white = "#ffffff";
+            black = theme.brightBlack;
+            red = theme.brightRed;
+            green = theme.brightGreen;
+            yellow = theme.brightYellow;
+            blue = theme.brightBlue;
+            magenta = theme.brightPurple;
+            cyan = theme.brightCyan;
+            white = theme.brightWhite;
           };
         };
       };
