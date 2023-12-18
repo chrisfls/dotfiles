@@ -105,6 +105,7 @@ in
     polybar.enable = true;
     qview.enable = true;
     screenshot.enable = true;
+    loopback-toggle.enable = true;
     themes.enable = true;
     window-manager.enable = true;
 

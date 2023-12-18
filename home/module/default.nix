@@ -11,6 +11,7 @@
     ./fontconfig.nix
     ./fonts.nix
     ./hotkeys.nix
+    ./loopback-toggle.nix
     ./menu.nix
     ./nixgl.nix
     ./notifications.nix
