@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.extra.browser;
+
+  browser = "brave-browser.desktop";
 in
 {
   options.extra.browser.enable = lib.mkEnableOption "Enable browser module";
@@ -10,16 +12,20 @@ in
 
     extra.nixGL.overlay.brave = [ "brave" ];
 
-    /* 
-          "x-scheme-handler/http" = cfg.name;
-          "x-scheme-handler/https" = cfg.name;
-          "x-scheme-handler/chrome" = cfg.name;
-          "text/html" = cfg.name;
-          "application/x-extension-htm" = cfg.name;
-          "application/x-extension-html" = cfg.name;
-          "application/x-extension-shtml" = cfg.name;
-          "application/xhtml+xml" = cfg.name;
-          "application/x-extension-xhtml" = cfg.name;
-          "application/x-extension-xht" = cfg.name; */
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "x-scheme-handler/http" = browser;
+        "x-scheme-handler/https" = browser;
+        "x-scheme-handler/chrome" = browser;
+        "text/html" = browser;
+        "application/x-extension-htm" = browser;
+        "application/x-extension-html" = browser;
+        "application/x-extension-shtml" = browser;
+        "application/xhtml+xml" = browser;
+        "application/x-extension-xhtml" = browser;
+        "application/x-extension-xht" = browser;
+      };
+    };
   };
 }
