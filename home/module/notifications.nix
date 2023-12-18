@@ -1,4 +1,4 @@
-# TODO: replace with dunst or mako
+# TODO: **ONE DAY** replace with dunst or mako
 { config, lib, pkgs, ... }:
 let
   cfg = config.extra.notifications;
