@@ -72,7 +72,7 @@ in
   };
 
 
-  # services.autorandr.enable = true;
+  services.autorandr.enable = true;
 
   home.username = ssot.users.arch-rmxp.kress.username;
   home.homeDirectory = ssot.users.arch-rmxp.kress.home;
