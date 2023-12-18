@@ -25,13 +25,15 @@ in
 
     # desktop environment apps
     pkgs.arandr # manual display config
-    lxqt.lxqt-config # config editor
     lxqt.pavucontrol-qt # sound mixer
     lxqt.pcmanfm-qt # file manager
 
     # desktop apps
     lxqt.qlipper # clipboard manager [alt: pkgs.copyq; but seems bloated]
     lxqt.qps # system monitor
+
+    # personal apps
+    pkgs.webcord-vencord
   ];
 
   #
@@ -76,6 +78,7 @@ in
           default=gtk
           org.freedesktop.impl.portal.FileChooser=lxqt
         '';
+      
       "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
         ''
           [Service]
@@ -91,7 +94,7 @@ in
   #
 
   extra = {
-    bar.enable = true;
+    betterlockscreen.enable = true;
     browser.enable = true;
     contour.enable = true;
     fontconfig.enable = true;
@@ -99,6 +102,8 @@ in
     hotkeys.enable = true;
     menu.enable = true;
     notifications.enable = true;
+    polybar.enable = true;
+    qview.enable = true;
     screenshot.enable = true;
     themes.enable = true;
     window-manager.enable = true;
