@@ -2,7 +2,7 @@
 {
   imports = [
     ./agenix.nix
-    ./bar.nix
+    ./betterlockscreen.nix
     ./browser.nix
     ./cloudflare-warp.nix
     ./codium.nix
@@ -14,6 +14,8 @@
     ./menu.nix
     ./nixgl.nix
     ./notifications.nix
+    ./polybar.nix
+    ./qview.nix
     ./scaling.nix
     ./screenshot.nix
     ./shell.nix
