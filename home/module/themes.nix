@@ -8,7 +8,7 @@ let
 
   fmtFont = { name, size, ... }:
     let
-      # TODO: review
+      # REVIEW:
       font = lib.strings.concatStringsSep "," [
         name
         (builtins.toString size)

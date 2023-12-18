@@ -18,6 +18,10 @@ in
   extra.themes.enable = true;
   extra.window-manager.enable = true;
 
+  #
+  # desktop packages
+  #
+
   home.packages = [
     # cli apps
     pkgs.alsa-utils
@@ -109,8 +113,6 @@ in
         '';
     };
   };
-
-  fonts.fontconfig.enable = true;
 
   services.xsettingsd.enable = true;
 }

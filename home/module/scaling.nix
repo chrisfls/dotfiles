@@ -23,8 +23,8 @@ in
     };
   };
 
+  # when using GDK/QT scaling, the DPI must be hardcoded
   config = lib.mkIf cfg.enable {
-    # when using GDK/QT scaling, dpi must be hardcoded
     xresources.properties."Xft.dpi" = cfg.dpi;
 
     home.sessionVariables = {
@@ -35,7 +35,6 @@ in
       QT_ENABLE_HIGHDPI_SCALING = 1;
       QT_SCALE_FACTOR = scale;
 
-      # when using GDK/QT scaling, dpi must be hardcoded
       QT_FONT_DPI = cfg.dpi;
     };
   };

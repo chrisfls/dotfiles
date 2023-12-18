@@ -6,6 +6,8 @@ in
   options.extra.bar.enable = lib.mkEnableOption "Enable bar module";
 
   config = lib.mkIf cfg.enable { };
+
+  # TODO: polybar config here
   /*services.polybar = {
     enable = true;
     settings = {

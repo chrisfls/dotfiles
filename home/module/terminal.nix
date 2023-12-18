@@ -65,5 +65,7 @@ in
       "super + semicolon" = "contour";
       "super + BackSpace" = "contour";
     };
+
+    # TODO: insert terminal configs here
   };
 }

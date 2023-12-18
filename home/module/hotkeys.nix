@@ -33,7 +33,7 @@ in
         "super + Escape" = "pkill -USR1 -x sxhkd";
 
         # restart / quit
-        "super + shift + {r, q }" = "bspc {wm -r,quit}";
+        "super + shift + {r, q}" = "bspc {wm -r,quit}";
 
         # logout
         # "super + shift + e" = "";
