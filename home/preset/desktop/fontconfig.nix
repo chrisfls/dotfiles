@@ -1,19 +1,61 @@
-{ config, lib, pkgs, specialArgs, ... }:
+{ config, lib, ... }:
 let
-  cfg = config.extra;
-  dpi = cfg.dpi;
+  cfg = config.extra.font;
+  dpi = toString config.extra.dpi;
+  toInt = bool: if bool then 1 else 0;
 in
 {
-  # TODO: abstract this away
+  options.extra.font = {
+    antialias = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
+
+    hinting = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
+
+    hintstyle = lib.mkOption {
+      # TODO: enum
+      type = lib.types.str;
+      default = "hintslight";
+    };
+
+    rgba = lib.mkOption {
+      # TODO: enum
+      type = lib.types.str;
+      default = "rgb";
+    };
+
+    autohint = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+    };
+
+    lcdfilter = lib.mkOption {
+      # TODO: enum
+      type = lib.types.str;
+      default = "lcddefault";
+    };
+
+    weight = lib.mkOption {
+      # TODO: enum
+      type = lib.types.str;
+      default = "medium";
+    };
+  };
+
   config = {
+    fonts.fontconfig.enable = true;
+
     xresources.properties = {
-      "Xft.dpi" = dpi;
-      "Xft.antialias" = 1;
-      "Xft.autohint" = 0;
-      "Xft.hinting" = 1;
-      "Xft.hintstyle" = "hintslight";
-      "Xft.lcdfilter" = "lcddefault";
-      "Xft.rgba" = "rgb";
+      "Xft.antialias" = toInt cfg.antialias;
+      "Xft.autohint" = toInt cfg.autohint;
+      "Xft.hinting" = toInt cfg.hinting;
+      "Xft.hintstyle" = cfg.hintstyle;
+      "Xft.lcdfilter" = cfg.lcdfilter;
+      "Xft.rgba" = cfg.rgba;
     };
 
     xdg.configFile."fontconfig/fonts.conf".text = ''
@@ -22,40 +64,36 @@ in
       <fontconfig>
           <match target="font">
               <edit name="antialias" mode="assign">
-                  <bool>true</bool>
+                  <bool>${toString cfg.antialias}</bool>
               </edit>
               <edit name="hinting" mode="assign">
-                  <bool>true</bool>
+                  <bool>${toString cfg.hinting}</bool>
               </edit>
               <edit name="hintstyle" mode="assign">
-                  <const>hintslight</const>
+                  <const>${cfg.hintstyle}</const>
               </edit>
               <edit name="rgba" mode="assign">
-                  <const>rgb</const>
+                  <const>${cfg.rgba}</const>
               </edit>
               <edit name="autohint" mode="assign">
-                  <bool>false</bool>
+                  <bool>${toString cfg.autohint}</bool>
               </edit>
               <edit name="lcdfilter" mode="assign">
-                  <const>lcddefault</const>
+                  <const>${cfg.lcdfilter}</const>
               </edit>
               <edit name="dpi" mode="assign">
-                  <double>${builtins.toString dpi}</double>
+                  <double>${dpi}</double>
               </edit>
           </match>
           <match target="font">
               <test name="weight" compare="more">
-                  <const>medium</const>
+                  <const>${cfg.weight}</const>
               </test>
               <edit name="autohint" mode="assign">
-                  <bool>false</bool>
+                  <bool>${toString cfg.autohint}</bool>
               </edit>
           </match>
       </fontconfig>
     '';
-
-    home.sessionVariables = {
-      QT_FONT_DPI = dpi;
-    };
   };
 }

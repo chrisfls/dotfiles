@@ -1,31 +1,32 @@
 { config, lib, pkgs, specialArgs, ... }:
-
 let
   cfg = config.extra;
 
   toINI = lib.generators.toINI { };
 
+  fmtFont = { name, size, ... }:
+    let
+      # TODO: review
+      font = lib.strings.concatStringsSep "," [
+        name
+        (builtins.toString size)
+        # TODO: parameterize the rest
+        "-1"
+        "5"
+        "50"
+        "0"
+        "0"
+        "0"
+        "0"
+        "0"
+        "Regular"
+      ];
+    in
+    "\"${font}\"";
+
   toQtct = pkg:
     let
-      name = builtins.baseNameOf (lib.getExe pkg);
-      fmtFont = { name, size, ... }:
-        let
-          font = lib.strings.concatStringsSep "," [
-            name
-            (builtins.toString size)
-            # TODO: parameterize the rest
-            "-1"
-            "5"
-            "50"
-            "0"
-            "0"
-            "0"
-            "0"
-            "0"
-            "Regular"
-          ];
-        in
-        "\"${font}\"";
+      name = baseNameOf (lib.getExe pkg);
     in
     toINI {
       Appearance = {
@@ -66,8 +67,6 @@ in
 {
   options.extra = {
     qt-theme = {
-      enable = lib.mkEnableOption "description";
-
       style = lib.mkOption {
         type = lib.types.str;
         default = "kvantum-dark";
@@ -100,8 +99,6 @@ in
     };
 
     gtk-theme = {
-      enable = lib.mkEnableOption "Manage gtk themes";
-
       name = lib.mkOption {
         type = lib.types.str;
         default = "Arc-Dark";
@@ -114,8 +111,6 @@ in
     };
 
     icon-theme = {
-      enable = lib.mkEnableOption "Manage icon themes";
-
       name = lib.mkOption {
         type = lib.types.str;
         default = "Papirus-Dark";
@@ -128,8 +123,6 @@ in
     };
 
     cursor-theme = {
-      enable = lib.mkEnableOption "Manage cursor themes";
-
       name = lib.mkOption {
         type = lib.types.str;
         default = "breeze_cursors";
@@ -147,8 +140,6 @@ in
     };
 
     font = {
-      enable = lib.mkEnableOption "Manage fonts";
-
       general = {
         name = lib.mkOption {
           type = lib.types.str;
@@ -182,77 +173,39 @@ in
           default = pkgs.noto-fonts;
         };
       };
-
-      extra = lib.mkOption {
-        type = lib.types.listOf lib.types.package;
-        default = [
-          # good heading fonts
-          pkgs.overpass
-          pkgs.montserrat
-
-          # terminal fonts
-          # pkgs.nerdfonts
-
-          # programming fonts
-          pkgs.jetbrains-mono
-          pkgs.cascadia-code
-        ];
-      };
     };
   };
 
-  config = lib.mkMerge [
-    (lib.mkIf cfg.qt-theme.enable {
-      qt = {
-        enable = true;
-        platformTheme = "qtct";
-        style.name = "kvantum";
+  config = {
+    home.packages = [ cfg.qt-theme.package ];
+
+    qt = {
+      enable = true;
+      platformTheme = "qtct";
+      style.name = "kvantum";
+    };
+
+    gtk = {
+      enable = true;
+      font = { inherit (cfg.font.general) name package size; };
+      iconTheme = { inherit (cfg.icon-theme) name package; };
+      theme = { inherit (cfg.gtk-theme) name package; };
+    };
+
+    home.pointerCursor = rec {
+      inherit (cfg.cursor-theme) name package size;
+      gtk.enable = true;
+      x11 = { enable = true; defaultCursor = name; };
+    };
+
+    xdg.configFile = {
+      "Kvantum/kvantum.kvconfig".text = toINI {
+        General.theme = cfg.qt-theme.kvantum-theme;
       };
-
-      home.packages = [ cfg.qt-theme.package ];
-
-      xdg = {
-        enable = true;
-        configFile = {
-          "Kvantum/kvantum.kvconfig".text = toINI {
-            General.theme = cfg.qt-theme.kvantum-theme;
-          };
-          "qt5ct/qt5ct.conf".text = toQtct pkgs.qt5ct;
-          "qt6ct/qt6ct.conf".text = toQtct pkgs.qt6ct;
-        };
-      };
-    })
-
-    (lib.mkIf cfg.gtk-theme.enable {
-      gtk = {
-        enable = true;
-        theme = { inherit (cfg.gtk-theme) name package; };
-      };
-    })
-
-    (lib.mkIf cfg.icon-theme.enable {
-      gtk = {
-        iconTheme = { inherit (cfg.icon-theme) name package; };
-      };
-    })
-
-    (lib.mkIf cfg.cursor-theme.enable {
-      home.pointerCursor = rec {
-        inherit (cfg.cursor-theme) name package size;
-        gtk.enable = true;
-        x11 = { enable = true; defaultCursor = name; };
-      };
-    })
-
-    (lib.mkIf cfg.font.enable {
-      home.packages = cfg.font.extra;
-
-    })
-
-    (lib.mkIf (cfg.gtk-theme.enable && cfg.font.enable) {
-      gtk.font = { inherit (cfg.font.general) name package size; };
-    })
-  ];
+      "qt5ct/qt5ct.conf".text = toQtct pkgs.qt5ct;
+      "qt6ct/qt6ct.conf".text = toQtct pkgs.qt6ct;
+    };
+  };
 }
 
 

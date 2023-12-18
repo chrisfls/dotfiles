@@ -28,5 +28,5 @@ in
     ];
   };
 
-  extra.nixGL.overlay = { vscodium = [ ]; };
+  extra.nixGL.overlay = { vscodium = [ "codium" ]; };
 }

@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
-  slop = "slop -r guides -b ${toString (ceil config.extra.scale)}";
+  slop = "slop -r guides -b ${toString (builtins.ceil config.extra.scale)}";
 in
 {
   home.packages = [

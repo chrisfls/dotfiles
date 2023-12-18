@@ -14,30 +14,6 @@ in
   services.sxhkd = {
     enable = true;
     keybindings = {
-
-      # APPLICATIONS
-      ######## #### ## #
-
-      # WARNING: do not use curly braces here
-
-      "super + BackSpace" =
-        config.extra.shell.terminal.cmd;
-
-      "super + semicolon" = # TODO: it should probably be a comma or n (as in new term)
-        config.extra.shell.terminal.cmd;
-
-      "super + Return" = # TODO: if possible put it on plain @super
-        config.extra.shell.launcher.cmd;
-
-      "Print" =
-        config.extra.shell.screenshot.cmd;
-
-      "shift + Print" = # TODO: instead save image to Pictures/Screenshots
-        config.extra.shell.screenshot-alt.cmd;
-
-      "super + shift + s" =
-        config.extra.shell.screenshot-alt.cmd;
-
       # MISC
       ######## #### ## #
 
@@ -82,12 +58,12 @@ in
       # toggle float focus
       "super + Tab" =
         "node -f prev.local.!hidden.window";
+
       "super + shift + Tab" =
         "node -f next.local.!hidden.window";
+
       #"super + space" =
       #  "bspc node -t floating";
-
-
       #"super + q" = "";
       #"super + r" = "";
       #"super + s" = "";

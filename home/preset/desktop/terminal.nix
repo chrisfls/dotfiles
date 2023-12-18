@@ -1,4 +1,4 @@
-#
+##
 # Performance ranking using github.com/cmuratori/termbench
 #
 #  1st foot
@@ -48,12 +48,15 @@
 #    latency:  unknown
 #    features: most of all
 #    protocol: both + windows
-#
+##
 { pkgs, ... }:
 {
   home.packages = [ pkgs.contour ];
 
   extra.nixGL.overlay.contour = [ "contour" ];
 
-  services.sxhkd.keybindings."super + semicolon" = "contour";
+  services.sxhkd.keybindings = {
+    "super + semicolon" = "contour";
+    "super + BackSpace" = "contour";
+  };
 }

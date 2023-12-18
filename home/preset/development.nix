@@ -3,7 +3,6 @@
   imports = [
     ../shell.nix
     ../agenix.nix
-    ../codium.nix
   ];
 
   config = {

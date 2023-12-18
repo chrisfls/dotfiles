@@ -8,6 +8,7 @@ in
   imports = [
     ../preset/non-nixos.nix
     ../preset/development.nix
+    ../preset/development-desktop.nix
     ../preset/desktop.nix
     ../preset/work.nix
     ../preset/gamedev.nix

@@ -1,33 +1,80 @@
 { config, lib, pkgs, ... }:
 let
   lxqt = pkgs.lxqt;
-  cfg = config.extra;
+  nixgl = config.targets.genericLinux.enable;
 in
 {
   imports = [
+    ./desktop/applications.nix
+    ./desktop/bar.nix
     ./desktop/browser.nix
     ./desktop/fontconfig.nix
-    ./desktop/scale.nix
-    ./desktop/apps.nix
-    ./desktop/theme.nix
-    ./desktop/wm.nix
+    ./desktop/fonts.nix
     ./desktop/keybindings.nix
+    ./desktop/menu.nix
+    ./desktop/notifications.nix
+    ./desktop/scale.nix
+    ./desktop/screenshot.nix
+    ./desktop/terminal.nix
+    ./desktop/theme.nix
+    ./desktop/window-manager.nix
   ];
-
 
   config = lib.mkMerge [
     {
       home.packages = [
+        # cli apps
         pkgs.alsa-utils
         pkgs.pamixer
+        pkgs.xclip
 
-        # management
-        pkgs.arandr
+        # desktop components
+        lxqt.xdg-desktop-portal-lxqt # qt integration with xdg-desktop-portal
+        lxqt.lxqt-policykit # policykit prompter
+        lxqt.lxqt-sudo # gui-sudo prompter
+        lxqt.lxqt-openssh-askpass # ssh prompter
 
-        # browser
-        pkgs.brave
+        # desktop environment apps
+        pkgs.arandr # manual display config
+        lxqt.lxqt-config # config editor
+        lxqt.pavucontrol-qt # sound mixer
+        lxqt.pcmanfm-qt # file manager
+
+        # desktop apps
+        lxqt.qlipper # clipboard manager [alt: pkgs.copyq; but seems bloated]
+        lxqt.qps # system monitor
       ];
 
+      #
+      # enable hardware acceleration
+      #
+
+      extra.nixGL = {
+        enable = nixgl;
+        overlay.lxqt = {
+          # desktop components
+          lxqt-policykit = [ "lxqt-policykit-agent" ];
+          lxqt-sudo = [ "lxqt-sudo" ];
+          lxqt-openssh-askpass = [ "lxqt-openssh-askpass" ];
+
+          # desktop environment apps
+          lxqt-config = [ "lxqt-config" ];
+          pavucontrol-qt = [ "pavucontrol-qt" ];
+          pcmanfm-qt = [ "pcmanfm-qt" ];
+          qlipper = [ "qlipper" ];
+
+          # desktop apps
+          qps = [ "qps" ];
+        };
+      };
+
+      extra.nixVulkan.enable = nixgl;
+
+      #
+      # startx support
+      #
+
+      xsession.enable = true;
 
       home.file.".xinitrc" = {
         executable = true;
@@ -45,64 +92,32 @@ in
         '';
       };
 
-      xdg.configFile."xdg-desktop-portal/portals.conf".text = ''
-        [preferred]
-        default=gtk
-        org.freedesktop.impl.portal.FileChooser=lxqt
-      '';
+      #
+      # extra config files
+      #
 
-      xdg.configFile."systemd/user/xdg-desktop-portal.service.d/override.conf".text = ''
-        [Service]
-        Environment="XDG_CURRENT_DESKTOP=KDE"
-      '';
-
-      xsession.enable = true;
-
-      extra.qt-theme.enable = true;
-      extra.gtk-theme.enable = true;
-      extra.icon-theme.enable = true;
-      extra.cursor-theme.enable = true;
-      extra.font.enable = true;
-      extra.shell = {
-        xdg-desktop-portal.enable = true;
-        notifications.enable = true;
-        polkit-agent.enable = true;
-        gui-sudo.enable = true;
-        ssh-askpass.enable = true;
-        file-manager.enable = true;
-        volume-mixer.enable = true;
-        system-monitor.enable = true;
-        clipboard-manager.enable = true;
-        screenshot.enable = true;
-        screenshot-alt.enable = true;
-        browser.enable = true;
-      };
-
-      programs.rofi = {
+      xdg = {
         enable = true;
-      };
-
-      programs.wezterm = {
-        # maybe migrate to foot after https://codeberg.org/dnkl/foot/issues/57
-        # unless no issues with gpu accel are found
-        enable = true;
+        userDirs.enable = true;
+        configFile = {
+          "xdg-desktop-portal/portals.conf".text =
+            ''
+              [preferred]
+              default=gtk
+              org.freedesktop.impl.portal.FileChooser=lxqt
+            '';
+          "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
+            ''
+              [Service]
+              Environment="XDG_CURRENT_DESKTOP=KDE"
+            '';
+        };
       };
 
       fonts.fontconfig.enable = true;
 
       services.xsettingsd.enable = true;
     }
-
-    (lib.mkIf config.targets.genericLinux.enable {
-      extra.nixGL = {
-        enable = true;
-        overlay = {
-          brave = [ "brave" ];
-        };
-      };
-
-      extra.nixVulkan.enable = true;
-    })
   ];
 }
 

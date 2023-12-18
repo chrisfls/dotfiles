@@ -6,7 +6,6 @@ let
 in
 {
   home.packages = [
-    pkgs.autotiling
     pkgs.picom
   ];
 

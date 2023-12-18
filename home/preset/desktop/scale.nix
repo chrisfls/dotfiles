@@ -22,6 +22,9 @@ in
   };
 
   config = {
+    # when using GDK/QT scaling, dpi must be hardcoded
+    xresources.properties."Xft.dpi" = cfg.dpi;
+
     home.sessionVariables = {
       GDK_SCALE = gdk-scale;
       GDK_DPI_SCALE = gdk-dpi-scale;
@@ -29,6 +32,9 @@ in
       QT_AUTO_SCREEN_SCALE_FACTOR = 0;
       QT_ENABLE_HIGHDPI_SCALING = 1;
       QT_SCALE_FACTOR = scale;
+
+      # when using GDK/QT scaling, dpi must be hardcoded
+      QT_FONT_DPI = cfg.dpi;
     };
   };
 }
