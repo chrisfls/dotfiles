@@ -71,7 +71,6 @@ in
     };
   };
 
-
   services.autorandr.enable = true;
 
   home.username = ssot.users.arch-rmxp.kress.username;
