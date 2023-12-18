@@ -4,9 +4,9 @@ let
 
   screenshot-save = pkgs.writeShellScriptBin "screenshot-save"
     ''
-      date = "$XDG_PICTURES_DIR/$(date +\"%Y-%m-%d\")"
-      mkdir -p $date
-      shotgun "$date/$(date +\"%H-%M-%S.png\")"
+      d="$XDG_PICTURES_DIR/Screenshots/$(date +"%Y-%m-%d")"
+      mkdir -p "$d"
+      shotgun "$d/$(date +"%H_%M_%S.png")"
     '';
 
   scale = toString (builtins.ceil config.extra.scaling.scale);
