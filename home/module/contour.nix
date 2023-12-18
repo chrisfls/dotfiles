@@ -52,12 +52,16 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.extra.contour;
+
+  scale = config.extra.scaling.scale;
+
+  pkg = pkgs.contour;
 in
 {
   options.extra.contour.enable = lib.mkEnableOption "Enable contour module";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.contour ];
+    home.packages = [ pkg ];
 
     extra.nixGL.overlay.contour = [ "contour" ];
 
@@ -67,7 +71,7 @@ in
     };
 
     # Default Contour Configuration File.
-    xdg.configFile."contour/contour.yml".text = lib.generators.toYAML {} {
+    xdg.configFile."contour/contour.yml".text = lib.generators.toYAML { } {
       # Overrides the auto-detected platform plugin to be loaded.
       #
       # Possible (incomplete list of) values are:
@@ -97,6 +101,7 @@ in
         #
         # Default: 4096
         tile_hashtable_slots = 4096;
+
         # Number of tiles that must fit at lest into the texture atlas.
         #
         # This does not include direct mapped tiles (US-ASCII glyphs,
@@ -199,6 +204,7 @@ in
         # maximum height in pixels of an image to be accepted (0 defaults to system screen pixel height)
         max_height = 0;
       };
+
       # Terminal Profiles
       # -----------------
       #
@@ -222,7 +228,7 @@ in
           # Sets initial working directory when spawning a new terminal.
           # A leading ~ is expanded to the user's home directory.
           # Default value is the user's home directory.
-          initial_working_directory = "~/Desktop";
+          initial_working_directory = "~";
 
           # When this profile is *activated*, this flag decides
           # whether or not the title bar will be shown
@@ -236,6 +242,7 @@ in
           # When this profile is *activated*, this flag decides
           # whether or not to put the window into maximized mode.
           maximized = false;
+
           # Defines the class part of the WM_CLASS property of the window.
           wm_class = "contour";
 
@@ -308,7 +315,7 @@ in
             size = 12;
 
             # DPI scaling factor applied on top of the system configured on (default: 1.0).
-            dpi_scale = 1.5;
+            dpi_scale = scale;
 
             # Font Locator API
             # Selects an engine to use for locating font files on the system.
@@ -482,7 +489,7 @@ in
             # Image opacity to be applied to make the image not look to intense
             # and not get too distracted by the background image.
             # Default: 0.5
-            opacity = 0.5;
+            opacity = 1.0;
 
             # Optionally blurs background image to make it less distracting
             # and keep the focus on the actual terminal contents.
