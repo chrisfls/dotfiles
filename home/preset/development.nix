@@ -1,5 +1,7 @@
 { config, inputs, pkgs, ... }:
 {
+  imports = [ ../module ];
+
   extra.shell.enable = true;
   extra.agenix.enable = true;
 

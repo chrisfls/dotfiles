@@ -4,6 +4,8 @@ let
   nixgl = config.targets.genericLinux.enable;
 in
 {
+  imports = [ ../module ];
+
   extra.bar.enable = true;
   extra.browser.enable = true;
   extra.fontconfig.enable = true;

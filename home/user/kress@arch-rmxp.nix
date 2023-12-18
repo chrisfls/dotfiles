@@ -6,7 +6,6 @@ let
 in
 {
   imports = [
-    ../module
     ../preset/non-nixos.nix
     ../preset/development.nix
     ../preset/development-desktop.nix

@@ -1,8 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [
-    ./development.nix
-  ];
+  imports = [ ./development.nix ];
 
   config = {
     home.packages = [
