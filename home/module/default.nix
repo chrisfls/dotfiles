@@ -6,6 +6,7 @@
     ./browser.nix
     ./cloudflare-warp.nix
     ./codium.nix
+    ./contour.nix
     ./copy-file.nix
     ./fontconfig.nix
     ./fonts.nix
@@ -16,7 +17,6 @@
     ./scaling.nix
     ./screenshot.nix
     ./shell.nix
-    ./terminal.nix
     ./themes.nix
     ./window-manager.nix
   ];

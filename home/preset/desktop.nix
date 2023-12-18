@@ -1,22 +1,11 @@
 { config, lib, pkgs, ... }:
 let
   lxqt = pkgs.lxqt;
+
   nixgl = config.targets.genericLinux.enable;
 in
 {
   imports = [ ../module ];
-
-  extra.bar.enable = true;
-  extra.browser.enable = true;
-  extra.fontconfig.enable = true;
-  extra.fonts.enable = true;
-  extra.hotkeys.enable = true;
-  extra.menu.enable = true;
-  extra.notifications.enable = true;
-  extra.screenshot.enable = true;
-  extra.terminal.enable = true;
-  extra.themes.enable = true;
-  extra.window-manager.enable = true;
 
   #
   # desktop packages
@@ -46,59 +35,40 @@ in
   ];
 
   #
-  # enable hardware acceleration
-  #
-
-  extra.nixGL = {
-    enable = nixgl;
-    overlay.lxqt = {
-      # desktop components
-      lxqt-policykit = [ "lxqt-policykit-agent" ];
-      lxqt-sudo = [ "lxqt-sudo" ];
-      lxqt-openssh-askpass = [ "lxqt-openssh-askpass" ];
-
-      # desktop environment apps
-      lxqt-config = [ "lxqt-config" ];
-      pavucontrol-qt = [ "pavucontrol-qt" ];
-      pcmanfm-qt = [ "pcmanfm-qt" ];
-      qlipper = [ "qlipper" ];
-
-      # desktop apps
-      qps = [ "qps" ];
-    };
-  };
-
-  extra.nixVulkan.enable = nixgl;
-
-  #
-  # startx support
+  # startx
   #
 
   xsession.enable = true;
 
+  # last if block from /etc/X11/xinit/xinitrc
   home.file.".xinitrc" = {
     executable = true;
-    text = ''
-      #!/bin/sh
-      # last if block from /etc/X11/xinit/xinitrc
-      if [ -d /etc/X11/xinit/xinitrc.d ] ; then
-      for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-        [ -x "$f" ] && . "$f"
-      done
-      unset f
-      fi
 
-      [[ -f ~/.xsession ]] && . ~/.xsession
-    '';
+    text =
+      ''
+        #!/bin/sh
+
+        if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+          for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+            [ -x "$f" ] && . "$f"
+          done
+
+          unset f
+        fi
+
+        [[ -f ~/.xsession ]] && . ~/.xsession
+      '';
   };
 
   #
-  # extra config files
+  # config files
   #
 
   xdg = {
     enable = true;
+
     userDirs.enable = true;
+
     configFile = {
       "xdg-desktop-portal/portals.conf".text =
         ''
@@ -115,6 +85,49 @@ in
   };
 
   services.xsettingsd.enable = true;
+
+  #
+  # module configs
+  #
+
+  extra = {
+    bar.enable = true;
+    browser.enable = true;
+    contour.enable = true;
+    fontconfig.enable = true;
+    fonts.enable = true;
+    hotkeys.enable = true;
+    menu.enable = true;
+    notifications.enable = true;
+    screenshot.enable = true;
+    themes.enable = true;
+    window-manager.enable = true;
+
+    #
+    # enable hardware acceleration
+    #
+
+    nixGL = {
+      enable = nixgl;
+      overlay.lxqt = {
+        # desktop components
+        lxqt-policykit = [ "lxqt-policykit-agent" ];
+        lxqt-sudo = [ "lxqt-sudo" ];
+        lxqt-openssh-askpass = [ "lxqt-openssh-askpass" ];
+
+        # desktop environment apps
+        lxqt-config = [ "lxqt-config" ];
+        pavucontrol-qt = [ "pavucontrol-qt" ];
+        pcmanfm-qt = [ "pcmanfm-qt" ];
+        qlipper = [ "qlipper" ];
+
+        # desktop apps
+        qps = [ "qps" ];
+      };
+    };
+
+    nixVulkan.enable = nixgl;
+  };
 }
 
 /*
