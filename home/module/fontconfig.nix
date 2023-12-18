@@ -5,6 +5,8 @@ let
   dpi = toString config.extra.scaling.dpi;
 
   toInt = bool: if bool then 1 else 0;
+
+  fromBool = bool: if bool then "true" else "false";
 in
 {
   options.extra.fontconfig = {
@@ -68,10 +70,10 @@ in
       <fontconfig>
           <match target="font">
               <edit name="antialias" mode="assign">
-                  <bool>${toString cfg.antialias}</bool>
+                  <bool>${fromBool cfg.antialias}</bool>
               </edit>
               <edit name="hinting" mode="assign">
-                  <bool>${toString cfg.hinting}</bool>
+                  <bool>${fromBool cfg.hinting}</bool>
               </edit>
               <edit name="hintstyle" mode="assign">
                   <const>${cfg.hintstyle}</const>
@@ -80,7 +82,7 @@ in
                   <const>${cfg.rgba}</const>
               </edit>
               <edit name="autohint" mode="assign">
-                  <bool>${toString cfg.autohint}</bool>
+                  <bool>${fromBool cfg.autohint}</bool>
               </edit>
               <edit name="lcdfilter" mode="assign">
                   <const>${cfg.lcdfilter}</const>
@@ -94,7 +96,7 @@ in
                   <const>${cfg.weight}</const>
               </test>
               <edit name="autohint" mode="assign">
-                  <bool>${toString cfg.autohint}</bool>
+                  <bool>${fromBool cfg.autohint}</bool>
               </edit>
           </match>
       </fontconfig>
