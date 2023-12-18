@@ -12,11 +12,14 @@ in
       pkgs.montserrat
 
       # terminal fonts
-      # pkgs.nerdfonts
+      (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "CascadiaCode" ]; })
 
       # programming fonts
       pkgs.jetbrains-mono
       pkgs.cascadia-code
+
+      # emoji fonts
+      pkgs.noto-fonts-color-emoji
     ];
   };
 }

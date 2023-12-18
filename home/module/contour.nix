@@ -393,20 +393,20 @@ in
             # the respective weight and slant will be used.
 
             bold = {
-              family = "Cascadia Code";
+              family = "CaskaydiaCove Nerd Font Mono";
               weight = "bold";
               slant = "normal";
             };
 
             italic = {
-              family = "Cascadia Code";
+              family = "CaskaydiaCove Nerd Font Mono";
               weight = "regular";
               slant = "oblique";
               features = [ "ss02" ];
             };
 
             bold_italic = {
-              family = "Cascadia Code";
+              family = "CaskaydiaCove Nerd Font Mono";
               weight = "bold";
               slant = "oblique";
               features = [ "ss02" ];

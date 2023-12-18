@@ -57,7 +57,7 @@ let
         stylesheets = "${pkg}/share/${name}/qss/scrollbar-simple.qss, ${pkg}/share/${name}/qss/sliders-simple.qss, ${pkg}/share/${name}/qss/tooltip-simple.qss, ${pkg}/share/${name}/qss/traynotification-simple.qss";
         toolbutton_style = 2;
         underline_shortcut = 2;
-        wheel_scroll_lines = 1;
+        wheel_scroll_lines = 3;
       };
 
       Troubleshooting = {
