@@ -1,7 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  lxqt = pkgs.lxqt;
-
   nixgl = config.targets.genericLinux.enable;
 in
 {
@@ -18,37 +16,40 @@ in
     pkgs.xclip
 
     # desktop components
-    lxqt.xdg-desktop-portal-lxqt # qt integration with xdg-desktop-portal
-    lxqt.lxqt-policykit # policykit prompter
-    lxqt.lxqt-sudo # gui-sudo prompter
-    lxqt.lxqt-openssh-askpass # ssh prompter
+    pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
+    pkgs.lxqt.lxqt-policykit # policykit prompter
+    pkgs.lxqt.lxqt-sudo # gui-sudo prompter
+    pkgs.lxqt.xdg-desktop-portal-lxqt # qt integration with xdg-desktop-portal
 
     # desktop environment apps
+    pkgs.lxqt.pavucontrol-qt # sound mixer
+    pkgs.lxqt.pcmanfm-qt # file manager
     pkgs.arandr # manual display config
-    lxqt.pavucontrol-qt # sound mixer
-    lxqt.pcmanfm-qt # file manager
 
     # desktop apps
+    pkgs.lxqt.qps # system monitor
+    pkgs.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpc-qt/mpv]
     pkgs.copyq # clipboard manager [or: qlipper]
-    lxqt.qps # system monitor
+    pkgs.featherpad # simple txt editor
+    pkgs.libsForQt5.kolourpaint # simple image editor [or pkgs.photoflare]
+    pkgs.libsForQt5.vvave # music player [or elisa/vvave]
     pkgs.qalculate-qt # calculator
     pkgs.qbittorrent # torrenting
-    pkgs.featherpad # simple txt editor
-    pkgs.libsForQt5.kolourpaint # simple image editor (or pkgs.photoflare)
 
     # personal apps
     pkgs.anydesk
     pkgs.gimp
     pkgs.languagetool
-    pkgs.libsForQt5.audiotube # [or elisa/vvave]
+    pkgs.libsForQt5.audiotube # not working until https://github.com/NixOS/nixpkgs/issues/228179 and https://github.com/NixOS/nixpkgs/pull/273263 are done
     pkgs.logseq
     pkgs.moonlight-qt
-    pkgs.mpv # [or haruna/QMPlay2/kmplayer/dragonplayer/mpc-qt/mpv]
+    pkgs.mpv
     pkgs.notepadqq
     pkgs.parsec-bin
     pkgs.soulseekqt
     pkgs.steam
     pkgs.webcord-vencord
+    pkgs.ytui-music # using until audiotube is fixed
   ];
 
   #
@@ -132,24 +133,25 @@ in
       enable = nixgl;
       overlay.lxqt = {
         # desktop components
+        lxqt-openssh-askpass = [ "lxqt-openssh-askpass" ];
         lxqt-policykit = [ "lxqt-policykit-agent" ];
         lxqt-sudo = [ "lxqt-sudo" ];
-        lxqt-openssh-askpass = [ "lxqt-openssh-askpass" ];
 
         # desktop environment apps
-        lxqt-config = [ "lxqt-config" ];
         pavucontrol-qt = [ "pavucontrol-qt" ];
         pcmanfm-qt = [ "pcmanfm-qt" ];
         qlipper = [ "qlipper" ];
 
         # desktop apps
-        qps = [ "qps" ];
+        copyq = [ "copyq" ];
+        featherpad = [ "featherpad" ];
         libsForQt5.kolourpaint = [ "kolourpaint" ];
+        libsForQt5.vvave = [ "vvave" ];
         lxqt.qps = [ "qps" ];
-        pkgs.copyq = [ "copyq" ];
-        pkgs.featherpad = [ "featherpad" ];
-        pkgs.qalculate-qt = [ "qalculate-qt" ];
-        pkgs.qbittorrent = [ "qbittorrent" ];
+        mpc-qt = [ "mpc-qt" ];
+        qalculate-qt = [ "qalculate-qt" ];
+        qbittorrent = [ "qbittorrent" ];
+        qps = [ "qps" ];
 
         # personal apps
         anydesk = [ "anydesk" ];
