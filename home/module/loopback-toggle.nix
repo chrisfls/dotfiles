@@ -1,5 +1,3 @@
-# commands:
-
 { config, lib, pkgs, ... }:
 let
   cfg = config.extra.loopback-toggle;
