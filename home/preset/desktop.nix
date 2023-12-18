@@ -29,22 +29,26 @@ in
     lxqt.pcmanfm-qt # file manager
 
     # desktop apps
-    lxqt.qlipper # clipboard manager [alt: pkgs.copyq; but seems bloated]
+    pkgs.copyq # clipboard manager [or: qlipper]
     lxqt.qps # system monitor
+    pkgs.qalculate-qt # calculator
+    pkgs.qbittorrent # torrenting
+    pkgs.featherpad # simple txt editor
+    pkgs.libsForQt5.kolourpaint # simple image editor (or pkgs.photoflare)
 
     # personal apps
-    pkgs.webcord-vencord
-    pkgs.moonlight-qt
-    pkgs.parsec-bin
-    pkgs.steam
     pkgs.anydesk
     pkgs.gimp
-    pkgs.logseq
-    pkgs.transmission-qt
     pkgs.languagetool
-    pkgs.vlc # or haruna/QMPlay2/kmplayer/dragonplayer/mpc-qt/mpv
+    pkgs.libsForQt5.audiotube # [or elisa/vvave]
+    pkgs.logseq
+    pkgs.moonlight-qt
+    pkgs.mpv # [or haruna/QMPlay2/kmplayer/dragonplayer/mpc-qt/mpv]
+    pkgs.notepadqq
+    pkgs.parsec-bin
     pkgs.soulseekqt
-    pkgs.libsForQt5.elisa # or vvave
+    pkgs.steam
+    pkgs.webcord-vencord
   ];
 
   #
@@ -111,12 +115,12 @@ in
     fontconfig.enable = true;
     fonts.enable = true;
     hotkeys.enable = true;
+    loopback-toggle.enable = true;
     menu.enable = true;
     notifications.enable = true;
     polybar.enable = true;
     qview.enable = true;
     screenshot.enable = true;
-    loopback-toggle.enable = true;
     themes.enable = true;
     window-manager.enable = true;
 
@@ -140,21 +144,28 @@ in
 
         # desktop apps
         qps = [ "qps" ];
+        libsForQt5.kolourpaint = [ "kolourpaint" ];
+        lxqt.qps = [ "qps" ];
+        pkgs.copyq = [ "copyq" ];
+        pkgs.featherpad = [ "featherpad" ];
+        pkgs.qalculate-qt = [ "qalculate-qt" ];
+        pkgs.qbittorrent = [ "qbittorrent" ];
 
         # personal apps
-
-        webcord-vencord = [ "webcord" ];
-        moonlight-qt = [ "moonlight" ];
-        parsec-bin = [ "parsecd" ];
-        steam = [ "steam" ];
         anydesk = [ "anydesk" ];
         gimp = [ "gimp" ];
-        logseq = [ "logseq" ];
-        transmission-qt = [ "transmission-qt" ];
         languagetool = [ "languagetool" ];
-        vlc = [ "vlc" ]; # or haruna/QMPlay2/kmplayer/dragonplayer/mpc-qt/mpv
+        libsForQt5.audiotube = [ "audiotube" ];
+        logseq = [ "logseq" ];
+        moonlight-qt = [ "moonlight" ];
+        mpv = [ "mpv" ];
+        notepadqq = [ "notepadqq" ];
+        parsec-bin = [ "parsecd" ];
+        qalculate-qt = [ "qalculate-qt" ];
+        qbittorrent = [ "qbittorrent" ];
         soulseekqt = [ "SoulseekQt" ];
-        libsForQt5.elisa = [ "elisa" ]; # or vvave
+        steam = [ "steam" ];
+        webcord-vencord = [ "webcord" ];
       };
     };
 
