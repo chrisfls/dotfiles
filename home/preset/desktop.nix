@@ -34,6 +34,17 @@ in
 
     # personal apps
     pkgs.webcord-vencord
+    pkgs.moonlight-qt
+    pkgs.parsec-bin
+    pkgs.steam
+    pkgs.anydesk
+    pkgs.gimp
+    pkgs.logseq
+    pkgs.transmission-qt
+    pkgs.languagetool
+    pkgs.vlc # or haruna/QMPlay2/kmplayer/dragonplayer/mpc-qt/mpv
+    pkgs.soulseekqt
+    pkgs.libsForQt5.elisa # or vvave
   ];
 
   #
@@ -78,7 +89,7 @@ in
           default=gtk
           org.freedesktop.impl.portal.FileChooser=lxqt
         '';
-      
+
       "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
         ''
           [Service]
@@ -129,6 +140,21 @@ in
 
         # desktop apps
         qps = [ "qps" ];
+
+        # personal apps
+
+        webcord-vencord = [ "webcord" ];
+        moonlight-qt = [ "moonlight" ];
+        parsec-bin = [ "parsecd" ];
+        steam = [ "steam" ];
+        anydesk = [ "anydesk" ];
+        gimp = [ "gimp" ];
+        logseq = [ "logseq" ];
+        transmission-qt = [ "transmission-qt" ];
+        languagetool = [ "languagetool" ];
+        vlc = [ "vlc" ]; # or haruna/QMPlay2/kmplayer/dragonplayer/mpc-qt/mpv
+        soulseekqt = [ "SoulseekQt" ];
+        libsForQt5.elisa = [ "elisa" ]; # or vvave
       };
     };
 
