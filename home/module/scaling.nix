@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.extra;
+  cfg = config.extra.scaling;
 
   scale = cfg.scale;
 
@@ -9,7 +9,9 @@ let
   gdk-dpi-scale = scale / gdk-scale;
 in
 {
-  options.extra = {
+  options.extra.scaling = {
+    enable = lib.mkEnableOption "Enable scaling module";
+
     scale = lib.mkOption {
       type = lib.types.float;
       default = 1;
@@ -21,7 +23,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     # when using GDK/QT scaling, dpi must be hardcoded
     xresources.properties."Xft.dpi" = cfg.dpi;
 

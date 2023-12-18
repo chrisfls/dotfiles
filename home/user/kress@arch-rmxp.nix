@@ -6,14 +6,19 @@ let
 in
 {
   imports = [
+    ../module
     ../preset/non-nixos.nix
     ../preset/development.nix
     ../preset/development-desktop.nix
     ../preset/desktop.nix
     ../preset/work.nix
     ../preset/gamedev.nix
-    ../cloudflare-warp.nix
   ];
+
+  extra.cloudflare-warp.enable = true;
+  extra.nixGL.enable = true;
+  extra.nixVulkan.enable = true;
+  extra.scaling = { enable = true; scale = 1.5; };
 
   home.keyboard.layout = "br";
 
@@ -67,9 +72,6 @@ in
     };
   };
 
-  extra.nixGL.enable = true;
-  extra.nixVulkan.enable = true;
-  extra.scale = 1.5;
 
   # services.autorandr.enable = true;
 

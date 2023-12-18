@@ -1,11 +1,15 @@
 { config, lib, ... }:
 let
-  cfg = config.extra.font;
-  dpi = toString config.extra.dpi;
+  cfg = config.extra.fontconfig;
+
+  dpi = toString config.extra.scaling.dpi;
+
   toInt = bool: if bool then 1 else 0;
 in
 {
-  options.extra.font = {
+  options.extra.fontconfig = {
+    enable = lib.mkEnableOption "Enable fontconfig module";
+
     antialias = lib.mkOption {
       type = lib.types.bool;
       default = true;
@@ -46,7 +50,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     fonts.fontconfig.enable = true;
 
     xresources.properties = {

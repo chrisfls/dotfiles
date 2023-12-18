@@ -49,14 +49,21 @@
 #    features: most of all
 #    protocol: both + windows
 ##
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
+let
+  cfg = config.extra.terminal;
+in
 {
-  home.packages = [ pkgs.contour ];
+  options.extra.terminal.enable = lib.mkEnableOption "Enable terminal module";
 
-  extra.nixGL.overlay.contour = [ "contour" ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ pkgs.contour ];
 
-  services.sxhkd.keybindings = {
-    "super + semicolon" = "contour";
-    "super + BackSpace" = "contour";
+    extra.nixGL.overlay.contour = [ "contour" ];
+
+    services.sxhkd.keybindings = {
+      "super + semicolon" = "contour";
+      "super + BackSpace" = "contour";
+    };
   };
 }

@@ -1,10 +1,16 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
+let
+  cfg = config.extra.browser;
+in
 {
-  home.packages = [ pkgs.brave ];
+  options.extra.browser.enable = lib.mkEnableOption "Enable browser module";
 
-  extra.nixGL.overlay.brave = [ "brave" ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ pkgs.brave ];
 
-  /* 
+    extra.nixGL.overlay.brave = [ "brave" ];
+
+    /* 
           "x-scheme-handler/http" = cfg.name;
           "x-scheme-handler/https" = cfg.name;
           "x-scheme-handler/chrome" = cfg.name;
@@ -15,4 +21,5 @@
           "application/xhtml+xml" = cfg.name;
           "application/x-extension-xhtml" = cfg.name;
           "application/x-extension-xht" = cfg.name; */
+  };
 }

@@ -64,11 +64,7 @@
             system = "x86_64-linux";
             overlays = [ inputs.nixgl.overlay ];
           };
-          modules = [
-            ./home/module/copy-file.nix
-            ./home/module/nixgl.nix
-            ./home/user/${ssot.users.arch-rmxp.kress.id}.nix
-          ];
+          modules = [ ./home/user/${ssot.users.arch-rmxp.kress.id}.nix ];
           extraSpecialArgs = homeSpecialArgs;
         };
       };

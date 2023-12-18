@@ -1,5 +1,11 @@
-{ ... }:
+{ config, lib, ... }:
+let
+  cfg = config.extra.bar;
+in
 {
+  options.extra.bar.enable = lib.mkEnableOption "Enable bar module";
+
+  config = lib.mkIf cfg.enable { };
   /*services.polybar = {
     enable = true;
     settings = {

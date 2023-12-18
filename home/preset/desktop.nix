@@ -4,121 +4,113 @@ let
   nixgl = config.targets.genericLinux.enable;
 in
 {
-  imports = [
-    ./desktop/applications.nix
-    ./desktop/bar.nix
-    ./desktop/browser.nix
-    ./desktop/fontconfig.nix
-    ./desktop/fonts.nix
-    ./desktop/keybindings.nix
-    ./desktop/menu.nix
-    ./desktop/notifications.nix
-    ./desktop/scale.nix
-    ./desktop/screenshot.nix
-    ./desktop/terminal.nix
-    ./desktop/theme.nix
-    ./desktop/window-manager.nix
+  extra.bar.enable = true;
+  extra.browser.enable = true;
+  extra.fontconfig.enable = true;
+  extra.fonts.enable = true;
+  extra.hotkeys.enable = true;
+  extra.menu.enable = true;
+  extra.notifications.enable = true;
+  extra.screenshot.enable = true;
+  extra.terminal.enable = true;
+  extra.themes.enable = true;
+  extra.window-manager.enable = true;
+
+  home.packages = [
+    # cli apps
+    pkgs.alsa-utils
+    pkgs.pamixer
+    pkgs.xclip
+
+    # desktop components
+    lxqt.xdg-desktop-portal-lxqt # qt integration with xdg-desktop-portal
+    lxqt.lxqt-policykit # policykit prompter
+    lxqt.lxqt-sudo # gui-sudo prompter
+    lxqt.lxqt-openssh-askpass # ssh prompter
+
+    # desktop environment apps
+    pkgs.arandr # manual display config
+    lxqt.lxqt-config # config editor
+    lxqt.pavucontrol-qt # sound mixer
+    lxqt.pcmanfm-qt # file manager
+
+    # desktop apps
+    lxqt.qlipper # clipboard manager [alt: pkgs.copyq; but seems bloated]
+    lxqt.qps # system monitor
   ];
 
-  config = lib.mkMerge [
-    {
-      home.packages = [
-        # cli apps
-        pkgs.alsa-utils
-        pkgs.pamixer
-        pkgs.xclip
+  #
+  # enable hardware acceleration
+  #
 
-        # desktop components
-        lxqt.xdg-desktop-portal-lxqt # qt integration with xdg-desktop-portal
-        lxqt.lxqt-policykit # policykit prompter
-        lxqt.lxqt-sudo # gui-sudo prompter
-        lxqt.lxqt-openssh-askpass # ssh prompter
+  extra.nixGL = {
+    enable = nixgl;
+    overlay.lxqt = {
+      # desktop components
+      lxqt-policykit = [ "lxqt-policykit-agent" ];
+      lxqt-sudo = [ "lxqt-sudo" ];
+      lxqt-openssh-askpass = [ "lxqt-openssh-askpass" ];
 
-        # desktop environment apps
-        pkgs.arandr # manual display config
-        lxqt.lxqt-config # config editor
-        lxqt.pavucontrol-qt # sound mixer
-        lxqt.pcmanfm-qt # file manager
+      # desktop environment apps
+      lxqt-config = [ "lxqt-config" ];
+      pavucontrol-qt = [ "pavucontrol-qt" ];
+      pcmanfm-qt = [ "pcmanfm-qt" ];
+      qlipper = [ "qlipper" ];
 
-        # desktop apps
-        lxqt.qlipper # clipboard manager [alt: pkgs.copyq; but seems bloated]
-        lxqt.qps # system monitor
-      ];
+      # desktop apps
+      qps = [ "qps" ];
+    };
+  };
 
-      #
-      # enable hardware acceleration
-      #
+  extra.nixVulkan.enable = nixgl;
 
-      extra.nixGL = {
-        enable = nixgl;
-        overlay.lxqt = {
-          # desktop components
-          lxqt-policykit = [ "lxqt-policykit-agent" ];
-          lxqt-sudo = [ "lxqt-sudo" ];
-          lxqt-openssh-askpass = [ "lxqt-openssh-askpass" ];
+  #
+  # startx support
+  #
 
-          # desktop environment apps
-          lxqt-config = [ "lxqt-config" ];
-          pavucontrol-qt = [ "pavucontrol-qt" ];
-          pcmanfm-qt = [ "pcmanfm-qt" ];
-          qlipper = [ "qlipper" ];
+  xsession.enable = true;
 
-          # desktop apps
-          qps = [ "qps" ];
-        };
-      };
+  home.file.".xinitrc" = {
+    executable = true;
+    text = ''
+      #!/bin/sh
+      # last if block from /etc/X11/xinit/xinitrc
+      if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+      for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+        [ -x "$f" ] && . "$f"
+      done
+      unset f
+      fi
 
-      extra.nixVulkan.enable = nixgl;
+      [[ -f ~/.xsession ]] && . ~/.xsession
+    '';
+  };
 
-      #
-      # startx support
-      #
+  #
+  # extra config files
+  #
 
-      xsession.enable = true;
-
-      home.file.".xinitrc" = {
-        executable = true;
-        text = ''
-          #!/bin/sh
-          # last if block from /etc/X11/xinit/xinitrc
-          if [ -d /etc/X11/xinit/xinitrc.d ] ; then
-          for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-            [ -x "$f" ] && . "$f"
-          done
-          unset f
-          fi
-
-          [[ -f ~/.xsession ]] && . ~/.xsession
+  xdg = {
+    enable = true;
+    userDirs.enable = true;
+    configFile = {
+      "xdg-desktop-portal/portals.conf".text =
+        ''
+          [preferred]
+          default=gtk
+          org.freedesktop.impl.portal.FileChooser=lxqt
         '';
-      };
+      "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
+        ''
+          [Service]
+          Environment="XDG_CURRENT_DESKTOP=KDE"
+        '';
+    };
+  };
 
-      #
-      # extra config files
-      #
+  fonts.fontconfig.enable = true;
 
-      xdg = {
-        enable = true;
-        userDirs.enable = true;
-        configFile = {
-          "xdg-desktop-portal/portals.conf".text =
-            ''
-              [preferred]
-              default=gtk
-              org.freedesktop.impl.portal.FileChooser=lxqt
-            '';
-          "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
-            ''
-              [Service]
-              Environment="XDG_CURRENT_DESKTOP=KDE"
-            '';
-        };
-      };
-
-      fonts.fontconfig.enable = true;
-
-      services.xsettingsd.enable = true;
-    }
-  ];
+  services.xsettingsd.enable = true;
 }
 
 /*

@@ -1,6 +1,4 @@
 { config, inputs, pkgs, ... }:
 {
-  imports = [
-    ../codium.nix
-  ];
+  extra.codium.enable = true;
 }
