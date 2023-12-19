@@ -34,7 +34,6 @@ in
     pkgs.libsForQt5.kolourpaint # simple image editor [or pkgs.photoflare]
     pkgs.libsForQt5.vvave # music player [or elisa/vvave]
     pkgs.qalculate-qt # calculator
-    pkgs.qbittorrent # torrenting
 
     # personal apps
     pkgs.anydesk
@@ -46,6 +45,7 @@ in
     pkgs.mpv
     pkgs.notepadqq
     pkgs.parsec-bin
+    pkgs.qbittorrent # torrenting
     pkgs.soulseekqt
     pkgs.steam
     pkgs.webcord-vencord
@@ -150,7 +150,6 @@ in
         lxqt.qps = [ "qps" ];
         mpc-qt = [ "mpc-qt" ];
         qalculate-qt = [ "qalculate-qt" ];
-        qbittorrent = [ "qbittorrent" ];
         qps = [ "qps" ];
 
         # personal apps
@@ -163,7 +162,6 @@ in
         mpv = [ "mpv" ];
         notepadqq = [ "notepadqq" ];
         parsec-bin = [ "parsecd" ];
-        qalculate-qt = [ "qalculate-qt" ];
         qbittorrent = [ "qbittorrent" ];
         soulseekqt = [ "SoulseekQt" ];
         steam = [ "steam" ];
