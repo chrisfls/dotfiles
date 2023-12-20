@@ -2,25 +2,102 @@
 let
   cfg = config.extra.polybar;
 
-  scripts = pkgs.fetchFromGitHub {
-    owner = "polybar";
-    repo = "polybar-scripts";
-    rev = "879834652947a7c6af894effc577dd2bfaa920b7";
-    sha256 = "sha256-bhuS2SQYP2KvwkOwfdjGLlismmNyDiViOOkIbVJPR+c=";
-  };
+  polybar-msg = "${pkgs.polybar}/bin/polybar-msg";
+
+  sxhkd-chord-mode =
+    let
+      script = pkgs.writeShellScriptBin "polybar-sxhkd"
+        ''
+          cat $SXHKD_FIFO | while read -r line; do
+              echo $line
+              if [[ $line == *"BBegin chain"* ]]; then
+                  ${polybar-msg} action sxhkd hook 1
+              elif [[ $line == *"EEnd chain"* ]]; then
+                  ${polybar-msg} action sxhkd hook 0
+              fi
+          done
+        '';
+    in
+    "${script}/bin/polybar-sxhkd";
+
+  toggle =
+    let
+      script = pkgs.writeShellScriptBin "polybar-toggle"
+        ''
+          fst=$1
+          shift
+
+          for arg in "$@"; do
+            ${polybar-msg} action "#$arg.module_toggle"
+          done
+
+          ${polybar-msg} action $fst next
+        '';
+    in
+    "${script}/bin/polybar-toggle";
+
+  bluetoothctl = "${pkgs.bluez}/bin/bluetoothctl";
+
+  bluetooth =
+    let
+      script = pkgs.writeShellScriptBin "polybar-bluetooth"
+        ''
+          if ${bluetoothctl} show | grep -q "Powered: yes"; then
+              hook=2
+          else
+              hook=1
+          fi
+
+          if [ "$1" = "--toggle" ]; then
+              if [ "$hook" = "2" ]; then
+                  ${bluetoothctl} power off
+                  hook=1
+              else
+                  ${bluetoothctl} power on
+                  hook=2
+              fi
+          fi
 
 
-  daemon =
-    ''
-      cat $SXHKD_FIFO | while read -r line; do
-        echo $line
-        if [[ $line == *"BBegin chain"* ]]; then
-          polybar-msg action mode hook 1
-        elif [[ $line == *"EEnd chain"* ]]; then
-          polybar-msg action mode hook 0
-        fi
-      done
-    '';
+          ${polybar-msg} action bluetooth hook $hook
+        '';
+    in
+    "";
+
+  pamixer = "${pkgs.pamixer}/bin/pamixer";
+
+  pipewire =
+    let
+      script = pkgs.writeShellScriptBin "polybar-pipewire"
+        ''
+          case $1 in
+            "--up")
+              ${pamixer} --increase 5
+              ;;
+            "--down")
+              ${pamixer} --decrease 5  
+              ;;
+            "--mute")
+              ${pamixer} --toggle-mute
+              ;;
+          esac
+
+          if [ "$(${pamixer} --get-volume-human)" = "muted" ]; then
+            hook=1
+          else
+            hook=2
+          fi
+
+          ${polybar-msg} action audio hook $hook
+        '';
+    in
+    "${script}/bin/polybar-pipewire";
+
+  bluedevil = "${pkgs.libsForQt5.bluedevil}/bin/bluedevil";
+
+  yad = "${pkgs.yad}/bin/yad";
+
+  pavucontrol-qt = "${pkgs.pavucontrol-qt}/bin/pavucontrol-qt";
 in
 {
   options.extra.polybar = {
@@ -34,6 +111,11 @@ in
   ##
 
   config = lib.mkIf cfg.enable {
+    systemd.user.services.sxhkd-chord-mode = {
+      Unit.Description = "Trigger sxhkd chord indicator";
+      Service.ExecStart = sxhkd-chord-mode;
+    };
+
     services.polybar = {
       enable = true;
       script = "polybar -r &";
@@ -148,8 +230,8 @@ in
           type = "custom/ipc";
           initial = 1;
 
-          scroll-down = "~/.config/polybar/toggler.sh toggle tray &";
-          scroll-up = "~/.config/polybar/toggler.sh toggle tray &";
+          scroll-down = "${toggle} toggle tray &";
+          scroll-up = "${toggle} toggle tray &";
 
           hook-0 = "";
           format-0 = "%{T3}%{T-}";
@@ -293,10 +375,10 @@ in
           type = "custom/ipc";
           initial = 1;
 
-          click-left = "~/.config/polybar/bluetooth.sh --toggle &";
-          click-right = "${pkgs.libsForQt5.bluedevil}/bin/bluedevil"
+          click-left = "${bluetooth} --toggle &";
+          click-right = "${bluedevil}";
 
-          hook-0 = "~/.config/polybar/bluetooth.sh &";
+          hook-0 = "${bluetooth} &";
           label = " %output% ";
 
           # off state
@@ -316,31 +398,31 @@ in
           type = "custom/ipc";
           initial = 1;
 
-          click-left = "~/.config/polybar/pipewire.sh --mute &";
-          click-right = "exec pavucontrol-qt &";
-          scroll-down = "~/.config/polybar/pipewire.sh --down &";
-          scroll-up = "~/.config/polybar/pipewire.sh --up &";
+          click-left = "${pipewire} --mute &";
+          click-right = "${pavucontrol-qt} &";
+          scroll-down = "${pipewire} --down &";
+          scroll-up = "${pipewire} --up &";
 
-          hook-0 = "~/.config/polybar/pipewire.sh &";
+          hook-0 = "${pipewire} &";
           label = " %output%%";
 
           # mute state
           format-1 = "<label> %{T3}󰝟%{T-} ";
           format-1-foreground = "$${colors.blue}";
           format-1-overline = "$${colors.blue}";
-          hook-1 = "${pkgs.pamixer}/bin/pamixer --get-volume";
+          hook-1 = "${pamixer} --get-volume";
 
           # on state
           format-2 = "<label> %{T3}󰕾%{T-} ";
           format-2-foreground = "$${colors.blueBright}";
           format-2-overline = "$${colors.blueBright}";
-          hook-2 = "${pkgs.pamixer}/bin/pamixer --get-volume";
+          hook-2 = "${pamixer} --get-volume";
         };
         "module/date" = {
           type = "internal/date";
           interval = "1.0";
 
-          click-left = "${pkgs.yad}/bin/yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons";
+          click-left = "${yad} --calendar --undecorated --fixed --close-on-unfocus --no-buttons";
 
           date = "%a, %d %b %Y %{T3}󰃭%{T-}";
           label = " %date% ";
@@ -355,14 +437,6 @@ in
           label-overline = "$${colors.foreground}";
           time = "%H:%M:%S %{T3}󰥔%{T-}";
         };
-
-      };
-    };
-
-    xdg.configFile = {
-      "polybar/pipewire-simple.sh" = {
-        source = ./polybar/pipewire-simple.sh;
-        executable = true;
       };
     };
   };

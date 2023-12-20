@@ -2,17 +2,17 @@
 
 case $1 in
     "--up")
-        pamixer --increase 5
+        /home/kress/.nix-profile/bin/pamixer --increase 5
         ;;
     "--down")
-        pamixer --decrease 5    
+        /home/kress/.nix-profile/bin/pamixer --decrease 5    
         ;;
     "--mute")
-        pamixer --toggle-mute
+        /home/kress/.nix-profile/bin/pamixer --toggle-mute
         ;;
 esac
 
-if [ "$(pamixer --get-volume-human)" = "muted" ]; then
+if [ "$(/home/kress/.nix-profile/bin/pamixer --get-volume-human)" = "muted" ]; then
     hook=1
 else
     hook=2
