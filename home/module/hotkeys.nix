@@ -23,8 +23,16 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.xdotool ];
 
+    xsession.initExtra =
+      ''
+        export SXHKD_FIFO="$XDG_RUNTIME_DIR/sxhkd.fifo"
+        [ -e "$SXHKD_FIFO" ] && rm "$SXHKD_FIFO"
+        mkfifo "$SXHKD_FIFO"
+      '';
+
     services.sxhkd = {
       enable = true;
+      extraOptions = [ "-s $SXHKD_FIFO" ];
       keybindings = {
         # MISC
         ######## #### ## #
