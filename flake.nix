@@ -21,6 +21,7 @@
     devenv.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
     devenv.inputs.flake-compat.follows = "flake-compat";
 
+    # still will be needed if I ever install nixos
     nixgl.url = "github:guibou/nixGL";
     nixgl.inputs.nixpkgs.follows = "nixpkgs";
     nixgl.inputs.flake-utils.follows = "flake-utils";
