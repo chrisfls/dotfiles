@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
-let
-  nixgl = config.targets.genericLinux.enable;
-in
+#let
+#  nixgl = config.targets.genericLinux.enable;
+#in
 {
   imports = [ ../module ];
 
@@ -22,6 +22,9 @@ in
     pkgs.lxqt.xdg-desktop-portal-lxqt # qt integration with xdg-desktop-portal
 
     # desktop environment apps
+    pkgs.arandr # manual display config
+    pkgs.libsForQt5.kdialog # dialogs and widgets
+    pkgs.libsForQt5.networkmanager-qt # network manager
     pkgs.lxqt.pavucontrol-qt # sound mixer
     pkgs.lxqt.pcmanfm-qt # file manager
     pkgs.arandr # manual display config
@@ -130,7 +133,7 @@ in
     #
 
     nixGL = {
-      enable = nixgl;
+      #enable = nixgl;
       overlay.lxqt = {
         # desktop components
         lxqt-openssh-askpass = [ "lxqt-openssh-askpass" ];
@@ -141,6 +144,7 @@ in
         pavucontrol-qt = [ "pavucontrol-qt" ];
         pcmanfm-qt = [ "pcmanfm-qt" ];
         qlipper = [ "qlipper" ];
+        libsForQt5.kdialog = [ "kdialog" ];
 
         # desktop apps
         copyq = [ "copyq" ];
@@ -169,7 +173,7 @@ in
       };
     };
 
-    nixVulkan.enable = nixgl;
+    # nixVulkan.enable = nixgl;
   };
 }
 
