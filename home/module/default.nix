@@ -6,20 +6,19 @@
     ./browser.nix
     ./cloudflare-warp.nix
     ./codium.nix
-    ./contour.nix
+    ./alacritty.nix
     ./copy-file.nix
     ./fontconfig.nix
     ./fonts.nix
     ./hotkeys.nix
     ./loopback-toggle.nix
     ./menu.nix
-    ./nixgl.nix
     ./notifications.nix
-    ./polybar.nix
     ./qview.nix
     ./scaling.nix
     ./screenshot.nix
     ./shell.nix
+    ./polybar.nix
     ./themes.nix
     ./window-manager.nix
   ];

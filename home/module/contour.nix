@@ -65,8 +65,6 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ pkg ];
 
-    extra.nixGL.overlay.contour = [ "contour" ];
-
     services.sxhkd.keybindings = {
       "super + semicolon" = "contour";
       "super + BackSpace" = "contour";

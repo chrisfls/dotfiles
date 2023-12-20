@@ -36,11 +36,11 @@ fi
       config = rec {
 
         menu = "rofi -show drun";
-        terminal = "nixGLIntel wezterm";
+        terminal = "wezterm";
 
         startup = [
           { command = "autotiling"; always = true; notification = false; }
-          { command = "nixGLIntel picom"; always = true; notification = false; }
+          { command = "picom"; always = true; notification = false; }
         ];
 
         modifier = "Mod4";

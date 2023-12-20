@@ -15,8 +15,6 @@ in
   ];
 
   extra.cloudflare-warp.enable = true;
-  extra.nixGL.enable = false;
-  extra.nixVulkan.enable = false;
   extra.scaling = { enable = true; scale = 1.5; };
 
   home.keyboard.layout = "br";

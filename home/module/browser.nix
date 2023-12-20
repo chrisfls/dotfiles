@@ -10,8 +10,6 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.brave ];
 
-    extra.nixGL.overlay.brave = [ "brave" ];
-
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {

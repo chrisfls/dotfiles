@@ -28,11 +28,6 @@ in
       pkgs.xclip
     ];
 
-    extra.nixGL.overlay = {
-      shotgun = [ "shotgun" ];
-      slop = [ "slop" ];
-    };
-
     xdg = {
       enable = true;
       configFile = {

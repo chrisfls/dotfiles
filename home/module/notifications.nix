@@ -9,8 +9,6 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.lxqt.lxqt-notificationd ];
 
-    extra.nixGL.overlay.lxqt.lxqt-notificationd = [ "lxqt-notificationd" ];
-
     xsession.windowManager.bspwm.startupPrograms = [ "lxqt-notificationd" ];
   };
 }
