@@ -110,7 +110,7 @@ in
           move "east" amount 0;
 
         # resize windows
-        "super + r : {h,j,k,l,Left,Down,Up,Right,Return,super + s}" =
+        "super + r : {h,j,k,l,Left,Down,Up,Right,Return,super + r}" =
           ''V = 20; \
               { bspc node -z left   -$V   0 \
               , bspc node -z bottom   0  $V \
