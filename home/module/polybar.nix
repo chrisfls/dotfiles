@@ -120,26 +120,6 @@ in
       enable = true;
       script = "polybar -r &";
       settings = {
-        colors = {
-          background = color-scheme.background;
-          foreground = color-scheme.foreground;
-          blackBright = color-scheme.blackBright;
-          whiteBright = color-scheme.whiteBright;
-          redBright = color-scheme.redBright;
-          yellowBright = color-scheme.yellowBright;
-          greenBright = color-scheme.greenBright;
-          cyanBright = color-scheme.cyanBright;
-          blueBright = color-scheme.blueBright;
-          magentaBright = color-scheme.magentaBright;
-          black = color-scheme.black;
-          white = color-scheme.white;
-          red = color-scheme.red;
-          yellow = color-scheme.yellow;
-          green = color-scheme.green;
-          cyan = color-scheme.cyan;
-          blue = color-scheme.blue;
-          magenta = color-scheme.magenta;
-        };
         "bar/topbar" = {
           enable-ipc = true;
 
@@ -153,8 +133,9 @@ in
           border-bottom-size = 4;
           separator = " ";
 
-          font-0 = "CaskaydiaCoveNerdFontMono:size=10;6";
-          font-1 = "CaskaydiaCoveNerdFontPropo:size=11;5";
+          font-0 = "CaskaydiaCoveNerdFontMono:size=10;4";
+          font-1 = "CaskaydiaCoveNerdFontPropo:size=11;3";
+          font-2 = "CaskaydiaCoveNerdFontPropo:size=16;5";
 
           background = "$${colors.background}";
           foreground = "$${colors.foreground}";
