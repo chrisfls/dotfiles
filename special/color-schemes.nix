@@ -1,4 +1,6 @@
 rec {
+  # ported from 
+  # https://github.com/atomcorp/themes/blob/master/themes.json
   popping-and-locking = {
     background = "#181921";
     black = "#1D2021";
@@ -21,6 +23,8 @@ rec {
     yellow = "#D79921";
     yellowBright = "#FABD2F";
   };
+  # adapted from popping-and-locking and colors from popping-and-locking-black vscode theme
+  # https://github.com/Luxcium/pop-n-lock-theme-vscode
   popping-and-locking-black = {
     inherit (popping-and-locking)
       black
@@ -44,6 +48,8 @@ rec {
     cursorColor = popping-and-locking-black.foreground;
     selectionBackground = "#6A6B5D";
   };
+  # ported from
+  # https://github.com/PapirusDevelopmentTeam/arc-kde/blob/master/konsole/ArcDark.colorscheme
   arc-dark = {
     background = "#383c4a";
     foreground = "#d3dae3";
@@ -78,6 +84,8 @@ rec {
     cyanDim = "#1b668f";
     whiteDim = "#63686d";
   };
+  # ported from
+  # https://gist.github.com/Kanon/99840108309ee3d2b995a0e5714f73ad
   arc-dark-alt = {
     background = "#2f343f";
     foreground = "#f3f4f5";
@@ -103,6 +111,8 @@ rec {
     cyanBright = "#37c3d6";
     whiteBright = "#f9f9f9";
   };
+  # ported from
+  # https://github.com/alacritty/alacritty-theme/blob/master/themes/material_theme_mod.toml
   material-mod = {
     background = "#1e282d";
     foreground = "#c4c7d1";
@@ -124,5 +134,32 @@ rec {
     magentaBright = "#6c71c4";
     cyanBright = "#35434d";
     whiteBright = "#ffffff";
+  };
+  # ported from
+  # https://github.com/carloscuesta/materialshell/blob/master/shell-color-themes/windows/terminal/dark.json
+  material-shell = {
+    background = "#151515";
+    foreground = "#A1B0B8";
+
+    cursorColor = "#FFFFFF";
+    selectionBackground = "#9cb0b9";
+
+    black = "#252525";
+    red = "#FF443E";
+    green = "#C3D82C";
+    yellow = "#FFC135";
+    blue = "#42A5F5";
+    magenta = "#C594C5";
+    cyan = "#00ACC1";
+    white = "#F5F5F5";
+
+    blackBright = "#A1B0B8";
+    redBright = "#EC5F67";
+    greenBright = "#99C794";
+    yellowBright = "#FAC863";
+    blueBright = "#6699CC";
+    magentaBright = "#D81B60";
+    cyanBright = "#5FB3B3";
+    whiteBright = "#D8DEE9";
   };
 }
