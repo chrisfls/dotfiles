@@ -76,41 +76,40 @@ in
         default = "kvantum-dark";
       };
 
-      # REVIEW: evaluate replacing ArcDark with materia kde
       kvantum-theme = lib.mkOption {
         type = lib.types.str;
-        default = "ArcDark";
+        default = "MateriaDark";
         description = ''
-          Other decent kvantum themes:
+          Other decent kvantum themes (ordered by stars):
 
-          - https://github.com/EliverLara/Nordic
-          - https://github.com/PapirusDevelopmentTeam/arc-kde
-          - https://github.com/vinceliuice/WhiteSur-kde
-          - https://github.com/PapirusDevelopmentTeam/materia-kde
-          - https://github.com/catppuccin/Kvantum
-          - https://github.com/vinceliuice/Colloid-kde
-          - https://github.com/HimDek/Utterly-Nord-Plasma
-          - https://github.com/EliverLara/Andromeda-KDE
-          - https://github.com/HimDek/Utterly-Sweet-Plasma
-          - https://github.com/HimDek/Utterly-Round-Plasma-Style
+          - https://github.com/EliverLara/Nordic [★★★☆☆]
+          - https://github.com/PapirusDevelopmentTeam/arc-kde [★★★★★]
+          - https://github.com/vinceliuice/WhiteSur-kde [★★★★☆]
+          - https://github.com/PapirusDevelopmentTeam/materia-kde [★★★★★]
+          - https://github.com/catppuccin/Kvantum [?????]
+          - https://github.com/vinceliuice/Colloid-kde [★★★★☆]
+          - https://github.com/HimDek/Utterly-Nord-Plasma [★★☆☆☆]
+          - https://github.com/EliverLara/Andromeda-KDE (no pkg)
+          - https://github.com/HimDek/Utterly-Sweet-Plasma [★★☆☆☆]
+          - https://github.com/HimDek/Utterly-Round-Plasma-Style [★★☆☆☆]
         '';
       };
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.arc-kde-theme;
+        default = pkgs.materia-kde-theme;
       };
     };
 
     gtk = {
       name = lib.mkOption {
         type = lib.types.str;
-        default = "Arc-Dark";
+        default = "Materia-dark-compact";
       };
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.arc-theme;
+        default = pkgs.materia-theme;
       };
     };
 
