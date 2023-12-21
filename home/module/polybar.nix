@@ -90,7 +90,7 @@ in
     enable = lib.mkEnableOption "Enable polybar module";
     color-scheme = lib.mkOption {
       type = lib.types.attrs;
-      default = specialArgs.color-schemes.popping-and-locking-black;
+      default = specialArgs.color-schemes.popping-and-locking;
     };
   };
 
@@ -118,9 +118,6 @@ in
       enable = true;
       script = "polybar &";
       settings = {
-        "settings" = {
-          pseudo-transparency = "\"true\"";
-        };
         "bar/topbar" = {
           # settings
           enable-ipc = "\"true\"";
@@ -240,13 +237,13 @@ in
           scroll-up = "\"${toggle} toggle tray &\"";
           initial = "\"1\"";
           hook-0 = "\"\"";
-          format-0 = "\"%{T2}%{T-}\"";
+          format-0 = "\"%{T2}%{T-}\"";
           format-0-foreground = "\"${foreground}\"";
           format-0-background = "\"${color}\"";
           format-0-padding = "\"1\"";
           hook-1 = "\"\"";
           format-1 = "\"%{T2}%{T-}\"";
-          format-1-foreground = "\"${foreground}\"";
+          format-1-foreground = "\"${background}\"";
           format-1-background = "\"${color}\"";
           format-1-padding = "\"1\"";
         };
@@ -259,13 +256,6 @@ in
           tray-foreground = "\"${foreground}\"";
           tray-background = "\"${color}\"";
           tray-size = "\"100%\"";
-        };
-        "module/workspaces-toggle-tray" = {
-          type = "\"custom/text\"";
-          label-foreground = "\"${foreground}\"";
-          label-background = "\"${color}\"";
-          label = "\"%{O-2}%{T3}%{T-}\"";
-          format = "\"<label>%{O-3}\"";
         };
         "module/title" = {
           type = "\"internal/xwindow\"";
