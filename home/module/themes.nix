@@ -177,6 +177,12 @@ in
         };
       };
     };
+
+    color-scheme = lib.mkOption {
+      type = lib.types.attrs;
+      default = specialArgs.color-schemes.popping-and-locking;
+      description = "Color scheme for polybar and other apps.";
+    };
   };
 
   config = lib.mkIf cfg.enable {

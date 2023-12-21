@@ -2,7 +2,7 @@
 let
   cfg = config.extra.polybar;
 
-  colors = config.extra.polybar.color-scheme;
+  colors = config.extra.themes.color-scheme;
 
   polybar-msg = "${pkgs.polybar}/bin/polybar-msg";
 
@@ -86,13 +86,7 @@ let
   color = colors.blue;
 in
 {
-  options.extra.polybar = {
-    enable = lib.mkEnableOption "Enable polybar module";
-    color-scheme = lib.mkOption {
-      type = lib.types.attrs;
-      default = specialArgs.color-schemes.popping-and-locking;
-    };
-  };
+  options.extra.polybar.enable = lib.mkEnableOption "Enable polybar module";
 
   config = lib.mkIf cfg.enable {
     systemd.user.services.sxhkd-chord-mode = {
@@ -147,10 +141,21 @@ in
           foreground = "\"${foreground}\"";
 
           # modules
-          modules-left = "\"mode keyboard even-l workspaces toggle tray right\"";
+          modules-left = "\"menu mode keyboard even-l workspaces toggle tray right\"";
           modules-center = "\"left title right \"";
           modules-right = "\"left filesystem even-r temperature odd-r memory even-r cpu odd-r wired even-r wireless odd-r bluetooth even-r audio odd-r date even-r time\"";
           format-radius = "\"32.0\"";
+        };
+        "module/menu" = {
+          type = "\"custom/text\"";
+
+          click-left = "\"${pkgs.jgmenu}/bin/jgmenu_run >/dev/null 2>&1 &\"";
+
+          content-padding = "\"1\"";
+
+          content = "\"%{T3}󰍜%{T-}\"";
+          content-background = "\"${foreground}\"";
+          content-foreground = "\"${background}\"";
         };
         "module/mode" = {
           type = "\"custom/ipc\"";
@@ -168,11 +173,10 @@ in
           format-1-background = "\"${foreground}\"";
           format-1-foreground = "\"${color}\"";
           format-1-padding = "\"1\"";
-
         };
         "module/keyboard" = {
           type = "\"internal/xkeyboard\"";
-          
+
           # REVIEW: not working
           # click-left = "\"${pkgs.numlockx}/bin/numlockx toggle &\"";
           blacklist-0 = "\"caps lock\"";
@@ -211,7 +215,7 @@ in
           occupied-scroll = "\"true\"";
 
           format = "\"%{O-1}%{T1}%{O2}<label-state>%{T-}\"";
-          label-active="";
+          label-active = "";
           label-active-background = "\"${color}\"";
           label-active-foreground = "\"${foreground}\"";
           label-active-padding = "\"1\"";
@@ -451,8 +455,8 @@ in
         };
         "module/even-l" = {
           type = "\"custom/text\"";
-          label="\"%{O-1}%{O1}%{B${color}}%{T3} %{T-}%{B-}%{O-25}%{T3}%{T-}\"";
-          label-foreground="\"${foreground}\"";
+          label = "\"%{O-1}%{O1}%{B${color}}%{T3} %{T-}%{B-}%{O-25}%{T3}%{T-}\"";
+          label-foreground = "\"${foreground}\"";
         };
         "module/even-r" = {
           type = "\"custom/text\"";
