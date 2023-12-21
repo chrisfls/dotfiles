@@ -228,6 +228,8 @@ with specialArgs;
         };
       };
     };
-    style = my.replaceVars config.theme (builtins.readFile ./style.scss);
+    style = my.replaceVars
+      (config.theme // { absoluteBlack = "#000000"; absoluteWhite = "#ffffff"; })
+      (builtins.readFile ./style.scss);
   };
 }

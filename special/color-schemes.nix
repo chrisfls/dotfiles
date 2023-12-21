@@ -1,10 +1,5 @@
-let
-  absoluteBlack = "#000000";
-  absoluteWhite = "#ffffff";
-in
 rec {
   popping-and-locking = {
-    inherit absoluteBlack absoluteWhite;
     background = "#181921";
     black = "#1D2021";
     blackBright = "#928374";
@@ -27,23 +22,22 @@ rec {
     yellowBright = "#FABD2F";
   };
   popping-and-locking-black = {
-    inherit absoluteBlack absoluteWhite;
     inherit (popping-and-locking)
       black
-      blackBright
       blue
-      blueBright
       cyan
-      cyanBright
       green
-      greenBright
       magenta
-      magentaBright
       red
-      redBright
       white
-      whiteBright
       yellow
+      blackBright
+      blueBright
+      cyanBright
+      greenBright
+      magentaBright
+      redBright
+      whiteBright
       yellowBright;
     background = "#000000";
     foreground = "#F2E5BC";
@@ -53,8 +47,10 @@ rec {
   arc-dark = {
     background = "#383c4a";
     foreground = "#d3dae3";
+
     cursorColor = arc-dark.foreground;
     selectionBackground = arc-dark.background;
+    
     black = "#4b5164";
     red = "#e14245";
     green = "#5ca75b";
@@ -63,6 +59,7 @@ rec {
     magenta = "#a660c3";
     cyan = "#5294e2";
     white = "#a9a9aa";
+    
     blackBright = "#616981";
     redBright = "#e16f7e";
     greenBright = "#add488";
@@ -71,6 +68,7 @@ rec {
     magentaBright = "#e2afec";
     cyanBright = "#73c5e2";
     whiteBright = "#fcfcfc";
+    
     blackDim = "#2c2f3a";
     redDim = "#783228";
     greenDim = "#4b7c16";
@@ -83,8 +81,10 @@ rec {
   arc-dark-alt = {
     background = "#2f343f";
     foreground = "#f3f4f5";
+
     cursorColor = arc-dark.foreground;
     selectionBackground = arc-dark.background;
+
     black = "#262b36";
     red = "#9c3528";
     green = "#61bc3b";
@@ -93,6 +93,7 @@ rec {
     magenta = "#744560";
     cyan = "#288e9c";
     white = "#a2a2a2";
+
     blackBright = "#2f343f";
     redBright = "#d64937";
     greenBright = "#86df5d";
@@ -101,5 +102,27 @@ rec {
     magentaBright = "#9e5e83";
     cyanBright = "#37c3d6";
     whiteBright = "#f9f9f9";
+  };
+  material-mod = {
+    background = "#1e282d";
+    foreground = "#c4c7d1";
+
+    black = "#666666";
+    red = "#eb606b";
+    green = "#c3e88d";
+    yellow = "#f7eb95";
+    blue = "#80cbc4";
+    magenta = "#ff2f90";
+    cyan = "#aeddff";
+    white = "#ffffff";
+
+    blackBright = "#a1a1a1";
+    redBright = "#eb606b";
+    greenBright = "#c3e88d";
+    yellowBright = "#f7eb95";
+    blueBright = "#7dc6bf";
+    magentaBright = "#6c71c4";
+    cyanBright = "#35434d";
+    whiteBright = "#ffffff";
   };
 }
