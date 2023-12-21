@@ -80,4 +80,26 @@ rec {
     cyanDim = "#1b668f";
     whiteDim = "#63686d";
   };
+  arc-dark-alt = {
+    background = "#2f343f";
+    foreground = "#f3f4f5";
+    cursorColor = arc-dark.foreground;
+    selectionBackground = arc-dark.background;
+    black = "#262b36";
+    red = "#9c3528";
+    green = "#61bc3b";
+    yellow = "#f3b43a";
+    blue = "#0d68a8";
+    magenta = "#744560";
+    cyan = "#288e9c";
+    white = "#a2a2a2";
+    blackBright = "#2f343f";
+    redBright = "#d64937";
+    greenBright = "#86df5d";
+    yellowBright = "#fdd75a";
+    blueBright = "#0f75bd";
+    magentaBright = "#9e5e83";
+    cyanBright = "#37c3d6";
+    whiteBright = "#f9f9f9";
+  };
 }

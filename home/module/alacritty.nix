@@ -2,7 +2,7 @@
 let
   cfg = config.extra.alacritty;
 
-  theme = specialArgs.color-schemes.popping-and-locking-black;
+  theme = specialArgs.color-schemes.arc-dark;
 in
 {
   options.extra.alacritty.enable = lib.mkEnableOption "Enable alacritty module";
