@@ -2,9 +2,7 @@
 let
   cfg = config.extra.polybar;
 
-  invisible = "#00000000";
-
-  colors = specialArgs.color-schemes.popping-and-locking;
+  colors = config.extra.polybar.color-scheme;
 
   polybar-msg = "${pkgs.polybar}/bin/polybar-msg";
 
@@ -80,6 +78,12 @@ let
         '';
     in
     "${script}/bin/polybar-pipewire";
+
+  foreground = colors.foreground;
+
+  background = colors.background;
+
+  color = colors.blue;
 in
 {
   options.extra.polybar = {
@@ -142,13 +146,13 @@ in
           # powerline font
           font-2 = "\"CaskaydiaCoveNerdFont:size=20;6\"";
 
-          background = "\"${invisible}\"";
-          foreground = "\"${colors.foreground}\"";
+          background = "\"${background}\"";
+          foreground = "\"${foreground}\"";
 
           # modules
-          modules-left = "\"mode keyboard mode-keyboard-workspaces workspaces toggle tray workspaces-toggle-tray\"";
-          modules-center = "\"title-left title title-right\"";
-          modules-right = "\"title-filesystem filesystem filesystem-temperature temperature temperature-memory memory memory-cpu cpu cpu-wired wired wired-wireless wireless wireless-bluetooth bluetooth bluetooth-audio audio audio-date date date-time time\"";
+          modules-left = "\"mode keyboard even-l workspaces toggle tray right\"";
+          modules-center = "\"left title right \"";
+          modules-right = "\"left filesystem even-r temperature odd-r memory even-r cpu odd-r wired even-r wireless odd-r bluetooth even-r audio odd-r date even-r time\"";
           format-radius = "\"32.0\"";
         };
         "module/mode" = {
@@ -158,14 +162,14 @@ in
           # move
           hook-0 = "\"\"";
           format-0 = "\"%{T2}󰆾%{T-}\"";
-          format-0-background = "\"${colors.foreground}\"";
-          format-0-foreground = "\"${colors.background}\"";
+          format-0-background = "\"${foreground}\"";
+          format-0-foreground = "\"${color}\"";
           format-0-padding = "\"1\"";
           # resize
           hook-1 = "\"\"";
           format-1 = "\"%{T2}󰩨%{T-}%{O1}\"";
-          format-1-background = "\"${colors.foreground}\"";
-          format-1-foreground = "\"${colors.background}\"";
+          format-1-background = "\"${foreground}\"";
+          format-1-foreground = "\"${color}\"";
           format-1-padding = "\"1\"";
 
         };
@@ -177,27 +181,27 @@ in
           blacklist-0 = "\"caps lock\"";
           blacklist-1 = "\"scroll lock\"";
 
-          format-foreground = "\"${colors.background}\"";
-          format-background = "\"${colors.foreground}\"";
+          format-foreground = "\"${color}\"";
+          format-background = "\"${foreground}\"";
 
           label-indicator-off-capslock = "\"%{T2}󰯫%{T-} \"";
-          label-indicator-off-capslock-foreground = "\"${colors.background}\"";
+          label-indicator-off-capslock-foreground = "\"${color}\"";
           label-indicator-off-numlock = "\"%{T2}󰰒%{T-} \"";
-          label-indicator-off-numlock-foreground = "\"${colors.background}\"";
+          label-indicator-off-numlock-foreground = "\"${color}\"";
           label-indicator-off-scrolllock = "\"%{T2}󰰡%{T-} \"";
-          label-indicator-off-scrolllock-foreground = "\"${colors.background}\"";
+          label-indicator-off-scrolllock-foreground = "\"${color}\"";
           label-indicator-on-capslock = "\"%{T2}󰬈%{T-} \"";
-          label-indicator-on-capslock-foreground = "\"${colors.background}\"";
+          label-indicator-on-capslock-foreground = "\"${color}\"";
           label-indicator-on-numlock = "\"%{T2}󰬕%{T-} \"";
-          label-indicator-on-numlock-foreground = "\"${colors.background}\"";
+          label-indicator-on-numlock-foreground = "\"${color}\"";
           label-indicator-on-scrolllock = "\"%{T2}󰬚%{T-} \"";
-          label-indicator-on-scrolllock-foreground = "\"${colors.background}\"";
+          label-indicator-on-scrolllock-foreground = "\"${color}\"";
           label-layout = "\"\"";
         };
         "module/mode-keyboard-workspaces" = {
           type = "\"custom/text\"";
-          label-foreground = "\"${colors.foreground}\"";
-          label = "\"%{B${colors.background}} %{B-}%{O-25}%{T3}%{T-}\"";
+          label-foreground = "\"${color}\"";
+          label = "\"%{B${color}} %{B-}%{O-25}%{T3}%{T-}\"";
           format = "\"<label>%{O-2}\"";
         };
         "module/workspaces" = {
@@ -209,24 +213,24 @@ in
           fuzzy-match = "\"false\"";
           occupied-scroll = "\"true\"";
 
-          format = "\"%{O1}%{T1}%{O2}<label-state>%{T-}\"";
+          format = "\"%{O-1}%{T1}%{O2}<label-state>%{T-}\"";
           label-active="";
-          label-active-background = "\"${colors.background}\"";
-          label-active-foreground = "\"${colors.foreground}\"";
+          label-active-background = "\"${color}\"";
+          label-active-foreground = "\"${foreground}\"";
           label-active-padding = "\"1\"";
 
           label-empty = "\"\"";
-          label-empty-background = "\"${colors.background}\"";
-          label-empty-foreground = "\"${colors.blackBright}\"";
+          label-empty-background = "\"${color}\"";
+          label-empty-foreground = "\"${background}\"";
           label-empty-padding = "\"1\"";
 
           label-occupied = "\"\"";
-          label-occupied-background = "\"${colors.background}\"";
-          label-occupied-foreground = "\"${colors.blackBright}\"";
+          label-occupied-background = "\"${color}\"";
+          label-occupied-foreground = "\"${background}\"";
           label-occupied-padding = "\"1\"";
 
           label-urgent = "\"\"";
-          label-urgent-background = "\"${colors.background}\"";
+          label-urgent-background = "\"${color}\"";
           label-urgent-foreground = "\"${colors.yellow}\"";
           label-urgent-padding = "\"1\"";
         };
@@ -237,13 +241,13 @@ in
           initial = "\"1\"";
           hook-0 = "\"\"";
           format-0 = "\"%{T2}%{T-}\"";
-          format-0-foreground = "\"${colors.foreground}\"";
-          format-0-background = "\"${colors.background}\"";
+          format-0-foreground = "\"${foreground}\"";
+          format-0-background = "\"${color}\"";
           format-0-padding = "\"1\"";
           hook-1 = "\"\"";
           format-1 = "\"%{T2}%{T-}\"";
-          format-1-foreground = "\"${colors.foreground}\"";
-          format-1-background = "\"${colors.background}\"";
+          format-1-foreground = "\"${foreground}\"";
+          format-1-background = "\"${color}\"";
           format-1-padding = "\"1\"";
         };
         "module/tray" = {
@@ -251,44 +255,24 @@ in
           tray-spacing = "\"1pt\"";
           tray-padding = "\"1pt\"";
           format = "\"%{O-2}<tray>\"";
-          format-background = "\"${colors.background}\"";
-          tray-foreground = "\"${colors.foreground}\"";
-          tray-background = "\"${colors.background}\"";
+          format-background = "\"${color}\"";
+          tray-foreground = "\"${foreground}\"";
+          tray-background = "\"${color}\"";
           tray-size = "\"100%\"";
         };
         "module/workspaces-toggle-tray" = {
           type = "\"custom/text\"";
-          label-foreground = "\"${colors.background}\"";
-          label-background = "\"${invisible}\"";
+          label-foreground = "\"${foreground}\"";
+          label-background = "\"${color}\"";
           label = "\"%{O-2}%{T3}%{T-}\"";
           format = "\"<label>%{O-3}\"";
-        };
-        "module/title-left" = {
-          type = "\"custom/text\"";
-          label-foreground = "\"${colors.background}\"";
-          label-background = "\"${invisible}\"";
-          label = "\"%{T3}%{T-}\"";
-          format = "\"<label>%{O-2}\"";
         };
         "module/title" = {
           type = "\"internal/xwindow\"";
           label = "\"%title:0:64:...%\"";
-          label-background = "\"${colors.background}\"";
+          label-background = "\"${color}\"";
           label-empty = "\"Desktop\"";
-          label-empty-background = "\"${colors.background}\"";
-        };
-        "module/title-right" = {
-          type = "\"custom/text\"";
-          label-foreground = "\"${colors.background}\"";
-          label-background = "\"${invisible}\"";
-          label = "\"%{T3}%{T-}\"";
-          format = "\"<label>%{O-3}\"";
-        };
-        "module/title-filesystem" = {
-          type = "\"custom/text\"";
-          label-foreground = "\"${colors.magentaBright}\"";
-          label = "\"%{T3}%{T-}\"";
-          format = "\"<label>%{O-2}\"";
+          label-empty-background = "\"${color}\"";
         };
         "module/filesystem" = {
           type = "\"internal/fs\"";
@@ -296,25 +280,19 @@ in
           mount-0 = "\"/\"";
 
           format-mounted = "\"<label-mounted> %{T2}󰋊%{T-}  \"";
-          format-mounted-foreground = "\"${colors.background}\"";
-          format-mounted-background = "\"${colors.magentaBright}\"";
+          format-mounted-foreground = "\"${foreground}\"";
+          format-mounted-background = "\"${color}\"";
           label-mounted = "\"%free%\"";
 
           format-warn = "\"<label-warn>\"";
-          format-warn-foreground = "\"${colors.background}\"";
-          format-warn-background = "\"${colors.magentaBright}\"";
+          format-warn-foreground = "\"${foreground}\"";
+          format-warn-background = "\"${color}\"";
           label-warn = "\"%free%\"";
 
           format-unmounted = "\"<label-unmounted> %{T2}󰋊%{T-}  \"";
-          format-unmounted-foreground = "\"${colors.background}\"";
-          format-unmounted-background = "\"${colors.magenta}\"";
+          format-unmounted-foreground = "\"${foreground}\"";
+          format-unmounted-background = "\"${color}\"";
           label-unmounted = "\"?\"";
-        };
-        "module/filesystem-temperature" = {
-          type = "\"custom/text\"";
-          label-foreground = "\"${colors.redBright}\"";
-          label = "\"%{B${colors.magentaBright}} %{B-}%{O-18}%{T3}%{T-}\"";
-          format = "\"<label>%{O-2}\"";
         };
         "module/temperature" = {
           type = "\"internal/temperature\"";
@@ -330,40 +308,27 @@ in
           ramp-4 = "\"\"";
 
           format = "\"<label> %{T2}<ramp>%{T-}  \"";
-          format-foreground = "\"${colors.black}\"";
-          format-background = "\"${colors.redBright}\"";
+          format-foreground = "\"${color}\"";
+          format-background = "\"${foreground}\"";
           label = "\"%temperature-c%\"";
 
           format-warn = "\"<label-warn> %{T2}<ramp>%{T-}  \"";
-          format-warn-foreground = "\"${colors.foreground}\"";
-          format-warn-background = "\"${colors.redBright}\"";
+          format-warn-foreground = "\"${color}\"";
+          format-warn-background = "\"${foreground}\"";
           label-warn = "\"%temperature-c%\"";
-        };
-        "module/temperature-memory" = {
-          type = "\"custom/text\"";
-          label-foreground = "\"${colors.yellowBright}\"";
-          label = "\"%{B${colors.redBright}} %{B-}%{O-18}%{T3}%{T-}\"";
-          format = "\"<label>%{O-2}\"";
-
         };
         "module/memory" = {
           type = "\"internal/memory\"";
 
           format = "\"<label> %{T2}%{T-} \"";
-          format-foreground = "\"${colors.background}\"";
-          format-background = "\"${colors.yellowBright}\"";
+          format-foreground = "\"${foreground}\"";
+          format-background = "\"${color}\"";
           label = "\"%percentage_used%%\"";
 
           format-warn = "\"<label> %{T2}%{T-} \"";
-          format-warn-foreground = "\"${colors.background}\"";
-          format-warn-background = "\"${colors.yellowBright}\"";
+          format-warn-foreground = "\"${foreground}\"";
+          format-warn-background = "\"${color}\"";
           label-warn = "\"%percentage_used%%\"";
-        };
-        "module/memory-cpu" = {
-          type = "\"custom/text\"";
-          label-foreground = "\"${colors.greenBright}\"";
-          label = "\"%{B${colors.yellowBright}} %{B-}%{O-8}%{T3}%{T-}\"";
-          format = "\"<label>%{O-2}\"";
         };
         "module/cpu" = {
           type = "\"internal/cpu\"";
@@ -380,18 +345,12 @@ in
           warn-percentage = "\"50\"";
 
           format = "\"<ramp-load> %{T2}%{T-}  \"";
-          format-foreground = "\"${colors.background}\"";
-          format-background = "\"${colors.greenBright}\"";
+          format-foreground = "\"${color}\"";
+          format-background = "\"${foreground}\"";
 
-          format-warn = "\"%{F#CC241D}<ramp-load>%{F${colors.background}} %{T2}%{T-} \"";
-          format-warn-foreground = "\"${colors.background}\"";
-          format-warn-background = "\"${colors.greenBright}\"";
-        };
-        "module/cpu-wired" = {
-          type = "\"custom/text\"";
-          label-foreground = "\"${colors.cyanBright}\"";
-          label = "\"%{B${colors.greenBright}} %{B-}%{O-18}%{T3}%{T-}\"";
-          format = "\"<label>%{O-2}\"";
+          format-warn = "\"%{F${colors.red}}<ramp-load>%{F${colors.red}} %{T2}%{T-} \"";
+          format-warn-foreground = "\"${color}\"";
+          format-warn-background = "\"${foreground}\"";
         };
         "module/wired" = {
           type = "\"internal/network\"";
@@ -399,20 +358,14 @@ in
           interval = "\"1\"";
 
           format-connected = "\"<label-connected>\"";
-          format-connected-foreground = "\"${colors.black}\"";
-          format-connected-background = "\"${colors.cyanBright}\"";
+          format-connected-foreground = "\"${foreground}\"";
+          format-connected-background = "\"${color}\"";
           label-connected = "\"%netspeed% %{T2}󰈁%{T-} \"";
 
           format-disconnected = "\"<label-disconnected>\"";
-          format-disconnected-foreground = "\"${colors.black}\"";
-          format-disconnected-background = "\"${colors.cyanBright}\"";
+          format-disconnected-foreground = "\"${foreground}\"";
+          format-disconnected-background = "\"${color}\"";
           label-disconnected = "\"down  %{T2}󰈂{T-} \"";
-        };
-        "module/wired-wireless" = {
-          type = "\"custom/text\"";
-          label-background = "\"${colors.cyanBright}\"";
-          label-foreground = "\"${colors.cyan}\"";
-          label = "\"%{T3}%{T-}\"";
         };
         "module/wireless" = {
           type = "\"internal/network\"";
@@ -425,21 +378,15 @@ in
           ramp-signal-3 = "\"󰤥\"";
           ramp-signal-4 = "\"󰤨\"";
 
-          format-connected = "\"<label-connected> %{T2}<ramp-signal>%{T-}  \"";
-          format-connected-foreground = "\"${colors.black}\"";
-          format-connected-background = "\"${colors.cyanBright}\"";
+          format-connected = "\"<label-connected> %{T2}<ramp-signal>%{T-} \"";
+          format-connected-foreground = "\"${color}\"";
+          format-connected-background = "\"${foreground}\"";
           label-connected = "\" %signal%%\"";
 
-          format-disconnected = "\"<label-disconnected> %{T2}󰤠{T-}  \"";
-          format-disconnected-foreground = "\"${colors.black}\"";
-          format-disconnected-background = "\"${colors.cyanBright}\"";
+          format-disconnected = "\"<label-disconnected> %{T2}󰤠{T-} \"";
+          format-disconnected-foreground = "\"${color}\"";
+          format-disconnected-background = "\"${foreground}\"";
           label-disconnected = "\" off\"";
-        };
-        "module/wireless-bluetooth" = {
-          type = "\"custom/text\"";
-          label-foreground = "\"${colors.blueBright}\"";
-          label = "\"%{B${colors.cyanBright}} %{B-}%{O-18}%{T3}%{T-}\"";
-          format = "\"<label>%{O-2}\"";
         };
         "module/bluetooth" = {
           # TODO: install bluez on user level https://bbs.archlinux.org/viewtopic.php?id=215080
@@ -453,22 +400,15 @@ in
           # off
           hook-1 = "\"\"";
           format-1 = "\"%{T2}󰂲%{T-} \"";
-          format-1-foreground = "\"${colors.blue}\"";
-          format-1-background = "\"${colors.blueBright}\"";
+          format-1-foreground = "\"${foreground}\"";
+          format-1-background = "\"${color}\"";
           # on
           hook-2 = "\"\"";
           format-2 = "\"%{T2}%{T-} \"";
-          format-2-foreground = "\"${colors.background}\"";
-          format-2-background = "\"${colors.blueBright}\"";
+          format-2-foreground = "\"${foreground}\"";
+          format-2-background = "\"${color}\"";
 
           # TODO: https://github.com/polybar/polybar-scripts/blob/master/polybar-scripts/system-usb-udev/system-usb-udev.sh
-        };
-        "module/bluetooth-audio" = {
-          type = "\"custom/text\"";
-          label-background = "\"${colors.blueBright}\"";
-          label-foreground = "\"${colors.blue}\"";
-          label = "\"%{T3}%{T-}\"";
-
         };
         "module/audio" = {
           type = "\"custom/ipc\"";
@@ -485,22 +425,16 @@ in
 
           # mute
           format-1 = "\"<label> %{T2}󰝟%{T-}  \"";
-          format-1-background = "\"${colors.blueBright}\"";
-          format-1-foreground = "\"${colors.blue}\"";
+          format-1-background = "\"${foreground}\"";
+          format-1-foreground = "\"${color}\"";
           hook-1 = "\"${pamixer} --get-volume\"";
 
           # low volume
           format-2 = "\"<label> %{T2}󰕾%{T-}  \"";
-          format-2-background = "\"${colors.blueBright}\"";
-          format-2-foreground = "\"${colors.background}\"";
+          format-2-background = "\"${foreground}\"";
+          format-2-foreground = "\"${color}\"";
           hook-2 = "\"${pamixer} --get-volume\"";
 
-        };
-        "module/audio-date" = {
-          type = "\"custom/text\"";
-          label-foreground = "\"${colors.background}\"";
-          label = "\"%{B${colors.blueBright}} %{B-}%{O-18}%{T3}%{T-}%{O-1}\"";
-          format = "\"<label>\"";
         };
         "module/date" = {
           type = "\"internal/date\"";
@@ -511,16 +445,10 @@ in
           # click-left = "\"${pkgs.yad}/bin/yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons &\"";
 
           label = "\"%date% \"";
-          label-background = "\"${colors.background}\"";
-          label-foreground = "\"${colors.foreground}\"";
+          label-background = "\"${color}\"";
+          label-foreground = "\"${foreground}\"";
           label-padding-right = "\"1\"";
 
-        };
-        "module/date-time" = {
-          type = "\"custom/text\"";
-          label-background = "\"${colors.background}\"";
-          label-foreground = "\"${colors.foreground}\"";
-          label = "\"%{T3}%{T-}%{O-1}\"";
         };
         "module/time" = {
           type = "\"internal/date\"";
@@ -528,8 +456,35 @@ in
           time = "\"%H:%M:%S %{T2}󰥔%{T-}\"";
 
           label = "\"%time% \"";
-          format-background = "\"${colors.foreground}\"";
-          format-foreground = "\"${colors.background}\"";
+          format-background = "\"${foreground}\"";
+          format-foreground = "\"${color}\"";
+        };
+        "module/even-l" = {
+          type = "\"custom/text\"";
+          label="\"%{O-1}%{O1}%{B${color}}%{T3} %{T-}%{B-}%{O-25}%{T3}%{T-}\"";
+          label-foreground="\"${foreground}\"";
+        };
+        "module/even-r" = {
+          type = "\"custom/text\"";
+          label-background = "\"${color}\"";
+          label-foreground = "\"${foreground}\"";
+          label = "\"%{T3}%{T-}%{O-1}\"";
+        };
+        "module/odd-r" = {
+          type = "\"custom/text\"";
+          label-background = "\"${foreground}\"";
+          label-foreground = "\"${color}\"";
+          label = "\"%{T3}%{T-}%{O-1}\"";
+        };
+        "module/left" = {
+          type = "\"custom/text\"";
+          label = "\"%{F${color}}%{T3}%{T-}%{F-}%{O-12}%{F${background}}%{T3}%{T-}%{F-}%{O-12}%{F${color}}%{T3}%{T-}%{F-}\"";
+          format = "\"<label>%{O-2}\"";
+        };
+        "module/right" = {
+          type = "\"custom/text\"";
+          label = "\"%{O23}%{F${color}}%{T3}%{T-}%{F-}%{F-}%{O-36}%{F${background}}%{T3}%{T-}%{F-}%{O-36}%{F${color}}%{T3}%{T-}\"";
+          format = "\"<label>%{O-2}\"";
         };
       };
     };
