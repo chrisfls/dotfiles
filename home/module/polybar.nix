@@ -100,9 +100,9 @@ in
               cat $SXHKD_FIFO | while read -r line; do
                   echo $line
                   if [[ $line == *"BBegin chain"* ]]; then
-                      ${polybar-msg} action sxhkd hook 1
+                      ${polybar-msg} action mode hook 1
                   elif [[ $line == *"EEnd chain"* ]]; then
-                      ${polybar-msg} action sxhkd hook 0
+                      ${polybar-msg} action mode hook 0
                   fi
               done
             '';
@@ -112,7 +112,7 @@ in
 
     services.polybar = {
       enable = true;
-      script = "polybar -r &";
+      script = "polybar &";
       settings = {
         "settings" = {
           pseudo-transparency = "\"true\"";
@@ -163,7 +163,7 @@ in
           format-0-padding = "\"1\"";
           # resize
           hook-1 = "\"\"";
-          format-1 = "\"%{T2}󰩨%{T-}\"";
+          format-1 = "\"%{T2}󰩨%{T-}%{O1}\"";
           format-1-background = "\"${colors.foreground}\"";
           format-1-foreground = "\"${colors.background}\"";
           format-1-padding = "\"1\"";
