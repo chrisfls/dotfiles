@@ -221,7 +221,7 @@ in
           label-empty-foreground = "\"${background}\"";
           label-empty-padding = "\"1\"";
 
-          label-occupied = "\"\"";
+          label-occupied = "\"\"";
           label-occupied-background = "\"${color}\"";
           label-occupied-foreground = "\"${background}\"";
           label-occupied-padding = "\"1\"";
@@ -237,13 +237,13 @@ in
           scroll-up = "\"${toggle} toggle tray &\"";
           initial = "\"1\"";
           hook-0 = "\"\"";
-          format-0 = "\"%{T2}%{T-}\"";
-          format-0-foreground = "\"${foreground}\"";
+          format-0 = "\"%{T2}%{T-}\"";
+          format-0-foreground = "\"${background}\"";
           format-0-background = "\"${color}\"";
           format-0-padding = "\"1\"";
           hook-1 = "\"\"";
-          format-1 = "\"%{T2}%{T-}\"";
-          format-1-foreground = "\"${background}\"";
+          format-1 = "\"%{T2}%{T-}\"";
+          format-1-foreground = "\"${foreground}\"";
           format-1-background = "\"${color}\"";
           format-1-padding = "\"1\"";
         };
@@ -269,7 +269,7 @@ in
           warn-percentage = "\"50\"";
           mount-0 = "\"/\"";
 
-          format-mounted = "\"<label-mounted> %{T2}󰋊%{T-}  \"";
+          format-mounted = "\"<label-mounted> %{T2}󰋊%{T-} \"";
           format-mounted-foreground = "\"${foreground}\"";
           format-mounted-background = "\"${color}\"";
           label-mounted = "\"%free%\"";
@@ -279,7 +279,7 @@ in
           format-warn-background = "\"${color}\"";
           label-warn = "\"%free%\"";
 
-          format-unmounted = "\"<label-unmounted> %{T2}󰋊%{T-}  \"";
+          format-unmounted = "\"<label-unmounted> %{T2}󰋊%{T-} \"";
           format-unmounted-foreground = "\"${foreground}\"";
           format-unmounted-background = "\"${color}\"";
           label-unmounted = "\"?\"";
@@ -297,12 +297,12 @@ in
           ramp-3 = "\"\"";
           ramp-4 = "\"\"";
 
-          format = "\"<label> %{T2}<ramp>%{T-}  \"";
+          format = "\"<label> %{T2}<ramp>%{T-} \"";
           format-foreground = "\"${color}\"";
           format-background = "\"${foreground}\"";
           label = "\"%temperature-c%\"";
 
-          format-warn = "\"<label-warn> %{T2}<ramp>%{T-}  \"";
+          format-warn = "\"<label-warn> %{T2}<ramp>%{T-} \"";
           format-warn-foreground = "\"${color}\"";
           format-warn-background = "\"${foreground}\"";
           label-warn = "\"%temperature-c%\"";
@@ -334,7 +334,7 @@ in
           ramp-load-7 = "\"█\"";
           warn-percentage = "\"50\"";
 
-          format = "\"<ramp-load> %{T2}%{T-}  \"";
+          format = "\"<ramp-load> %{T2}%{T-} \"";
           format-foreground = "\"${color}\"";
           format-background = "\"${foreground}\"";
 
@@ -371,12 +371,12 @@ in
           format-connected = "\"<label-connected> %{T2}<ramp-signal>%{T-} \"";
           format-connected-foreground = "\"${color}\"";
           format-connected-background = "\"${foreground}\"";
-          label-connected = "\" %signal%%\"";
+          label-connected = "\"%signal%%\"";
 
           format-disconnected = "\"<label-disconnected> %{T2}󰤠{T-} \"";
           format-disconnected-foreground = "\"${color}\"";
           format-disconnected-background = "\"${foreground}\"";
-          label-disconnected = "\" off\"";
+          label-disconnected = "\"off\"";
         };
         "module/bluetooth" = {
           # TODO: install bluez on user level https://bbs.archlinux.org/viewtopic.php?id=215080
@@ -411,16 +411,16 @@ in
 
           # startup
           hook-0 = "\"${pipewire} &\"";
-          label = "\" %output%%\"";
+          label = "\"%output%%\"";
 
           # mute
-          format-1 = "\"<label> %{T2}󰝟%{T-}  \"";
+          format-1 = "\"<label> %{T2}󰝟%{T-} \"";
           format-1-background = "\"${foreground}\"";
           format-1-foreground = "\"${color}\"";
           hook-1 = "\"${pamixer} --get-volume\"";
 
           # low volume
-          format-2 = "\"<label> %{T2}󰕾%{T-}  \"";
+          format-2 = "\"<label> %{T2}󰕾%{T-} \"";
           format-2-background = "\"${foreground}\"";
           format-2-foreground = "\"${color}\"";
           hook-2 = "\"${pamixer} --get-volume\"";
