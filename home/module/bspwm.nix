@@ -6,6 +6,10 @@ in
   options.extra.bspwm.enable = lib.mkEnableOption "Enable bspwm module";
 
   config = lib.mkIf cfg.enable {
+    home.sessionVariables.DESKTOP_SESSION = "bspwm";
+
+    xsession.initExtra = "systemctl --user import-environment DESKTOP_SESSION";
+
     xsession.windowManager.bspwm = {
       enable = true;
       monitors = {
