@@ -2,7 +2,7 @@
 let
   cfg = config.extra.alacritty;
 
-  theme = specialArgs.color-schemes.popping-and-locking-black;
+  colors = config.extra.themes.color-scheme;
 in
 {
   options.extra.alacritty.enable = lib.mkEnableOption "Enable alacritty module";
@@ -16,32 +16,34 @@ in
     programs.alacritty = {
       enable = true;
       settings = {
+        # TODO: default font
         shell.program = "${pkgs.fish}/bin/fish";
         colors = {
           primary = {
-            background = theme.background;
-            foreground = theme.foreground;
+            background = colors.background;
+            foreground = colors.foreground;
           };
           normal = {
-            black = theme.black;
-            blue = theme.blue;
-            cyan = theme.cyan;
-            green = theme.green;
-            magenta = theme.magenta;
-            red = theme.red;
-            white = theme.white;
-            yellow = theme.yellow;
+            black = colors.black;
+            blue = colors.blue;
+            cyan = colors.cyan;
+            green = colors.green;
+            magenta = colors.magenta;
+            red = colors.red;
+            white = colors.white;
+            yellow = colors.yellow;
           };
           bright = {
-            black = theme.blackBright;
-            blue = theme.blueBright;
-            cyan = theme.cyanBright;
-            green = theme.greenBright;
-            magenta = theme.magentaBright;
-            red = theme.redBright;
-            white = theme.whiteBright;
-            yellow = theme.yellowBright;
+            black = colors.blackBright;
+            blue = colors.blueBright;
+            cyan = colors.cyanBright;
+            green = colors.greenBright;
+            magenta = colors.magentaBright;
+            red = colors.redBright;
+            white = colors.whiteBright;
+            yellow = colors.yellowBright;
           };
+          # TOOD: dim colors
         };
       };
     };
