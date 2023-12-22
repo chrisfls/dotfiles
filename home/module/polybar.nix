@@ -326,7 +326,7 @@ in
         };
         "module/cpu" = {
           type = "\"internal/cpu\"";
-          interval = "\"0.25\"";
+          interval = "\"0.5\"";
 
           ramp-load-0 = "\"▁\"";
           ramp-load-1 = "\"▂\"";
@@ -349,7 +349,7 @@ in
         "module/wired" = {
           type = "\"internal/network\"";
           interface-type = "\"wired\"";
-          interval = "\"1\"";
+          interval = "\"10\"";
 
           format-connected = "\"<label-connected>\"";
           format-connected-foreground = "\"${foreground}\"";
@@ -359,12 +359,12 @@ in
           format-disconnected = "\"<label-disconnected>\"";
           format-disconnected-foreground = "\"${foreground}\"";
           format-disconnected-background = "\"${color}\"";
-          label-disconnected = "\"down  %{T2}󰈂{T-} \"";
+          label-disconnected = "\"off  %{T2}󰈂{T-} \"";
         };
         "module/wireless" = {
           type = "\"internal/network\"";
           interface-type = "\"wireless\"";
-          interval = "\"1\"";
+          interval = "\"2\"";
 
           ramp-signal-0 = "\"󰤯\"";
           ramp-signal-1 = "\"󰤟\"";
