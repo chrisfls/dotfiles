@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.extra.bspwm;
+
+  colors = config.extra.themes.color-scheme;
 in
 {
   options.extra.bspwm.enable = lib.mkEnableOption "Enable bspwm module";
@@ -17,59 +19,33 @@ in
 
     xsession.windowManager.bspwm = {
       enable = true;
-      monitors = {
-        HDMI-1 = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
+      rules = {
+        "Yad".floating = true;
       };
-      rules = { };
       settings = {
-        # top_padding = 24;
-        # bottom_padding = 0;
-        # left_padding = 0;
-        # right_padding = 0;
         border_width = 2;
-        #window_gap = 16;
+        window_gap = 16;
 
         # Borders and gaps
         borderless_monocle = true;
         gapless_monocle = true;
+        single_monocle = true;
 
         # Border colors
-        # normal_border_color = "#484848";
-        # focused_border_color = "#1F8999";
-        # urgent_border_color = "#B58900";
-        # presel_border_color = "#26E2FF";
+        normal_border_color = colors.background;
+        focused_border_color = "#808080";
 
-        # It looks like these options get overridden by Compton...
-        # normal_frame_opacity = 0.75;
-        # focused_frame_opacity = 0.75;
-
-        # Multihead behavior
-        # remove_disabled_monitors = true;
-        # remove_unplugged_monitors = true;
+        # disble multihead behavior (TODO: move to user)
+        remove_disabled_monitors = true;
+        remove_unplugged_monitors = true;
 
         # Focusing behavior
-        # focus_follows_pointer = false;
-        # history_aware_focus = true;
-        # focus_by_distance = true;
+        focus_follows_pointer = false;
 
         # Misc
-        # split_ratio = 0.50;
-        # auto_alternate = true;
-        # auto_cancel = true;
-        # initial_polarity = first_child;
+        split_ratio = 0.50;
+        initial_polarity = "second_child";
       };
-
-
-      # Set up displays
-      # bspc monitor -d 1 2 3 4
-
-      # bspc rule -a Conky sticky=on manage=off lower=on
-      # bspc rule -a xfce4-session floating=on fullscreen=on
-      # bspc rule -a xfce4-panel floating=on manage=off
-      # bspc rule -a wrapper-1.0 floating=on border=off focus=on
-      # bspc rule -a Firefox desktop=^4 focus=on
-      # bspc rule -a Thunderbird floating=on
-      # bspc rule -a Yad floating=on
     };
   };
 }

@@ -66,6 +66,16 @@ in
     };
   };
 
+  # bspwm multihead behavior
+  xsession.windowManager.bspwm = {
+    monitors.HDMI-1 = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
+    settings = {
+      remove_disabled_monitors = true;
+      remove_unplugged_monitors = true;
+    };
+  };
+
+
   home.username = ssot.users.arch-rmxp.kress.username;
   home.homeDirectory = ssot.users.arch-rmxp.kress.home;
 
