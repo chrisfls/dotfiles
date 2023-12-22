@@ -15,7 +15,7 @@ let
 
   screenshot-area = pkgs.writeShellScriptBin "screenshot-area"
     ''
-      shotgun -g \"$(${slop})\" - | xclip -t 'image/png' -selection clipboard
+      shotgun -g "$(${slop})" - | xclip -t 'image/png' -selection clipboard
     '';
 in
 {
