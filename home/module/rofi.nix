@@ -13,7 +13,7 @@ in
   options.extra.rofi.enable = lib.mkEnableOption "Enable rofi module";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.rofi ];
+    home.packages = [ pkgs.rofi pkgs.hostname ];
 
     services.sxhkd.keybindings."super + Return" = "rofi -show drun";
 
