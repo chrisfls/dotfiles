@@ -14,6 +14,7 @@
     ./hotkeys.nix
     ./loopback-toggle.nix
     ./notifications.nix
+    ./picom.nix
     ./polybar.nix
     ./qview.nix
     ./rofi.nix
