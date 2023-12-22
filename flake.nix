@@ -63,7 +63,7 @@
         "${ssot.users.arch-rmxp.kress.id}" = home-manager.lib.homeManagerConfiguration {
           pkgs = import inputs.nixpkgs {
             system = "x86_64-linux";
-            overlays = [ inputs.nixgl.overlay ];
+            overlays = [ (import ./pkgs) ];
           };
           modules = [ ./home/user/${ssot.users.arch-rmxp.kress.id}.nix ];
           extraSpecialArgs = homeSpecialArgs;
