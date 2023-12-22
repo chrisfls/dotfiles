@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.hotkeys;
+  cfg = config.extra.sxhkd;
 
   move = dir: x: y:
     let
@@ -12,8 +12,8 @@ let
   amount = cfg.amount;
 in
 {
-  options.extra.hotkeys = {
-    enable = lib.mkEnableOption "Enable hotkeys module";
+  options.extra.sxhkd = {
+    enable = lib.mkEnableOption "Enable sxhkd module";
     amount = lib.mkOption {
       type = lib.types.int;
       default = 20;
@@ -139,7 +139,7 @@ in
 # SAMPLE BSPWM configs:
 /*
   #
-  # wm independent hotkeys
+  # wm independent sxhkd
   #
 
   # terminal emulator
@@ -152,7 +152,7 @@ in
 
 
   #
-  # bspwm hotkeys
+  # bspwm sxhkd
   #
 
 

@@ -117,7 +117,7 @@
         bspwm.enable = true;
         fontconfig.enable = true;
         fonts.enable = true;
-        hotkeys.enable = true;
+        sxhkd.enable = true;
         loopback-toggle.enable = true;
         notifications.enable = true;
         picom.enable = true;

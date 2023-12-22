@@ -11,7 +11,6 @@
     ./copy-file.nix
     ./fontconfig.nix
     ./fonts.nix
-    ./hotkeys.nix
     ./loopback-toggle.nix
     ./notifications.nix
     ./picom.nix
@@ -21,6 +20,7 @@
     ./scaling.nix
     ./screenshot.nix
     ./shell.nix
+    ./sxhkd.nix
     ./themes.nix
   ];
 }
