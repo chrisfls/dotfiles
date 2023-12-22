@@ -4,9 +4,8 @@ let
 
   scale = cfg.scale;
 
-  gdk-scale = builtins.ceil scale;
-
-  gdk-dpi-scale = scale / gdk-scale;
+  # gdk-scale = builtins.ceil scale;
+  # gdk-dpi-scale = scale / gdk-scale;
 in
 {
   options.extra.scaling = {
