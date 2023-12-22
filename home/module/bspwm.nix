@@ -9,6 +9,10 @@ in
     home.sessionVariables.DESKTOP_SESSION = "bspwm";
 
     xsession.initExtra = "systemctl --user import-environment DESKTOP_SESSION";
+    
+    xsession.windowManager.bspwm.startupPrograms = [
+      "systemd-cat -t pcmanfm-qt-desktop systemd-run --user --scope --property=OOMPolicy=continue -u pcmanfm-qt-desktop ${pkgs.lxqt.pcmanfm-qt}/bin/pcmanfm-qt --desktop"
+    ];
 
     xsession.windowManager.bspwm = {
       enable = true;
