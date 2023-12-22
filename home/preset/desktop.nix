@@ -26,6 +26,7 @@
         pkgs.nm-tray # network manager
         pkgs.lxqt.pavucontrol-qt # sound mixer
         pkgs.lxqt.pcmanfm-qt # file manager
+        pkgs.lxqt.lxqt-archiver	# archiver
 
         # desktop apps
         pkgs.lxqt.qps # system monitor
@@ -94,18 +95,19 @@
 
         userDirs.enable = true;
 
+        # TODO: review these
         configFile = {
           "xdg-desktop-portal/portals.conf".text =
             ''
               [preferred]
-              default=gtk
+              default=lxqt
               org.freedesktop.impl.portal.FileChooser=lxqt
             '';
 
           "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
             ''
               [Service]
-              Environment="XDG_CURRENT_DESKTOP=KDE"
+              Environment="XDG_CURRENT_DESKTOP=LXQt"
             '';
         };
       };
