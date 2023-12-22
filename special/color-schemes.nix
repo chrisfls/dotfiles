@@ -56,7 +56,7 @@ rec {
 
     cursorColor = arc-dark.foreground;
     selectionBackground = arc-dark.background;
-    
+
     black = "#4b5164";
     red = "#e14245";
     green = "#5ca75b";
@@ -65,7 +65,7 @@ rec {
     magenta = "#a660c3";
     cyan = "#5294e2";
     white = "#a9a9aa";
-    
+
     blackBright = "#616981";
     redBright = "#e16f7e";
     greenBright = "#add488";
@@ -74,7 +74,7 @@ rec {
     magentaBright = "#e2afec";
     cyanBright = "#73c5e2";
     whiteBright = "#fcfcfc";
-    
+
     blackDim = "#2c2f3a";
     redDim = "#783228";
     greenDim = "#4b7c16";
@@ -161,5 +161,69 @@ rec {
     magentaBright = "#D81B60";
     cyanBright = "#5FB3B3";
     whiteBright = "#D8DEE9";
+  };
+  material-dark = {
+    background = "#212121";
+    foreground = "#eeffff";
+
+    cursorColor = "#ffffff";
+    selectionBackground = "#eeffff";
+
+    black = "#000000";
+    red = "#ff5370";
+    green = "#c3e88d";
+    yellow = "#ffcb6b";
+    blue = "#82aaff";
+    magenta = "#c792ea";
+    cyan = "#89ddff";
+    white = "#ffffff";
+
+    blackBright = "#545454";
+    redBright = "#ff5370";
+    greenBright = "#c3e88d";
+    yellowBright = "#ffcb6b";
+    blueBright = "#82aaff";
+    magentaBright = "#c792ea";
+    cyanBright = "#89ddff";
+    whiteBright = "#ffffff";
+  };
+  # ported from
+  # https://github.com/PapirusDevelopmentTeam/materia-kde/blob/master/konsole/MateriaDark.colorscheme
+  material-dark-kde = {
+    background = "#121212";
+    foreground = "#DFDFDF";
+
+    black = "#474747";
+    red = "#F44336";
+    green = "#4CAF50";
+    yellow = "#FF9800";
+    blue = "#1A73E8";
+    magenta = "#9C27B0";
+    cyan = "#0097A7";
+    white = "#FFFFFF";
+
+    backgroundBright = "#121212";
+    foregroundBright = "#FFFFFF";
+
+    blackBright = "#474747";
+    redBright = "#F44336";
+    greenBright = "#4CAF50";
+    yellowBright = "#FF9800";
+    blueBright = "#1A73E8";
+    magentaBright = "#9C27B0";
+    cyanBright = "#0097A7";
+    whiteBright = "#FFFFFF";
+
+    backgroundDim = "#121212";
+    foregroundDim = "#DFDFDF";
+
+    blackDim = "#474747";
+    redDim = "#F44336";
+    greenDim = "#4CAF50";
+    yellowDim = "#FF9800";
+    blueDim = "#1A73E8";
+    magentaDim = "#9C27B0";
+    cyanDim = "#0097A7";
+    whiteDim = "#FFFFFF";
   };
 }
