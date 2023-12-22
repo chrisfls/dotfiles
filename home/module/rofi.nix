@@ -15,7 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.rofi pkgs.hostname ];
 
-    services.sxhkd.keybindings."super + Return" = "rofi -show drun";
+    services.sxhkd.keybindings."super + Return" = "rofi -show drun -theme \"${xdg.configHome}/rofi/launchers/type-3/style-1.rasi\"";
 
     xdg.dataFile = {
       "fonts/GrapeNuts-Regular.ttf".source = "${rofi}/fonts/GrapeNuts-Regular.ttf";
