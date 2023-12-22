@@ -112,7 +112,7 @@ in
     systemd.user.services.polybar = lib.mkForce {};
 
     xsession.windowManager.bspwm.startupPrograms = [
-      "systemd-cat -t polybar systemd-run --user --scope --property=OOMPolicy=continue -u polybar ${pkgs.polybar}/bin/polybar &"
+      "systemd-cat -t polybar systemd-run --user --scope --property=OOMPolicy=continue -u polybar ${pkgs.polybar}/bin/polybar"
     ];
 
     services.polybar = {
