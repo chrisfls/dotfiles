@@ -16,6 +16,9 @@ in
         # "--no-use-damage"
       ];
       vSync = true;
+      shadow = true;
+      shadowOpacity = 0.5;
+      shadowOffsets = [ (-18) (-14) ];
       settings = {
         blur = {
           method = "dual_kawase";
@@ -23,7 +26,7 @@ in
         };
       };
       wintypes = {
-        normal = { blur-background = true; };
+        normal = { blur-background = true; shadow = false; };
         splash = { blur-background = false; };
       };
     };
