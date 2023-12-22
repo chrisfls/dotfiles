@@ -19,7 +19,7 @@ in
       settings = {
         blur = {
           method = "dual_kawase";
-          strength = 8;
+          strength = 4;
         };
       };
       wintypes = {
