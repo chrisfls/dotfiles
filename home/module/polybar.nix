@@ -83,7 +83,7 @@ let
 
   background = colors.background;
 
-  color = colors.blue;
+  color = colors.black;
 in
 {
   options.extra.polybar.enable = lib.mkEnableOption "Enable polybar module";
@@ -124,7 +124,7 @@ in
           line-size = "\"2pt\"";
           padding-left = "\"0\"";
           padding-right = "\"0\"";
-          dim-value = "\"0.5\"";
+          # dim-value = "\"0.5\"";
 
           # styling
 
