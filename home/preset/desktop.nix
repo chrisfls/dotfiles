@@ -40,18 +40,22 @@
         # personal apps
         pkgs.anydesk
         pkgs.gimp
-        pkgs.languagetool
-        pkgs.libsForQt5.audiotube # not working until https://github.com/NixOS/nixpkgs/issues/228179 and https://github.com/NixOS/nixpkgs/pull/273263 are done
         pkgs.logseq
         pkgs.moonlight-qt
-        pkgs.mpv
-        pkgs.notepadqq
         pkgs.parsec-bin
-        pkgs.qbittorrent # torrenting
+        pkgs.qbittorrent
         pkgs.soulseekqt
         pkgs.steam
         pkgs.webcord-vencord
         pkgs.ytui-music # using until audiotube is fixed
+
+        # disabled personal apps 
+        /*
+        pkgs.notepadqq # notepad++ [not needed with micro around]
+        pkgs.libsForQt5.audiotube # not working until https://github.com/NixOS/nixpkgs/issues/228179 and https://github.com/NixOS/nixpkgs/pull/273263 are done
+        pkgs.mpv # not configured yet
+        pkgs.languagetool # not the actual languagetool app
+        */
       ];
 
       #
@@ -87,7 +91,8 @@
       # home configs
       #
 
-      home.sessionVariables.GTK_USE_PORTAL = 1;
+      # TODO: review this
+      # home.sessionVariables.GTK_USE_PORTAL = 1;
 
       #
       # config files
@@ -95,10 +100,17 @@
 
       xdg = {
         enable = true;
-
         userDirs.enable = true;
+        desktopEntries = {
+          "avahi-discover" = { name = "Avahi Zeroconf Browser"; noDisplay = true; };
+          "bssh" = { name = "Avahi SSH Server Browser"; noDisplay = true; };
+          "bvnc" = { name = "Avahi VNC Server Browser"; noDisplay = true; };
+          # "geoclue-where-am-i" = {name= ""; noDisplay = true;};
+          # "geoclue-demo-agent" = {name= ""; noDisplay = true;};
+        };
 
-        # TODO: review these
+        # TODO: review this
+        /*
         configFile = {
           "xdg-desktop-portal/portals.conf".text =
             ''
@@ -113,6 +125,7 @@
               Environment="XDG_CURRENT_DESKTOP=LXQt"
             '';
         };
+        */
       };
 
       services.xsettingsd.enable = true;
