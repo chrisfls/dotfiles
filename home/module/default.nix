@@ -13,10 +13,10 @@
     ./fonts.nix
     ./hotkeys.nix
     ./loopback-toggle.nix
-    ./menu.nix
     ./notifications.nix
     ./polybar.nix
     ./qview.nix
+    ./rofi.nix
     ./scaling.nix
     ./screenshot.nix
     ./shell.nix

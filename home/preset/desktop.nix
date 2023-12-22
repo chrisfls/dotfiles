@@ -118,7 +118,7 @@
         fonts.enable = true;
         hotkeys.enable = true;
         loopback-toggle.enable = true;
-        menu.enable = true;
+        rofi.enable = true;
         notifications.enable = true;
         polybar.enable = true;
         qview.enable = true;
