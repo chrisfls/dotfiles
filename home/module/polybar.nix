@@ -79,6 +79,22 @@ let
     in
     "${script}/bin/polybar-pipewire";
 
+  polybar-sxhkd =
+    let
+      script = pkgs.writeShellScriptBin "polybar-sxhkd"
+        ''
+          cat $SXHKD_FIFO | while read -r line; do
+              echo $line
+              if [[ $line == *"BBegin chain"* ]]; then
+                  ${polybar-msg} action mode hook 1
+              elif [[ $line == *"EEnd chain"* ]]; then
+                  ${polybar-msg} action mode hook 0
+              fi
+          done
+        '';
+    in
+    "${script}/bin/polybar-sxhkd";
+
   black = colors.background;
   white = colors.foreground;
   primary = colors.black;
@@ -88,30 +104,12 @@ in
   options.extra.polybar.enable = lib.mkEnableOption "Enable polybar module";
 
   config = lib.mkIf cfg.enable {
-    systemd.user.services.sxhkd-chord-mode = {
-      Unit.Description = "Trigger sxhkd chord indicator";
-      Service.ExecStart =
-        let
-          script = pkgs.writeShellScriptBin "polybar-sxhkd"
-            ''
-              cat $SXHKD_FIFO | while read -r line; do
-                  echo $line
-                  if [[ $line == *"BBegin chain"* ]]; then
-                      ${polybar-msg} action mode hook 1
-                  elif [[ $line == *"EEnd chain"* ]]; then
-                      ${polybar-msg} action mode hook 0
-                  fi
-              done
-            '';
-        in
-        "${script}/bin/polybar-sxhkd";
-    };
-
     # HACK: disable polybar service
     systemd.user.services.polybar = lib.mkForce { };
 
     xsession.windowManager.bspwm.startupPrograms = [
       "systemd-cat -t polybar systemd-run --user --scope --property=OOMPolicy=continue -u polybar ${pkgs.polybar}/bin/polybar"
+      "systemd-cat -t polybar-sxhkd systemd-run --user --scope --property=OOMPolicy=continue -u polybar-sxhkd ${polybar-sxhkd}"
     ];
 
     services.polybar = {
@@ -158,18 +156,18 @@ in
 
           click-left = "\"rofi -show drun -theme \"${config.xdg.configHome}/rofi/launchers/type-3/style-1.rasi\"\"";
 
-          content = "\" %{T2}󰺮%{T-} Apps\"";
-          content-background = "\"${accent}\"";
-          content-foreground = "\"${white}\"";
+          format = "\" %{T2}󰺮%{T-} Apps\"";
+          format-background = "\"${accent}\"";
+          format-foreground = "\"${white}\"";
         };
         "module/session" = {
           type = "\"custom/text\"";
 
           click-left = "\"${config.xdg.configHome}/rofi/powermenu/type-1/powermenu.sh\"";
 
-          content = "\"${config.home.username} %{T2}󰍃%{T-} \"";
-          content-background = "\"${accent}\"";
-          content-foreground = "\"${white}\"";
+          format = "\"${config.home.username} %{T2}󰍃%{T-} \"";
+          format-background = "\"${accent}\"";
+          format-foreground = "\"${white}\"";
         };
         "module/mode" = {
           type = "\"custom/ipc\"";
