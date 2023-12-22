@@ -108,10 +108,18 @@ in
         "${script}/bin/polybar-sxhkd";
     };
 
+    # HACK: disable polybar service
+    systemd.user.services.polybar = lib.mkForce {};
+
+    xsession.windowManager.bspwm.startupPrograms = [
+      "systemd-cat -t polybar systemd-run --user --scope --property=OOMPolicy=continue -u polybar ${pkgs.polybar}/bin/polybar &"
+    ];
+
     services.polybar = {
       enable = true;
-      script = "polybar &";
+      script = "";
       settings = {
+        settings.screenchange-reload = "\"true\"";
         "bar/topbar" = {
           # settings
           enable-ipc = "\"true\"";
@@ -141,19 +149,19 @@ in
           foreground = "\"${foreground}\"";
 
           # modules
-          modules-left = "\"menu mode keyboard even-l workspaces toggle tray right\"";
+          modules-left = "\"logout mode keyboard even-l workspaces toggle tray right\"";
           modules-center = "\"left title right \"";
           modules-right = "\"left filesystem even-r temperature odd-r memory even-r cpu odd-r wired even-r wireless odd-r bluetooth even-r audio odd-r date even-r time\"";
           format-radius = "\"32.0\"";
         };
-        "module/menu" = {
+        "module/logout" = {
           type = "\"custom/text\"";
 
-          click-left = "\"${pkgs.jgmenu}/bin/jgmenu_run >/dev/null 2>&1 &\"";
+          click-left = "\"${config.xdg.configHome}/rofi/powermenu/type-1/powermenu.sh\"";
 
           content-padding = "\"1\"";
 
-          content = "\"%{T3}󰍜%{T-}\"";
+          content = "\"%{T2}%{T-} ${config.home.username}\""; # 󰍃  󰩈 󰗼 
           content-background = "\"${foreground}\"";
           content-foreground = "\"${background}\"";
         };
@@ -163,16 +171,16 @@ in
           initial = "\"1\"";
           # move
           hook-0 = "\"\"";
-          format-0 = "\"%{T2}󰆾%{T-}\"";
+          format-0 = "\"%{T2}󰰞%{T-}\"";
           format-0-background = "\"${foreground}\"";
           format-0-foreground = "\"${color}\"";
-          format-0-padding = "\"1\"";
+          format-0-padding = "\"0\"";
           # resize
           hook-1 = "\"\"";
-          format-1 = "\"%{T2}󰩨%{T-}%{O1}\"";
+          format-1 = "\"%{T2}󰬙%{T-}\"";
           format-1-background = "\"${foreground}\"";
           format-1-foreground = "\"${color}\"";
-          format-1-padding = "\"1\"";
+          format-1-padding = "\"0\"";
         };
         "module/keyboard" = {
           type = "\"internal/xkeyboard\"";
