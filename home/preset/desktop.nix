@@ -111,24 +111,24 @@
       #
 
       extra = {
+        alacritty.enable = true;
         betterlockscreen.enable = true;
         browser.enable = true;
-        alacritty.enable = true;
+        bspwm.enable = true;
         fontconfig.enable = true;
         fonts.enable = true;
         hotkeys.enable = true;
         loopback-toggle.enable = true;
-        rofi.enable = true;
         notifications.enable = true;
+        picom.enable = true;
         polybar.enable = true;
         qview.enable = true;
+        rofi.enable = true;
         screenshot.enable = true;
         themes.enable = true;
-        bspwm.enable = true;
       };
     }
     (lib.mkIf config.targets.genericLinux.enable {
-
       home.sessionVariables = {
         LIBGL_DRIVERS_PATH = "/usr/lib/dri";
         LIBVA_DRIVERS_PATH = "/usr/lib/dri";
@@ -144,6 +144,11 @@
         LD_LIBRARY_PATH = "/usr/lib:/usr/lib/vdpau:$LD_LIBRARY_PATH";
         VK_ICD_FILENAMES = "$(find /usr/share/vulkan/icd.d/ -name '*.json' | tr '\\n' ':' | sed 's/:$//')";
       };
+
+      xsession.initExtra =
+        ''
+          systemctl --user import-environment LIBGL_DRIVERS_PATH LIBVA_DRIVERS_PATH __EGL_VENDOR_LIBRARY_FILENAMES LD_LIBRARY_PATH VK_ICD_FILENAMES
+        '';
     })
   ];
 }
