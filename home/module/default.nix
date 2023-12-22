@@ -3,6 +3,7 @@
   imports = [
     ./agenix.nix
     ./alacritty.nix
+    ./autorandr.nix
     ./betterlockscreen.nix
     ./browser.nix
     ./bspwm.nix

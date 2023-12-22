@@ -120,12 +120,12 @@
 
       extra = {
         alacritty.enable = true;
+        autorandr.enable = true;
         betterlockscreen.enable = true;
         browser.enable = true;
         bspwm.enable = true;
         fontconfig.enable = true;
         fonts.enable = true;
-        sxhkd.enable = true;
         loopback-toggle.enable = true;
         notifications.enable = true;
         picom.enable = true;
@@ -133,6 +133,7 @@
         qview.enable = true;
         rofi.enable = true;
         screenshot.enable = true;
+        sxhkd.enable = true;
         themes.enable = true;
       };
     }
