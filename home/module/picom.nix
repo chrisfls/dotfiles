@@ -15,19 +15,33 @@ in
         "--glx-no-stencil"
         # "--no-use-damage"
       ];
-      vSync = true;
+      fade = true;
+      fadeDelta = 16;
+      fadeSteps = [ 0.2 0.2 ];
       shadow = true;
+      shadowOffsets = [ (-18) (-16) ];
       shadowOpacity = 0.5;
-      shadowOffsets = [ (-18) (-14) ];
+      vSync = true;
       settings = {
+        corner-radius = 12;
+        crop-shadow-to-monitor = true;
         blur = {
           method = "dual_kawase";
           strength = 4;
+          background = false;
+          background-frame = false;
+          background-fixed = false;
         };
+        corner-radius-rules = [
+          "12:class_g = 'Rofi'"
+        ];
+        rounded-corners-exclude = [
+          "class_g = 'Polybar'"
+        ];
       };
       wintypes = {
         normal = { blur-background = true; shadow = false; };
-        splash = { blur-background = false; };
+        splash = { blur-background = false; shadow = false; };
       };
     };
   };
