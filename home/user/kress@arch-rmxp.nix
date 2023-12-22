@@ -19,51 +19,48 @@ in
 
   home.keyboard.layout = "br";
 
-  programs.autorandr = {
-    enable = true;
-    profiles = {
-      undocked = {
-        fingerprint = { inherit eDP-1; };
-        config = {
-          DP-1.enable = false;
-          DP-2.enable = false;
-          eDP-1 = {
-            enable = true;
-            crtc = 0;
-            primary = true;
-            position = "0x0";
-            mode = "800x1280";
-            rate = "60.06";
-            rotate = "right";
-            # x-prop-aspect_ratio Automaticmn
-            # x-prop-audio auto
-            # x-prop-broadcast_rgb Automatic
-            # x-prop-colorspace Default
-            # x-prop-max_bpc 8
-            # x-prop-non_desktop 0
-          };
+  programs.autorandr.profiles = {
+    undocked = {
+      fingerprint = { inherit eDP-1; };
+      config = {
+        DP-1.enable = false;
+        DP-2.enable = false;
+        eDP-1 = {
+          enable = true;
+          crtc = 0;
+          primary = true;
+          position = "0x0";
+          mode = "800x1280";
+          rate = "60.06";
+          rotate = "right";
+          # x-prop-aspect_ratio Automaticmn
+          # x-prop-audio auto
+          # x-prop-broadcast_rgb Automatic
+          # x-prop-colorspace Default
+          # x-prop-max_bpc 8
+          # x-prop-non_desktop 0
         };
       };
-      docked = {
-        fingerprint = { inherit eDP-1 HDMI-1; };
-        config = {
-          eDP-1.enable = false;
-          DP-1.enable = false;
-          DP-2.enable = false;
-          HDMI-1 = {
-            enable = true;
-            crtc = 0;
-            primary = true;
-            position = "0x0";
-            mode = "3840x2160";
-            rate = "60.00";
-            # x-prop-aspect_ratio Automatic
-            # x-prop-audio auto
-            # x-prop-broadcast_rgb Automatic
-            # x-prop-colorspace Default
-            # x-prop-max_bpc 8
-            # x-prop-non_desktop 0
-          };
+    };
+    docked = {
+      fingerprint = { inherit eDP-1 HDMI-1; };
+      config = {
+        eDP-1.enable = false;
+        DP-1.enable = false;
+        DP-2.enable = false;
+        HDMI-1 = {
+          enable = true;
+          crtc = 0;
+          primary = true;
+          position = "0x0";
+          mode = "3840x2160";
+          rate = "60.00";
+          # x-prop-aspect_ratio Automatic
+          # x-prop-audio auto
+          # x-prop-broadcast_rgb Automatic
+          # x-prop-colorspace Default
+          # x-prop-max_bpc 8
+          # x-prop-non_desktop 0
         };
       };
     };
