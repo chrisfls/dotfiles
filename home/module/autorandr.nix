@@ -7,6 +7,7 @@ in
 
   config = lib.mkIf cfg.enable {
     services.autorandr.enable = true;
+    programs.autorandr.enable = true;
     xsession.initExtra = "${pkgs.autorandr}/bin/autorandr -c";
   };
 }
