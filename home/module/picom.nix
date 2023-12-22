@@ -13,7 +13,7 @@ in
       extraArgs = [
         "--vsync-use-glfinish"
         "--glx-no-stencil"
-        "--no-use-damage"
+        # "--no-use-damage"
       ];
       vSync = true;
       settings = {
