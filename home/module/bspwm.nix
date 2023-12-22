@@ -1,22 +1,11 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.extra.bspwm;
-
-  xorg = pkgs.xorg;
-
-  i3 = config.xsession.windowManager.i3;
-
-  mod = config.xsession.windowManager.i3.config.modifier;
 in
 {
   options.extra.bspwm.enable = lib.mkEnableOption "Enable bspwm module";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      pkgs.picom-next
-      pkgs.jgmenu
-    ];
-
     xsession.windowManager.bspwm = {
       enable = true;
       monitors = {
