@@ -9,39 +9,62 @@ in
     services.picom = {
       enable = true;
       package = pkgs.picom-next;
-      backend = "glx";
       extraArgs = [
         "--vsync-use-glfinish"
         "--glx-no-stencil"
-        # "--no-use-damage"
       ];
-      fade = true;
-      fadeDelta = 16;
-      fadeSteps = [ 0.2 0.2 ];
-      shadow = true;
-      shadowOffsets = [ (-18) (-16) ];
-      shadowOpacity = 0.5;
-      vSync = true;
+
+      # general settings
       settings = {
-        corner-radius = 12;
+        backend = "glx";
+        vsync = true;
+
+        # fade animations -------------
+        fade-delta = 8;
+        fade-exclude = [ ];
+        fade-in-step = 0.250000;
+        fade-out-step = 0.250000;
+        fading = true;
+
+        # shadows ---------------------
+        shadow = false;
         crop-shadow-to-monitor = true;
-        blur = {
-          method = "dual_kawase";
-          strength = 4;
-          background = false;
-          background-frame = false;
-          background-fixed = false;
-        };
-        corner-radius-rules = [
-          "12:class_g = 'Rofi'"
+        shadow-exclude = [
+          "_GTK_FRAME_EXTENTS@:c"
+          "(bounding_shaped && !rounded_corners)"
+          "class_g ?= 'Notify-osd'"
+          "class_g ?= 'zoom'"
+          "class_g = 'Cairo-clock'"
+          "class_g = 'Conky'"
+          "name = 'cpt_frame_xcb_window'"
+          "name = 'Notification'"
+          "name = 'rect-overlay'"
         ];
-        rounded-corners-exclude = [
-          "class_g = 'Polybar'"
-        ];
+        shadow-offset-x = -18;
+        shadow-offset-y = -18;
+        shadow-opacity = 0.500000;
+
+        # rounded corners -------------
+        corner-radius = 12;
+        # force round corners for rofi
+        corner-radius-rules = [ "12:class_g = 'Rofi'" ];
+        # force straight corners for polybar
+        rounded-corners-exclude = [ "class_g = 'Polybar'" ];
+
+        # blurred backgrounds ---------
+        blur-method = "dual_kawase";
+        blur-background = true;
+        blur-background-fixed = true;
+        blur-background-frame = false;
+        blur-strength = 4;
+        # only blur rofi and alacritty
+        blur-background-exclude = "!(class_g = 'Rofi' || class_g = 'Alacritty')";
       };
+
+      # only enable shadows for normal windows and for polybar
       wintypes = {
-        normal = { blur-background = true; shadow = false; };
-        splash = { blur-background = false; shadow = false; };
+        dock.shadow = true;
+        normal.shadow = true;
       };
     };
   };
