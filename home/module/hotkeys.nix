@@ -28,6 +28,7 @@ in
         export SXHKD_FIFO="$XDG_RUNTIME_DIR/sxhkd.fifo"
         [ -e "$SXHKD_FIFO" ] && rm "$SXHKD_FIFO"
         mkfifo "$SXHKD_FIFO"
+        systemctl --user import-environment SXHKD_FIFO
       '';
 
     services.sxhkd = {
