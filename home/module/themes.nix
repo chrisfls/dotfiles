@@ -121,7 +121,9 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.papirus-icon-theme;
+        default = pkgs.papirus-icon-theme.override {
+          color = "paleorange";
+        };
       };
     };
 
@@ -180,13 +182,18 @@ in
 
     color-scheme = lib.mkOption {
       type = lib.types.attrs;
-      default = specialArgs.color-schemes.popping-and-locking;
+      default = specialArgs.color-schemes.material-dark-kde;
       description = "Color scheme for polybar and other apps.";
     };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ cfg.qt.package ];
+    home.packages = [
+      cfg.qt.package
+      cfg.gtk.package
+      cfg.cursor.package
+      cfg.icon.package
+    ];
 
     qt = {
       enable = true;
@@ -198,13 +205,14 @@ in
       enable = true;
       font = { inherit (cfg.font.general) name package size; };
       iconTheme = { inherit (cfg.icon) name package; };
+      cursorTheme = { inherit (cfg.cursor) name package size; };
       theme = { inherit (cfg.gtk) name package; };
     };
 
     home.pointerCursor = rec {
       inherit (cfg.cursor) name package size;
       gtk.enable = true;
-      x11 = { enable = true; defaultCursor = name; };
+      x11.enable = true;
     };
 
     xdg.configFile = {
