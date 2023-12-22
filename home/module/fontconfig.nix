@@ -2,7 +2,7 @@
 let
   cfg = config.extra.fontconfig;
 
-  dpi = toString config.extra.scaling.dpi;
+  dpi = toString config.extra.scaling.dpiScaled;
 
   toInt = bool: if bool then 1 else 0;
 
@@ -62,6 +62,7 @@ in
       "Xft.hintstyle" = cfg.hintstyle;
       "Xft.lcdfilter" = cfg.lcdfilter;
       "Xft.rgba" = cfg.rgba;
+      "Xft.dpi" = dpi;
     };
 
     xdg.configFile."fontconfig/fonts.conf".text = ''
