@@ -26,7 +26,7 @@
         pkgs.nm-tray # network manager
         pkgs.lxqt.pavucontrol-qt # sound mixer
         pkgs.lxqt.pcmanfm-qt # file manager
-        pkgs.lxqt.lxqt-archiver	# archiver
+        pkgs.lxqt.lxqt-archiver # archiver
 
         # desktop apps
         pkgs.lxqt.qps # system monitor
@@ -58,7 +58,10 @@
       # startx
       #
 
-      xsession.enable = true;
+      xsession = {
+        enable = true;
+        numlock.enable = true;
+      };
 
       # last if block from /etc/X11/xinit/xinitrc
       home.file.".xinitrc" = {
