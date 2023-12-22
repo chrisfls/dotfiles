@@ -79,9 +79,9 @@ let
     in
     "${script}/bin/polybar-pipewire";
 
-  polybar-sxhkd =
+  sxhkd-mode =
     let
-      script = pkgs.writeShellScriptBin "polybar-sxhkd"
+      script = pkgs.writeShellScriptBin "sxhkd-mode"
         ''
           cat $SXHKD_FIFO | while read -r line; do
               echo $line
@@ -93,7 +93,7 @@ let
           done
         '';
     in
-    "${script}/bin/polybar-sxhkd";
+    "${script}/bin/sxhkd-mode";
 
   black = colors.background;
   white = colors.foreground;
@@ -109,7 +109,7 @@ in
 
     xsession.windowManager.bspwm.startupPrograms = [
       "systemd-cat -t polybar systemd-run --user --scope --property=OOMPolicy=continue -u polybar ${pkgs.polybar}/bin/polybar"
-      "systemd-cat -t polybar-sxhkd systemd-run --user --scope --property=OOMPolicy=continue -u polybar-sxhkd ${polybar-sxhkd}"
+      "systemd-cat -t sxhkd-mode systemd-run --user --scope --property=OOMPolicy=continue -u sxhkd-mode ${sxhkd-mode}"
     ];
 
     services.polybar = {
