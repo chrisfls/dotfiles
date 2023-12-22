@@ -34,7 +34,7 @@ in
       default = 2;
     };
     device = lib.mkOption {
-      type = lib.types.string;
+      type = lib.types.str;
       default = "ARCANO MARK-HI";
     };
   };
