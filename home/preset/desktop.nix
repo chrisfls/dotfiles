@@ -80,6 +80,12 @@
       };
 
       #
+      # home configs
+      #
+
+      home.sessionVariables.GTK_USE_PORTAL = 1;
+
+      #
       # config files
       #
 
@@ -146,9 +152,7 @@
       };
 
       xsession.initExtra =
-        ''
-          systemctl --user import-environment LIBGL_DRIVERS_PATH LIBVA_DRIVERS_PATH __EGL_VENDOR_LIBRARY_FILENAMES LD_LIBRARY_PATH VK_ICD_FILENAMES
-        '';
+        "systemctl --user import-environment LIBGL_DRIVERS_PATH LIBVA_DRIVERS_PATH __EGL_VENDOR_LIBRARY_FILENAMES LD_LIBRARY_PATH VK_ICD_FILENAMES";
     })
   ];
 }
