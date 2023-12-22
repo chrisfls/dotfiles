@@ -23,7 +23,7 @@
         # desktop environment apps
         pkgs.arandr # manual display config
         pkgs.libsForQt5.kdialog # dialogs and widgets
-        pkgs.libsForQt5.networkmanager-qt # network manager
+        pkgs.nm-tray # network manager
         pkgs.lxqt.pavucontrol-qt # sound mixer
         pkgs.lxqt.pcmanfm-qt # file manager
 
@@ -124,7 +124,7 @@
         qview.enable = true;
         screenshot.enable = true;
         themes.enable = true;
-        window-manager.enable = true;
+        bspwm.enable = true;
       };
     }
     (lib.mkIf config.targets.genericLinux.enable {
