@@ -202,7 +202,7 @@ rec {
     cyan = "#0097A7";
     white = "#FFFFFF";
 
-    backgroundBright = "#121212";
+    backgroundBright = "#1E1E1E";
     foregroundBright = "#FFFFFF";
 
     blackBright = "#474747";
