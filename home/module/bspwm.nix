@@ -34,7 +34,7 @@ in
 
         # Border colors
         normal_border_color = colors.background;
-        focused_border_color = "#808080";
+        focused_border_color = colors.foreground;
 
         # disble multihead behavior (TODO: move to user)
         remove_disabled_monitors = true;
