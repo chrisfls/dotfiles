@@ -264,17 +264,18 @@ in
           initial = "\"1\"";
           hook-0 = "\"\"";
           format-0 = "\"%{T2}%{T-}\"";
-          format-0-foreground = "\"${darkest}\"";
+          format-0-foreground = "\"${light}\"";
           format-0-background = "\"${dark}\"";
           format-0-padding = "\"1\"";
           hook-1 = "\"\"";
           format-1 = "\"%{T2}%{T-}\"";
-          format-1-foreground = "\"${light}\"";
+          format-1-foreground = "\"${darkest}\"";
           format-1-background = "\"${dark}\"";
           format-1-padding = "\"1\"";
         };
         "module/tray" = {
           type = "\"internal/tray\"";
+          hidden = "\"true\"";
           tray-spacing = "\"1pt\"";
           tray-padding = "\"1pt\"";
           format = "\"%{O-2}<tray>\"";
