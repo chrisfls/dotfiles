@@ -1,14 +1,32 @@
 { config, lib, pkgs, ... }:
+with {
+  inherit (builtins) replaceStrings readFile;
+};
 let
   cfg = config.module.browser;
 
   browser = "brave-browser.desktop";
+
+  pkg = pkgs.brave;
+
+  # the wrapper is injecting mesa/libva...
+  wrapper = pkgs.symlinkJoin {
+    name = "brave";
+    paths = [
+      (pkgs.writeShellScriptBin "brave"
+        (replaceStrings
+          [ "mesa" "libva" ]
+          [ "dummy-mesa" "dummy-libva" ]
+          (readFile "${pkg}/bin/brave")))
+      pkg
+    ];
+  };
 in
 {
   options.module.browser.enable = lib.mkEnableOption "Enable browser module";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.brave ];
+    home.packages = [ wrapper ];
 
     xdg.mimeApps = {
       enable = true;
