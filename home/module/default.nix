@@ -10,10 +10,11 @@
     ./cloudflare-warp.nix
     ./codium.nix
     ./copy-file.nix
+    ./dunst.nix
     ./fontconfig.nix
     ./fonts.nix
     ./loopback-toggle.nix
-    ./notifications.nix
+    ./micro.nix
     ./picom.nix
     ./polybar.nix
     ./qview.nix
@@ -23,5 +24,6 @@
     ./shell.nix
     ./sxhkd.nix
     ./themes.nix
+    ./xdg-portal.nix
   ];
 }

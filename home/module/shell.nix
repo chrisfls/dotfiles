@@ -58,13 +58,6 @@ in
       keys = [ "id_ed25519" ];
     };
 
-    programs.micro = {
-      enable = true;
-      settings = {
-        colorscheme = "gruvbox-tc";
-      };
-    };
-
     programs.git = {
       enable = true;
       userName = ssot.contact.name;
@@ -100,6 +93,8 @@ in
       enableBashIntegration = true;
       enableFishIntegration = true;
     };
+
+    extra.micro.enable = true;
   };
 }
 

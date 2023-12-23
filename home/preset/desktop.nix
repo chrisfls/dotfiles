@@ -18,7 +18,6 @@
         pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
         pkgs.lxqt.lxqt-policykit # policykit prompter
         pkgs.lxqt.lxqt-sudo # gui-sudo prompter
-        pkgs.lxqt.xdg-desktop-portal-lxqt # qt integration with xdg-desktop-portal
 
         # desktop environment apps
         pkgs.arandr # manual display config
@@ -38,6 +37,7 @@
         pkgs.qalculate-qt # calculator
 
         # personal apps
+        pkgs.rclone
         pkgs.anydesk
         pkgs.gimp
         pkgs.logseq
@@ -67,14 +67,13 @@
         numlock.enable = true;
       };
 
-      # last if block from /etc/X11/xinit/xinitrc
       home.file.".xinitrc" = {
         executable = true;
-
         text =
           ''
             #!/bin/sh
 
+            # this is the last if block from /etc/X11/xinit/xinitrc
             if [ -d /etc/X11/xinit/xinitrc.d ] ; then
               for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
                 [ -x "$f" ] && . "$f"
@@ -88,13 +87,6 @@
       };
 
       #
-      # home configs
-      #
-
-      # TODO: review this
-      # home.sessionVariables.GTK_USE_PORTAL = 1;
-
-      #
       # config files
       #
 
@@ -105,30 +97,44 @@
           "avahi-discover" = { name = "Avahi Zeroconf Browser"; noDisplay = true; };
           "bssh" = { name = "Avahi SSH Server Browser"; noDisplay = true; };
           "bvnc" = { name = "Avahi VNC Server Browser"; noDisplay = true; };
-          # "geoclue-where-am-i" = {name= ""; noDisplay = true;};
-          # "geoclue-demo-agent" = {name= ""; noDisplay = true;};
+          "micro" = {
+            name = "Micro";
+            genericName = "Text Editor";
+            comment = "Edit text files in a terminal";
+            icon = "micro";
+            type = "Application";
+            categories = [ "Utility" "TextEditor" "Development" ];
+            exec = "micro %F";
+            startupNotify = true;
+            terminal = true;
+            noDisplay = false;
+            mimeType = [
+              "text/plain"
+              "text/x-chdr"
+              "text/x-csrc"
+              "text/x-c++hdr"
+              "text/x-c++src"
+              "text/x-java"
+              "text/x-dsrc"
+              "text/x-pascal"
+              "text/x-perl"
+              "text/x-python"
+              "application/x-php"
+              "application/x-httpd-php3"
+              "application/x-httpd-php4"
+              "application/x-httpd-php5"
+              "application/xml"
+              "text/html"
+              "text/css"
+              "text/x-sql"
+              "text/x-diff"
+            ];
+          };
         };
-
-        # TODO: review this
-        /*
-        configFile = {
-          "xdg-desktop-portal/portals.conf".text =
-            ''
-              [preferred]
-              default=lxqt
-              org.freedesktop.impl.portal.FileChooser=lxqt
-            '';
-
-          "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
-            ''
-              [Service]
-              Environment="XDG_CURRENT_DESKTOP=LXQt"
-            '';
-        };
-        */
       };
 
       services.xsettingsd.enable = true;
+      services.udiskie.enable = true;
 
       #
       # module configs
@@ -140,10 +146,10 @@
         betterlockscreen.enable = true;
         browser.enable = true;
         bspwm.enable = true;
+        dunst.enable = true;
         fontconfig.enable = true;
         fonts.enable = true;
         loopback-toggle.enable = true;
-        notifications.enable = true;
         picom.enable = true;
         polybar.enable = true;
         qview.enable = true;
@@ -151,6 +157,7 @@
         screenshot.enable = true;
         sxhkd.enable = true;
         themes.enable = true;
+        micro = { enable = true; desktop = true; };
       };
     }
     (lib.mkIf config.targets.genericLinux.enable {
