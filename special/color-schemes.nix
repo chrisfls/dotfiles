@@ -226,4 +226,41 @@ rec {
     cyanDim = "#0097A7";
     whiteDim = "#FFFFFF";
   };
+  material-dark-kde-alt = {
+    background = "#121212";
+    foreground = "#E0E0E0";
+
+    black = "#474747";
+    red = "#F44336";
+    green = "#4CAF50";
+    yellow = "#FF9800";
+    blue = "#1A73E8";
+    magenta = "#9C27B0";
+    cyan = "#0097A7";
+    white = "#FAFAFA";
+
+    backgroundDim = "#121212";
+    foregroundDim = "#9E9E9E";
+
+    blackDim = "#000000";
+    redDim = "#E53935";
+    greenDim = "#43A047";
+    yellowDim = "#FB8C00";
+    blueDim = "#1565C0";
+    magentaDim = "#8E24AA";
+    cyanDim = "#00838F";
+    whiteDim = "#F5F5F5";
+
+    backgroundBright = "#121212";
+    foregroundBright = "#F5F5F5";
+
+    blackBright = "#616161";
+    redBright = "#EF5350";
+    greenBright = "#66BB6A";
+    yellowBright = "#FFA726";
+    blueBright = "#2196F3";
+    magentaBright = "#AB47BC";
+    cyanBright = "#00ACC1";
+    whiteBright = "#FFFFFF";
+  };
 }
