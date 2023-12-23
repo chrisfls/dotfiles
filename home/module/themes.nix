@@ -185,6 +185,11 @@ in
       default = specialArgs.color-schemes.material-dark-kde-alt;
       description = "Color scheme for polybar and other apps.";
     };
+
+    rofi = lib.mkOption {
+      type = lib.types.str;
+      default = "${config.xdg.configHome}/rofi/launchers/type-3/style-1.rasi";
+    };
   };
 
   config = lib.mkIf cfg.enable {
