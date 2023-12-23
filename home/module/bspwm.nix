@@ -23,7 +23,7 @@ in
         };
         "qalculate-qt" = {
           state = "floating";
-          rectangle = "768x480+0+0";
+          rectangle = "768x640+0+0";
           center = true;
         };
         "pavucontrol-qt" = {
