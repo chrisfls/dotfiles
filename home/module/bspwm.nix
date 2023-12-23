@@ -22,6 +22,26 @@ in
       enable = true;
       rules = {
         "Yad".floating = true;
+        "copyq" = {
+          state = "floating";
+          rectangle = "1280x960+0+0";
+          center = true;
+        };
+        "qalculate-qt" = {
+          state = "floating";
+          rectangle = "768x480+0+0";
+          center = true;
+        };
+        "pavucontrol-qt" = {
+          state = "floating";
+          rectangle = "1115x839+0+0";
+          center = true;
+        };
+        "bluedevil-wizard" = {
+          state = "floating";
+          rectangle = "750x678+0+0";
+          center = true;
+        };
       };
       settings = {
         border_width = 2;
