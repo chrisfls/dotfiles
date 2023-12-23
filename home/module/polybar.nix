@@ -169,8 +169,8 @@ in
           # resize
           hook-1 = "\"\"";
           format-1 = "\" %{T2}󰺮%{T-} Applications\"";
-          format-1-background = "\"${darkest}\"";
-          format-1-foreground = "\"${danger}\"";
+          format-1-background = "\"${select}\"";
+          format-1-foreground = "\"${darkest}\"";
           format-1-padding = "\"0\"";
         };
         "module/session" = {
@@ -452,19 +452,17 @@ in
           hook-2 = "\"${pamixer} --get-volume\"";
 
         };
+        # TODO: replace with custom module to support calendar
         "module/date" = {
-          type = "\"internal/date\"";
+          type = "\"custom/script\"";
           interval = "\"1.0\"";
-          date = "\"%a, %d %b %Y %{T2}󰃭%{T-}\"";
+          click-left = "\"${pkgs.yad}/bin/yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons --posx=3264 --posy=36 &\"";
+          exec = "\"echo \"$(date +'%a, %d %b %Y') %{T2}󰃭%{T-}\"\"";
 
-          # REVIEW: not working
-          # click-left = "\"${pkgs.yad}/bin/yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons &\"";
-
-          label = "\"%date% \"";
+          label = "\"%output% \"";
           label-background = "\"${dark}\"";
           label-foreground = "\"${light}\"";
           label-padding-right = "\"1\"";
-
         };
         "module/time" = {
           type = "\"internal/date\"";
