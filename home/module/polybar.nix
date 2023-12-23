@@ -95,10 +95,10 @@ let
     in
     "${script}/bin/sxhkd-mode";
 
-  black = colors.background;
-  white = colors.foreground;
-  primary = colors.black;
-  accent = colors.blue;
+  darkest = colors.background;
+  light = colors.foreground;
+  dark = colors.black;
+  select = colors.blue;
   danger = colors.red;
   warning = colors.yellow;
 in
@@ -144,11 +144,11 @@ in
           # powerline font
           font-2 = "\"CaskaydiaCoveNerdFont:size=20;6\"";
 
-          background = "\"${black}\"";
-          foreground = "\"${white}\"";
+          background = "\"${darkest}\"";
+          foreground = "\"${light}\"";
 
           # modules
-          modules-left = "\"menu menu-l keyboard even-l workspaces toggle tray right\"";
+          modules-left = "\"menu menu-l workspaces even-l toggle tray right\"";
           modules-center = "\"left title right \"";
           modules-right = "\"left filesystem even-r temperature odd-r memory even-r cpu odd-r wired even-r wireless odd-r bluetooth even-r audio odd-r date even-r time menu-r session\"";
           format-radius = "\"32.0\"";
@@ -163,14 +163,14 @@ in
           # move
           hook-0 = "\"\"";
           format-0 = "\" %{T2}󰺮%{T-} Applications\"";
-          format-0-background = "\"${accent}\"";
-          format-0-foreground = "\"${white}\"";
+          format-0-background = "\"${select}\"";
+          format-0-foreground = "\"${light}\"";
           format-0-padding = "\"0\"";
           # resize
           hook-1 = "\"\"";
           format-1 = "\" %{T2}󰺮%{T-} Applications\"";
-          format-1-background = "\"${accent}\"";
-          format-1-foreground = "\"${black}\"";
+          format-1-background = "\"${darkest}\"";
+          format-1-foreground = "\"${danger}\"";
           format-1-padding = "\"0\"";
         };
         "module/session" = {
@@ -179,8 +179,8 @@ in
           click-left = "\"${config.xdg.configHome}/rofi/powermenu/type-1/powermenu.sh\"";
 
           format = "\"${config.home.username} %{T2}󰍃%{T-} \"";
-          format-background = "\"${accent}\"";
-          format-foreground = "\"${white}\"";
+          format-background = "\"${select}\"";
+          format-foreground = "\"${light}\"";
         };
         # "module/mode" = {
         #   type = "\"custom/ipc\"";
@@ -189,50 +189,44 @@ in
         #   # move
         #   hook-0 = "\"\"";
         #   format-0 = "\" %{O-1}%{T2}󰆾%{T-}\"";
-        #   format-0-background = "\"${white}\"";
-        #   format-0-foreground = "\"${primary}\"";
+        #   format-0-background = "\"${light}\"";
+        #   format-0-foreground = "\"${dark}\"";
         #   format-0-padding = "\"0\"";
         #   # resize
         #   hook-1 = "\"\"";
         #   format-1 = "\" %{O1}%{T2}󰁌%{T-}\"";
-        #   format-1-background = "\"${white}\"";
-        #   format-1-foreground = "\"${primary}\"";
+        #   format-1-background = "\"${light}\"";
+        #   format-1-foreground = "\"${dark}\"";
         #   format-1-padding = "\"0\"";
         # };
-        "module/keyboard" = {
-          type = "\"internal/xkeyboard\"";
+        # "module/keyboard" = {
+        #   type = "\"internal/xkeyboard\"";
 
-          # REVIEW: not working
-          # click-left = "\"${pkgs.numlockx}/bin/numlockx toggle &\"";
-          blacklist-0 = "\"caps lock\"";
-          blacklist-1 = "\"scroll lock\"";
+        #   # REVIEW: not working
+        #   # click-left = "\"${pkgs.numlockx}/bin/numlockx toggle &\"";
+        #   blacklist-0 = "\"caps lock\"";
+        #   blacklist-1 = "\"scroll lock\"";
 
-          format-foreground = "\"${primary}\"";
-          format-background = "\"${white}\"";
+        #   format-foreground = "\"${dark}\"";
+        #   format-background = "\"${light}\"";
 
-          # label-indicator-off-capslock = "\" %{T2}󰯫%{T-}\"";
-          # label-indicator-off-capslock-foreground = "\"${primary}\"";
-          # label-indicator-on-capslock = "\" %{T2}󰬈%{T-}\"";
-          # label-indicator-on-capslock-foreground = "\"${primary}\"";
+        #   # label-indicator-off-capslock = "\" %{T2}󰯫%{T-}\"";
+        #   # label-indicator-off-capslock-foreground = "\"${dark}\"";
+        #   # label-indicator-on-capslock = "\" %{T2}󰬈%{T-}\"";
+        #   # label-indicator-on-capslock-foreground = "\"${dark}\"";
 
-          label-indicator-off-numlock = "\"%{T2}󰰒%{T-}\"";
-          label-indicator-off-numlock-foreground = "\"${primary}\"";
-          label-indicator-on-numlock = "\"%{T2}󰬕%{T-}\"";
-          label-indicator-on-numlock-foreground = "\"${primary}\"";
+        #   label-indicator-off-numlock = "\"%{T2}󰰒%{T-}\"";
+        #   label-indicator-off-numlock-foreground = "\"${dark}\"";
+        #   label-indicator-on-numlock = "\"%{T2}󰬕%{T-}\"";
+        #   label-indicator-on-numlock-foreground = "\"${dark}\"";
 
-          # label-indicator-off-scrolllock = "\" %{T2}󰰡%{T-}\"";
-          # label-indicator-off-scrolllock-foreground = "\"${primary}\"";
-          # label-indicator-on-scrolllock = "\" %{T2}󰬚%{T-}\"";
-          # label-indicator-on-scrolllock-foreground = "\"${primary}\"";
-          label-layout = "\"\"";
-          # label-layout-padding = "\"0\"";
-        };
-        "module/mode-keyboard-workspaces" = {
-          type = "\"custom/text\"";
-          label-foreground = "\"${primary}\"";
-          label = "\"%{B${primary}} %{B-}%{O-25}%{T3}%{T-}\"";
-          format = "\"<label>%{O-2}\"";
-        };
+        #   # label-indicator-off-scrolllock = "\" %{T2}󰰡%{T-}\"";
+        #   # label-indicator-off-scrolllock-foreground = "\"${dark}\"";
+        #   # label-indicator-on-scrolllock = "\" %{T2}󰬚%{T-}\"";
+        #   # label-indicator-on-scrolllock-foreground = "\"${dark}\"";
+        #   label-layout = "\"\"";
+        #   # label-layout-padding = "\"0\"";
+        # };
         "module/workspaces" = {
           type = "\"internal/bspwm\"";
 
@@ -244,22 +238,22 @@ in
 
           format = "\"%{O-1}%{T1}%{O2}<label-state>%{T-}\"";
           label-focused = "";
-          label-focused-background = "\"${primary}\"";
-          label-focused-foreground = "\"${white}\"";
+          label-focused-background = "\"${light}\"";
+          label-focused-foreground = "\"${select}\"";
           label-focused-padding = "\"1\"";
 
           label-empty = "\"\"";
-          label-empty-background = "\"${primary}\"";
-          label-empty-foreground = "\"${black}\"";
+          label-empty-background = "\"${light}\"";
+          label-empty-foreground = "\"${dark}\"";
           label-empty-padding = "\"1\"";
 
           label-occupied = "\"\"";
-          label-occupied-background = "\"${primary}\"";
-          label-occupied-foreground = "\"${black}\"";
+          label-occupied-background = "\"${light}\"";
+          label-occupied-foreground = "\"${dark}\"";
           label-occupied-padding = "\"1\"";
 
           label-urgent = "\"\"";
-          label-urgent-background = "\"${primary}\"";
+          label-urgent-background = "\"${light}\"";
           label-urgent-foreground = "\"${warning}\"";
           label-urgent-padding = "\"1\"";
         };
@@ -270,13 +264,13 @@ in
           initial = "\"1\"";
           hook-0 = "\"\"";
           format-0 = "\"%{T2}%{T-}\"";
-          format-0-foreground = "\"${black}\"";
-          format-0-background = "\"${primary}\"";
+          format-0-foreground = "\"${darkest}\"";
+          format-0-background = "\"${dark}\"";
           format-0-padding = "\"1\"";
           hook-1 = "\"\"";
           format-1 = "\"%{T2}%{T-}\"";
-          format-1-foreground = "\"${white}\"";
-          format-1-background = "\"${primary}\"";
+          format-1-foreground = "\"${light}\"";
+          format-1-background = "\"${dark}\"";
           format-1-padding = "\"1\"";
         };
         "module/tray" = {
@@ -284,17 +278,17 @@ in
           tray-spacing = "\"1pt\"";
           tray-padding = "\"1pt\"";
           format = "\"%{O-2}<tray>\"";
-          format-background = "\"${primary}\"";
-          tray-foreground = "\"${white}\"";
-          tray-background = "\"${primary}\"";
+          format-background = "\"${dark}\"";
+          tray-foreground = "\"${light}\"";
+          tray-background = "\"${dark}\"";
           tray-size = "\"66%\"";
         };
         "module/title" = {
           type = "\"internal/xwindow\"";
           label = "\"%title:0:64:...%\"";
-          label-background = "\"${primary}\"";
+          label-background = "\"${dark}\"";
           label-empty = "\"Desktop\"";
-          label-empty-background = "\"${primary}\"";
+          label-empty-background = "\"${dark}\"";
         };
         "module/filesystem" = {
           type = "\"internal/fs\"";
@@ -302,18 +296,18 @@ in
           mount-0 = "\"/\"";
 
           format-mounted = "\"<label-mounted> %{T2}󰋊%{T-} \"";
-          format-mounted-foreground = "\"${white}\"";
-          format-mounted-background = "\"${primary}\"";
+          format-mounted-foreground = "\"${light}\"";
+          format-mounted-background = "\"${dark}\"";
           label-mounted = "\"%free%\"";
 
           format-warn = "\"<label-warn>\"";
-          format-warn-foreground = "\"${white}\"";
-          format-warn-background = "\"${primary}\"";
+          format-warn-foreground = "\"${light}\"";
+          format-warn-background = "\"${dark}\"";
           label-warn = "\"%free%\"";
 
           format-unmounted = "\"<label-unmounted> %{T2}󰋊%{T-} \"";
-          format-unmounted-foreground = "\"${white}\"";
-          format-unmounted-background = "\"${primary}\"";
+          format-unmounted-foreground = "\"${light}\"";
+          format-unmounted-background = "\"${dark}\"";
           label-unmounted = "\"?\"";
         };
         "module/temperature" = {
@@ -330,26 +324,26 @@ in
           ramp-4 = "\"\"";
 
           format = "\"<label> %{T2}<ramp>%{T-} \"";
-          format-foreground = "\"${primary}\"";
-          format-background = "\"${white}\"";
+          format-foreground = "\"${dark}\"";
+          format-background = "\"${light}\"";
           label = "\"%temperature-c%\"";
 
           format-warn = "\"<label-warn> %{T2}<ramp>%{T-} \"";
-          format-warn-foreground = "\"${primary}\"";
-          format-warn-background = "\"${white}\"";
+          format-warn-foreground = "\"${dark}\"";
+          format-warn-background = "\"${light}\"";
           label-warn = "\"%temperature-c%\"";
         };
         "module/memory" = {
           type = "\"internal/memory\"";
 
           format = "\"<label> %{T2}%{T-} \"";
-          format-foreground = "\"${white}\"";
-          format-background = "\"${primary}\"";
+          format-foreground = "\"${light}\"";
+          format-background = "\"${dark}\"";
           label = "\"%percentage_used%%\"";
 
           format-warn = "\"<label> %{T2}%{T-} \"";
-          format-warn-foreground = "\"${white}\"";
-          format-warn-background = "\"${primary}\"";
+          format-warn-foreground = "\"${light}\"";
+          format-warn-background = "\"${dark}\"";
           label-warn = "\"%percentage_used%%\"";
         };
         "module/cpu" = {
@@ -367,12 +361,12 @@ in
           warn-percentage = "\"50\"";
 
           format = "\"<ramp-load> %{T2}%{T-} \"";
-          format-foreground = "\"${primary}\"";
-          format-background = "\"${white}\"";
+          format-foreground = "\"${dark}\"";
+          format-background = "\"${light}\"";
 
           format-warn = "\"%{F${danger}}<ramp-load>%{F${danger}} %{T2}%{T-} \"";
-          format-warn-foreground = "\"${primary}\"";
-          format-warn-background = "\"${white}\"";
+          format-warn-foreground = "\"${dark}\"";
+          format-warn-background = "\"${light}\"";
         };
         "module/wired" = {
           type = "\"internal/network\"";
@@ -380,13 +374,13 @@ in
           interval = "\"10\"";
 
           format-connected = "\"<label-connected>\"";
-          format-connected-foreground = "\"${white}\"";
-          format-connected-background = "\"${primary}\"";
+          format-connected-foreground = "\"${light}\"";
+          format-connected-background = "\"${dark}\"";
           label-connected = "\"%netspeed% %{T2}󰈁%{T-} \"";
 
           format-disconnected = "\"<label-disconnected>\"";
-          format-disconnected-foreground = "\"${white}\"";
-          format-disconnected-background = "\"${primary}\"";
+          format-disconnected-foreground = "\"${light}\"";
+          format-disconnected-background = "\"${dark}\"";
           label-disconnected = "\"off  %{T2}󰈂{T-} \"";
         };
         "module/wireless" = {
@@ -401,13 +395,13 @@ in
           ramp-signal-4 = "\"󰤨\"";
 
           format-connected = "\"<label-connected> %{T2}<ramp-signal>%{T-} \"";
-          format-connected-foreground = "\"${primary}\"";
-          format-connected-background = "\"${white}\"";
+          format-connected-foreground = "\"${dark}\"";
+          format-connected-background = "\"${light}\"";
           label-connected = "\"%signal%%\"";
 
           format-disconnected = "\"<label-disconnected> %{T2}󰤠{T-} \"";
-          format-disconnected-foreground = "\"${primary}\"";
-          format-disconnected-background = "\"${white}\"";
+          format-disconnected-foreground = "\"${dark}\"";
+          format-disconnected-background = "\"${light}\"";
           label-disconnected = "\"off\"";
         };
         "module/bluetooth" = {
@@ -422,13 +416,13 @@ in
           # off
           hook-1 = "\"\"";
           format-1 = "\"%{T2}󰂲%{T-} \"";
-          format-1-foreground = "\"${white}\"";
-          format-1-background = "\"${primary}\"";
+          format-1-foreground = "\"${light}\"";
+          format-1-background = "\"${dark}\"";
           # on
           hook-2 = "\"\"";
           format-2 = "\"%{T2}%{T-} \"";
-          format-2-foreground = "\"${white}\"";
-          format-2-background = "\"${primary}\"";
+          format-2-foreground = "\"${light}\"";
+          format-2-background = "\"${dark}\"";
 
           # TODO: https://github.com/polybar/polybar-scripts/blob/master/polybar-scripts/system-usb-udev/system-usb-udev.sh
         };
@@ -447,14 +441,14 @@ in
 
           # mute
           format-1 = "\"<label> %{T2}󰝟%{T-} \"";
-          format-1-background = "\"${white}\"";
-          format-1-foreground = "\"${primary}\"";
+          format-1-background = "\"${light}\"";
+          format-1-foreground = "\"${dark}\"";
           hook-1 = "\"${pamixer} --get-volume\"";
 
           # low volume
           format-2 = "\"<label> %{T2}󰕾%{T-} \"";
-          format-2-background = "\"${white}\"";
-          format-2-foreground = "\"${primary}\"";
+          format-2-background = "\"${light}\"";
+          format-2-foreground = "\"${dark}\"";
           hook-2 = "\"${pamixer} --get-volume\"";
 
         };
@@ -467,8 +461,8 @@ in
           # click-left = "\"${pkgs.yad}/bin/yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons &\"";
 
           label = "\"%date% \"";
-          label-background = "\"${primary}\"";
-          label-foreground = "\"${white}\"";
+          label-background = "\"${dark}\"";
+          label-foreground = "\"${light}\"";
           label-padding-right = "\"1\"";
 
         };
@@ -478,45 +472,45 @@ in
           time = "\"%H:%M:%S %{T2}󰥔%{T-}\"";
 
           label = "\"%time% \"";
-          format-background = "\"${white}\"";
-          format-foreground = "\"${primary}\"";
+          format-background = "\"${light}\"";
+          format-foreground = "\"${dark}\"";
         };
         "module/menu-r" = {
           type = "\"custom/text\"";
-          label-background = "\"${white}\"";
-          label-foreground = "\"${accent}\"";
+          label-background = "\"${light}\"";
+          label-foreground = "\"${select}\"";
           label = "\"%{T3}%{T-}%{O-1}\"";
         };
         "module/menu-l" = {
           type = "\"custom/text\"";
-          label = "\"%{O-1}%{O1}%{B${white}}%{T3} %{T-}%{B-}%{O-25}%{T3}%{T-}\"";
-          label-foreground = "\"${accent}\"";
+          label = "\"%{O-1}%{O1}%{B${light}}%{T3} %{T-}%{B-}%{O-25}%{T3}%{T-}\"";
+          label-foreground = "\"${select}\"";
         };
         "module/left" = {
           type = "\"custom/text\"";
-          label = "\"%{F${primary}}%{T3}%{T-}%{F-}%{O-12}%{F${black}}%{T3}%{T-}%{F-}%{O-12}%{F${primary}}%{T3}%{T-}%{F-}\"";
+          label = "\"%{F${dark}}%{T3}%{T-}%{F-}%{O-12}%{F${darkest}}%{T3}%{T-}%{F-}%{O-12}%{F${dark}}%{T3}%{T-}%{F-}\"";
           format = "\"<label>%{O-2}\"";
         };
         "module/right" = {
           type = "\"custom/text\"";
-          label = "\"%{O23}%{F${primary}}%{T3}%{T-}%{F-}%{F-}%{O-36}%{F${black}}%{T3}%{T-}%{F-}%{O-36}%{F${primary}}%{T3}%{T-}\"";
+          label = "\"%{O23}%{F${dark}}%{T3}%{T-}%{F-}%{F-}%{O-36}%{F${darkest}}%{T3}%{T-}%{F-}%{O-36}%{F${dark}}%{T3}%{T-}\"";
           format = "\"<label>%{O-2}\"";
         };
         "module/even-l" = {
           type = "\"custom/text\"";
-          label = "\"%{O-1}%{O1}%{B${primary}}%{T3} %{T-}%{B-}%{O-25}%{T3}%{T-}\"";
-          label-foreground = "\"${white}\"";
+          label = "\"%{O-1}%{O1}%{B${dark}}%{T3} %{T-}%{B-}%{O-25}%{T3}%{T-}\"";
+          label-foreground = "\"${light}\"";
         };
         "module/even-r" = {
           type = "\"custom/text\"";
-          label-background = "\"${primary}\"";
-          label-foreground = "\"${white}\"";
+          label-background = "\"${dark}\"";
+          label-foreground = "\"${light}\"";
           label = "\"%{T3}%{T-}%{O-1}\"";
         };
         "module/odd-r" = {
           type = "\"custom/text\"";
-          label-background = "\"${white}\"";
-          label-foreground = "\"${primary}\"";
+          label-background = "\"${light}\"";
+          label-foreground = "\"${dark}\"";
           label = "\"%{T3}%{T-}%{O-1}\"";
         };
       };
