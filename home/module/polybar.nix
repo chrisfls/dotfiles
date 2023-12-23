@@ -156,7 +156,7 @@ in
         "module/menu" = {
           type = "\"custom/ipc\"";
 
-          click-left = "\"rofi -show drun -theme \"${config.xdg.configHome}/rofi/launchers/type-3/style-1.rasi\"\"";
+          click-left = "\"rofi -show drun -theme \\\"${config.module.themes.rofi}\\\"\"";
 
           # startup
           initial = "\"1\"";
