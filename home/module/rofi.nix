@@ -25,7 +25,7 @@ in
   options.module.rofi.enable = lib.mkEnableOption "Enable rofi module";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkg pkgs.hostname pkgs.rofi-calc ];
+    home.packages = [ pkg pkgs.hostname ];
 
     services.sxhkd.keybindings."super + Return" = "rofi -show drun -theme \"${config.xdg.configHome}/rofi/launchers/type-3/style-1.rasi\"";
 
