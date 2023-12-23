@@ -12,12 +12,6 @@ in
 
     xsession.initExtra = "systemctl --user import-environment DESKTOP_SESSION";
 
-    xsession.windowManager.bspwm.startupPrograms = [
-      "systemd-cat -t pcmanfm-qt systemd-run --user --scope --property=OOMPolicy=continue -u pcmanfm-qt ${pkgs.lxqt.pcmanfm-qt}/bin/pcmanfm-qt --desktop"
-      "systemd-cat -t copyq systemd-run --user --scope --property=OOMPolicy=continue -u copyq ${pkgs.copyq}/bin/copyq"
-      "systemd-cat -t nm-tray systemd-run --user --scope --property=OOMPolicy=continue -u nm-tray ${pkgs.nm-tray}/bin/nm-tray"
-    ];
-
     xsession.windowManager.bspwm = {
       enable = true;
       rules = {
