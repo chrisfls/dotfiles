@@ -82,15 +82,16 @@ in
         pkgs.qalculate-qt # calculator
 
         # personal apps
-        pkgs.rclone
         pkgs.anydesk
         pkgs.gimp
         pkgs.logseq
         pkgs.moonlight-qt
         pkgs.parsec-bin
         pkgs.qbittorrent
+        pkgs.rclone
         pkgs.soulseekqt
         pkgs.steam
+        pkgs.telegram-desktop
         pkgs.webcord-vencord
         pkgs.ytui-music # using until audiotube is fixed
 
