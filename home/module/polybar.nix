@@ -86,9 +86,9 @@ let
           cat $SXHKD_FIFO | while read -r line; do
               echo $line
               if [[ $line == *"BBegin chain"* ]]; then
-                  ${polybar-msg} action mode hook 1
+                  ${polybar-msg} action menu hook 1
               elif [[ $line == *"EEnd chain"* ]]; then
-                  ${polybar-msg} action mode hook 0
+                  ${polybar-msg} action menu hook 0
               fi
           done
         '';
@@ -98,7 +98,9 @@ let
   black = colors.background;
   white = colors.foreground;
   primary = colors.black;
-  accent = colors.blueBright;
+  accent = colors.blue;
+  danger = colors.red;
+  warning = colors.yellow;
 in
 {
   options.module.polybar.enable = lib.mkEnableOption "Enable polybar module";
@@ -146,19 +148,30 @@ in
           foreground = "\"${white}\"";
 
           # modules
-          modules-left = "\"menu menu-l mode keyboard even-l workspaces toggle tray right\"";
+          modules-left = "\"menu menu-l keyboard even-l workspaces toggle tray right\"";
           modules-center = "\"left title right \"";
           modules-right = "\"left filesystem even-r temperature odd-r memory even-r cpu odd-r wired even-r wireless odd-r bluetooth even-r audio odd-r date even-r time menu-r session\"";
           format-radius = "\"32.0\"";
         };
         "module/menu" = {
-          type = "\"custom/text\"";
+          type = "\"custom/ipc\"";
 
           click-left = "\"rofi -show drun -theme \"${config.xdg.configHome}/rofi/launchers/type-3/style-1.rasi\"\"";
 
-          format = "\" %{T2}󰺮%{T-} Apps\"";
-          format-background = "\"${accent}\"";
-          format-foreground = "\"${white}\"";
+          # startup
+          initial = "\"1\"";
+          # move
+          hook-0 = "\"\"";
+          format-0 = "\" %{T2}󰺮%{T-} Apps\"";
+          format-0-background = "\"${accent}\"";
+          format-0-foreground = "\"${white}\"";
+          format-0-padding = "\"0\"";
+          # resize
+          hook-1 = "\"\"";
+          format-1 = "\" %{T2}󰺮%{T-} Apps\"";
+          format-1-background = "\"${accent}\"";
+          format-1-foreground = "\"${black}\"";
+          format-1-padding = "\"0\"";
         };
         "module/session" = {
           type = "\"custom/text\"";
@@ -169,23 +182,23 @@ in
           format-background = "\"${accent}\"";
           format-foreground = "\"${white}\"";
         };
-        "module/mode" = {
-          type = "\"custom/ipc\"";
-          # startup
-          initial = "\"1\"";
-          # move
-          hook-0 = "\"\"";
-          format-0 = "\" %{O-1}%{T2}󰆾%{T-}\"";
-          format-0-background = "\"${white}\"";
-          format-0-foreground = "\"${primary}\"";
-          format-0-padding = "\"0\"";
-          # resize
-          hook-1 = "\"\"";
-          format-1 = "\" %{O1}%{T2}󰁌%{T-}\"";
-          format-1-background = "\"${white}\"";
-          format-1-foreground = "\"${primary}\"";
-          format-1-padding = "\"0\"";
-        };
+        # "module/mode" = {
+        #   type = "\"custom/ipc\"";
+        #   # startup
+        #   initial = "\"1\"";
+        #   # move
+        #   hook-0 = "\"\"";
+        #   format-0 = "\" %{O-1}%{T2}󰆾%{T-}\"";
+        #   format-0-background = "\"${white}\"";
+        #   format-0-foreground = "\"${primary}\"";
+        #   format-0-padding = "\"0\"";
+        #   # resize
+        #   hook-1 = "\"\"";
+        #   format-1 = "\" %{O1}%{T2}󰁌%{T-}\"";
+        #   format-1-background = "\"${white}\"";
+        #   format-1-foreground = "\"${primary}\"";
+        #   format-1-padding = "\"0\"";
+        # };
         "module/keyboard" = {
           type = "\"internal/xkeyboard\"";
 
@@ -247,7 +260,7 @@ in
 
           label-urgent = "\"\"";
           label-urgent-background = "\"${primary}\"";
-          label-urgent-foreground = "\"${colors.yellow}\"";
+          label-urgent-foreground = "\"${warning}\"";
           label-urgent-padding = "\"1\"";
         };
         "module/toggle" = {
@@ -357,7 +370,7 @@ in
           format-foreground = "\"${primary}\"";
           format-background = "\"${white}\"";
 
-          format-warn = "\"%{F${colors.red}}<ramp-load>%{F${colors.red}} %{T2}%{T-} \"";
+          format-warn = "\"%{F${danger}}<ramp-load>%{F${danger}} %{T2}%{T-} \"";
           format-warn-foreground = "\"${primary}\"";
           format-warn-background = "\"${white}\"";
         };
