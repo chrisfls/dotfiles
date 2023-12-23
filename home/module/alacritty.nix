@@ -1,11 +1,11 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.extra.alacritty;
+  cfg = config.module.alacritty;
 
-  colors = config.extra.themes.color-scheme;
+  colors = config.module.themes.color-scheme;
 in
 {
-  options.extra.alacritty.enable = lib.mkEnableOption "Enable alacritty module";
+  options.module.alacritty.enable = lib.mkEnableOption "Enable alacritty module";
 
   config = lib.mkIf cfg.enable {
     services.sxhkd.keybindings = {

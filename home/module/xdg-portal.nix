@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.xdg-portal;
+  cfg = config.module.xdg-portal;
 in
 {
-  options.extra.xdg-portal.enable = lib.mkEnableOption "Enable xdg-portal module";
+  options.module.xdg-portal.enable = lib.mkEnableOption "Enable xdg-portal module";
   # TODO: review this
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.lxqt.xdg-desktop-portal-lxqt ];

@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra;
+  cfg = config.module;
   toPath = builtins.toPath;
   entryAfter = lib.hm.dag.entryAfter;
 in
 {
-  options.extra.copyFile = lib.mkOption {
+  options.module.copyFile = lib.mkOption {
     type = lib.types.attrsOf lib.types.path;
     default = { };
   };

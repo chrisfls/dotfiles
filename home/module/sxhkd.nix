@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.sxhkd;
+  cfg = config.module.sxhkd;
 
   move = dir: x: y:
     let
@@ -12,7 +12,7 @@ let
   amount = cfg.amount;
 in
 {
-  options.extra.sxhkd = {
+  options.module.sxhkd = {
     enable = lib.mkEnableOption "Enable sxhkd module";
     amount = lib.mkOption {
       type = lib.types.int;

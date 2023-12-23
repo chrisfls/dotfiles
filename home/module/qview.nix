@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.qview;
+  cfg = config.module.qview;
 
   desktop = "com.interversehq.qView.desktop";
 in
 {
-  options.extra.qview.enable = lib.mkEnableOption "Enable qview module";
+  options.module.qview.enable = lib.mkEnableOption "Enable qview module";
 
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.qview ];

@@ -1,9 +1,9 @@
 { config, inputs, lib, pkgs, ... }:
 let
-  cfg = config.extra.agenix;
+  cfg = config.module.agenix;
 in
 {
-  options.extra.agenix.enable = lib.mkEnableOption "Enable agenix module";
+  options.module.agenix.enable = lib.mkEnableOption "Enable agenix module";
 
   imports = [ inputs.homeage.homeManagerModules.homeage ];
 

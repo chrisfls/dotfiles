@@ -1,13 +1,13 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.extra.shell;
+  cfg = config.module.shell;
 
   bin = "${config.programs.fish.package}/bin/fish";
 
   ssot = specialArgs.ssot;
 in
 {
-  options.extra.shell.enable = lib.mkEnableOption "Enable shell module";
+  options.module.shell.enable = lib.mkEnableOption "Enable shell module";
 
   config = lib.mkIf cfg.enable {
     home.sessionVariables = {
@@ -94,7 +94,7 @@ in
       enableFishIntegration = true;
     };
 
-    extra.micro.enable = true;
+    module.micro.enable = true;
   };
 }
 

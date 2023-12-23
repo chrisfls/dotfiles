@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.browser;
+  cfg = config.module.browser;
 
   browser = "brave-browser.desktop";
 in
 {
-  options.extra.browser.enable = lib.mkEnableOption "Enable browser module";
+  options.module.browser.enable = lib.mkEnableOption "Enable browser module";
 
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.brave ];

@@ -1,8 +1,8 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.extra.polybar;
+  cfg = config.module.polybar;
 
-  colors = config.extra.themes.color-scheme;
+  colors = config.module.themes.color-scheme;
 
   polybar-msg = "${pkgs.polybar}/bin/polybar-msg";
 
@@ -101,7 +101,7 @@ let
   accent = colors.blueBright;
 in
 {
-  options.extra.polybar.enable = lib.mkEnableOption "Enable polybar module";
+  options.module.polybar.enable = lib.mkEnableOption "Enable polybar module";
 
   config = lib.mkIf cfg.enable {
     # HACK: disable polybar service

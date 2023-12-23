@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.rofi;
+  cfg = config.module.rofi;
 
   rofi = pkgs.fetchFromGitHub {
     owner = "kress95";
@@ -9,7 +9,7 @@ let
     sha256 = "sha256-RwFPqZSe/YJBTpAxmdfcsRbpgIYDUba6nqEUT6xy8ZE=";
   };
 
-  dpi = builtins.toString (builtins.floor config.extra.scaling.dpiScaled);
+  dpi = builtins.toString (builtins.floor config.module.scaling.dpiScaled);
 
   pkg = pkgs.symlinkJoin {
     name = "rofi";
@@ -22,7 +22,7 @@ let
   user = config.home.username;
 in
 {
-  options.extra.rofi.enable = lib.mkEnableOption "Enable rofi module";
+  options.module.rofi.enable = lib.mkEnableOption "Enable rofi module";
 
   config = lib.mkIf cfg.enable {
     home.packages = [ pkg pkgs.hostname pkgs.rofi-calc ];

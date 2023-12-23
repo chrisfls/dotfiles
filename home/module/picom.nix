@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.picom;
+  cfg = config.module.picom;
 in
 {
-  options.extra.picom.enable = lib.mkEnableOption "Enable picom module";
+  options.module.picom.enable = lib.mkEnableOption "Enable picom module";
 
   config = lib.mkIf cfg.enable {
     services.picom = {

@@ -140,7 +140,7 @@
       # module configs
       #
 
-      extra = {
+      module = {
         alacritty.enable = true;
         autorandr.enable = true;
         betterlockscreen.enable = true;

@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.extra.scaling;
+  cfg = config.module.scaling;
 
   scale = cfg.scale;
 
@@ -8,7 +8,7 @@ let
   # gdk-dpi-scale = scale / gdk-scale;
 in
 {
-  options.extra.scaling = {
+  options.module.scaling = {
     enable = lib.mkEnableOption "Enable scaling module";
 
     scale = lib.mkOption {

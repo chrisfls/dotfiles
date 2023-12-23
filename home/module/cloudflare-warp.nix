@@ -1,9 +1,9 @@
 { config, inputs, lib, pkgs, ... }:
 let
-  cfg = config.extra.cloudflare-warp;
+  cfg = config.module.cloudflare-warp;
 in
 {
-  options.extra.cloudflare-warp.enable = lib.mkEnableOption "Enable cloudflare-warp module";
+  options.module.cloudflare-warp.enable = lib.mkEnableOption "Enable cloudflare-warp module";
 
   config = lib.mkIf cfg.enable {
     xdg = {

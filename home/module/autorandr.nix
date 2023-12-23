@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.autorandr;
+  cfg = config.module.autorandr;
 in
 {
-  options.extra.autorandr.enable = lib.mkEnableOption "Enable autorandr module";
+  options.module.autorandr.enable = lib.mkEnableOption "Enable autorandr module";
 
   config = lib.mkIf cfg.enable {
     services.autorandr.enable = true;

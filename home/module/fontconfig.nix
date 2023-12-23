@@ -1,15 +1,15 @@
 { config, lib, ... }:
 let
-  cfg = config.extra.fontconfig;
+  cfg = config.module.fontconfig;
 
-  dpi = toString config.extra.scaling.dpiScaled;
+  dpi = toString config.module.scaling.dpiScaled;
 
   toInt = bool: if bool then 1 else 0;
 
   fromBool = bool: if bool then "true" else "false";
 in
 {
-  options.extra.fontconfig = {
+  options.module.fontconfig = {
     enable = lib.mkEnableOption "Enable fontconfig module";
 
     antialias = lib.mkOption {

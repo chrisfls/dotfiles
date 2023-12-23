@@ -1,10 +1,10 @@
 # TODO: configure
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.betterlockscreen;
+  cfg = config.module.betterlockscreen;
 in
 {
-  options.extra.betterlockscreen.enable = lib.mkEnableOption "Enable betterlockscreen module";
+  options.module.betterlockscreen.enable = lib.mkEnableOption "Enable betterlockscreen module";
 
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.betterlockscreen ];

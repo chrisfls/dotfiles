@@ -51,16 +51,16 @@
 ##
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.extra.contour;
+  cfg = config.module.contour;
 
-  scale = config.extra.scaling.scale;
+  scale = config.module.scaling.scale;
 
   theme = specialArgs.color-schemes.popping-and-locking-black;
 
   pkg = pkgs.contour;
 in
 {
-  options.extra.contour.enable = lib.mkEnableOption "Enable contour module";
+  options.module.contour.enable = lib.mkEnableOption "Enable contour module";
 
   config = lib.mkIf cfg.enable {
     home.packages = [ pkg ];

@@ -2,7 +2,7 @@
 {
   imports = [ ../module ];
 
-  extra = {
+  module = {
     shell.enable = true;
     agenix.enable = true;
   };

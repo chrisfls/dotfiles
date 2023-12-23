@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.loopback-toggle;
+  cfg = config.module.loopback-toggle;
 
   amixer =
     "${pkgs.alsa-utils}/bin/amixer";
@@ -27,7 +27,7 @@ let
     '';
 in
 {
-  options.extra.loopback-toggle = {
+  options.module.loopback-toggle = {
     enable = lib.mkEnableOption "Enable loopback-toggle module";
     volume = lib.mkOption {
       type = lib.types.int;

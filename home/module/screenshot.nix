@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.screenshot;
+  cfg = config.module.screenshot;
 
   screenshot-save = pkgs.writeShellScriptBin "screenshot-save"
     ''
@@ -9,7 +9,7 @@ let
       shotgun "$d/$(date +"%H_%M_%S.png")"
     '';
 
-  scale = toString (builtins.ceil config.extra.scaling.scale);
+  scale = toString (builtins.ceil config.module.scaling.scale);
 
   slop = "slop -r guides -b ${scale}";
 
@@ -19,7 +19,7 @@ let
     '';
 in
 {
-  options.extra.screenshot.enable = lib.mkEnableOption "Enable screenshot module";
+  options.module.screenshot.enable = lib.mkEnableOption "Enable screenshot module";
 
   config = lib.mkIf cfg.enable {
     home.packages = [

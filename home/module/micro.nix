@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.micro;
+  cfg = config.module.micro;
 in
 {
-  options.extra.micro.enable = lib.mkEnableOption "Enable micro module";
-  options.extra.micro.desktop = lib.mkEnableOption "Enable micro desktop entry";
+  options.module.micro.enable = lib.mkEnableOption "Enable micro module";
+  options.module.micro.desktop = lib.mkEnableOption "Enable micro desktop entry";
 
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {

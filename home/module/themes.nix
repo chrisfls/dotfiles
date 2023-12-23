@@ -1,8 +1,8 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.extra.themes;
+  cfg = config.module.themes;
 
-  scale = config.extra.scaling.scale;
+  scale = config.module.scaling.scale;
 
   toINI = lib.generators.toINI { };
 
@@ -67,7 +67,7 @@ let
     };
 in
 {
-  options.extra.themes = {
+  options.module.themes = {
     enable = lib.mkEnableOption "Enable themes module";
 
     qt = {

@@ -67,11 +67,11 @@ fi
           "${mod}+Return" = "exec ${menu}";
 
           # screenshot
-          "Print" = "exec ${config.extra.shell.screenshot.cmd}";
-          "Shift+Print" = "exec ${config.extra.shell.screenshot-alt.cmd}";
+          "Print" = "exec ${config.module.shell.screenshot.cmd}";
+          "Shift+Print" = "exec ${config.module.shell.screenshot-alt.cmd}";
 
           # windows compat
-          "${mod}+Shift+s" = "exec ${config.extra.shell.screenshot-alt.cmd}";
+          "${mod}+Shift+s" = "exec ${config.module.shell.screenshot-alt.cmd}";
 
           # WINDOW CONTROLS
           ######## #### ## #

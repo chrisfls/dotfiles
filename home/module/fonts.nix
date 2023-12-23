@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.fonts;
+  cfg = config.module.fonts;
 in
 {
-  options.extra.fonts.enable = lib.mkEnableOption "Enable fonts module";
+  options.module.fonts.enable = lib.mkEnableOption "Enable fonts module";
 
   config = lib.mkIf cfg.enable {
     home.packages = [

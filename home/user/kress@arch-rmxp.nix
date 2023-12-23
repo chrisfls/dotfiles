@@ -14,8 +14,10 @@ in
     ../preset/gamedev.nix
   ];
 
-  extra.cloudflare-warp.enable = true;
-  extra.scaling = { enable = true; scale = 1.5; };
+  module = {
+    cloudflare-warp.enable = true;
+    scaling = { enable = true; scale = 1.5; };
+  };
 
   home.keyboard.layout = "br";
 

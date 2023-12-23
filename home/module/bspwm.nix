@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.extra.bspwm;
+  cfg = config.module.bspwm;
 
-  colors = config.extra.themes.color-scheme;
+  colors = config.module.themes.color-scheme;
 in
 {
-  options.extra.bspwm.enable = lib.mkEnableOption "Enable bspwm module";
+  options.module.bspwm.enable = lib.mkEnableOption "Enable bspwm module";
 
   config = lib.mkIf cfg.enable {
     home.sessionVariables.DESKTOP_SESSION = "bspwm";
