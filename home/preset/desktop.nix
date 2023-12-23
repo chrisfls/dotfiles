@@ -1,12 +1,57 @@
 { config, lib, pkgs, ... }:
+let
+  enable = config.preset.desktop;
+  development = config.preset.development;
+  non-nixos = config.preset.non-nixos;
+in
 {
-  imports = [ ../module ];
+  options.preset.desktop = lib.mkEnableOption "Enable desktop preset";
 
   config = lib.mkMerge [
-    {
-      #
-      # desktop packages
-      #
+    (lib.mkIf enable {
+      module = {
+        alacritty.enable = true;
+        autorandr.enable = true;
+        betterlockscreen.enable = true;
+        browser.enable = true;
+        bspwm.enable = true;
+        dunst.enable = true;
+        fontconfig.enable = true;
+        fonts.enable = true;
+        loopback-toggle.enable = true;
+        picom.enable = true;
+        polybar.enable = true;
+        qview.enable = true;
+        rofi.enable = true;
+        screenshot.enable = true;
+        sxhkd.enable = true;
+        themes.enable = true;
+        micro = { enable = true; desktop = true; };
+      };
+
+      xsession = {
+        enable = true;
+        numlock.enable = true;
+      };
+
+      home.file.".xinitrc" = {
+        executable = true;
+        text =
+          ''
+            #!/bin/sh
+
+            # this is the last if block from /etc/X11/xinit/xinitrc
+            if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+              for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+                [ -x "$f" ] && . "$f"
+              done
+
+              unset f
+            fi
+
+            [[ -f ~/.xsession ]] && . ~/.xsession
+          '';
+      };
 
       home.packages = [
         # cli apps
@@ -55,40 +100,8 @@
         pkgs.libsForQt5.audiotube # not working until https://github.com/NixOS/nixpkgs/issues/228179 and https://github.com/NixOS/nixpkgs/pull/273263 are done
         pkgs.mpv # not configured yet
         pkgs.languagetool # not the actual languagetool app
-        */
+          */
       ];
-
-      #
-      # startx
-      #
-
-      xsession = {
-        enable = true;
-        numlock.enable = true;
-      };
-
-      home.file.".xinitrc" = {
-        executable = true;
-        text =
-          ''
-            #!/bin/sh
-
-            # this is the last if block from /etc/X11/xinit/xinitrc
-            if [ -d /etc/X11/xinit/xinitrc.d ] ; then
-              for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-                [ -x "$f" ] && . "$f"
-              done
-
-              unset f
-            fi
-
-            [[ -f ~/.xsession ]] && . ~/.xsession
-          '';
-      };
-
-      #
-      # config files
-      #
 
       xdg = {
         enable = true;
@@ -135,32 +148,11 @@
 
       services.xsettingsd.enable = true;
       services.udiskie.enable = true;
-
-      #
-      # module configs
-      #
-
-      module = {
-        alacritty.enable = true;
-        autorandr.enable = true;
-        betterlockscreen.enable = true;
-        browser.enable = true;
-        bspwm.enable = true;
-        dunst.enable = true;
-        fontconfig.enable = true;
-        fonts.enable = true;
-        loopback-toggle.enable = true;
-        picom.enable = true;
-        polybar.enable = true;
-        qview.enable = true;
-        rofi.enable = true;
-        screenshot.enable = true;
-        sxhkd.enable = true;
-        themes.enable = true;
-        micro = { enable = true; desktop = true; };
-      };
-    }
-    (lib.mkIf config.targets.genericLinux.enable {
+    })
+    (lib.mkIf (enable && development) {
+      module.codium.enable = true;
+    })
+    (lib.mkIf (enable && non-nixos) {
       home.sessionVariables = {
         LIBGL_DRIVERS_PATH = "/usr/lib/dri";
         LIBVA_DRIVERS_PATH = "/usr/lib/dri";

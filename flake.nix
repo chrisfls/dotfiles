@@ -65,7 +65,11 @@
             system = "x86_64-linux";
             overlays = [ (import ./pkgs) ];
           };
-          modules = [ ./home/user/${ssot.users.arch-rmxp.kress.id}.nix ];
+          modules = [
+            ./home/module
+            ./home/preset
+            ./home/user/${ssot.users.arch-rmxp.kress.id}.nix
+          ];
           extraSpecialArgs = homeSpecialArgs;
         };
       };
