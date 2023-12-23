@@ -26,7 +26,7 @@ in
         shadow-offset-y = -18;
         shadow-opacity = 0.500000;
         shadow-exclude = [
-          "!(class_g = 'Rofi' || class_g = 'Polybar')"
+          "!(class_g = 'Rofi' || class_g = 'Polybar' || class_g = 'Dunst')"
         ];
 
         # border opacity
@@ -44,8 +44,8 @@ in
 
         # rounded corners -------------
         corner-radius = 12;
-        # force round corners for rofi
-        corner-radius-rules = [ "12:class_g = 'Rofi'" ];
+        # force round corners for rofi and Dunst
+        corner-radius-rules = [ "12:class_g = 'Rofi'" "12:class_g = 'Dunst'" ];
         # force straight corners for polybar
         rounded-corners-exclude = [ "class_g = 'Polybar'" ];
 
@@ -56,7 +56,7 @@ in
         blur-background-frame = false;
         blur-strength = 4;
         # only blur rofi and alacritty
-        blur-background-exclude = "!(class_g = 'Rofi' || class_g = 'Alacritty')";
+        blur-background-exclude = "!(class_g = 'Rofi' || class_g = 'Alacritty' || class_g = 'Dunst')";
       };
     };
   };
