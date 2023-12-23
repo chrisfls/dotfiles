@@ -20,7 +20,20 @@ in
         vsync = true;
 
         # disable shadows
-        shadow = false;
+        shadow = true;
+        crop-shadow-to-monitor = true;
+        shadow-offset-x = -18;
+        shadow-offset-y = -18;
+        shadow-opacity = 0.500000;
+        shadow-exclude = [
+          "!(class_g = 'Rofi' || class_g = 'Polybar')"
+        ];
+
+        # border opacity
+        frame-opacity = 0.75;
+
+        # speedup games:
+        # unredir-if-possible = false;
 
         # fade animations -------------
         fade-delta = 8;
