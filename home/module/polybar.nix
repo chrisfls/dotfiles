@@ -162,13 +162,13 @@ in
           initial = "\"1\"";
           # move
           hook-0 = "\"\"";
-          format-0 = "\" %{T2}󰺮%{T-} Apps\"";
+          format-0 = "\" %{T2}󰺮%{T-} Applications\"";
           format-0-background = "\"${accent}\"";
           format-0-foreground = "\"${white}\"";
           format-0-padding = "\"0\"";
           # resize
           hook-1 = "\"\"";
-          format-1 = "\" %{T2}󰺮%{T-} Apps\"";
+          format-1 = "\" %{T2}󰺮%{T-} Applications\"";
           format-1-background = "\"${accent}\"";
           format-1-foreground = "\"${black}\"";
           format-1-padding = "\"0\"";
@@ -243,10 +243,10 @@ in
           occupied-scroll = "\"true\"";
 
           format = "\"%{O-1}%{T1}%{O2}<label-state>%{T-}\"";
-          label-active = "";
-          label-active-background = "\"${primary}\"";
-          label-active-foreground = "\"${white}\"";
-          label-active-padding = "\"1\"";
+          label-focused = "";
+          label-focused-background = "\"${primary}\"";
+          label-focused-foreground = "\"${white}\"";
+          label-focused-padding = "\"1\"";
 
           label-empty = "\"\"";
           label-empty-background = "\"${primary}\"";
@@ -287,7 +287,7 @@ in
           format-background = "\"${primary}\"";
           tray-foreground = "\"${white}\"";
           tray-background = "\"${primary}\"";
-          tray-size = "\"100%\"";
+          tray-size = "\"66%\"";
         };
         "module/title" = {
           type = "\"internal/xwindow\"";
