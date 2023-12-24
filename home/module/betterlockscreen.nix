@@ -1,3 +1,5 @@
+# update cache with
+# $ betterlockscreen -u /home/kress/Pictures/wallpaper/23-12-23.png --fx dim,blur
 { config, lib, pkgs, ... }:
 let
   cfg = config.module.betterlockscreen;
