@@ -5,8 +5,8 @@ let
   settings = pkgs.fetchFromGitHub {
     owner = "kress95";
     repo = "rofi";
-    rev = "1822ef64ef54133b61fd99256d74f55d42f43118";
-    sha256 = "sha256-SOaEJypffYfOVzgIaSbKbl/k1PadvpToZ5r8cvLmga8=";
+    rev = "d62cda366ee335add32bfacf17f38371ebf6e5e4";
+    sha256 = "sha256-AZmMfgQUdVZo7orM2TEYkDkJUbaKi1Oa5UxRoe3ymhY=";
   };
 
   dpi = builtins.toString (builtins.floor config.module.scaling.dpiScaled);
