@@ -4,8 +4,6 @@ let
 
   colors = config.module.themes.color-scheme;
 
-  polybar-msg = "${pkgs.polybar}/bin/polybar-msg";
-
   toggle =
     let
       script = pkgs.writeShellScriptBin "polybar-toggle"
@@ -14,21 +12,19 @@ let
           shift
 
           for arg in "$@"; do
-            ${polybar-msg} action "#$arg.module_toggle"
+            polybar-msg action "#$arg.module_toggle"
           done
 
-          ${polybar-msg} action $fst next
+          polybar-msg action $fst next
         '';
     in
     "${script}/bin/polybar-toggle";
-
-  bluetoothctl = "${pkgs.bluez}/bin/bluetoothctl";
 
   bluetooth =
     let
       script = pkgs.writeShellScriptBin "polybar-bluetooth"
         ''
-          if ${bluetoothctl} show | grep -q "Powered: yes"; then
+          if bluetoothctl show | grep -q "Powered: yes"; then
               hook=2
           else
               hook=1
@@ -36,21 +32,19 @@ let
 
           if [ "$1" = "--toggle" ]; then
               if [ "$hook" = "2" ]; then
-                  ${bluetoothctl} power off
+                  bluetoothctl power off
                   hook=1
               else
-                  ${bluetoothctl} power on
+                  bluetoothctl power on
                   hook=2
               fi
           fi
 
 
-          ${polybar-msg} action bluetooth hook $hook
+          polybar-msg action bluetooth hook $hook
         '';
     in
     "${script}/bin/polybar-bluetooth";
-
-  pamixer = "${pkgs.pamixer}/bin/pamixer";
 
   pipewire =
     let
@@ -58,23 +52,23 @@ let
         ''
           case $1 in
             "--up")
-              ${pamixer} --increase 5
+              pamixer --increase 5
               ;;
             "--down")
-              ${pamixer} --decrease 5  
+              pamixer --decrease 5  
               ;;
             "--mute")
-              ${pamixer} --toggle-mute
+              pamixer --toggle-mute
               ;;
           esac
 
-          if [ "$(${pamixer} --get-volume-human)" = "muted" ]; then
+          if [ "$(pamixer --get-volume-human)" = "muted" ]; then
             hook=1
           else
             hook=2
           fi
 
-          ${polybar-msg} action audio hook $hook
+          polybar-msg action audio hook $hook
         '';
     in
     "${script}/bin/polybar-pipewire";
@@ -86,14 +80,16 @@ let
           cat $SXHKD_FIFO | while read -r line; do
               echo $line
               if [[ $line == *"BBegin chain"* ]]; then
-                  ${polybar-msg} action menu hook 1
+                  polybar-msg action menu hook 1
               elif [[ $line == *"EEnd chain"* ]]; then
-                  ${polybar-msg} action menu hook 0
+                  polybar-msg action menu hook 0
               fi
           done
         '';
     in
     "${script}/bin/sxhkd-mode";
+
+  dollar = "$";
 
   darkest = colors.background;
   light = colors.foreground;
@@ -156,7 +152,7 @@ in
         "module/menu" = {
           type = "\"custom/ipc\"";
 
-          click-left = "\"rofi -show drun -theme \\\"${config.module.themes.rofi}\\\"\"";
+          click-left = "\"rofi-mainmenu\"";
 
           # startup
           initial = "\"1\"";
@@ -176,7 +172,7 @@ in
         "module/session" = {
           type = "\"custom/text\"";
 
-          click-left = "\"${config.xdg.configHome}/rofi/powermenu/type-1/powermenu.sh\"";
+          click-left = "\"rofi-powermenu\"";
 
           format = "\"${config.home.username} %{T2}󰍃%{T-} \"";
           format-background = "\"${select}\"";
@@ -272,7 +268,23 @@ in
           format-1-foreground = "\"${darkest}\"";
           format-1-background = "\"${dark}\"";
           format-1-padding = "\"1\"";
-        };
+        }; /*
+        "module/tray" = {
+          type = "\"custom/ipc\"";
+          scroll-down = "\"${toggle} toggle tray &\"";
+          scroll-up = "\"${toggle} toggle tray &\"";
+          initial = "\"1\"";
+          hook-0 = "\"\"";
+          format-0 = "\"%{T2}%{T-}\"";
+          format-0-foreground = "\"${light}\"";
+          format-0-background = "\"${dark}\"";
+          format-0-padding = "\"1\"";
+          hook-1 = "\"\"";
+          format-1 = "\"%{T2}%{T-}\"";
+          format-1-foreground = "\"${darkest}\"";
+          format-1-background = "\"${dark}\"";
+          format-1-padding = "\"1\"";
+        };*/
         "module/tray" = {
           type = "\"internal/tray\"";
           hidden = "\"true\"";
@@ -444,13 +456,13 @@ in
           format-1 = "\"<label> %{T2}󰝟%{T-} \"";
           format-1-background = "\"${light}\"";
           format-1-foreground = "\"${dark}\"";
-          hook-1 = "\"${pamixer} --get-volume\"";
+          hook-1 = "\"pamixer --get-volume\"";
 
           # low volume
           format-2 = "\"<label> %{T2}󰕾%{T-} \"";
           format-2-background = "\"${light}\"";
           format-2-foreground = "\"${dark}\"";
-          hook-2 = "\"${pamixer} --get-volume\"";
+          hook-2 = "\"pamixer --get-volume\"";
 
         };
         # TODO: replace with custom module to support calendar
