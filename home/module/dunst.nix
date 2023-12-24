@@ -12,7 +12,7 @@ in
     systemd.user.services.dunst = lib.mkForce { };
 
     xsession.windowManager.bspwm.startupPrograms = [
-      "systemd-cat -t dunst systemd-run --user --scope --property=OOMPolicy=continue -u dunst \"${pkgs.dunst}/bin/dunst -config ${config.services.dunst.configFile}\""
+      "systemd-cat -t dunst systemd-run --user --scope --property=OOMPolicy=continue -u dunst ${pkgs.dunst}/bin/dunst -config ${config.services.dunst.configFile}"
     ];
 
     services.dunst = {
