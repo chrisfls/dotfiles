@@ -2,20 +2,27 @@
 let
   cfg = config.module.screenshot;
 
+  scale = toString (builtins.ceil config.module.scaling.scale);
+
+  shotgun = "${pkgs.shotgun}/bin/shotgun"; # or pkgs.maim
+  slop = "${pkgs.slop}/bin/slop"; # or pkgs.hacksaw
+  xclip = "${pkgs.xclip}/bin/xclip";
+
+  screenshot-copy = pkgs.writeShellScriptBin "screenshot-copy"
+    ''
+      ${shotgun} - | ${xclip} -t 'image/png' -selection clipboard
+    '';
+
+  screenshot-copy-area = pkgs.writeShellScriptBin "screenshot-copy-area"
+    ''
+      ${shotgun} -g "$(${slop} -r guides -b ${scale})" - | ${xclip} -t 'image/png' -selection clipboard
+    '';
+
   screenshot-save = pkgs.writeShellScriptBin "screenshot-save"
     ''
       d="$XDG_PICTURES_DIR/Screenshots/$(date +"%Y-%m-%d")"
       mkdir -p "$d"
-      shotgun "$d/$(date +"%H_%M_%S.png")"
-    '';
-
-  scale = toString (builtins.ceil config.module.scaling.scale);
-
-  slop = "slop -r guides -b ${scale}";
-
-  screenshot-area = pkgs.writeShellScriptBin "screenshot-area"
-    ''
-      shotgun -g "$(${slop})" - | xclip -t 'image/png' -selection clipboard
+      ${shotgun} "$d/$(date +"%H_%M_%S.png")"
     '';
 in
 {
@@ -23,9 +30,9 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = [
-      pkgs.shotgun # or pkgs.maim
-      pkgs.slop # or pkgs.hacksaw
-      pkgs.xclip
+      screenshot-copy
+      screenshot-copy-area
+      screenshot-save
     ];
 
     xdg = {
@@ -99,13 +106,9 @@ in
     };
 
     services.sxhkd.keybindings = {
-      "Print" = "shotgun - | xclip -t 'image/png' -selection clipboard";
-
-      "shift + Print" =
-        "${screenshot-save}/bin/screenshot-save";
-
-      "super + shift + s" =
-        "${screenshot-area}/bin/screenshot-area";
+      "Print" = "screenshot-copy";
+      "super + shift + s" = "screenshot-copy-area";
+      "shift + Print" = "screenshot-save";
     };
   };
 }
