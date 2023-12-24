@@ -40,7 +40,6 @@ let
               fi
           fi
 
-
           polybar-msg action bluetooth hook $hook
         '';
     in
@@ -88,6 +87,16 @@ let
         '';
     in
     "${script}/bin/sxhkd-mode";
+
+  dunst-toggle = 
+    let
+      script = pkgs.writeShellScriptBin "dunst-toggle"
+        ''
+          dunstctl set-paused toggle
+          polybar-msg action notifications next
+        '';
+    in
+    "${script}/bin/dunst-toggle";
 
   dollar = "$";
 
@@ -144,7 +153,7 @@ in
           foreground = "\"${light}\"";
 
           # modules
-          modules-left = "\"menu menu-l workspaces even-l toggle tray right\"";
+          modules-left = "\"menu menu-l workspaces even-l toggle notifications tray right\"";
           modules-center = "\"left title right \"";
           modules-right = "\"left filesystem even-r temperature odd-r memory even-r cpu odd-r wired even-r wireless odd-r bluetooth even-r audio odd-r date even-r time menu-r session\"";
           format-radius = "\"32.0\"";
@@ -232,7 +241,7 @@ in
           fuzzy-match = "\"false\"";
           occupied-scroll = "\"true\"";
 
-          format = "\"%{O-1}%{T1}%{O2}<label-state>%{T-}\"";
+          format = "\"%{O-1}%{T1}%{O2}<label-state>%{T-}%{O-12}\"";
           label-focused = "";
           label-focused-background = "\"${light}\"";
           label-focused-foreground = "\"${select}\"";
@@ -255,8 +264,9 @@ in
         };
         "module/toggle" = {
           type = "\"custom/ipc\"";
-          scroll-down = "\"${toggle} toggle tray &\"";
-          scroll-up = "\"${toggle} toggle tray &\"";
+          click-left = "\"${toggle} toggle notifications tray &\"";
+          scroll-down = "\"${toggle} toggle notifications tray &\"";
+          scroll-up = "\"${toggle} toggle notifications tray &\"";
           initial = "\"1\"";
           hook-0 = "\"\"";
           format-0 = "\"%{T2}%{T-}\"";
@@ -268,23 +278,27 @@ in
           format-1-foreground = "\"${darkest}\"";
           format-1-background = "\"${dark}\"";
           format-1-padding = "\"1\"";
-        }; /*
-        "module/tray" = {
+        };
+        "module/notifications" = {
           type = "\"custom/ipc\"";
-          scroll-down = "\"${toggle} toggle tray &\"";
-          scroll-up = "\"${toggle} toggle tray &\"";
+          hidden = "\"true\"";
+          click-left = "\"${dunst-toggle} &\"";
+          click-right = "\"rofi-dunst &\"";
+          scroll-down = "\"dunstctl history-pop &\"";
+          scroll-up = "\"dunstctl close &\"";
           initial = "\"1\"";
           hook-0 = "\"\"";
-          format-0 = "\"%{T2}%{T-}\"";
+          format-0 = "\"%{O-12}%{T2}%{T-}\"";
           format-0-foreground = "\"${light}\"";
           format-0-background = "\"${dark}\"";
           format-0-padding = "\"1\"";
           hook-1 = "\"\"";
-          format-1 = "\"%{T2}%{T-}\"";
-          format-1-foreground = "\"${darkest}\"";
+          format-1 = "\"%{O-12}%{T2}%{T-}\"";
+          format-1-foreground = "\"${light}\"";
+          
           format-1-background = "\"${dark}\"";
           format-1-padding = "\"1\"";
-        };*/
+        };
         "module/tray" = {
           type = "\"internal/tray\"";
           hidden = "\"true\"";
@@ -294,7 +308,7 @@ in
           format-background = "\"${dark}\"";
           tray-foreground = "\"${light}\"";
           tray-background = "\"${dark}\"";
-          tray-size = "\"66%\"";
+          tray-size = "\"75%\"";
         };
         "module/title" = {
           type = "\"internal/xwindow\"";
