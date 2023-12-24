@@ -2,22 +2,81 @@
 let
   cfg = config.module.rofi;
 
-  rofi = pkgs.fetchFromGitHub {
+  settings = pkgs.fetchFromGitHub {
     owner = "kress95";
     repo = "rofi";
-    rev = "896d5dea410618701bf6c5d81a804e213a08b571";
-    sha256 = "sha256-RwFPqZSe/YJBTpAxmdfcsRbpgIYDUba6nqEUT6xy8ZE=";
+    rev = "1822ef64ef54133b61fd99256d74f55d42f43118";
+    sha256 = "sha256-SOaEJypffYfOVzgIaSbKbl/k1PadvpToZ5r8cvLmga8=";
   };
 
   dpi = builtins.toString (builtins.floor config.module.scaling.dpiScaled);
 
-  pkg = pkgs.symlinkJoin {
-    name = "rofi";
-    paths = [
-      (pkgs.writeShellScriptBin "rofi" "${pkgs.rofi}/bin/rofi -dpi ${dpi} $@")
-      pkgs.rofi
-    ];
-  };
+  pkg =
+    let
+      pkg = pkgs.rofi.override { plugins = [ pkgs.rofi-calc ]; };
+    in
+    pkgs.symlinkJoin {
+      name = "rofi";
+      paths = [
+        (pkgs.writeShellScriptBin "rofi" "${pkg}/bin/rofi -dpi ${dpi} \"$@\"")
+        pkg
+      ];
+    };
+
+  # rofi calculator
+  rofi-calc = pkgs.writeShellScriptBin "rofi-calc"
+    ''
+      out=$(
+      rofi -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi" \
+        -show calc -modi calc -no-show-match -no-sort \
+        -calc-command "echo -n '{result}'"
+      )
+      if [[ -n $out ]]; then
+        echo -n $out | xclip -sel c
+      fi
+    '';
+
+  dollar = "$";
+
+  # rofi notifications menu
+  rofi-dunst = pkgs.writeShellScriptBin "rofi-dunst"
+    ''
+      history=$(dunstctl history | jq -r .data[][])
+      ids=($(echo $history | jq -r .id.data))
+      summaries=("$(echo $history | jq -r .summary.data)" "󰃢 Clear All")
+      selected=$(
+        printf "%s\n" "${dollar}{summaries[@]}" | grep -v '^$' \
+          | rofi -dmenu -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi" -format i -p " "
+      )
+      if [[ -n $selected ]]; then
+        if [[ $selected -lt ${dollar}{#summaries[@]} ]]; then
+          dunstctl history-pop "${dollar}{ids[$selected]}"
+        else
+          for id in "${dollar}{ids[@]}"; do
+            dunstctl history-rm "$id"
+          done
+        fi
+      fi
+    '';
+
+  # polybar main menu
+  rofi-mainmenu = pkgs.writeShellScriptBin "rofi-mainmenu"
+    "rofi -show drun -theme \"${config.module.themes.rofi}\"";
+
+  # polybar session menu
+  rofi-powermenu = pkgs.writeShellScriptBin "rofi-powermenu" "${config.xdg.configHome}/rofi/powermenu/type-1/powermenu.sh";
+
+  # rofi run menu
+  rofi-run = pkgs.writeShellScriptBin "rofi-run"
+    ''
+      rofi -show run -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi"
+    '';
+
+  # rofi windows menu
+  rofi-windows = pkgs.writeShellScriptBin "rofi-windows"
+    ''
+      rofi -show window -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi"
+    '';
 
   user = config.home.username;
 in
@@ -25,17 +84,26 @@ in
   options.module.rofi.enable = lib.mkEnableOption "Enable rofi module";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkg pkgs.hostname ];
+    home.packages = [
+      pkg
+      pkgs.hostname
+      rofi-calc
+      rofi-dunst
+      rofi-mainmenu
+      rofi-powermenu
+      rofi-run
+      rofi-windows
+    ];
 
-    services.sxhkd.keybindings."super + Return" = "rofi -show drun -theme \"${config.module.themes.rofi}\"";
+    services.sxhkd.keybindings."super + Return" = "rofi-mainmenu";
 
     xdg.dataFile = {
-      "fonts/GrapeNuts-Regular.ttf".source = "${rofi}/fonts/GrapeNuts-Regular.ttf";
-      "fonts/Icomoon-Feather.ttf".source = "${rofi}/fonts/Icomoon-Feather.ttf";
-      # "fonts/Iosevka-Nerd-Font-Complete.ttf".source = "${rofi}/fonts/Iosevka-Nerd-Font-Complete.ttf";
-      # "fonts/JetBrains-Mono-Nerd-Font-Complete.ttf".source = "${rofi}/fonts/JetBrains-Mono-Nerd-Font-Complete.ttf";
+      "fonts/GrapeNuts-Regular.ttf".source = "${settings}/fonts/GrapeNuts-Regular.ttf";
+      "fonts/Icomoon-Feather.ttf".source = "${settings}/fonts/Icomoon-Feather.ttf";
+      "fonts/Iosevka-Nerd-Font-Complete.ttf".source = "${settings}/fonts/Iosevka-Nerd-Font-Complete.ttf";
+      "fonts/JetBrains-Mono-Nerd-Font-Complete.ttf".source = "${settings}/fonts/JetBrains-Mono-Nerd-Font-Complete.ttf";
     };
 
-    xdg.configFile."rofi".source = "${rofi}/files";
+    xdg.configFile."rofi".source = "${settings}/files";
   };
 }
