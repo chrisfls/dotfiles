@@ -257,7 +257,7 @@ in
           label-occupied-foreground = "\"${dark}\"";
           label-occupied-padding = "\"1\"";
 
-          label-urgent = "\"\"";
+          label-urgent = "\"\"";
           label-urgent-background = "\"${light}\"";
           label-urgent-foreground = "\"${warning}\"";
           label-urgent-padding = "\"1\"";
