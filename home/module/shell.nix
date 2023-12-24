@@ -10,6 +10,10 @@ in
   options.module.shell.enable = lib.mkEnableOption "Enable shell module";
 
   config = lib.mkIf cfg.enable {
+    home.packages = [
+      pkgs.jq
+    ];
+
     home.sessionVariables = {
       EDITOR = "micro";
       TERM = "xterm-256color";
