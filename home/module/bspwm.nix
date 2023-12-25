@@ -14,6 +14,14 @@ in
 
     xsession.windowManager.bspwm = {
       enable = true;
+      package = pkgs.bspwm.overrideAttrs (old: {
+        src = pkgs.fetchFromGitHub {
+          owner = "baskerville";
+          repo = "bspwm";
+          rev = "af3bd8b4351f4478fe0fe3cfd6c09e44cb108b4b";
+          hash = "sha256-O4Qwdjb3p6jw8Qtcd4zGZ57cB3oCCbPZcjUQtWbyC7Y=";
+        };
+      });
       rules = {
         "Yad".floating = true;
         "copyq" = {
