@@ -1,15 +1,14 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (builtins) toString concatStringsSep attrNames attrValues map filter;
+  inherit (builtins) attrNames concatStringsSep filter map toString;
   inherit (lib.attrsets) mapAttrs';
+  inherit (lib.strings) splitString removePrefix removeSuffix;
   inherit (lib.trivial) pipe;
   inherit (lib) types isAttrs;
-  inherit (lib.strings) splitString removePrefix removeSuffix;
 
   cfg = config.module.sxhkd;
 
   xdotool = "${pkgs.xdotool}/bin/xdotool";
-
 
   bspc-focus = pkgs.writeShellScriptBin "bspc-focus"
     ''
@@ -74,21 +73,9 @@ let
   /*
 
     default = {
-    # MISC
-    ######## #### ## #
-
-    # reload config
-    "super + Escape" = "pkill -USR1 -x sxhkd";
-
-    # restart / quit
-    "super + shift + {r, q}" = "bspc {wm -r,quit}";
 
     # WINDOW CONTROLS
     ######## #### ## #
-
-    # close / kill
-    "super + {_,shift +} c" =
-      "bspc node -{c,k}";
 
     # toggle tiled / monocle / fullscreen
     "super + {_,shift +} m" =
@@ -171,24 +158,7 @@ let
 
   */
 
-  amount = toString amount;
-
-  trim = str:
-    let
-      str' = pipe str [ (removeSuffix " ") (removePrefix " ") ];
-    in
-    if str == str' then
-      str
-    else
-      trim str';
-
-  format = str:
-    pipe str [
-      (splitString "\n")
-      (map trim)
-      (filter (str: str != ""))
-      (concatStringsSep " \\\n    ")
-    ];
+  amount = toString cfg.amount;
 in
 {
   options.module.sxhkd = {
@@ -199,81 +169,86 @@ in
     };
     keybindings = lib.mkOption {
       type = types.attrsOf (types.oneOf [ types.str (types.attrsOf types.str) ]);
-      default = rec {
-        self = {
-          # MISC
-          ######## #### ## #
+      default = {
+        # MISC
+        ######## #### ## #
 
-          # reload sxhkd configs
-          "super + Escape" = "pkill -USR1 -x sxhkd";
+        # reload sxhkd configs
+        "super + Escape" = "pkill -USR1 -x sxhkd";
 
-          # panic restart bspwm
-          "super + shift + r" = "bspc wm -r";
+        # panic restart bspwm
+        "super + shift + r" = "bspc wm -r";
 
-          # panic quit bspwm
-          "super + shift + q" = "bspc quit";
+        # panic quit bspwm
+        "super + shift + q" = "bspc quit";
 
-          # WINDOW CONTROLS
-          ######## #### ## #
+        # WINDOW CONTROLS
+        ######## #### ## #
 
-          # close app
-          "super + c" = "bspc node -c";
+        # close app
+        "super + c" = "bspc node -c";
 
-          # kill app
-          "super + shift + c" = "bspc node -k";
+        # kill app
+        "super + shift + c" = "bspc node -k";
 
-          # toggle tiled state
-          "super + s" = "bspc node -t ~tiled";
+        # toggle tiled state
+        "super + s" = "bspc node -t ~tiled";
 
-          # RESIZE
-          ######## #### ## #
+        # RESIZE
+        ######## #### ## #
+        "super + r" =
+          let
+            left = "bspc-resize-x -${amount}";
+            down = "bspc-resize-y ${amount}";
+            up = "bspc-resize-y -${amount}";
+            right = "bspc-resize-x ${amount}";
+            escape = "${xdotool} key Escape";
+          in
+          {
+            "Left" = left;
+            "h" = left;
 
-          "super + r" = {
-            "Left" = "bspc-resize-x -${amount}";
-            "h" = self."super + r".Left;
+            "Down" = down;
+            "j" = down;
 
-            "Down" = "bspc-resize-y ${amount}";
-            "j" = self."super + r".Down;
+            "Up" = up;
+            "k" = up;
 
-            "Up" = "bspc-resize-y -${amount}";
-            "k" = self."super + r".Up;
+            "Right" = right;
+            "l" = right;
 
-            "Right" = "bspc-resize-x ${amount}";
-            "l" = self."super + r".Right;
-
-            "r" = "${xdotool} key Escape";
-            "space" = self."super + r".r;
-            "Return" = self."super + r".r;
+            "r" = escape;
+            "space" = escape;
+            "Return" = escape;
           };
 
-          # WORKSPACES
-          ######## #### ## #
+        # WORKSPACES
+        ######## #### ## #
 
-          # focus
-          "super + 1" = "bspc desktop -f '^1'";
-          "super + 2" = "bspc desktop -f '^2'";
-          "super + 3" = "bspc desktop -f '^3'";
-          "super + 4" = "bspc desktop -f '^4'";
-          "super + 5" = "bspc desktop -f '^5'";
-          "super + 6" = "bspc desktop -f '^6'";
-          "super + 7" = "bspc desktop -f '^7'";
-          "super + 8" = "bspc desktop -f '^8'";
-          "super + 9" = "bspc desktop -f '^9'";
-          "super + 0" = "bspc desktop -f '^10'";
+        # focus
+        "super + 1" = "bspc desktop -f '^1'";
+        "super + 2" = "bspc desktop -f '^2'";
+        "super + 3" = "bspc desktop -f '^3'";
+        "super + 4" = "bspc desktop -f '^4'";
+        "super + 5" = "bspc desktop -f '^5'";
+        "super + 6" = "bspc desktop -f '^6'";
+        "super + 7" = "bspc desktop -f '^7'";
+        "super + 8" = "bspc desktop -f '^8'";
+        "super + 9" = "bspc desktop -f '^9'";
+        "super + 0" = "bspc desktop -f '^10'";
 
-          # move
-          "super + shift + 1" = "bspc node -d '^1'";
-          "super + shift + 2" = "bspc node -d '^2'";
-          "super + shift + 3" = "bspc node -d '^3'";
-          "super + shift + 4" = "bspc node -d '^4'";
-          "super + shift + 5" = "bspc node -d '^5'";
-          "super + shift + 6" = "bspc node -d '^6'";
-          "super + shift + 7" = "bspc node -d '^7'";
-          "super + shift + 8" = "bspc node -d '^8'";
-          "super + shift + 9" = "bspc node -d '^9'";
-          "super + shift + 0" = "bspc node -d '^10'";
-        };
-      }.self;
+        # move
+        "super + shift + 1" = "bspc node -d '^1'";
+        "super + shift + 2" = "bspc node -d '^2'";
+        "super + shift + 3" = "bspc node -d '^3'";
+        "super + shift + 4" = "bspc node -d '^4'";
+        "super + shift + 5" = "bspc node -d '^5'";
+        "super + shift + 6" = "bspc node -d '^6'";
+        "super + shift + 7" = "bspc node -d '^7'";
+        "super + shift + 8" = "bspc node -d '^8'";
+        "super + shift + 9" = "bspc node -d '^9'";
+        "super + shift + 0" = "bspc node -d '^10'";
+      };
     };
   };
 
@@ -301,17 +276,31 @@ in
       enable = true;
       extraOptions = [ "-s $SXHKD_FIFO" ];
       keybindings =
+        let
+          trim = str:
+            let
+              str' = (removePrefix " " (removeSuffix " " str));
+            in
+            if str == str' then
+              str
+            else
+              trim str';
+
+          format = str:
+            pipe str [
+              (splitString "\n")
+              (map trim)
+              (filter (str: str != ""))
+              (concatStringsSep " \\\n    ")
+            ];
+        in
         mapAttrs'
           (name: value:
             if isAttrs value then
+              let names = attrNames value; in
               {
-                name = "${name} : {${concatStringsSep "," (attrNames value)}}";
-                value = pipe value [
-                  attrValues
-                  (map format)
-                  (concatStringsSep "\n  , ")
-                  (str: "{ ${str}\n  }\n")
-                ];
+                name = "${name} : {${concatStringsSep "," names}}";
+                value = "{ ${concatStringsSep "\n  , " (map format names)}\n  }\n";
               }
 
             else
