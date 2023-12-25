@@ -1,23 +1,33 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (builtins) attrNames concatStringsSep filter map toString;
-  inherit (lib.attrsets) mapAttrs';
-  inherit (lib.strings) splitString removePrefix removeSuffix;
-  inherit (lib.trivial) pipe;
-  inherit (lib) types isAttrs;
+  inherit (builtins)
+    attrNames
+    attrValues
+    concatStringsSep
+    filter
+    map
+    throw
+    toString;
+
+  inherit (lib.attrsets)
+    mapAttrs';
+
+  inherit (lib.strings)
+    splitString
+    removePrefix
+    removeSuffix;
+
+  inherit (lib.trivial)
+    pipe;
+
+  inherit (lib)
+    types
+    isAttrs;
 
   cfg = config.module.sxhkd;
 
   xdotool = "${pkgs.xdotool}/bin/xdotool";
 
-  bspc-focus = pkgs.writeShellScriptBin "bspc-focus"
-    ''
-      if bspc query -N -n "focused.floating" > /dev/null; then
-        bspc node '.floating' -f $1
-      else
-        bspc node '.!floating' -f $1
-      fi
-    '';
 
   bspc-resize-x = pkgs.writeShellScriptBin "bspc-resize-x"
     ''
@@ -43,23 +53,6 @@ let
       bspc node -z bottom $val 0
     '';
 
-  bspc-move-x = pkgs.writeShellScriptBin "bspc-move-x"
-    ''
-      if [ $1 -gt 0 ]; then
-          bspc node --move $1 0 || bspc node --swap west
-      else
-          bspc node --move $1 0 || bspc node --swap east
-      fi
-    '';
-
-  bspc-move-y = pkgs.writeShellScriptBin "bspc-move-y"
-    ''
-      if [ $1 -gt 0 ]; then
-          bspc node --move 0 $1 || bspc node --swap north
-      else
-          bspc node --move 0 $1 || bspc node --swap south
-      fi
-    '';
 
   bspc-toggle-focus = pkgs.writeShellScriptBin "bspc-toggle-focus"
     ''
@@ -82,8 +75,6 @@ let
       "bspc {desktop -l next,node -t fullscreen}";
 
     # tiled / pseudo tiled
-    "super + s" =
-      "bspc node -t ~tiled";
     "super + p" =
       "bspc node -t ~pseudo_tiled";
 
@@ -158,7 +149,54 @@ let
 
   */
 
-  amount = toString cfg.amount;
+  amount =
+    toString cfg.amount;
+
+  focus = direction:
+    ''
+      bspc node 'focused.!floating' -f '${direction}.!floating'
+      ||
+      bspc node 'focused.floating' -f '${direction}.floating'
+    '';
+
+  move = direction:
+    let
+      prefix = "bspc node 'focused.!floating' --swap ${direction} ||";
+    in
+    if direction == "west" then
+      "${prefix} bspc node 'focused.floating' --move -${amount} 0"
+    else if direction == "south" then
+      "${prefix} bspc node 'focused.floating' --move 0 ${amount}"
+
+    else if direction == "north" then
+      "${prefix} bspc node 'focused.floating' --move 0 -${amount}"
+
+    else if direction == "east" then
+      "${prefix} bspc node 'focused.floating' --move ${amount} 0"
+
+    else
+      builtins.throw "Invalid move direction";
+
+  resize = vertical: grow:
+    let
+      dir = if vertical then "top" else "left";
+      dir' = if vertical then "bottom" else "right";
+
+      amount = value:
+        let value' = toString (builtins.ceil value); in
+        if vertical then "0 ${value'}" else "${value'} 0";
+
+      n = if grow then (cfg.amount * -1) else cfg.amount;
+    in
+    ''
+      bspc node 'focused.!floating' -z ${dir} ${amount n}
+      ||
+      bspc node 'focused.!floating' -z ${dir'} ${amount (n * -1)}
+      ||
+      bspc node 'focused.floating' -z ${dir} ${amount (n / 2)}
+      ||
+      bspc node 'focused.floating' -z ${dir'} ${amount (n / -2)}
+    '';
 in
 {
   options.module.sxhkd = {
@@ -192,34 +230,58 @@ in
         "super + shift + c" = "bspc node -k";
 
         # toggle tiled state
-        "super + s" = "bspc node -t ~tiled";
+        "super + f" = "bspc node -t ~tiled";
+
+        # WINDOWING
+        ######## #### ## #
+
+        # focus with vim keys
+        "super + h" = focus "west";
+        "super + j" = focus "south";
+        "super + k" = focus "north";
+        "super + l" = focus "east";
+
+        # focus with arrow keys
+        "super + Left" = focus "west";
+        "super + Down" = focus "south";
+        "super + Up" = focus "north";
+        "super + Right" = focus "east";
+
+        # move with vim keys
+        "super + shift + h" = move "west";
+        "super + shift + j" = move "south";
+        "super + shift + k" = move "north";
+        "super + shift + l" = move "east";
+
+        # move with arrow keys
+        "super + shift + Left" = move "west";
+        "super + shift + Down" = move "south";
+        "super + shift + Up" = move "north";
+        "super + shift + Right" = move "east";
 
         # RESIZE
         ######## #### ## #
-        "super + r" =
+
+        "super + r :" =
           let
-            left = "bspc-resize-x -${amount}";
-            down = "bspc-resize-y ${amount}";
-            up = "bspc-resize-y -${amount}";
-            right = "bspc-resize-x ${amount}";
             escape = "${xdotool} key Escape";
           in
           {
-            "Left" = left;
-            "h" = left;
+            "Left" = resize false false;
+            "h" = resize false false;
 
-            "Down" = down;
-            "j" = down;
+            "Down" = resize true true;
+            "j" = resize true true;
 
-            "Up" = up;
-            "k" = up;
+            "Up" = resize true false;
+            "k" = resize true false;
 
-            "Right" = right;
-            "l" = right;
+            "Right" = resize false true;
+            "l" = resize false true;
 
-            "r" = escape;
-            "space" = escape;
-            "Return" = escape;
+            # "r" = escape;
+            #"space" = escape;
+            #"Return" = escape;
           };
 
         # WORKSPACES
@@ -300,16 +362,19 @@ in
               (splitString "\n")
               (map trim)
               (filter (str: str != ""))
-              (concatStringsSep " \\\n    ")
+              (concatStringsSep " ")
             ];
         in
         mapAttrs'
           (name: value:
             if isAttrs value then
-              let names = attrNames value; in
+              let
+                names = attrNames value;
+                values = attrValues value;
+              in
               {
-                name = "${name} : {${concatStringsSep "," names}}";
-                value = "{ ${concatStringsSep "\n  , " (map format names)}\n  }\n";
+                name = "${name} {${concatStringsSep ", " names}}";
+                value = "{ ${concatStringsSep " , " (map format values)} }";
               }
 
             else
