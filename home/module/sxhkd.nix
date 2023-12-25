@@ -1,27 +1,291 @@
 { config, lib, pkgs, ... }:
 let
+  inherit (builtins) toString concatStringsSep attrNames attrValues map filter;
+  inherit (lib.attrsets) mapAttrs';
+  inherit (lib.trivial) pipe;
+  inherit (lib) types isAttrs;
+  inherit (lib.strings) splitString removePrefix removeSuffix;
+
   cfg = config.module.sxhkd;
 
-  move = dir: x: y:
-    let
-      dx = toString x;
-      dy = toString y;
-    in
-    "bspc node --move ${dx} ${dy} || bspc node --swap ${dir}";
+  xdotool = "${pkgs.xdotool}/bin/xdotool";
 
-  amount = cfg.amount;
+
+  bspc-focus = pkgs.writeShellScriptBin "bspc-focus"
+    ''
+      if bspc query -N -n "focused.floating" > /dev/null; then
+        bspc node '.floating' -f $1
+      else
+        bspc node '.!floating' -f $1
+      fi
+    '';
+
+  bspc-resize-x = pkgs.writeShellScriptBin "bspc-resize-x"
+    ''
+      if bspc query -N -n "focused.floating" > /dev/null; then
+        val=$(($1 / 2))
+      else
+        val=$1
+      fi
+
+      bspc node -z left $(($val * -1)) 0
+      bspc node -z right $val 0
+    '';
+
+  bspc-resize-y = pkgs.writeShellScriptBin "bspc-resize-y"
+    ''
+      if bspc query -N -n "focused.floating" > /dev/null; then
+        val=$(($1 / 2))
+      else
+        val=$1
+      fi
+
+      bspc node -z top $(($val * -1)) 0
+      bspc node -z bottom $val 0
+    '';
+
+  bspc-move-x = pkgs.writeShellScriptBin "bspc-move-x"
+    ''
+      if [ $1 -gt 0 ]; then
+          bspc node --move $1 0 || bspc node --swap west
+      else
+          bspc node --move $1 0 || bspc node --swap east
+      fi
+    '';
+
+  bspc-move-y = pkgs.writeShellScriptBin "bspc-move-y"
+    ''
+      if [ $1 -gt 0 ]; then
+          bspc node --move 0 $1 || bspc node --swap north
+      else
+          bspc node --move 0 $1 || bspc node --swap south
+      fi
+    '';
+
+  bspc-toggle-focus = pkgs.writeShellScriptBin "bspc-toggle-focus"
+    ''
+      if bspc query -N -n 'focused.floating' > /dev/null; then
+        bspc node -f 'last.!hidden.!floating'
+      else
+        bspc node -f 'last.!hidden.floating'
+      fi
+    '';
+
+  /*
+
+    default = {
+    # MISC
+    ######## #### ## #
+
+    # reload config
+    "super + Escape" = "pkill -USR1 -x sxhkd";
+
+    # restart / quit
+    "super + shift + {r, q}" = "bspc {wm -r,quit}";
+
+    # WINDOW CONTROLS
+    ######## #### ## #
+
+    # close / kill
+    "super + {_,shift +} c" =
+      "bspc node -{c,k}";
+
+    # toggle tiled / monocle / fullscreen
+    "super + {_,shift +} m" =
+      "bspc {desktop -l next,node -t fullscreen}";
+
+    # tiled / pseudo tiled
+    "super + s" =
+      "bspc node -t ~tiled";
+    "super + p" =
+      "bspc node -t ~pseudo_tiled";
+
+    # floating / pinned
+    "super + f" =
+      "bspc node -t ~floating";
+    "super + shift + f" = # TODO: it would be good if only floating windows could be stity
+      "bspc node -g sticky";
+
+    # toggle fullscreen / monocle
+    "super + m" =
+      "bspc node -t fullscreen";
+    "super + shift + m" =
+      "bspc desktop -l next";
+
+    # toggle float focus
+    "super + Tab" =
+      "node -f prev.local.!hidden.window";
+
+    "super + shift + Tab" =
+      "node -f next.local.!hidden.window";
+
+    "super + space" = "bspc-toggle-focus";
+
+    #"super + q" = "";
+    #"super + r" = "";
+    #"super + s" = "";
+    #"super + g" = "";
+    #"super + f" = "";
+    #"super + {}" = "bspc node -t {tiled,pseudo_tiled,floating,fullscreen}";
+    #"super + space" = "";
+
+    # WINDOWING
+    ######## #### ## #
+
+    # focus windows
+    "super + {h,j,k,l}" = "bspc-focus {west,south,north,east}";
+    "super + {Left,Down,Up,Right}" = "bspc-focus {west,south,north,east}";
+
+    # focus floating window
+
+
+    # move windows
+    "super + shift + {h,Left}" = "bspc-move-x -${amount}";
+    "super + shift + {j,Down}" = "bspc-move-y ${amount}";
+    "super + shift + {k,Up}" = "bspc-move-y -${amount}";
+    "super + shift + {l,Right}" = "bspc-move-x ${amount}";
+
+    # resize mode
+    "super + r : {Left,h,Down,j,Up,k,Right,l,Return,space,r}" =
+      concatStringsSep " \\\n  " [
+        "{ bspc-resize-x -${amount}"
+        ", bspc-resize-x -${amount}"
+        ", bspc-resize-y ${amount}"
+        ", bspc-resize-y ${amount}"
+        ", bspc-resize-y -${amount}"
+        ", bspc-resize-y -${amount}"
+        ", bspc-resize-x ${amount}"
+        ", bspc-resize-x ${amount}"
+        ", ${xdotool} key Escape"
+        ", ${xdotool} key Escape"
+        ", ${xdotool} key Escape"
+        "}"
+      ];
+
+    # focus workspace
+    "super + {1-9,0}" = "bspc desktop -f '^{1-9,10}'";
+
+    # move to workspace
+    "super + shift + {1-9,0}" = "bspc node -d '^{1-9,10}'";
+    };
+
+  */
+
+  amount = toString amount;
+
+  trim = str:
+    let
+      str' = pipe str [ (removeSuffix " ") (removePrefix " ") ];
+    in
+    if str == str' then
+      str
+    else
+      trim str';
+
+  format = str:
+    pipe str [
+      (splitString "\n")
+      (map trim)
+      (filter (str: str != ""))
+      (concatStringsSep " \\\n    ")
+    ];
 in
 {
   options.module.sxhkd = {
     enable = lib.mkEnableOption "Enable sxhkd module";
     amount = lib.mkOption {
-      type = lib.types.int;
-      default = 20;
+      type = types.int;
+      default = 50;
+    };
+    keybindings = lib.mkOption {
+      type = types.attrsOf (types.oneOf [ types.str (types.attrsOf types.str) ]);
+      default = rec {
+        self = {
+          # MISC
+          ######## #### ## #
+
+          # reload sxhkd configs
+          "super + Escape" = "pkill -USR1 -x sxhkd";
+
+          # panic restart bspwm
+          "super + shift + r" = "bspc wm -r";
+
+          # panic quit bspwm
+          "super + shift + q" = "bspc quit";
+
+          # WINDOW CONTROLS
+          ######## #### ## #
+
+          # close app
+          "super + c" = "bspc node -c";
+
+          # kill app
+          "super + shift + c" = "bspc node -k";
+
+          # toggle tiled state
+          "super + s" = "bspc node -t ~tiled";
+
+          # RESIZE
+          ######## #### ## #
+
+          "super + r" = {
+            "Left" = "bspc-resize-x -${amount}";
+            "h" = self."super + r".Left;
+
+            "Down" = "bspc-resize-y ${amount}";
+            "j" = self."super + r".Down;
+
+            "Up" = "bspc-resize-y -${amount}";
+            "k" = self."super + r".Up;
+
+            "Right" = "bspc-resize-x ${amount}";
+            "l" = self."super + r".Right;
+
+            "r" = "${xdotool} key Escape";
+            "space" = self."super + r".r;
+            "Return" = self."super + r".r;
+          };
+
+          # WORKSPACES
+          ######## #### ## #
+
+          # focus
+          "super + 1" = "bspc desktop -f '^1'";
+          "super + 2" = "bspc desktop -f '^2'";
+          "super + 3" = "bspc desktop -f '^3'";
+          "super + 4" = "bspc desktop -f '^4'";
+          "super + 5" = "bspc desktop -f '^5'";
+          "super + 6" = "bspc desktop -f '^6'";
+          "super + 7" = "bspc desktop -f '^7'";
+          "super + 8" = "bspc desktop -f '^8'";
+          "super + 9" = "bspc desktop -f '^9'";
+          "super + 0" = "bspc desktop -f '^10'";
+
+          # move
+          "super + shift + 1" = "bspc node -d '^1'";
+          "super + shift + 2" = "bspc node -d '^2'";
+          "super + shift + 3" = "bspc node -d '^3'";
+          "super + shift + 4" = "bspc node -d '^4'";
+          "super + shift + 5" = "bspc node -d '^5'";
+          "super + shift + 6" = "bspc node -d '^6'";
+          "super + shift + 7" = "bspc node -d '^7'";
+          "super + shift + 8" = "bspc node -d '^8'";
+          "super + shift + 9" = "bspc node -d '^9'";
+          "super + shift + 0" = "bspc node -d '^10'";
+        };
+      }.self;
     };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.xdotool ];
+    home.packages = [
+      #bspc-focus
+      #bspc-move-x
+      #bspc-move-y
+      #bspc-resize-x
+      #bspc-resize-y
+      #bspc-toggle-focus
+    ];
 
     xsession.initExtra =
       ''
@@ -31,107 +295,28 @@ in
         systemctl --user import-environment SXHKD_FIFO
       '';
 
+    home.sessionVariables.SXHKD_SHELL = "${pkgs.dash}/bin/dash";
+
     services.sxhkd = {
       enable = true;
       extraOptions = [ "-s $SXHKD_FIFO" ];
-      keybindings = {
-        # MISC
-        ######## #### ## #
-
-        # reload config
-        "super + Escape" = "pkill -USR1 -x sxhkd";
-
-        # restart / quit
-        "super + shift + {r, q}" = "bspc {wm -r,quit}";
-
-        # logout
-        # "super + shift + e" = "";
-
-        # WINDOW CONTROLS
-        ######## #### ## #
-
-        # close / kill
-        "super + {_,shift +} c" =
-          "bspc node -{c,k}";
-
-        # toggle tiled / monocle / fullscreen
-        "super + {_,shift +} m" =
-          "bspc {desktop -l next,node -t fullscreen}";
-
-        # tiled / pseudo tiled
-        "super + s" =
-          "bspc node -t ~tiled";
-        "super + p" =
-          "bspc node -t ~pseudo_tiled";
-
-        # floating / pinned
-        "super + f" =
-          "bspc node -t ~floating";
-        "super + shift + f" = # TODO: it would be good if only floating windows could be stity
-          "bspc node -g sticky";
-
-        # toggle fullscreen / monocle
-        "super + m" =
-          "bspc node -t fullscreen";
-        "super + shift + m" =
-          "bspc desktop -l next";
-
-        # toggle float focus
-        "super + Tab" =
-          "node -f prev.local.!hidden.window";
-
-        "super + shift + Tab" =
-          "node -f next.local.!hidden.window";
-
-        #"super + space" =
-        #  "bspc node -t floating";
-        #"super + q" = "";
-        #"super + r" = "";
-        #"super + s" = "";
-        #"super + g" = "";
-        #"super + f" = "";
-        #"super + {}" = "bspc node -t {tiled,pseudo_tiled,floating,fullscreen}";
-        #"super + space" = "";
-
-        # WINDOWING
-        ######## #### ## #
-
-        # focus windows
-        "super + {h,j,k,l,Left,Down,Up,Right}" =
-          "bspc node -f {west,south,north,east,west,south,north,east}";
-
-        # move windows
-        "super + shift + {h,Left}" =
-          move "west" (- amount) 0;
-        "super + shift + {j,Down}" =
-          move "south" 0 amount;
-        "super + shift + {k,Up}" =
-          move "north" 0 (-amount);
-        "super + shift + {l,Right}" =
-          move "east" amount 0;
-
-        # resize windows
-        "super + r : {h,j,k,l,Left,Down,Up,Right,Return,super + r}" =
-          ''V = 20; \
-              { bspc node -z left   -$V   0 \
-              , bspc node -z bottom   0  $V \
-              , bspc node -z top      0 -$V \
-              , bspc node -z right   $V   0 \
-              , bspc node -z left   -$V   0 \
-              , bspc node -z bottom   0  $V \
-              , bspc node -z top      0 -$V \
-              , bspc node -z right   $V   0 \
-              , xdotool key Escape \
-              , xdotool key Escape \
+      keybindings =
+        mapAttrs'
+          (name: value:
+            if isAttrs value then
+              {
+                name = "${name} : {${concatStringsSep "," (attrNames value)}}";
+                value = pipe value [
+                  attrValues
+                  (map format)
+                  (concatStringsSep "\n  , ")
+                  (str: "{ ${str}\n  }\n")
+                ];
               }
-          '';
 
-        # WORKSPACES
-        ######## #### ## #
-
-        # focus / move
-        "super + {_,shift +} {1-9,0}" = "bspc {desktop -f,node -d} '^{1-9,10}'";
-      };
+            else
+              { inherit name; value = format value; })
+          cfg.keybindings;
     };
   };
 }
