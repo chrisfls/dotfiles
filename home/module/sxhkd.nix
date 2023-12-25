@@ -274,6 +274,15 @@ in
 
     services.sxhkd = {
       enable = true;
+      package = pkgs.sxhkd.overrideAttrs (old: {
+        patches = old.patches ++ [
+          (pkgs.fetchpatch {
+            name = "sxhkd-line-length.patch";
+            url = "https://github.com/kress95/sxhkd/commit/d8ee372042618d6b603fce19d8e3035095f1fe28.patch";
+            hash = "sha256-DzFtui42M9fUB7wXkgJzGmZtC6pgQXaZhKoOJ7cTB0A=";
+          })
+        ];
+      });
       extraOptions = [ "-s $SXHKD_FIFO" ];
       keybindings =
         let
