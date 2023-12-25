@@ -337,6 +337,12 @@ in
     services.sxhkd = {
       enable = true;
       package = pkgs.sxhkd.overrideAttrs (old: {
+        src = pkgs.fetchFromGitHub {
+          owner = "baskerville";
+          repo = "sxhkd";
+          rev = "b0923b6b3d5d85b1ff80a5bb286934b8721a7c08";
+          hash = "sha256-cSJZveU4quKT2MG1H8/cz9JEaj6Z4t0AEViPah4QoPs=";
+        };
         patches = old.patches ++ [
           (pkgs.fetchpatch {
             name = "sxhkd-line-length.patch";
