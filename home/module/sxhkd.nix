@@ -33,9 +33,9 @@ let
 
   focus = direction:
     ''
-      bspc node 'focused.!floating' --focus '${direction}.!floating'
+      bspc node 'focused.!floating' --focus '${direction}.!floating.window'
       ||
-      bspc node 'focused.floating' --focus '${direction}.floating'
+      bspc node 'focused.floating' --focus '${direction}.floating.window'
     '';
 
   swapOrMove = direction:
@@ -126,13 +126,13 @@ in
       # hide window
       "super + n" = "bspc node --flag hidden=on";
       # unhide window
-      "super + shift + n" = "bspc node 'prev.hidden' --flag hidden=off --swap focused --rotate 180";
+      "super + shift + n" = "bspc node 'prev.hidden' --flag hidden=off";
 
-        # FOCUS AND MOVEMENT
-        ######## #### ## #
+      # FOCUS AND MOVEMENT
+      ######## #### ## #
 
-        # focus with vim keys
-        "super + h" = focus "west";
+      # focus with vim keys
+      "super + h" = focus "west";
       "super + j" = focus "south";
       "super + k" = focus "north";
       "super + l" = focus "east";
@@ -184,10 +184,27 @@ in
 
       # swap current window with previous hidden window
       "super + Tab" =
-        "bspc node 'prev.hidden' --flag hidden=off --swap focused && bspc node --flag hidden=on";
+        ''
+          curr=$(bspc query --nodes --node);
+          hidden=$(bspc query --nodes --node 'prev.hidden.local');
+          bspc node $curr --presel-dir north -i
+          &&
+          bspc node $hidden --flag hidden=off --to-node $(bspc query --nodes --node '.leaf.!window') --focus $hidden
+          &&
+          bspc node $curr --flag hidden=on
+        '';
+
       # swap current window with next hidden window
-      "super + shift + tab" =
-        "bspc node 'next.hidden' --flag hidden=off --swap focused && bspc node --flag hidden=on";
+      "super + shift + Tab" =
+        ''
+          curr=$(bspc query --nodes --node);
+          hidden=$(bspc query --nodes --node 'next.hidden.local');
+          bspc node $curr --presel-dir north -i
+          &&
+          bspc node $hidden --flag hidden=off --to-node $(bspc query --nodes --node '.leaf.!window') --focus $hidden
+          &&
+          bspc node $curr --flag hidden=on
+        '';
 
       # (RE) SIZE
       ######## #### ## #
@@ -321,10 +338,17 @@ in
   };
 }
 
+# bspc node (bspc query --nodes --node 'prev.hidden') --flag hidden=off --to-node (bspc query --nodes --node '.leaf.!window') --follow
+
 /*
   #
   # preselect
   #
+
+  bspc node --presel-dir north -i && bspc node --presel-dir north -i
+  bspc node 
+
+  bspc node 'prev.hidden' --flag hidden=off
 
   # preselect the direction
   super + ctrl + {h,j,k,l}
