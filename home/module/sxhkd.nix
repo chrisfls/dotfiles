@@ -224,6 +224,8 @@ in
           shrink-right = "bspc node --resize right -${amount} 0";
         in
         {
+          # enlarge
+
           "Left" = grow-left; # i3-resize false false;
           "h" = grow-left; # i3-resize false false;
 
@@ -236,17 +238,35 @@ in
           "Right" = grow-right; # i3-resize false true;
           "l" = grow-right; # i3-resize false true;
 
-          "super + Left" = shrink-left; # i3-resize false false;
-          "super + h" = shrink-left; # i3-resize false false;
+          # shrink
 
-          "super + Down" = shrink-down; # i3-resize true true;
-          "super + j" = shrink-down; # i3-resize true true;
+          "shift + Left" = shrink-left;
+          "shift + h" = shrink-left;
 
-          "super + Up" = shrink-up; # i3-resize true false;
-          "super + k" = shrink-up; # i3-resize true false;
+          "shift + Down" = shrink-down;
+          "shift + j" = shrink-down;
 
-          "super + Right" = shrink-right; # i3-resize false true;
-          "super + l" = shrink-right; # i3-resize false true;
+          "shift + Up" = shrink-up;
+          "shift + k" = shrink-up;
+
+          "shift + Right" = shrink-right;
+          "shift + l" = shrink-right;
+
+          # shrink with super (lazy to move fingers)
+
+          "super + Left" = shrink-left;
+          "super + h" = shrink-left;
+
+          "super + Down" = shrink-down;
+          "super + j" = shrink-down;
+
+          "super + Up" = shrink-up;
+          "super + k" = shrink-up;
+
+          "super + Right" = shrink-right;
+          "super + l" = shrink-right;
+
+          # cancel
 
           "Return" = escape;
           "space" = escape;
