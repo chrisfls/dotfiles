@@ -68,6 +68,7 @@ in
         # Misc
         split_ratio = 0.50;
         initial_polarity = "second_child";
+        automatic_scheme = "alternate";
       };
     };
   };
