@@ -30,10 +30,10 @@ in
         ];
 
         # border opacity
-        frame-opacity = 0.75;
+        frame-opacity = 1.0;
 
         # speedup games:
-        # unredir-if-possible = false;
+        unredir-if-possible = true;
 
         # fade animations -------------
         fade-delta = 8;
