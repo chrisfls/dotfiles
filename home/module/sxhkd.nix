@@ -31,6 +31,10 @@ let
 
   # bspc node 'south' -p 'east' && bspc node -n 'last.!automatic.local'
 
+  dollar = "$";
+
+  amount = toString cfg.amount;
+
   focus = direction:
     ''
       bspc node 'focused.!floating' --focus '${direction}.!floating.window'
@@ -40,26 +44,25 @@ let
 
   swapOrMove = direction:
     let
-      n = toString cfg.amount;
       prefix = "bspc node 'focused.!floating' --swap ${direction}";
     in
     if direction == "west" then
-      "${prefix} || bspc node 'focused.floating' --move -${n} 0"
+      "${prefix} || bspc node 'focused.floating' --move -${amount} 0"
     else if direction == "south" then
-      "${prefix} || bspc node 'focused.floating' --move 0 ${n}"
+      "${prefix} || bspc node 'focused.floating' --move 0 ${amount}"
 
     else if direction == "north" then
-      "${prefix} || bspc node 'focused.floating' --move 0 -${n}"
+      "${prefix} || bspc node 'focused.floating' --move 0 -${amount}"
 
     else if direction == "east" then
-      "${prefix} || bspc node 'focused.floating' --move ${n} 0"
+      "${prefix} || bspc node 'focused.floating' --move ${amount} 0"
 
     else
       builtins.throw "Invalid move direction";
 
   # (bspc node '${direction}' -p 'south' && bspc node -n 'last.!automatic.local')
 
-  resize = vertical: grow:
+  i3-resize = vertical: grow:
     let
       fmt = n: toString (ceil n);
       n = if grow then cfg.amount / -2 else cfg.amount / 2;
@@ -106,9 +109,8 @@ in
       # kill app
       "super + shift + c" = "bspc node -k";
 
-      # rotate parent container
-      "super + r" = "bspc node '@parent' --rotate 90";
-      "super + shift + r" = "bspc node '@parent' --rotate -90";
+      # shift direction
+      "super + s" = "bspc node '@parent.vertical' -y horizontal || bspc node '@parent' -y vertical";
 
       # toggle floating state
       "super + f" = "bspc node --state ~floating";
@@ -166,17 +168,17 @@ in
       # focus previous window
       "alt + Tab" =
         ''
-          bspc node 'focused.!floating' --focus 'prev.!floating.window.local' --flag hidden=off
+          bspc node 'focused.!floating' --focus 'prev.local.window.!floating' --flag hidden=off
           ||
-          bspc node 'focused.floating' --focus 'prev.floating.window.local' --flag hidden=off
+          bspc node 'focused.floating' --focus 'prev.local.window.floating' --flag hidden=off
         '';
 
       # focus next window
       "alt + shift + Tab" =
         ''
-          bspc node 'focused.!floating' --focus 'next.!floating.window.local' --flag hidden=off
+          bspc node 'focused.!floating' --focus 'next.local.window.!floating' --flag hidden=off
           ||
-          bspc node 'focused.floating' --focus 'next.floating.window.local' --flag hidden=off
+          bspc node 'focused.floating' --focus 'next.local.window.floating' --flag hidden=off
         '';
 
       # TAB Simulation
@@ -185,31 +187,78 @@ in
       # swap current window with previous hidden window
       "super + Tab" =
         ''
-          curr=$(bspc query --nodes --node);
-          hidden=$(bspc query --nodes --node 'prev.hidden.local');
-          bspc node $curr --presel-dir north -i
-          &&
-          bspc node $hidden --flag hidden=off --to-node $(bspc query --nodes --node '.leaf.!window') --focus $hidden
-          &&
-          bspc node $curr --flag hidden=on
+          wid=$(bspc query --nodes --node 'prev.local.window.hidden');
+          if [ "${dollar}{wid}" ]; then
+            bspc node --presel-dir north -i --flag hidden=on
+            &&
+            bspc node $wid --flag hidden=off --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $wid
+          ; fi
         '';
 
       # swap current window with next hidden window
       "super + shift + Tab" =
         ''
-          curr=$(bspc query --nodes --node);
-          hidden=$(bspc query --nodes --node 'next.hidden.local');
-          bspc node $curr --presel-dir north -i
-          &&
-          bspc node $hidden --flag hidden=off --to-node $(bspc query --nodes --node '.leaf.!window') --focus $hidden
-          &&
-          bspc node $curr --flag hidden=on
+          wid=$(bspc query --nodes --node 'next.local.window.hidden');
+          if [ "${dollar}{wid}" ]; then
+            bspc node --presel-dir north -i --flag hidden=on
+            &&
+            bspc node $wid --flag hidden=off --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $wid
+          ; fi
         '';
+
+      # RESIZE
+      ######## #### ## #
+
+      "super + r :" =
+        # TODO directional expand/contract
+        let
+          escape = "${xdotool} key Escape";
+          grow-left = "bspc node --move -${amount} 0";
+          grow-down = "bspc node --move 0 ${amount}";
+          grow-up = "bspc node --move 0 -${amount}";
+          grow-right = "bspc node --move ${amount} 0";
+
+          shrink-left = "bspc node --move ${amount} 0";
+          shrink-down = "bspc node --move 0 -${amount}";
+          shrink-up = "bspc node --move 0 ${amount}";
+          shrink-right = "bspc node --move -${amount} 0";
+        in
+        {
+          "Left" = grow-left; # i3-resize false false;
+          "h" = grow-left; # i3-resize false false;
+
+          "Down" = grow-down; # i3-resize true true;
+          "j" = grow-down; # i3-resize true true;
+
+          "Up" = grow-up; # i3-resize true false;
+          "k" = grow-up; # i3-resize true false;
+
+          "Right" = grow-right; # i3-resize false true;
+          "l" = grow-right; # i3-resize false true;
+
+          "shift + Left" = shrink-left; # i3-resize false false;
+          "shift + h" = shrink-left; # i3-resize false false;
+
+          "shift + Down" = shrink-down; # i3-resize true true;
+          "shift + j" = shrink-down; # i3-resize true true;
+
+          "shift + Up" = shrink-up; # i3-resize true false;
+          "shift + k" = shrink-up; # i3-resize true false;
+
+          "shift + Right" = shrink-right; # i3-resize false true;
+          "shift + l" = shrink-right; # i3-resize false true;
+
+          "Return" = escape;
+          "space" = escape;
+          "s" = escape;
+        };
+
 
       # (RE) SIZE
       ######## #### ## #
 
-      "super + s :" =
+      /*
+      "super + r :" =
         let
           escape = "${xdotool} key Escape";
         in
@@ -230,6 +279,7 @@ in
           "space" = escape;
           "s" = escape;
         };
+      */
 
       # PRESELECTION
       ######## #### ## #
@@ -367,3 +417,4 @@ in
       bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
   */
+
