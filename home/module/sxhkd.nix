@@ -123,61 +123,16 @@ in
       # toggle sticky flag
       "super + shift + p" = "bspc node --flag sticky";
 
-      # TODO: hide/unhide window
+      # hide window
+      "super + n" = "bspc node --flag hidden=on";
+      # unhide window
+      "super + shift + n" = "bspc node 'prev.hidden' --flag hidden=off --swap focused --rotate 180";
 
-      # TODO: swap this window with hidden
-      "super + n" = "bspc node 'prev.hidden' --flag hidden=off --swap focused";
-      "super + shift + n" = "bspc node --flag hidden=on";
-
-
-      /*
-
-        default = {
-
-        # WINDOW CONTROLS
+        # FOCUS AND MOVEMENT
         ######## #### ## #
 
-        "super + shift + Tab" =
-      "node -f next.local.!hidden.window";
-
-        #"super + q" = "";
-        #"super + s" = "";
-        #"super + g" = "";
-        #"super + f" = "";
-        #"super + space" = "";
-        };
-
-      */
-
-
-      "super + Tab" =
-        ''
-          bspc node $(bspc query --nodes --node 'next.hidden.window') --flag hidden=off
-        '';
-      #"super + shift + tab" = "";
-
-      #"super + Tab" = "bspc node --focus prev.!hidden.window.local";
-      #"super + shift + Tab" = "bspc node --focus next.!hidden.window.local";
-
-      "alt + Tab" =
-        ''
-          bspc node 'focused.!floating' --focus 'prev.!floating.window.local' --flag hidden=off
-          ||
-          bspc node 'focused.floating' --focus 'prev.floating.window.local' --flag hidden=off
-        '';
-
-      "alt + shift + Tab" =
-        ''
-          bspc node 'focused.!floating' --focus 'next.!floating.window.local' --flag hidden=off
-          ||
-          bspc node 'focused.floating' --focus 'next.floating.window.local' --flag hidden=off
-        '';
-
-      # FOCUS AND MOVEMENT
-      ######## #### ## #
-
-      # focus with vim keys
-      "super + h" = focus "west";
+        # focus with vim keys
+        "super + h" = focus "west";
       "super + j" = focus "south";
       "super + k" = focus "north";
       "super + l" = focus "east";
@@ -208,6 +163,32 @@ in
           bspc node 'focused.floating' -f 'last.!hidden.!floating.local'
         '';
 
+      # focus previous window
+      "alt + Tab" =
+        ''
+          bspc node 'focused.!floating' --focus 'prev.!floating.window.local' --flag hidden=off
+          ||
+          bspc node 'focused.floating' --focus 'prev.floating.window.local' --flag hidden=off
+        '';
+
+      # focus next window
+      "alt + shift + Tab" =
+        ''
+          bspc node 'focused.!floating' --focus 'next.!floating.window.local' --flag hidden=off
+          ||
+          bspc node 'focused.floating' --focus 'next.floating.window.local' --flag hidden=off
+        '';
+
+      # TAB Simulation
+      ######## #### ## #
+
+      # swap current window with previous hidden window
+      "super + Tab" =
+        "bspc node 'prev.hidden' --flag hidden=off --swap focused && bspc node --flag hidden=on";
+      # swap current window with next hidden window
+      "super + shift + tab" =
+        "bspc node 'next.hidden' --flag hidden=off --swap focused && bspc node --flag hidden=on";
+
       # (RE) SIZE
       ######## #### ## #
 
@@ -232,6 +213,11 @@ in
           "space" = escape;
           "s" = escape;
         };
+
+      # PRESELECTION
+      ######## #### ## #
+
+      # TODO
 
       # WORKSPACES
       ######## #### ## #
@@ -335,84 +321,7 @@ in
   };
 }
 
-# SAMPLE BSPWM configs:
 /*
-  #
-  # wm independent sxhkd
-  #
-
-  # terminal emulator
-  super + Return
-      urxvt
-
-  # program launcher
-  super + @space
-      dmenu_run
-
-
-  #
-  # bspwm sxhkd
-  #
-
-
-  # alternate between the tiled and monocle layout
-  super + m
-      bspc desktop -l next
-
-  # send the newest marked node to the newest preselected node
-  super + y
-      bspc node newest.marked.local -n newest.!automatic.local
-
-  # swap the current node and the biggest window
-  super + g
-      bspc node -s biggest.window
-
-  #
-  # state/flags
-  #
-
-  # set the window state
-  super + {t,shift + t,s,f}
-      bspc node --state {tiled,pseudo_tiled,floating,fullscreen}
-
-  # set the node flags
-  super + ctrl + {m,x,y,z}
-      bspc node --flag {marked,locked,sticky,private}
-
-  #
-  # focus/swap
-  #
-
-  # focus the node in the given direction
-  super + {_,shift + }{h,j,k,l}
-      bspc node -{f,s} {west,south,north,east}
-
-  # focus the node for the given path jump
-  super + {p,b,comma,period}
-      bspc node -f @{parent,brother,first,second}
-
-  # focus the next/previous window in the current desktop
-  super + {_,shift + }c
-      bspc node -f {next,prev}.local.!hidden.window
-
-  # focus the next/previous desktop in the current monitor
-  super + bracket{left,right}
-      bspc desktop -f {prev,next}.local
-
-  # focus the last node/desktop
-  super + {grave,Tab}
-      bspc {node,desktop} -f last
-
-  # focus the older or newer node in the focus history
-  super + {o,i}
-      bspc wm -h off; \
-      bspc node {older,newer} -f; \
-      bspc wm -h on
-
-  # focus or send to the given desktop
-  super + {_,shift + }{1-9,0}
-      bspc {desktop -f,node -d} '^{1-9,10}'
-
   #
   # preselect
   #
@@ -432,21 +341,5 @@ in
   # cancel the preselection for the focused desktop
   super + ctrl + shift + space
       bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
-
-  #
-  # move/resize
-  #
-
-  # expand a window by moving one of its side outward
-  super + alt + {h,j,k,l}
-      bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
-
-  # contract a window by moving one of its side inward
-  super + alt + shift + {h,j,k,l}
-      bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
-
-  # move a floating window
-  super + {Left,Down,Up,Right}
-      bspc node -v {-20 0,0 20,0 -20,20 0}
 
   */
