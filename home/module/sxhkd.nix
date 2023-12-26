@@ -213,15 +213,15 @@ in
         # TODO directional expand/contract
         let
           escape = "${xdotool} key Escape";
-          grow-left = "bspc node --move -${amount} 0";
-          grow-down = "bspc node --move 0 ${amount}";
-          grow-up = "bspc node --move 0 -${amount}";
-          grow-right = "bspc node --move ${amount} 0";
+          grow-left = "bspc node --resize left -${amount} 0";
+          grow-down = "bspc node --resize bottom 0 ${amount}";
+          grow-up = "bspc node --resize top 0 -${amount}";
+          grow-right = "bspc node --resize right ${amount} 0";
 
-          shrink-left = "bspc node --move ${amount} 0";
-          shrink-down = "bspc node --move 0 -${amount}";
-          shrink-up = "bspc node --move 0 ${amount}";
-          shrink-right = "bspc node --move -${amount} 0";
+          shrink-left = "bspc node --resize left ${amount} 0";
+          shrink-down = "bspc node --resize bottom 0 -${amount}";
+          shrink-up = "bspc node --resize top 0 ${amount}";
+          shrink-right = "bspc node --resize right -${amount} 0";
         in
         {
           "Left" = grow-left; # i3-resize false false;
