@@ -7,6 +7,7 @@ let
     filter
     map
     throw
+    ceil
     toString;
 
   inherit (lib.attrsets)
@@ -28,174 +29,45 @@ let
 
   xdotool = "${pkgs.xdotool}/bin/xdotool";
 
-
-  bspc-resize-x = pkgs.writeShellScriptBin "bspc-resize-x"
-    ''
-      if bspc query -N -n "focused.floating" > /dev/null; then
-        val=$(($1 / 2))
-      else
-        val=$1
-      fi
-
-      bspc node -z left $(($val * -1)) 0
-      bspc node -z right $val 0
-    '';
-
-  bspc-resize-y = pkgs.writeShellScriptBin "bspc-resize-y"
-    ''
-      if bspc query -N -n "focused.floating" > /dev/null; then
-        val=$(($1 / 2))
-      else
-        val=$1
-      fi
-
-      bspc node -z top $(($val * -1)) 0
-      bspc node -z bottom $val 0
-    '';
-
-
-  bspc-toggle-focus = pkgs.writeShellScriptBin "bspc-toggle-focus"
-    ''
-      if bspc query -N -n 'focused.floating' > /dev/null; then
-        bspc node -f 'last.!hidden.!floating'
-      else
-        bspc node -f 'last.!hidden.floating'
-      fi
-    '';
-
-  /*
-
-    default = {
-
-    # WINDOW CONTROLS
-    ######## #### ## #
-
-    # toggle tiled / monocle / fullscreen
-    "super + {_,shift +} m" =
-      "bspc {desktop -l next,node -t fullscreen}";
-
-    # tiled / pseudo tiled
-    "super + p" =
-      "bspc node -t ~pseudo_tiled";
-
-    # floating / pinned
-    "super + f" =
-      "bspc node -t ~floating";
-    "super + shift + f" = # TODO: it would be good if only floating windows could be stity
-      "bspc node -g sticky";
-
-    # toggle fullscreen / monocle
-    "super + m" =
-      "bspc node -t fullscreen";
-    "super + shift + m" =
-      "bspc desktop -l next";
-
-    # toggle float focus
-    "super + Tab" =
-      "node -f prev.local.!hidden.window";
-
-    "super + shift + Tab" =
-      "node -f next.local.!hidden.window";
-
-    "super + space" = "bspc-toggle-focus";
-
-    #"super + q" = "";
-    #"super + r" = "";
-    #"super + s" = "";
-    #"super + g" = "";
-    #"super + f" = "";
-    #"super + {}" = "bspc node -t {tiled,pseudo_tiled,floating,fullscreen}";
-    #"super + space" = "";
-
-    # WINDOWING
-    ######## #### ## #
-
-    # focus windows
-    "super + {h,j,k,l}" = "bspc-focus {west,south,north,east}";
-    "super + {Left,Down,Up,Right}" = "bspc-focus {west,south,north,east}";
-
-    # focus floating window
-
-
-    # move windows
-    "super + shift + {h,Left}" = "bspc-move-x -${amount}";
-    "super + shift + {j,Down}" = "bspc-move-y ${amount}";
-    "super + shift + {k,Up}" = "bspc-move-y -${amount}";
-    "super + shift + {l,Right}" = "bspc-move-x ${amount}";
-
-    # resize mode
-    "super + r : {Left,h,Down,j,Up,k,Right,l,Return,space,r}" =
-      concatStringsSep " \\\n  " [
-        "{ bspc-resize-x -${amount}"
-        ", bspc-resize-x -${amount}"
-        ", bspc-resize-y ${amount}"
-        ", bspc-resize-y ${amount}"
-        ", bspc-resize-y -${amount}"
-        ", bspc-resize-y -${amount}"
-        ", bspc-resize-x ${amount}"
-        ", bspc-resize-x ${amount}"
-        ", ${xdotool} key Escape"
-        ", ${xdotool} key Escape"
-        ", ${xdotool} key Escape"
-        "}"
-      ];
-
-    # focus workspace
-    "super + {1-9,0}" = "bspc desktop -f '^{1-9,10}'";
-
-    # move to workspace
-    "super + shift + {1-9,0}" = "bspc node -d '^{1-9,10}'";
-    };
-
-  */
-
-  amount =
-    toString cfg.amount;
+  # bspc node 'south' -p 'east' && bspc node -n 'last.!automatic.local'
 
   focus = direction:
     ''
-      bspc node 'focused.!floating' -f '${direction}.!floating'
+      bspc node 'focused.!floating' --focus '${direction}.!floating'
       ||
-      bspc node 'focused.floating' -f '${direction}.floating'
+      bspc node 'focused.floating' --focus '${direction}.floating'
     '';
 
-  move = direction:
+  swapOrMove = direction:
     let
-      prefix = "bspc node 'focused.!floating' --swap ${direction} ||";
+      n = toString cfg.amount;
+      prefix = "bspc node 'focused.!floating' --swap ${direction}";
     in
     if direction == "west" then
-      "${prefix} bspc node 'focused.floating' --move -${amount} 0"
+      "${prefix} || bspc node 'focused.floating' --move -${n} 0"
     else if direction == "south" then
-      "${prefix} bspc node 'focused.floating' --move 0 ${amount}"
+      "${prefix} || bspc node 'focused.floating' --move 0 ${n}"
 
     else if direction == "north" then
-      "${prefix} bspc node 'focused.floating' --move 0 -${amount}"
+      "${prefix} || bspc node 'focused.floating' --move 0 -${n}"
 
     else if direction == "east" then
-      "${prefix} bspc node 'focused.floating' --move ${amount} 0"
+      "${prefix} || bspc node 'focused.floating' --move ${n} 0"
 
     else
       builtins.throw "Invalid move direction";
 
+  # (bspc node '${direction}' -p 'south' && bspc node -n 'last.!automatic.local')
+
   resize = vertical: grow:
     let
-      dir = if vertical then "top" else "left";
-      dir' = if vertical then "bottom" else "right";
-
-      amount = value:
-        let value' = toString (builtins.ceil value); in
-        if vertical then "0 ${value'}" else "${value'} 0";
-
-      n = if grow then (cfg.amount * -1) else cfg.amount;
+      fmt = n: toString (ceil n);
+      n = if grow then cfg.amount / -2 else cfg.amount / 2;
+      fst = if vertical then "top 0 ${fmt n}" else "left ${fmt n} 0";
+      snd = if vertical then "bottom 0 ${fmt (n * -1)}" else "right ${fmt (n * -1)} 0";
     in
     ''
-      bspc node 'focused.!floating' -z ${dir} ${amount n}
-      ||
-      bspc node 'focused.!floating' -z ${dir'} ${amount (n * -1)}
-      ||
-      bspc node 'focused.floating' -z ${dir} ${amount (n / 2)}
-      ||
-      bspc node 'focused.floating' -z ${dir'} ${amount (n / -2)}
+      bspc node --resize ${fst} --resize ${snd}
     '';
 in
 {
@@ -206,123 +78,196 @@ in
       default = 50;
     };
     keybindings = lib.mkOption {
-      type = types.attrsOf (types.oneOf [ types.str (types.attrsOf types.str) ]);
-      default = {
-        # MISC
-        ######## #### ## #
-
-        # reload sxhkd configs
-        "super + Escape" = "pkill -USR1 -x sxhkd";
-
-        # panic restart bspwm
-        "super + shift + r" = "bspc wm -r";
-
-        # panic quit bspwm
-        "super + shift + q" = "bspc quit";
-
-        # WINDOW CONTROLS
-        ######## #### ## #
-
-        # close app
-        "super + c" = "bspc node -c";
-
-        # kill app
-        "super + shift + c" = "bspc node -k";
-
-        # toggle tiled state
-        "super + f" = "bspc node -t ~tiled";
-
-        # WINDOWING
-        ######## #### ## #
-
-        # focus with vim keys
-        "super + h" = focus "west";
-        "super + j" = focus "south";
-        "super + k" = focus "north";
-        "super + l" = focus "east";
-
-        # focus with arrow keys
-        "super + Left" = focus "west";
-        "super + Down" = focus "south";
-        "super + Up" = focus "north";
-        "super + Right" = focus "east";
-
-        # move with vim keys
-        "super + shift + h" = move "west";
-        "super + shift + j" = move "south";
-        "super + shift + k" = move "north";
-        "super + shift + l" = move "east";
-
-        # move with arrow keys
-        "super + shift + Left" = move "west";
-        "super + shift + Down" = move "south";
-        "super + shift + Up" = move "north";
-        "super + shift + Right" = move "east";
-
-        # RESIZE
-        ######## #### ## #
-
-        "super + r :" =
-          let
-            escape = "${xdotool} key Escape";
-          in
-          {
-            "Left" = resize false false;
-            "h" = resize false false;
-
-            "Down" = resize true true;
-            "j" = resize true true;
-
-            "Up" = resize true false;
-            "k" = resize true false;
-
-            "Right" = resize false true;
-            "l" = resize false true;
-
-            # "r" = escape;
-            #"space" = escape;
-            #"Return" = escape;
-          };
-
-        # WORKSPACES
-        ######## #### ## #
-
-        # focus
-        "super + 1" = "bspc desktop -f '^1'";
-        "super + 2" = "bspc desktop -f '^2'";
-        "super + 3" = "bspc desktop -f '^3'";
-        "super + 4" = "bspc desktop -f '^4'";
-        "super + 5" = "bspc desktop -f '^5'";
-        "super + 6" = "bspc desktop -f '^6'";
-        "super + 7" = "bspc desktop -f '^7'";
-        "super + 8" = "bspc desktop -f '^8'";
-        "super + 9" = "bspc desktop -f '^9'";
-        "super + 0" = "bspc desktop -f '^10'";
-
-        # move
-        "super + shift + 1" = "bspc node -d '^1'";
-        "super + shift + 2" = "bspc node -d '^2'";
-        "super + shift + 3" = "bspc node -d '^3'";
-        "super + shift + 4" = "bspc node -d '^4'";
-        "super + shift + 5" = "bspc node -d '^5'";
-        "super + shift + 6" = "bspc node -d '^6'";
-        "super + shift + 7" = "bspc node -d '^7'";
-        "super + shift + 8" = "bspc node -d '^8'";
-        "super + shift + 9" = "bspc node -d '^9'";
-        "super + shift + 0" = "bspc node -d '^10'";
-      };
+      type = types.lazyAttrsOf (types.oneOf [ types.str (types.lazyAttrsOf types.str) ]);
+      default = { };
     };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      #bspc-focus
-      #bspc-move-x
-      #bspc-move-y
-      #bspc-resize-x
-      #bspc-resize-y
-      #bspc-toggle-focus
-    ];
+    # TODO: move to bspwm
+    module.sxhkd.keybindings = {
+      # MISC
+      ######## #### ## #
+
+      # reload sxhkd configs
+      "super + Escape" = "pkill -USR1 -x sxhkd";
+
+      # panic restart bspwm
+      "super + shift + Escape" = "bspc wm --restart";
+
+      # panic quit bspwm
+      "super + shift + q" = "bspc quit";
+
+      # WINDOW CONTROLS
+      ######## #### ## #
+
+      # close app
+      "super + c" = "bspc node --close";
+      # kill app
+      "super + shift + c" = "bspc node -k";
+
+      # rotate parent container
+      "super + r" = "bspc node '@parent' --rotate 90";
+      "super + shift + r" = "bspc node '@parent' --rotate -90";
+
+      # toggle floating state
+      "super + f" = "bspc node --state ~floating";
+
+      # toggle monocle layout
+      "super + m" = "bspc desktop --layout next";
+      # toggle fullscreen state
+      "super + shift + m" = "bspc node --state ~fullscreen";
+
+      # toggle pseudo tiled state
+      "super + p" = "bspc node --state ~pseudo_tiled";
+      # toggle sticky flag
+      "super + shift + p" = "bspc node --flag sticky";
+
+      # TODO: hide/unhide window
+
+      # TODO: swap this window with hidden
+      "super + n" = "bspc node 'prev.hidden' --flag hidden=off --swap focused";
+      "super + shift + n" = "bspc node --flag hidden=on";
+
+
+      /*
+
+        default = {
+
+        # WINDOW CONTROLS
+        ######## #### ## #
+
+        "super + shift + Tab" =
+      "node -f next.local.!hidden.window";
+
+        #"super + q" = "";
+        #"super + s" = "";
+        #"super + g" = "";
+        #"super + f" = "";
+        #"super + space" = "";
+        };
+
+      */
+
+
+      "super + Tab" =
+        ''
+          bspc node $(bspc query --nodes --node 'next.hidden.window') --flag hidden=off
+        '';
+      #"super + shift + tab" = "";
+
+      #"super + Tab" = "bspc node --focus prev.!hidden.window.local";
+      #"super + shift + Tab" = "bspc node --focus next.!hidden.window.local";
+
+      "alt + Tab" =
+        ''
+          bspc node 'focused.!floating' --focus 'prev.!floating.window.local' --flag hidden=off
+          ||
+          bspc node 'focused.floating' --focus 'prev.floating.window.local' --flag hidden=off
+        '';
+
+      "alt + shift + Tab" =
+        ''
+          bspc node 'focused.!floating' --focus 'next.!floating.window.local' --flag hidden=off
+          ||
+          bspc node 'focused.floating' --focus 'next.floating.window.local' --flag hidden=off
+        '';
+
+      # FOCUS AND MOVEMENT
+      ######## #### ## #
+
+      # focus with vim keys
+      "super + h" = focus "west";
+      "super + j" = focus "south";
+      "super + k" = focus "north";
+      "super + l" = focus "east";
+
+      # focus with arrow keys
+      "super + Left" = focus "west";
+      "super + Down" = focus "south";
+      "super + Up" = focus "north";
+      "super + Right" = focus "east";
+
+      # move with vim keys
+      "super + shift + h" = swapOrMove "west";
+      "super + shift + j" = swapOrMove "south";
+      "super + shift + k" = swapOrMove "north";
+      "super + shift + l" = swapOrMove "east";
+
+      # move with arrow keys
+      "super + shift + Left" = swapOrMove "west";
+      "super + shift + Down" = swapOrMove "south";
+      "super + shift + Up" = swapOrMove "north";
+      "super + shift + Right" = swapOrMove "east";
+
+      # toggle floating focus
+      "super + space" =
+        ''
+          bspc node 'focused.!floating' -f 'last.!hidden.floating.local'
+          ||
+          bspc node 'focused.floating' -f 'last.!hidden.!floating.local'
+        '';
+
+      # (RE) SIZE
+      ######## #### ## #
+
+      "super + s :" =
+        let
+          escape = "${xdotool} key Escape";
+        in
+        {
+          "Left" = resize false false;
+          "h" = resize false false;
+
+          "Down" = resize true true;
+          "j" = resize true true;
+
+          "Up" = resize true false;
+          "k" = resize true false;
+
+          "Right" = resize false true;
+          "l" = resize false true;
+
+          "Return" = escape;
+          "space" = escape;
+          "s" = escape;
+        };
+
+      # WORKSPACES
+      ######## #### ## #
+
+      # focus workspace
+      "super + 1" = "bspc desktop --focus '^1'";
+      "super + 2" = "bspc desktop --focus '^2'";
+      "super + 3" = "bspc desktop --focus '^3'";
+      "super + 4" = "bspc desktop --focus '^4'";
+      "super + 5" = "bspc desktop --focus '^5'";
+      "super + 6" = "bspc desktop --focus '^6'";
+      "super + 7" = "bspc desktop --focus '^7'";
+      "super + 8" = "bspc desktop --focus '^8'";
+      "super + 9" = "bspc desktop --focus '^9'";
+      "super + 0" = "bspc desktop --focus '^10'";
+
+      # move window to workspace
+      "super + shift + 1" = "bspc node --to-desktop '^1'";
+      "super + shift + 2" = "bspc node --to-desktop '^2'";
+      "super + shift + 3" = "bspc node --to-desktop '^3'";
+      "super + shift + 4" = "bspc node --to-desktop '^4'";
+      "super + shift + 5" = "bspc node --to-desktop '^5'";
+      "super + shift + 6" = "bspc node --to-desktop '^6'";
+      "super + shift + 7" = "bspc node --to-desktop '^7'";
+      "super + shift + 8" = "bspc node --to-desktop '^8'";
+      "super + shift + 9" = "bspc node --to-desktop '^9'";
+      "super + shift + 0" = "bspc node --to-desktop '^10'";
+
+      # focus next/prev workspace
+      "super + minus" = "bspc desktop --focus prev";
+      "super + equal" = "bspc desktop --focus next";
+
+      # move workspace
+      "super + shift + minus" = "bspc desktop --swap prev --follow";
+      "super + shift + equal" = "bspc desktop --swap next --follow";
+    };
 
     xsession.initExtra =
       ''
@@ -428,11 +373,11 @@ in
 
   # set the window state
   super + {t,shift + t,s,f}
-      bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+      bspc node --state {tiled,pseudo_tiled,floating,fullscreen}
 
   # set the node flags
   super + ctrl + {m,x,y,z}
-      bspc node -g {marked,locked,sticky,private}
+      bspc node --flag {marked,locked,sticky,private}
 
   #
   # focus/swap
