@@ -128,7 +128,7 @@ in
       # hide window
       "super + n" = "bspc node --flag hidden=on";
       # unhide window
-      "super + shift + n" = "bspc node 'prev.hidden' --flag hidden=off";
+      "super + shift + n" = "bspc node 'prev.local.hidden.window' --flag hidden=off";
 
       # FOCUS AND MOVEMENT
       ######## #### ## #
@@ -160,25 +160,25 @@ in
       # toggle floating focus
       "super + space" =
         ''
-          bspc node 'focused.!floating' -f 'last.!hidden.floating.local'
+          bspc node 'focused.!floating' -f 'last.local.!hidden.window.floating'
           ||
-          bspc node 'focused.floating' -f 'last.!hidden.!floating.local'
+          bspc node 'focused.floating' -f 'last.local.!hidden.window.!floating'
         '';
 
       # focus previous window
       "alt + Tab" =
         ''
-          bspc node 'focused.!floating' --focus 'prev.local.window.!floating' --flag hidden=off
+          bspc node 'focused.!floating' --focus 'prev.local.!hidden.window.!floating' --flag hidden=off
           ||
-          bspc node 'focused.floating' --focus 'prev.local.window.floating' --flag hidden=off
+          bspc node 'focused.floating' --focus 'prev.local.!hidden.window.floating' --flag hidden=off
         '';
 
       # focus next window
       "alt + shift + Tab" =
         ''
-          bspc node 'focused.!floating' --focus 'next.local.window.!floating' --flag hidden=off
+          bspc node 'focused.!floating' --focus 'next.local.!hidden.window.!floating' --flag hidden=off
           ||
-          bspc node 'focused.floating' --focus 'next.local.window.floating' --flag hidden=off
+          bspc node 'focused.floating' --focus 'next.local.!hidden.window.floating' --flag hidden=off
         '';
 
       # TAB Simulation
@@ -236,17 +236,17 @@ in
           "Right" = grow-right; # i3-resize false true;
           "l" = grow-right; # i3-resize false true;
 
-          "shift + Left" = shrink-left; # i3-resize false false;
-          "shift + h" = shrink-left; # i3-resize false false;
+          "super + Left" = shrink-left; # i3-resize false false;
+          "super + h" = shrink-left; # i3-resize false false;
 
-          "shift + Down" = shrink-down; # i3-resize true true;
-          "shift + j" = shrink-down; # i3-resize true true;
+          "super + Down" = shrink-down; # i3-resize true true;
+          "super + j" = shrink-down; # i3-resize true true;
 
-          "shift + Up" = shrink-up; # i3-resize true false;
-          "shift + k" = shrink-up; # i3-resize true false;
+          "super + Up" = shrink-up; # i3-resize true false;
+          "super + k" = shrink-up; # i3-resize true false;
 
-          "shift + Right" = shrink-right; # i3-resize false true;
-          "shift + l" = shrink-right; # i3-resize false true;
+          "super + Right" = shrink-right; # i3-resize false true;
+          "super + l" = shrink-right; # i3-resize false true;
 
           "Return" = escape;
           "space" = escape;
