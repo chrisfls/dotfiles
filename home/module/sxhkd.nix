@@ -187,23 +187,21 @@ in
       # swap current window with previous hidden window
       "super + Tab" =
         ''
-          hidden=$(bspc query --nodes --node 'prev.local.window.hidden');
+          hidden=$(bspc query --nodes --node 'prev.local.hidden.window');
           if [ "${dollar}{hidden}" ]; then
             focused=$(bspc query --nodes --node 'focused.local.window');
-  
-            if [ "${dollar}{focused}" ]; then
-              bspc node $focused --presel-dir north --insert-receptacle --flag hidden=on;
-              receptacle=$(bspc query --nodes --node 'prev.leaf.!window') ;
-              bspc node $hidden --flag hidden=off --to-node $receptacle --focus $hidden;
+            unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
+            if [ "${dollar}{unfocused}" ]; then
+              bspc node --presel-dir north --insert-receptacle --flag hidden=on;
+              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') +--flag hidden=off --focus $hidden;
+            elif [ "${dollar}{focused}" ]; then
+              bspc node $focused --flag hidden=on;
+              bspc node $hidden --flag hidden=off --focus $hidden;
             else
               bspc node $hidden --flag hidden=off --focus $hidden;
             fi;
           fi;
         '';
-
-        #bspc node $hidden --flag floating=on --flag hidden=off
-        #&&
-              
 
       # swap current window with next hidden window
       /*
