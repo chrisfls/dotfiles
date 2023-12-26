@@ -12,7 +12,6 @@ in
       module = {
         alacritty.enable = true;
         autorandr.enable = true;
-        betterlockscreen.enable = true;
         browser.enable = true;
         bspwm.enable = true;
         dunst.enable = true;
