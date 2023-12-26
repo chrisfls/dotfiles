@@ -210,7 +210,6 @@ in
       ######## #### ## #
 
       "super + r :" =
-        # TODO directional expand/contract
         let
           escape = "${xdotool} key Escape";
           grow-left = "bspc node --resize left -${amount} 0";
