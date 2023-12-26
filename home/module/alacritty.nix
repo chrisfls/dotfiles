@@ -8,7 +8,7 @@ in
   options.module.alacritty.enable = lib.mkEnableOption "Enable alacritty module";
 
   config = lib.mkIf cfg.enable {
-    services.sxhkd.keybindings = {
+    module.sxhkd.keybindings = {
       "super + semicolon" = "alacritty";
       "super + BackSpace" = "alacritty";
     };

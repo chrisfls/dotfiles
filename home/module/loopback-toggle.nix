@@ -40,7 +40,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    services.sxhkd.keybindings = {
+    module.sxhkd.keybindings = {
       # TODO: map to F24 (keycode: 202) 
       "super + Pause" = "${loopback-toggle}/bin/loopback-toggle";
     };

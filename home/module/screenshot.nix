@@ -105,10 +105,10 @@ in
       };
     };
 
-    services.sxhkd.keybindings = {
+    module.sxhkd.keybindings = {
       "Print" = "screenshot-copy";
-      "super + shift + s" = "screenshot-copy-area";
       "shift + Print" = "screenshot-save";
+      "super + Print" = "screenshot-copy-area";
     };
   };
 }

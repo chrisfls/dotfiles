@@ -95,7 +95,7 @@ in
       rofi-windows
     ];
 
-    services.sxhkd.keybindings."super + Return" = "rofi-mainmenu";
+    module.sxhkd.keybindings."super + Return" = "rofi-mainmenu";
 
     xdg.dataFile = {
       "fonts/GrapeNuts-Regular.ttf".source = "${settings}/fonts/GrapeNuts-Regular.ttf";
