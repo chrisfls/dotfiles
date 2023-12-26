@@ -47,7 +47,7 @@ in
       };
       settings = {
         border_width = 2;
-        window_gap = 16;
+        window_gap = 18;
 
         # Borders and gaps
         borderless_monocle = true;
@@ -57,6 +57,7 @@ in
         # Border colors
         normal_border_color = colors.background;
         focused_border_color = colors.foreground;
+        borderless_singleton = true;
 
         # disble multihead behavior (TODO: move to user)
         remove_disabled_monitors = true;
