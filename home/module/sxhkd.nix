@@ -187,24 +187,38 @@ in
       # swap current window with previous hidden window
       "super + Tab" =
         ''
-          wid=$(bspc query --nodes --node 'prev.local.window.hidden');
-          if [ "${dollar}{wid}" ]; then
-            bspc node --presel-dir north -i --flag hidden=on
-            &&
-            bspc node $wid --flag hidden=off --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $wid
-          ; fi
+          hidden=$(bspc query --nodes --node 'prev.local.window.hidden');
+          if [ "${dollar}{hidden}" ]; then
+            focused=$(bspc query --nodes --node 'focused.local.window');
+  
+            if [ "${dollar}{focused}" ]; then
+              bspc node $focused --presel-dir north --insert-receptacle --flag hidden=on;
+              receptacle=$(bspc query --nodes --node 'prev.leaf.!window') ;
+              bspc node $hidden --flag hidden=off --to-node $receptacle --focus $hidden;
+            else
+              bspc node $hidden --flag hidden=off --focus $hidden;
+            fi;
+          fi;
         '';
 
+        #bspc node $hidden --flag floating=on --flag hidden=off
+        #&&
+              
+
       # swap current window with next hidden window
+      /*
       "super + shift + Tab" =
         ''
           wid=$(bspc query --nodes --node 'next.local.window.hidden');
           if [ "${dollar}{wid}" ]; then
-            bspc node --presel-dir north -i --flag hidden=on
+            bspc node $wid --flag hidden=off --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $wid ;
+            receptacle=$(bspc query --nodes --node 'prev.leaf.!window');
+
             &&
-            bspc node $wid --flag hidden=off --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $wid
+            bspc node --presel-dir north -i --flag hidden=on
           ; fi
         '';
+        */
 
       # RESIZE
       ######## #### ## #
