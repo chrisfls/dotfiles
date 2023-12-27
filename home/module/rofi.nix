@@ -95,7 +95,12 @@ in
       rofi-windows
     ];
 
-    module.sxhkd.keybindings."super + Return" = "rofi-mainmenu";
+    module.sxhkd.keybindings = {
+      "super + apostrophe" = "rofi-windows";
+      "super + Return" = "rofi-mainmenu";
+      "super + shift + BackSpace" = "rofi-calc";
+      "super + shift + Return" = "rofi-run";
+    };
 
     xdg.dataFile = {
       "fonts/GrapeNuts-Regular.ttf".source = "${settings}/fonts/GrapeNuts-Regular.ttf";
