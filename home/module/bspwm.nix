@@ -37,6 +37,8 @@ let
 
     else
       throw "Invalid move direction";
+
+  # TODO: https://github.com/JopStro/bspswallow
 in
 {
   options.module.bspwm = {
@@ -353,15 +355,18 @@ in
       # push window to scratchpad
       "super + apostrophe" = "bspc node --flag sticky=off --to-desktop pad";
       # pop window from scratchpad
-      "super + shift + apostrophe" =
-        "bspc node $(bspc query --nodes --monitor PAD --desktop pad --node) --to-desktop focused";
+      "super + shift + apostrophe" = "bspc node 'prev#@pad:' --to-desktop focused";
 
       # swap current window with previous scratchpad window
       "super + Tab" =
-        "bspc node --flag sticky=off --swap $(bspc query --nodes --monitor PAD --desktop pad --node prev)";
+        ''
+          bspc node 'prev#@pad:' --flag sticky=off --swap focused
+        '';
       # swap current window with next scratchpad window
       "super + shift + Tab" =
-        "bspc node --flag sticky=off --swap $(bspc query --nodes --monitor PAD --desktop pad --node next)";
+        ''
+          bspc node 'next#@pad:' --flag sticky=off --swap focused
+        '';
     };
   };
 }
