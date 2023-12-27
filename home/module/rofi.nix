@@ -73,9 +73,13 @@ let
     '';
 
   # rofi windows menu
-  rofi-windows = pkgs.writeShellScriptBin "rofi-windows"
+  rofi-windowscd = pkgs.writeShellScriptBin "rofi-windows"
     ''
-      rofi -show window -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi"
+      rofi -show window -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi" "$@"
+    '';
+  rofi-window = pkgs.writeShellScriptBin "rofi-windows"
+    ''
+      rofi -show window -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi" "$@"
     '';
 
   user = config.home.username;
@@ -92,11 +96,13 @@ in
       rofi-mainmenu
       rofi-powermenu
       rofi-run
-      rofi-windows
+      rofi-window
+      rofi-windowcd
     ];
 
     module.sxhkd.keybindings = {
-      "super + apostrophe" = "rofi-windows";
+      "super + apostrophe" = "rofi-windowcd";
+      "super + shift + apostrophe" = "rofi-window";
       # TODO: hidden windows menu
       # TODO: scratchpad windows menu
       "super + Return" = "rofi-mainmenu";
