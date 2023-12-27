@@ -361,7 +361,6 @@ in
       "super + shift + i" =
         "bspc node --to-node $(bspc query --nodes --node 'prev.local.leaf.!window') --focus $focused";
 
-
       ######## #### ## #
       # HIDDEN SWALLOW
       ######## #### ## #
