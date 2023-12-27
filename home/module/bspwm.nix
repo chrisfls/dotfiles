@@ -39,39 +39,29 @@ let
       throw "Invalid move direction";
 
   swallow = selector:
-    # MONO: PERFECT
-    # UNREACH: PERFECT
     ''
       hidden=$(${selector});
-      if [ "${dollar}{hidden}" ]; then
-        focused=$(bspc query --nodes --node 'focused.local.window');
-        if [ "${dollar}{focused}" ]; then
-          unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
-          if [ "${dollar}{unfocused}" ]; then
-            echo "tabs";
-            picom-trans --window "$focused" 0
-            &&
-            bspc node --presel-dir north --insert-receptacle --state floating
-            &&
-            bspc node $hidden --to-node $(bspc query --nodes --node 'prev.local.leaf.!window') --flag hidden=off --focus $hidden
-            &&
-            bspc node $focused --flag hidden=on --state ~floating
-            &&
-            picom-trans --window "$focused" 100;
-          else
-            echo "mono";
-            bspc node $focused --flag hidden=on
-            &&
-            bspc node $hidden --flag hidden=off --focus $hidden;
-          fi
-        else
-          echo "backlog";
-          bspc node $hidden --flag hidden=off --focus $hidden;
-        fi;
-      else
-        echo "unreach";
-        bspc node 'any.local.hidden.window' --flag hidden=off;
+      if [ -z "${dollar}{hidden}" ]; then
+        bspc node 'any.local.hidden.window' --flag hidden=off && exit 0;
       fi;
+
+      focused=$(bspc query --nodes --node);
+      if [ -z "${dollar}{focused}" ]; then exit 0; fi;
+
+      unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
+      if [ -z "${dollar}{unfocused}" ]; then
+        bspc node $focused --flag hidden=on
+        &&
+        bspc node $hidden --flag hidden=off --focus $hidden
+        &&
+        exit 0;
+      fi;
+
+      bspc node --presel-dir north --insert-receptacle --flag hidden=on
+      &&
+      bspc node $hidden --to-node $(bspc query --nodes --node 'prev.local.leaf.!window') --flag hidden=off --focus $hidden
+      &&
+      bspc node $focused --flag hidden=on
     '';
 in
 {
@@ -241,7 +231,7 @@ in
 
       "super + i" =
         ''
-          existing=$(bspc query --nodes focused --node any.local.leaf.!window);
+          existing=$(bspc query --nodes --node any.local.leaf.!window);
           if [ "${dollar}{existing}" ]; then
             while bspc node 'any.local.leaf.!window' -k; do :; done
           else
