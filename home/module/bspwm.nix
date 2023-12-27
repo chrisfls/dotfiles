@@ -38,6 +38,48 @@ let
     else
       throw "Invalid move direction";
 
+  switch = age:
+    let
+      age' =
+        if age == "newer" then
+          "older"
+        else if age == "older" then
+          "newer"
+        else
+          throw "Invalid age";
+    in
+    ''
+      bspc wm -h off;
+
+      window=$(bspc query --nodes --node 'focused.local.!hidden.!floating.window');
+
+      if [ "$window" ]; then
+        modifier="!floating";
+      else;
+        modifier="floating";
+      fi;
+
+      bspc node --focus "older.local.!hidden.$modifier.window" || (
+        if [ -z "$window" ]; then
+          window=$(bspc query --nodes --node);
+        fi;
+
+        while true; do
+          result=$(bspc query --nodes --node "$window#newer.local.!hidden.$modifier.window");
+
+          if [ -z "$result" ]; then
+            break;
+          else
+            window="$result";
+          fi;
+        done;
+
+        bspc node $window --focus
+      );
+
+      bspc wm -h on;
+    '';
+
   # TODO: https://github.com/JopStro/bspswallow
 in
 {
@@ -48,7 +90,6 @@ in
       default = 100;
     };
   };
-
 
   config = lib.mkIf cfg.enable {
     home.sessionVariables.DESKTOP_SESSION = "bspwm";
@@ -255,19 +296,9 @@ in
         '';
 
       # focus previous window
-      "alt + Tab" =
-        ''
-          bspc node 'focused.!floating' --focus 'prev.local.!hidden.!floating.window' --flag hidden=off
-          ||
-          bspc node 'focused.floating' --focus 'prev.local.!hidden.floating.window' --flag hidden=off
-        '';
+      "alt + Tab" = switch "older";
       # focus next window
-      "alt + shift + Tab" =
-        ''
-          bspc node 'focused.!floating' --focus 'next.local.!hidden.!floating.window' --flag hidden=off
-          ||
-          bspc node 'focused.floating' --focus 'next.local.!hidden.floating.window' --flag hidden=off
-        '';
+      "alt + shift + Tab" = switch "newer";
 
       ######## #### ## #
       # WORKSPACES
@@ -355,18 +386,32 @@ in
       # push window to scratchpad
       "super + apostrophe" = "bspc node --flag sticky=off --to-desktop pad";
       # pop window from scratchpad
-      "super + shift + apostrophe" = "bspc node 'prev#@pad:' --to-desktop focused";
+      "super + shift + apostrophe" =
+        ''
+          pad=$(bspc query --desktops --desktop 'pad');
+          bspc node "@$pad:" --swap "@$pad:/#prev"
+          &&
+          bspc node "@$pad:" --to-desktop focused
+          bspc node "prev#@$pad:" --to-desktop focused
+        '';
 
       # swap current window with previous scratchpad window
       "super + Tab" =
         ''
-          bspc node 'prev#@pad:' --flag sticky=off --swap focused
+          pad=$(bspc query --desktops --desktop 'pad');
+          bspc node "@$pad:/#next" --swap focused
+          &&
+          bspc node "@$pad:/#prev" --flag sticky=off --swap "@$pad:/#next"
         '';
       # swap current window with next scratchpad window
       "super + shift + Tab" =
         ''
-          bspc node 'next#@pad:' --flag sticky=off --swap focused
+          pad=$(bspc query --desktops --desktop 'pad');
+          bspc node "@$pad:/#prev" --swap focused
+          &&
+          bspc node "@$pad:/#prev" --flag sticky=off --swap "@$pad:/#next"
         '';
     };
   };
 }
+# bspc node "@$pad:/#prev" --to-desktop focused
