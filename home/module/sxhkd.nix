@@ -115,7 +115,7 @@ in
 
       # toggle maximize state (fullscreen)
       "super + x" = "bspc node --state ~fullscreen";
-      
+
       # cycle tiled/monocle layout
       "super + t" = "bspc desktop --layout next";
 
@@ -191,10 +191,12 @@ in
             focused=$(bspc query --nodes --node 'focused.local.window');
             unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
             if [ "${dollar}{unfocused}" ]; then
-              bspc node --presel-dir north --insert-receptacle --flag hidden=on;
-              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') +--flag hidden=off --focus $hidden;
+              bspc node --presel-dir north --insert-receptacle --flag hidden=on
+              &&
+              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') --flag hidden=off --focus $hidden;
             elif [ "${dollar}{focused}" ]; then
-              bspc node $focused --flag hidden=on;
+              bspc node $focused --flag hidden=on
+              &&
               bspc node $hidden --flag hidden=off --focus $hidden;
             else
               bspc node $hidden --flag hidden=off --focus $hidden;
@@ -212,8 +214,9 @@ in
             focused=$(bspc query --nodes --node 'focused.local.window');
             unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
             if [ "${dollar}{unfocused}" ]; then
-              bspc node --presel-dir north --insert-receptacle --flag hidden=on;
-              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') +--flag hidden=off --focus $hidden;
+              bspc node --presel-dir north --insert-receptacle --flag hidden=on
+              &&
+              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') --flag hidden=off --focus $hidden;
             elif [ "${dollar}{focused}" ]; then
               bspc node $focused --flag hidden=on;
               bspc node $hidden --flag hidden=off --focus $hidden;
@@ -277,38 +280,70 @@ in
           "r" = escape;
         };
 
+      # TODO: perhaps join both modes down
 
-      # (RE) SIZE
+      # RECEPTACLE
       ######## #### ## #
 
-      /*
-      "super + r :" =
+      "super + shift + r ;" =
+        let
+          escape = "${xdotool} key Escape";
+          move = dir1: dir2:
+            ''
+              bspc node '${dir1}.local.!hidden.!floating.window' --presel-dir ${dir2} --insert-receptacle
+              &&
+              bspc node --to-node $(bspc query --nodes --node 'prev.leaf.!window') --flag hidden=off;
+            '';
+          move-left = move "west" "east";
+          move-down = move "south" "north";
+          move-up = move "north" "south";
+          move-right = move "east" "west";
+        in
+        {
+          "Left" = move-left;
+          "h" = move-left;
+
+          "Down" = move-down;
+          "j" = move-down;
+
+          "Up" = move-up;
+          "k" = move-up;
+
+          "Right" = move-right;
+          "l" = move-right;
+
+          "Return" = escape;
+          "space" = escape;
+          "r" = escape;
+        };
+
+      # PRESELECTION
+      ######## #### ## #
+
+      "super + g ;" = # grab
         let
           escape = "${xdotool} key Escape";
         in
         {
-          "Left" = resize false false;
-          "h" = resize false false;
+          "Left" = "bspc node --presel-dir ~west";
+          "h" = "bspc node --presel-dir ~west";
 
-          "Down" = resize true true;
-          "j" = resize true true;
+          "Down" = "bspc node --presel-dir ~south";
+          "j" = "bspc node --presel-dir ~south";
 
-          "Up" = resize true false;
-          "k" = resize true false;
+          "Up" = "bspc node --presel-dir ~north";
+          "k" = "bspc node --presel-dir ~north";
 
-          "Right" = resize false true;
-          "l" = resize false true;
+          "Right" = "bspc node --presel-dir ~east";
+          "l" = "bspc node --presel-dir ~east";
 
           "Return" = escape;
           "space" = escape;
           "s" = escape;
         };
-      */
 
-      # PRESELECTION
-      ######## #### ## #
-
-      # TODO
+      "super + shift + g" = # ungrab
+        "bspc node --presel-dir cancel";
 
       # WORKSPACES
       ######## #### ## #
