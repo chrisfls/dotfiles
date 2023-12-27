@@ -3,6 +3,13 @@ let
   enable = config.preset.desktop;
   development = config.preset.development;
   non-nixos = config.preset.non-nixos;
+
+  # needed until these are done:
+  #  - https://github.com/NixOS/nixpkgs/issues/228179
+  #  - https://github.com/NixOS/nixpkgs/pull/273263 
+  audiotube = pkgs.libsForQt5.audiotube.overrideAttrs (old: {
+    buildInputs = old.buildInputs ++ [ pkgs.libsForQt5.kpurpose ];
+  });
 in
 {
   options.preset.desktop = lib.mkEnableOption "Enable desktop preset";
@@ -100,12 +107,11 @@ in
         pkgs.steam
         pkgs.telegram-desktop
         pkgs.webcord-vencord
-        pkgs.ytui-music # using until audiotube is fixed
+        audiotube
 
         # disabled personal apps 
         /*
         pkgs.notepadqq # notepad++ [not needed with micro around]
-        pkgs.libsForQt5.audiotube # not working until https://github.com/NixOS/nixpkgs/issues/228179 and https://github.com/NixOS/nixpkgs/pull/273263 are done
         pkgs.mpv # not configured yet
         pkgs.languagetool # not the actual languagetool app
           */
