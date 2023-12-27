@@ -329,22 +329,9 @@ in
       "super + i ;" =
         let
           insert = dir:
-            let
-              dir' =
-                if dir == "west" then
-                  "east"
-                else if dir == "south" then
-                  "north"
-                else if dir == "north" then
-                  "south"
-                else if dir == "east" then
-                  "west"
-                else
-                  throw "Invalid move direction";
-            in
             ''
               focused=$(bspc query --nodes --node);
-              bspc node $(bspc query --nodes @parent --node '${dir}.local.!hidden.!floating.window') --presel-dir ${dir'} --insert-receptacle
+              bspc node $(bspc query --nodes @parent --node '${dir}.local.!hidden.!floating.window') --insert-receptacle
               &&
               bspc node $focused --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $focused;
             '';
