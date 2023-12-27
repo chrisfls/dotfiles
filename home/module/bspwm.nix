@@ -166,19 +166,10 @@ in
       # toggle [p]inned flag (sticky)
       "super + shift + p" = "bspc node --flag sticky";
 
-      # ## #
-      # tertiary actions (equalize/balance/show desktop)
-      # ## #
 
-      # [e]qualize spacing
-      "super + e" = "bspc node @parent --equalize";
-      # [e]qualize spacing for all
-      "super + shift + e" = "bspc node @/ --equalize";
-
-      # [b]alance spacing
-      "super + b" = "bspc node @parent --balance";
-      # [b]alance spacing for all
-      "super + shift + b" = "bspc node @/ --balance";
+      # ## #
+      # tertiary actions (show desktop/equalize/balance)
+      # ## #
 
       # show/hide [d]ekstop
       "super + d" =
@@ -186,6 +177,23 @@ in
           while bspc node any.local.hidden.window -g hidden=off; do false; done
             && while bspc node 'any.local.!hidden.window' -g hidden=on; do :; done
         '';
+
+      "super + w ;" = {
+        # [e]qualize spacing
+        "e" = "bspc node @parent --equalize";
+        # [e]qualize spacing for all
+        "shift + e" = "bspc node @/ --equalize";
+
+        # [b]alance spacing
+        "b" = "bspc node @parent --balance";
+        # [b]alance spacing for all
+        "shift + b" = "bspc node @/ --balance";
+
+        # cancel
+        "Return" = escape;
+        "space" = escape;
+        "w" = escape;
+      };
 
       ######## #### ## #
       # RECEPTACLES
