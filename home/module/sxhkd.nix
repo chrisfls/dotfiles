@@ -29,8 +29,6 @@ let
 
   xdotool = "${pkgs.xdotool}/bin/xdotool";
 
-  # bspc node 'south' -p 'east' && bspc node -n 'last.!automatic.local'
-
   dollar = "$";
 
   amount = toString cfg.amount;
@@ -78,7 +76,7 @@ in
     enable = lib.mkEnableOption "Enable sxhkd module";
     amount = lib.mkOption {
       type = types.int;
-      default = 50;
+      default = 100;
     };
     keybindings = lib.mkOption {
       type = types.lazyAttrsOf (types.oneOf [ types.str (types.lazyAttrsOf types.str) ]);
@@ -182,7 +180,7 @@ in
           bspc node 'focused.floating' --focus 'next.local.!hidden.floating.window' --flag hidden=off
         '';
 
-      # TAB Simulation
+      # MANUAL SWALLOW
       ######## #### ## #
 
       # swap current window with previous hidden window
@@ -276,7 +274,7 @@ in
 
           "Return" = escape;
           "space" = escape;
-          "s" = escape;
+          "r" = escape;
         };
 
 
