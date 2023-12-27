@@ -115,7 +115,7 @@ in
     };
 
     module.sxhkd.keybindings = {
-
+      ######## #### ## #
       # MISC
       ######## #### ## #
 
@@ -125,26 +125,18 @@ in
       # panic quit bspwm
       "control + alt + Escape" = "bspc quit";
 
+      ######## #### ## #
       # WINDOW CONTROLS
       ######## #### ## #
 
-      # primary actions (close/float/min/max/alt+tab)
+      # ## #
+      # primary actions (close/min/max)
       # ## #
 
       # [c]lose app
       "super + c" = "bspc node --close";
       # [c]lose app (kill)
       "super + shift + c" = "bspc node -k";
-
-      # toggle [f]loating state
-      "super + f" = "bspc node --state ~floating";
-      #  focus floating windows
-      "super + space" =
-        ''
-          bspc node 'focused.!floating' -f 'last.local.!hidden.floating.window'
-          ||
-          bspc node 'focused.floating' -f 'last.local.!hidden.!floating.window'
-        '';
 
       # [m]inimize window (hide)
       "super + m" = "bspc node --flag hidden=on";
@@ -153,13 +145,17 @@ in
 
       # toggle ma[x]imize state (fullscreen)
       "super + x" = "bspc node --state ~fullscreen";
+      # ## #
+      # secondary actions (layout/float/rotate/reverse/pseudo/pin)
+      # ## #
+
       # cycle [t]iled/monocle layout
       "super + t" = "bspc desktop --layout next";
 
-      # secondary actions (rotate/pseudo/pin)
-      # ## #
+      # toggle [f]loating state
+      "super + f" = "bspc node --state ~floating";
 
-      # shift pair direction
+      # [r]otate pair direction
       "super + r" = "bspc node '@parent.vertical' -y horizontal || bspc node '@parent' -y vertical";
       # [r]everse pair position
       "super + shift + r" = "bspc node '@parent' --rotate 180";
@@ -169,6 +165,7 @@ in
       # toggle [p]inned flag (sticky)
       "super + shift + p" = "bspc node --flag sticky";
 
+      ######## #### ## #
       # FOCUS AND MOVEMENT
       ######## #### ## #
 
@@ -196,6 +193,14 @@ in
       "super + shift + Up" = move "north";
       "super + shift + Right" = move "east";
 
+      # focus floating windows
+      "super + space" =
+        ''
+          bspc node 'focused.!floating' -f 'last.local.!hidden.floating.window'
+          ||
+          bspc node 'focused.floating' -f 'last.local.!hidden.!floating.window'
+        '';
+
       # focus previous window
       "alt + Tab" =
         ''
@@ -211,56 +216,90 @@ in
           bspc node 'focused.floating' --focus 'next.local.!hidden.floating.window' --flag hidden=off
         '';
 
-      # HIDDEN SWALLOW
+      ######## #### ## #
+      # WORKSPACES
       ######## #### ## #
 
-      # TODO: fix focus flicker
+      # focus workspace
+      "super + 1" = "bspc desktop --focus '^1'";
+      "super + 2" = "bspc desktop --focus '^2'";
+      "super + 3" = "bspc desktop --focus '^3'";
+      "super + 4" = "bspc desktop --focus '^4'";
+      "super + 5" = "bspc desktop --focus '^5'";
+      "super + 6" = "bspc desktop --focus '^6'";
+      "super + 7" = "bspc desktop --focus '^7'";
+      "super + 8" = "bspc desktop --focus '^8'";
+      "super + 9" = "bspc desktop --focus '^9'";
+      "super + 0" = "bspc desktop --focus '^10'";
 
-      # swap current window with previous hidden window
-      "super + Tab" =
-        ''
-          hidden=$(bspc query --nodes --node 'next.local.hidden.window');
-          if [ "${dollar}{hidden}" ]; then
-            focused=$(bspc query --nodes --node 'focused.local.window');
-            unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
-            if [ "${dollar}{unfocused}" ]; then
-              bspc node --presel-dir north --insert-receptacle --flag hidden=on
-              &&
-              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') --flag hidden=off --focus $hidden;
-            elif [ "${dollar}{focused}" ]; then
-              bspc node $focused --flag hidden=on
-              &&
-              bspc node $hidden --flag hidden=off --focus $hidden;
-            else
-              bspc node $hidden --flag hidden=off --focus $hidden;
-            fi;
-          else
-            bspc node 'any.local.hidden.window' --flag hidden=off;
-          fi;
-        '';
+      # move window to workspace
+      "super + shift + 1" = "bspc node --to-desktop '^1'";
+      "super + shift + 2" = "bspc node --to-desktop '^2'";
+      "super + shift + 3" = "bspc node --to-desktop '^3'";
+      "super + shift + 4" = "bspc node --to-desktop '^4'";
+      "super + shift + 5" = "bspc node --to-desktop '^5'";
+      "super + shift + 6" = "bspc node --to-desktop '^6'";
+      "super + shift + 7" = "bspc node --to-desktop '^7'";
+      "super + shift + 8" = "bspc node --to-desktop '^8'";
+      "super + shift + 9" = "bspc node --to-desktop '^9'";
+      "super + shift + 0" = "bspc node --to-desktop '^10'";
 
-      # swap current window with next hidden window
-      "super + shift + Tab" =
-        ''
-          hidden=$(bspc query --nodes --node 'prev.local.hidden.window');
-          if [ "${dollar}{hidden}" ]; then
-            focused=$(bspc query --nodes --node 'focused.local.window');
-            unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
-            if [ "${dollar}{unfocused}" ]; then
-              bspc node --presel-dir north --insert-receptacle --flag hidden=on
-              &&
-              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') --flag hidden=off --focus $hidden;
-            elif [ "${dollar}{focused}" ]; then
-              bspc node $focused --flag hidden=on;
-              bspc node $hidden --flag hidden=off --focus $hidden;
-            else
-              bspc node $hidden --flag hidden=off --focus $hidden;
-            fi;
-          else
-            bspc node 'any.local.hidden.window' --flag hidden=off;
-          fi;
-        '';
+      # focus next/prev workspace
+      "super + minus" = "bspc desktop --focus prev";
+      "super + equal" = "bspc desktop --focus next";
 
+      # move workspace
+      "super + shift + minus" = "bspc desktop --swap prev --follow";
+      "super + shift + equal" = "bspc desktop --swap next --follow";
+
+      ######## #### ## #
+      # INSERT
+      ######## #### ## #
+
+      "super + i ;" =
+        let
+          insert = dir:
+            let
+              dir' =
+                if dir == "west" then
+                  "east"
+                else if dir == "south" then
+                  "north"
+                else if dir == "north" then
+                  "south"
+                else if dir == "east" then
+                  "west"
+                else
+                  throw "Invalid move direction";
+            in
+            ''
+              focused=$(bspc query --nodes --node);
+              bspc node $(bspc query --nodes @parent --node '${dir}.local.!hidden.!floating.window') --presel-dir ${dir'} --insert-receptacle
+              &&
+              bspc node $focused --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $focused;
+            '';
+        in
+        {
+          # insert at
+          "Left" = insert "west";
+          "h" = insert "west";
+          "Down" = insert "south";
+          "j" = insert "south";
+          "Up" = insert "north";
+          "k" = insert "north";
+          "Right" = insert "east";
+          "l" = insert "east";
+
+          # cancel
+          "Return" = "";
+          "space" = "";
+          "i" = "";
+        };
+
+      # remove all receptacles
+      "super + shift + i" = "while bspc node 'any.leaf.!window' -k; do :; done";
+
+      ######## #### ## #
       # RESIZE
       ######## #### ## #
 
@@ -330,86 +369,56 @@ in
           "s" = escape;
         };
 
-      # INSERT
+      ######## #### ## #
+      # HIDDEN SWALLOW
       ######## #### ## #
 
-      "super + i ;" =
-        let
-          insert = dir:
-            let
-              dir' =
-                if dir == "west" then
-                  "east"
-                else if dir == "south" then
-                  "north"
-                else if dir == "north" then
-                  "south"
-                else if dir == "east" then
-                  "west"
-                else
-                  throw "Invalid move direction";
-            in
-            ''
-              focused=$(bspc query --nodes --node);
-              bspc node $(bspc query --nodes @parent --node '${dir}.local.!hidden.!floating.window') --presel-dir ${dir'} --insert-receptacle
+      # TODO: fix focus flicker
+
+      # swap current window with previous hidden window
+      "super + Tab" =
+        ''
+          hidden=$(bspc query --nodes --node 'next.local.hidden.window');
+          if [ "${dollar}{hidden}" ]; then
+            focused=$(bspc query --nodes --node 'focused.local.window');
+            unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
+            if [ "${dollar}{unfocused}" ]; then
+              bspc node --presel-dir north --insert-receptacle --flag hidden=on
               &&
-              bspc node $focused --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $focused;
-            '';
-        in
-        {
-          # insert at
-          "Left" = insert "west";
-          "h" = insert "west";
-          "Down" = insert "south";
-          "j" = insert "south";
-          "Up" = insert "north";
-          "k" = insert "north";
-          "Right" = insert "east";
-          "l" = insert "east";
+              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') --flag hidden=off --focus $hidden;
+            elif [ "${dollar}{focused}" ]; then
+              bspc node $focused --flag hidden=on
+              &&
+              bspc node $hidden --flag hidden=off --focus $hidden;
+            else
+              bspc node $hidden --flag hidden=off --focus $hidden;
+            fi;
+          else
+            bspc node 'any.local.hidden.window' --flag hidden=off;
+          fi;
+        '';
 
-          # cancel
-          "Return" = "";
-          "space" = "";
-          "i" = "";
-        };
-
-      # remove all receptacles
-      "super + shift + i" = "while bspc node 'any.leaf.!window' -k; do :; done";
-
-      # WORKSPACES
-      ######## #### ## #
-
-      # focus workspace
-      "super + 1" = "bspc desktop --focus '^1'";
-      "super + 2" = "bspc desktop --focus '^2'";
-      "super + 3" = "bspc desktop --focus '^3'";
-      "super + 4" = "bspc desktop --focus '^4'";
-      "super + 5" = "bspc desktop --focus '^5'";
-      "super + 6" = "bspc desktop --focus '^6'";
-      "super + 7" = "bspc desktop --focus '^7'";
-      "super + 8" = "bspc desktop --focus '^8'";
-      "super + 9" = "bspc desktop --focus '^9'";
-      "super + 0" = "bspc desktop --focus '^10'";
-
-      # move window to workspace
-      "super + shift + 1" = "bspc node --to-desktop '^1'";
-      "super + shift + 2" = "bspc node --to-desktop '^2'";
-      "super + shift + 3" = "bspc node --to-desktop '^3'";
-      "super + shift + 4" = "bspc node --to-desktop '^4'";
-      "super + shift + 5" = "bspc node --to-desktop '^5'";
-      "super + shift + 6" = "bspc node --to-desktop '^6'";
-      "super + shift + 7" = "bspc node --to-desktop '^7'";
-      "super + shift + 8" = "bspc node --to-desktop '^8'";
-      "super + shift + 9" = "bspc node --to-desktop '^9'";
-      "super + shift + 0" = "bspc node --to-desktop '^10'";
-
-      # focus next/prev workspace
-      "super + minus" = "bspc desktop --focus prev";
-      "super + equal" = "bspc desktop --focus next";
-
-      # move workspace
-      "super + shift + minus" = "bspc desktop --swap prev --follow";
-      "super + shift + equal" = "bspc desktop --swap next --follow";
+      # swap current window with next hidden window
+      "super + shift + Tab" =
+        ''
+          hidden=$(bspc query --nodes --node 'prev.local.hidden.window');
+          if [ "${dollar}{hidden}" ]; then
+            focused=$(bspc query --nodes --node 'focused.local.window');
+            unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
+            if [ "${dollar}{unfocused}" ]; then
+              bspc node --presel-dir north --insert-receptacle --flag hidden=on
+              &&
+              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') --flag hidden=off --focus $hidden;
+            elif [ "${dollar}{focused}" ]; then
+              bspc node $focused --flag hidden=on;
+              bspc node $hidden --flag hidden=off --focus $hidden;
+            else
+              bspc node $hidden --flag hidden=off --focus $hidden;
+            fi;
+          else
+            bspc node 'any.local.hidden.window' --flag hidden=off;
+          fi;
+        '';
     };
   };
 }
