@@ -99,6 +99,7 @@ in
       # panic quit bspwm
       "control + alt + Escape" = "bspc quit";
 
+
       # WINDOW CONTROLS
       ######## #### ## #
 
@@ -109,6 +110,8 @@ in
 
       # shift pair direction
       "super + s" = "bspc node '@parent.vertical' -y horizontal || bspc node '@parent' -y vertical";
+      # flip pair direction
+      "super + shift + s" = "bspc node '@parent' --rotate 180";
 
       # toggle floating state
       "super + f" = "bspc node --state ~floating";
@@ -290,9 +293,10 @@ in
           escape = "${xdotool} key Escape";
           move = dir1: dir2:
             ''
-              bspc node '${dir1}.local.!hidden.!floating.window' --presel-dir ${dir2} --insert-receptacle
+              focused=$(bspc query --nodes --node);
+              bspc node $(bspc query --nodes @parent --node '${dir1}.local.!hidden.!floating.window') --presel-dir ${dir2} --insert-receptacle
               &&
-              bspc node --to-node $(bspc query --nodes --node 'prev.leaf.!window') --flag hidden=off;
+              bspc node $focused --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $focused;
             '';
           move-left = move "west" "east";
           move-down = move "south" "north";
@@ -316,6 +320,9 @@ in
           "space" = escape;
           "r" = escape;
         };
+
+      # remove receptacles that might have been created by mistake
+      "super + alt + r" = "while bspc node 'any.leaf.!window' -k; do :; done";
 
       # PRESELECTION
       ######## #### ## #
@@ -446,34 +453,3 @@ in
     };
   };
 }
-
-# bspc node (bspc query --nodes --node 'prev.hidden') --flag hidden=off --to-node (bspc query --nodes --node '.leaf.!window') --follow
-
-/*
-  #
-  # preselect
-  #
-
-  bspc node --presel-dir north -i && bspc node --presel-dir north -i
-  bspc node 
-
-  bspc node 'prev.hidden' --flag hidden=off
-
-  # preselect the direction
-  super + ctrl + {h,j,k,l}
-      bspc node -p {west,south,north,east}
-
-  # preselect the ratio
-  super + ctrl + {1-9}
-      bspc node -o 0.{1-9}
-
-  # cancel the preselection for the focused node
-  super + ctrl + space
-      bspc node -p cancel
-
-  # cancel the preselection for the focused desktop
-  super + ctrl + shift + space
-      bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
-
-  */
-
