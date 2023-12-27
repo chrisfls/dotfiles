@@ -37,6 +37,42 @@ let
 
     else
       throw "Invalid move direction";
+
+  swallow = selector:
+    # MONO: PERFECT
+    # UNREACH: PERFECT
+    ''
+      hidden=$(${selector});
+      if [ "${dollar}{hidden}" ]; then
+        focused=$(bspc query --nodes --node 'focused.local.window');
+        if [ "${dollar}{focused}" ]; then
+          unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
+          if [ "${dollar}{unfocused}" ]; then
+            echo "tabs";
+            picom-trans --window "$focused" 0
+            &&
+            bspc node --presel-dir north --insert-receptacle --state floating
+            &&
+            bspc node $hidden --to-node $(bspc query --nodes --node 'prev.local.leaf.!window') --flag hidden=off --focus $hidden
+            &&
+            bspc node $focused --flag hidden=on --state ~floating
+            &&
+            picom-trans --window "$focused" 100;
+          else
+            echo "mono";
+            bspc node $focused --flag hidden=on
+            &&
+            bspc node $hidden --flag hidden=off --focus $hidden;
+          fi
+        else
+          echo "backlog";
+          bspc node $hidden --flag hidden=off --focus $hidden;
+        fi;
+      else
+        echo "unreach";
+        bspc node 'any.local.hidden.window' --flag hidden=off;
+      fi;
+    '';
 in
 {
   options.module.bspwm = {
@@ -350,52 +386,13 @@ in
       # HIDDEN SWALLOW
       ######## #### ## #
 
-      # TODO: fix focus flicker
-
       # swap current window with previous hidden window
       "super + Tab" =
-        ''
-          hidden=$(bspc query --nodes --node 'next.local.hidden.window');
-          if [ "${dollar}{hidden}" ]; then
-            focused=$(bspc query --nodes --node 'focused.local.window');
-            unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
-            if [ "${dollar}{unfocused}" ]; then
-              bspc node --presel-dir north --insert-receptacle --flag floating=on
-              &&
-              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') --flag hidden=off --focus $hidden;
-            elif [ "${dollar}{focused}" ]; then
-              bspc node $focused --flag hidden=on
-              &&
-              bspc node $hidden --flag hidden=off --focus $hidden;
-            else
-              bspc node $hidden --flag hidden=off --focus $hidden;
-            fi;
-          else
-            bspc node 'any.local.hidden.window' --flag hidden=off;
-          fi;
-        '';
+        swallow "bspc query --nodes --node 'next.local.hidden.window'";
 
       # swap current window with next hidden window
       "super + shift + Tab" =
-        ''
-          hidden=$(bspc query --nodes --node 'prev.local.hidden.window');
-          if [ "${dollar}{hidden}" ]; then
-            focused=$(bspc query --nodes --node 'focused.local.window');
-            unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
-            if [ "${dollar}{unfocused}" ]; then
-              bspc node --presel-dir north --insert-receptacle --flag hidden=on
-              &&
-              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') --flag hidden=off --focus $hidden;
-            elif [ "${dollar}{focused}" ]; then
-              bspc node $focused --flag hidden=on;
-              bspc node $hidden --flag hidden=off --focus $hidden;
-            else
-              bspc node $hidden --flag hidden=off --focus $hidden;
-            fi;
-          else
-            bspc node 'any.local.hidden.window' --flag hidden=off;
-          fi;
-        '';
+        swallow "bspc query --nodes --node 'prev.local.hidden.window'";
     };
   };
 }
