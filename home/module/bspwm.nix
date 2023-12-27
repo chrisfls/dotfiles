@@ -55,7 +55,7 @@ let
 
       if [ "$window" ]; then
         modifier="!floating";
-      else;
+      else
         modifier="floating";
       fi;
 
@@ -77,7 +77,7 @@ let
         bspc node $window --focus
       );
 
-      bspc wm -h on;
+      bspc wm -h on
     '';
 
   # TODO: https://github.com/JopStro/bspswallow
