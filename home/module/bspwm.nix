@@ -398,44 +398,37 @@ in
       # REVIEW: probably there's a better way to do that
 
       # push window to scratchpad
-      "super + apostrophe" =
+      "super + n" = # apostrophe
         ''
           ${scratchpad};
-          bspc node --flag sticky=off --to-desktop pad --state tiled
+          window=$(bspc query --nodes --node);
+          if [ -z "$window" ]; then exit 1; fi;
+          bspc node $window --flag sticky=off --to-desktop pad --state tiled;
+          bspc node '@pad:/' --circulate forward
         '';
       # pop window from scratchpad
-      "super + shift + apostrophe" =
+      "super + shift + n" = # apostrophe
         ''
           ${scratchpad};
-          bspc node '@pad:#next.local.window' --to-desktop focused
-          ||
-          bspc node '@pad:#any.local.window' --to-desktop focused
+          bspc node '@pad:#newest.local.window' --to-desktop focused --focus $window
         '';
 
       # swap current window with previous scratchpad window
       "super + Tab" =
         ''
           ${scratchpad};
-          (
-            bspc node --swap '@pad:#next.local.window'
-            &&
-            bspc node '@pad:/' --circulate backward
-          )
-          ||
-          bspc node --swap '@pad:#any.local.window'
+          bspc node '@pad:/' --circulate forward
+          &&
+          bspc node --swap '@pad:#newest.local.window'
         '';
 
       # swap current window with next scratchpad window
       "super + shift + Tab" =
         ''
           ${scratchpad};
-          (
-            bspc node --swap '@pad:#next.local.window'
-            &&
-            bspc node '@pad:/' --circulate forward
-          )
-          ||
-          bspc node --swap '@pad:#any.local.window'
+          bspc node --swap '@pad:#newest.local.window'
+          &&
+          bspc node '@pad:/' --circulate backward
         '';
     };
   };

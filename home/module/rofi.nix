@@ -96,7 +96,9 @@ in
     ];
 
     module.sxhkd.keybindings = {
-      "super + shift + space" = "rofi-windows";
+      "super + apostrophe" = "rofi-windows";
+      # TODO: hidden windows menu
+      # TODO: scratchpad windows menu
       "super + Return" = "rofi-mainmenu";
       "super + shift + BackSpace" = "rofi-calc";
       "super + shift + Return" = "rofi-run";
