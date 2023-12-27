@@ -74,6 +74,10 @@ in
       remove_disabled_monitors = true;
       remove_unplugged_monitors = true;
     };
+    extraConfig =
+      ''
+        bspc wm --add-monitor PAD 3840x2160+3840+0
+      '';
   };
 
 
