@@ -415,15 +415,13 @@ in
 
       # push window to scratchpad
       "super + apostrophe" =
-        "bspc node --flag sticky=off --to-desktop pad";
+        "bspc node --flag sticky=off --to-desktop pad --state tiled";
       # pop window from scratchpad
       "super + shift + apostrophe" =
-        # REVIEW: probably there's a better way for implementing this
         ''
-          window=$(
-            bspc query --nodes --node '@pad:#next.local.window' || bspc query --nodes --node '@pad:#any.local.window'
-          );
-          bspc node $window --to-desktop focused
+          bspc node '@pad:#next.local.window' --to-desktop focused
+          ||
+          bspc node '@pad:#any.local.window' --to-desktop focused
         '';
 
       # swap current window with previous scratchpad window
