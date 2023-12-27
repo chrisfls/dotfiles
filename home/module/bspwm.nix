@@ -89,6 +89,7 @@ in
           hash = "sha256-O4Qwdjb3p6jw8Qtcd4zGZ57cB3oCCbPZcjUQtWbyC7Y=";
         };
       });
+      monitors.PAD = [ "pad" ];
       rules = {
         "Yad".floating = true;
         "copyq" = {
