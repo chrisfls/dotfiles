@@ -324,34 +324,6 @@ in
       # remove receptacles that might have been created by mistake
       "super + alt + r" = "while bspc node 'any.leaf.!window' -k; do :; done";
 
-      # PRESELECTION
-      ######## #### ## #
-
-      "super + g ;" = # grab
-        let
-          escape = "${xdotool} key Escape";
-        in
-        {
-          "Left" = "bspc node --presel-dir ~west";
-          "h" = "bspc node --presel-dir ~west";
-
-          "Down" = "bspc node --presel-dir ~south";
-          "j" = "bspc node --presel-dir ~south";
-
-          "Up" = "bspc node --presel-dir ~north";
-          "k" = "bspc node --presel-dir ~north";
-
-          "Right" = "bspc node --presel-dir ~east";
-          "l" = "bspc node --presel-dir ~east";
-
-          "Return" = escape;
-          "space" = escape;
-          "s" = escape;
-        };
-
-      "super + shift + g" = # ungrab
-        "bspc node --presel-dir cancel";
-
       # WORKSPACES
       ######## #### ## #
 
