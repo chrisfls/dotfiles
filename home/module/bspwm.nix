@@ -157,9 +157,9 @@ in
       "super + f" = "bspc node --state ~floating";
 
       # [r]otate pair direction
-      "super + r" = "bspc node '@parent.vertical' -y horizontal || bspc node '@parent' -y vertical";
+      "super + s" = "bspc node '@parent.vertical' -y horizontal || bspc node '@parent' -y vertical";
       # [r]everse pair position
-      "super + shift + r" = "bspc node '@parent' --rotate 180";
+      "super + shift + s" = "bspc node '@parent' --rotate 180";
 
       # toggle [p]seudo tiled state
       "super + p" = "bspc node --state ~pseudo_tiled";
@@ -186,6 +186,23 @@ in
           while bspc node any.local.hidden.window -g hidden=off; do false; done
             && while bspc node 'any.local.!hidden.window' -g hidden=on; do :; done
         '';
+
+      ######## #### ## #
+      # RECEPTACLES
+      ######## #### ## #
+
+      "super + i" =
+        ''
+          existing=$(bspc query --nodes focused --node any.local.leaf.!window);
+          if [ "${dollar}{existing}" ]; then
+            while bspc node 'any.local.leaf.!window' -k; do :; done
+          else
+            bspc node --insert-receptacle;
+          fi
+        '';
+
+      "super + shift + i" =
+        "bspc node --to-node $(bspc query --nodes --node 'prev.local.leaf.!window') --focus $focused";
 
       ######## #### ## #
       # FOCUS AND MOVEMENT
@@ -278,7 +295,7 @@ in
       # RESIZE
       ######## #### ## #
 
-      "super + s :" =
+      "super + r :" =
         let
           grow-left = "bspc node --resize left -${amount} 0";
           grow-down = "bspc node --resize bottom 0 ${amount}";
@@ -314,25 +331,8 @@ in
           # cancel
           "Return" = escape;
           "space" = escape;
-          "s" = escape;
+          "r" = escape;
         };
-
-      ######## #### ## #
-      # INSERT
-      ######## #### ## #
-
-      "super + i" =
-        ''
-          existing=$(bspc query --nodes focused --node any.local.leaf.!window);
-          if [ "${dollar}{existing}" ]; then
-            while bspc node 'any.local.leaf.!window' -k; do :; done
-          else
-            bspc node --insert-receptacle;
-          fi
-        '';
-
-      "super + shift + i" =
-        "bspc node --to-node $(bspc query --nodes --node 'prev.local.leaf.!window') --focus $focused";
 
       ######## #### ## #
       # HIDDEN SWALLOW
