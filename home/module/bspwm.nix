@@ -37,32 +37,6 @@ let
 
     else
       throw "Invalid move direction";
-
-  swallow = selector:
-    ''
-      hidden=$(${selector});
-      if [ -z "${dollar}{hidden}" ]; then
-        bspc node 'any.local.hidden.window' --flag hidden=off && exit 0;
-      fi;
-
-      focused=$(bspc query --nodes --node);
-      if [ -z "${dollar}{focused}" ]; then exit 0; fi;
-
-      unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
-      if [ -z "${dollar}{unfocused}" ]; then
-        bspc node $focused --flag hidden=on
-        &&
-        bspc node $hidden --flag hidden=off --focus $hidden
-        &&
-        exit 0;
-      fi;
-
-      bspc node --presel-dir north --insert-receptacle --flag hidden=on
-      &&
-      bspc node $hidden --to-node $(bspc query --nodes --node 'prev.local.leaf.!window') --flag hidden=off --focus $hidden
-      &&
-      bspc node $focused --flag hidden=on
-    '';
 in
 {
   options.module.bspwm = {
@@ -196,7 +170,6 @@ in
       "super + p" = "bspc node --state ~pseudo_tiled";
       # toggle [p]inned flag (sticky)
       "super + shift + p" = "bspc node --flag sticky";
-
 
       # ## #
       # tertiary actions (show desktop/equalize/balance)
@@ -374,16 +347,21 @@ in
         };
 
       ######## #### ## #
-      # HIDDEN SWALLOW
+      # SCRATCHPAD
       ######## #### ## #
 
-      # swap current window with previous hidden window
-      "super + Tab" =
-        swallow "bspc query --nodes --node 'next.local.hidden.window'";
+      # push window to scratchpad
+      "super + apostrophe" = "bspc node --flag sticky=off --to-desktop pad";
+      # pop window from scratchpad
+      "super + shift + apostrophe" =
+        "bspc node $(bspc query --nodes --monitor PAD --desktop pad --node) --to-desktop focused";
 
-      # swap current window with next hidden window
+      # swap current window with previous scratchpad window
+      "super + Tab" =
+        "bspc node --flag sticky=off --swap $(bspc query --nodes --monitor PAD --desktop pad --node prev)";
+      # swap current window with next scratchpad window
       "super + shift + Tab" =
-        swallow "bspc query --nodes --node 'prev.local.hidden.window'";
+        "bspc node --flag sticky=off --swap $(bspc query --nodes --monitor PAD --desktop pad --node next)";
     };
   };
 }
