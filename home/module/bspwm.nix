@@ -59,7 +59,7 @@ let
         modifier="floating";
       fi;
 
-      bspc node --focus "${age}.local.!hidden.$modifier.window" || (
+      bspc node "${age}.local.!hidden.$modifier.window" --focus || (
         if [ -z "$window" ]; then
           window=$(bspc query --nodes --node);
         fi;
@@ -80,6 +80,36 @@ let
       bspc wm -h on
     '';
 
+  swallow = age:
+    let
+      age' =
+        if age == "newer" then
+          "older"
+        else if age == "older" then
+          "newer"
+        else
+          throw "Invalid age";
+    in
+    ''
+      bspc wm -h off;
+
+      focused=$(bspc query --nodes --node 'focused.local.!hidden.!floating.window');
+
+      if [ "$focused" ]; then
+        modifier="!floating";
+      else
+        modifier="floating";
+        focused=$(bspc query --nodes --node);
+      fi;
+
+      window=$(bspc query --nodes --node 'any.local.hidden.window');
+
+      bspc node $window --state $modifier --flag hidden=off --focus
+      &&
+      bspc node $focused --flag hidden=on --state !floating;
+
+      bspc wm -h on
+    '';
   # TODO: https://github.com/JopStro/bspswallow
 in
 {
@@ -385,7 +415,7 @@ in
 
       # push window to scratchpad
       "super + apostrophe" =
-        "bspc node --flag sticky=off --to-desktop pad --state !floating";
+        "bspc node --flag sticky=off --to-desktop pad";
       # pop window from scratchpad
       "super + shift + apostrophe" =
         # REVIEW: probably there's a better way for implementing this
@@ -399,19 +429,25 @@ in
       # swap current window with previous scratchpad window
       "super + Tab" =
         ''
-          pad=$(bspc query --desktops --desktop 'pad');
-          bspc node "@11:/#next" --swap focused
-          &&
-          bspc node "@11:/#prev" --flag sticky=off --swap "@11:/#next"
+          head=$(bspc query --nodes --node '@pad:#next.local.window');
+          prev=$(bspc query --nodes --node '@pad:#prev.local.window');
+          if [ "$head" ] && [ "$prev" ]; then
+            focused=$(bspc query --nodes --node);
+            bspc node $head --swap $head $focused --focus
+            &&
+            bspc node $focused --swap $prev;
+          else
+            bspc node --swap '@pad:#any.local.window';
+          fi
         '';
       # swap current window with next scratchpad window
-      "super + shift + Tab" =
+      /*"super + shift + Tab" =
         ''
           pad=$(bspc query --desktops --desktop 'pad');
           bspc node "@11:/#prev" --swap focused
           &&
           bspc node "@11:/#prev" --flag sticky=off --swap "@11:/#next"
-        '';
+        '';*/
     };
   };
 }
