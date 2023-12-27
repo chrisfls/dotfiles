@@ -59,13 +59,13 @@ let
         modifier="floating";
       fi;
 
-      bspc node --focus "older.local.!hidden.$modifier.window" || (
+      bspc node --focus "${age}.local.!hidden.$modifier.window" || (
         if [ -z "$window" ]; then
           window=$(bspc query --nodes --node);
         fi;
 
         while true; do
-          result=$(bspc query --nodes --node "$window#newer.local.!hidden.$modifier.window");
+          result=$(bspc query --nodes --node "$window#${age'}.local.!hidden.$modifier.window");
 
           if [ -z "$result" ]; then
             break;
