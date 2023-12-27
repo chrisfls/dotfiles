@@ -80,37 +80,13 @@ let
       bspc wm -h on
     '';
 
-  swallow = age:
-    let
-      age' =
-        if age == "newer" then
-          "older"
-        else if age == "older" then
-          "newer"
-        else
-          throw "Invalid age";
-    in
+  scratchpad =
     ''
-      bspc wm -h off;
-
-      focused=$(bspc query --nodes --node 'focused.local.!hidden.!floating.window');
-
-      if [ "$focused" ]; then
-        modifier="!floating";
-      else
-        modifier="floating";
-        focused=$(bspc query --nodes --node);
-      fi;
-
-      window=$(bspc query --nodes --node 'any.local.hidden.window');
-
-      bspc node $window --state $modifier --flag hidden=off --focus
-      &&
-      bspc node $focused --flag hidden=on --state !floating;
-
-      bspc wm -h on
+      if [ -z "$(bspc query --monitors --monitor PAD)" ]; then
+        bspc wm --add-monitor PAD ${cfg.scratchpad};
+        bspc monitor 'PAD' -d 'pad';
+      fi
     '';
-  # TODO: https://github.com/JopStro/bspswallow
 in
 {
   options.module.bspwm = {
@@ -118,6 +94,9 @@ in
     amount = lib.mkOption {
       type = types.int;
       default = 100;
+    };
+    scratchpad = lib.mkOption {
+      type = types.str;
     };
   };
 
@@ -136,7 +115,7 @@ in
           hash = "sha256-O4Qwdjb3p6jw8Qtcd4zGZ57cB3oCCbPZcjUQtWbyC7Y=";
         };
       });
-      monitors.PAD = [ "pad" ];
+      extraConfig = scratchpad;
       rules = {
         "Yad".floating = true;
         "copyq" = {
@@ -287,7 +266,10 @@ in
         '';
 
       "super + shift + i" =
-        "bspc node --to-node $(bspc query --nodes --node 'prev.local.leaf.!window') --focus $focused";
+        ''
+          existing=$(bspc query --nodes --node 'prev.local.leaf.!window');
+          if [ "$existing" ]; then bspc node --to-node $existing; fi;
+        '';
 
       ######## #### ## #
       # FOCUS AND MOVEMENT
@@ -413,12 +395,18 @@ in
       # SCRATCHPAD
       ######## #### ## #
 
+      # REVIEW: probably there's a better way to do that
+
       # push window to scratchpad
       "super + apostrophe" =
-        "bspc node --flag sticky=off --to-desktop pad --state tiled";
+        ''
+          ${scratchpad};
+          bspc node --flag sticky=off --to-desktop pad --state tiled
+        '';
       # pop window from scratchpad
       "super + shift + apostrophe" =
         ''
+          ${scratchpad};
           bspc node '@pad:#next.local.window' --to-desktop focused
           ||
           bspc node '@pad:#any.local.window' --to-desktop focused
@@ -427,26 +415,47 @@ in
       # swap current window with previous scratchpad window
       "super + Tab" =
         ''
-          head=$(bspc query --nodes --node '@pad:#next.local.window');
-          prev=$(bspc query --nodes --node '@pad:#prev.local.window');
-          if [ "$head" ] && [ "$prev" ]; then
-            focused=$(bspc query --nodes --node);
-            bspc node $head --swap $head $focused --focus
+          ${scratchpad};
+          (
+            bspc node --swap '@pad:#next.local.window'
             &&
-            bspc node $focused --swap $prev;
-          else
-            bspc node --swap '@pad:#any.local.window';
-          fi
+            bspc node '@pad:/' --circulate backward
+          )
+          ||
+          bspc node --swap '@pad:#any.local.window'
         '';
+
       # swap current window with next scratchpad window
-      /*"super + shift + Tab" =
+      "super + shift + Tab" =
         ''
-          pad=$(bspc query --desktops --desktop 'pad');
-          bspc node "@11:/#prev" --swap focused
-          &&
-          bspc node "@11:/#prev" --flag sticky=off --swap "@11:/#next"
-        '';*/
+          ${scratchpad};
+          (
+            bspc node --swap '@pad:#next.local.window'
+            &&
+            bspc node '@pad:/' --circulate forward
+          )
+          ||
+          bspc node --swap '@pad:#any.local.window'
+        '';
     };
   };
 }
-# bspc node "@$pad:/#prev" --to-desktop focused
+
+/*
+  last=$(bspc query --nodes --node '@pad:#any.local.window');
+  if [ -z "$last" ]; then exit 0; fi;
+  while true; do
+  result=$(bspc query --nodes --node "$last#prev.local.window");
+  if [ "$result" ]; then window="$result"; else break; fi;
+  done;
+
+  window=$(bspc query --nodes --node '@pad:#any.local.window');
+  if [ -z "$window" ]; then exit 0; fi;
+  while true; do
+  result=$(bspc query --nodes --node "$window#prev.local.window");
+  if [ -z "$result" ]; then break; fi;
+  bspc node $window --swap $result;
+  window="$result";
+  if [ "$window" -eq "$last" ]; then break; fi;
+  done;
+*/

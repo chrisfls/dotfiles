@@ -16,6 +16,7 @@ in
   module = {
     cloudflare-warp.enable = true;
     scaling = { enable = true; scale = 1.5; };
+    bspwm.scratchpad = "3840x2160+3840+0";
   };
 
   home.keyboard.layout = "br";
@@ -74,10 +75,6 @@ in
       remove_disabled_monitors = true;
       remove_unplugged_monitors = true;
     };
-    extraConfig =
-      ''
-        bspc wm --add-monitor PAD 3840x2160+3840+0
-      '';
   };
 
 
