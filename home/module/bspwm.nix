@@ -85,6 +85,10 @@ in
           rectangle = "750x678+0+0";
           center = true;
         };
+        "pcmanfm-qt" = {
+          state = "floating";
+          center = true;
+        };
       };
       settings = {
         border_width = 2;
@@ -356,7 +360,7 @@ in
             focused=$(bspc query --nodes --node 'focused.local.window');
             unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
             if [ "${dollar}{unfocused}" ]; then
-              bspc node --presel-dir north --insert-receptacle --flag hidden=on
+              bspc node --presel-dir north --insert-receptacle --flag floating=on
               &&
               bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') --flag hidden=off --focus $hidden;
             elif [ "${dollar}{focused}" ]; then
