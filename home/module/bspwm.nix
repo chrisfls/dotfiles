@@ -440,22 +440,3 @@ in
     };
   };
 }
-
-/*
-  last=$(bspc query --nodes --node '@pad:#any.local.window');
-  if [ -z "$last" ]; then exit 0; fi;
-  while true; do
-  result=$(bspc query --nodes --node "$last#prev.local.window");
-  if [ "$result" ]; then window="$result"; else break; fi;
-  done;
-
-  window=$(bspc query --nodes --node '@pad:#any.local.window');
-  if [ -z "$window" ]; then exit 0; fi;
-  while true; do
-  result=$(bspc query --nodes --node "$window#prev.local.window");
-  if [ -z "$result" ]; then break; fi;
-  bspc node $window --swap $result;
-  window="$result";
-  if [ "$window" -eq "$last" ]; then break; fi;
-  done;
-*/
