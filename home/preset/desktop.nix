@@ -25,14 +25,14 @@ in
         fontconfig.enable = true;
         fonts.enable = true;
         loopback-toggle.enable = true;
+        micro = { enable = true; desktop = true; };
         picom.enable = true;
         polybar.enable = true;
         qview.enable = true;
         rofi.enable = true;
         screenshot.enable = true;
-        sxhkd.enable = true;
+        sxhkd = { enable = true; keybindings."super + e" = "gtk-launch pcmanfm-qt"; };
         themes.enable = true;
-        micro = { enable = true; desktop = true; };
       };
 
       xsession = {
@@ -114,7 +114,7 @@ in
         pkgs.notepadqq # notepad++ [not needed with micro around]
         pkgs.mpv # not configured yet
         pkgs.languagetool # not the actual languagetool app
-          */
+        */
       ];
 
       xdg = {

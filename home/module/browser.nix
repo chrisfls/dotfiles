@@ -43,5 +43,7 @@ in
         "application/x-extension-xht" = browser;
       };
     };
+
+    module.sxhkd.keybindings."super + b" = "gtk-launch brave-browser";
   };
 }
