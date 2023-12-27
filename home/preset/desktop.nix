@@ -31,7 +31,13 @@ in
         qview.enable = true;
         rofi.enable = true;
         screenshot.enable = true;
-        sxhkd = { enable = true; keybindings."super + e" = "gtk-launch pcmanfm-qt"; };
+        sxhkd = {
+          enable = true;
+          keybindings = {
+            "super + e" = "gtk-launch pcmanfm-qt";
+            "ctrl + alt + Delete" = "gtk-launch qps";
+          };
+        };
         themes.enable = true;
       };
 
