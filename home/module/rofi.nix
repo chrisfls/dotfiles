@@ -100,6 +100,7 @@ in
       "super + Return" = "rofi-mainmenu";
       "super + shift + BackSpace" = "rofi-calc";
       "super + shift + Return" = "rofi-run";
+      "super + shift + semicolon" = "rofi-calc";
     };
 
     xdg.dataFile = {
