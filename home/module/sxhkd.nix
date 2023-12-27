@@ -44,18 +44,18 @@ let
 
   swapOrMove = direction:
     let
-      prefix = "bspc node 'focused.!floating' --swap ${direction}";
+      prefix = "bspc node 'focused.!floating.window' --swap ${direction}";
     in
     if direction == "west" then
-      "${prefix} || bspc node 'focused.floating' --move -${amount} 0"
+      "${prefix} || bspc node 'focused.floating.window' --move -${amount} 0"
     else if direction == "south" then
-      "${prefix} || bspc node 'focused.floating' --move 0 ${amount}"
+      "${prefix} || bspc node 'focused.floating.window' --move 0 ${amount}"
 
     else if direction == "north" then
-      "${prefix} || bspc node 'focused.floating' --move 0 -${amount}"
+      "${prefix} || bspc node 'focused.floating.window' --move 0 -${amount}"
 
     else if direction == "east" then
-      "${prefix} || bspc node 'focused.floating' --move ${amount} 0"
+      "${prefix} || bspc node 'focused.floating.window' --move ${amount} 0"
 
     else
       builtins.throw "Invalid move direction";
@@ -99,7 +99,7 @@ in
       "super + shift + Escape" = "bspc wm --restart";
 
       # panic quit bspwm
-      "super + shift + q" = "bspc quit";
+      "control + alt + Escape" = "bspc quit";
 
       # WINDOW CONTROLS
       ######## #### ## #
@@ -109,26 +109,27 @@ in
       # kill app
       "super + shift + c" = "bspc node -k";
 
-      # shift direction
+      # shift pair direction
       "super + s" = "bspc node '@parent.vertical' -y horizontal || bspc node '@parent' -y vertical";
 
       # toggle floating state
       "super + f" = "bspc node --state ~floating";
 
-      # toggle monocle layout
-      "super + m" = "bspc desktop --layout next";
-      # toggle fullscreen state
-      "super + shift + m" = "bspc node --state ~fullscreen";
+      # toggle maximize state (fullscreen)
+      "super + x" = "bspc node --state ~fullscreen";
+      
+      # cycle tiled/monocle layout
+      "super + t" = "bspc desktop --layout next";
 
       # toggle pseudo tiled state
       "super + p" = "bspc node --state ~pseudo_tiled";
-      # toggle sticky flag
+      # toggle pinned flag (sticky)
       "super + shift + p" = "bspc node --flag sticky";
 
-      # hide window
-      "super + n" = "bspc node --flag hidden=on";
-      # unhide window
-      "super + shift + n" = "bspc node 'prev.local.hidden.window' --flag hidden=off";
+      # minimize window (hide)
+      "super + m" = "bspc node --flag hidden=on";
+      # unminimize window (unhide)
+      "super + shift + m" = "bspc node 'any.local.hidden.window' --flag hidden=off;";
 
       # FOCUS AND MOVEMENT
       ######## #### ## #
@@ -160,25 +161,25 @@ in
       # toggle floating focus
       "super + space" =
         ''
-          bspc node 'focused.!floating' -f 'last.local.!hidden.window.floating'
+          bspc node 'focused.!floating' -f 'last.local.!hidden.floating.window'
           ||
-          bspc node 'focused.floating' -f 'last.local.!hidden.window.!floating'
+          bspc node 'focused.floating' -f 'last.local.!hidden.!floating.window'
         '';
 
       # focus previous window
       "alt + Tab" =
         ''
-          bspc node 'focused.!floating' --focus 'prev.local.!hidden.window.!floating' --flag hidden=off
+          bspc node 'focused.!floating' --focus 'prev.local.!hidden.!floating.window' --flag hidden=off
           ||
-          bspc node 'focused.floating' --focus 'prev.local.!hidden.window.floating' --flag hidden=off
+          bspc node 'focused.floating' --focus 'prev.local.!hidden.floating.window' --flag hidden=off
         '';
 
       # focus next window
       "alt + shift + Tab" =
         ''
-          bspc node 'focused.!floating' --focus 'next.local.!hidden.window.!floating' --flag hidden=off
+          bspc node 'focused.!floating' --focus 'next.local.!hidden.!floating.window' --flag hidden=off
           ||
-          bspc node 'focused.floating' --focus 'next.local.!hidden.window.floating' --flag hidden=off
+          bspc node 'focused.floating' --focus 'next.local.!hidden.floating.window' --flag hidden=off
         '';
 
       # TAB Simulation
@@ -186,25 +187,6 @@ in
 
       # swap current window with previous hidden window
       "super + Tab" =
-        ''
-          hidden=$(bspc query --nodes --node 'prev.local.hidden.window');
-          if [ "${dollar}{hidden}" ]; then
-            focused=$(bspc query --nodes --node 'focused.local.window');
-            unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
-            if [ "${dollar}{unfocused}" ]; then
-              bspc node --presel-dir north --insert-receptacle --flag hidden=on;
-              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') +--flag hidden=off --focus $hidden;
-            elif [ "${dollar}{focused}" ]; then
-              bspc node $focused --flag hidden=on;
-              bspc node $hidden --flag hidden=off --focus $hidden;
-            else
-              bspc node $hidden --flag hidden=off --focus $hidden;
-            fi;
-          fi;
-        '';
-
-      # swap current window with next hidden window
-      "super + shift + Tab" =
         ''
           hidden=$(bspc query --nodes --node 'next.local.hidden.window');
           if [ "${dollar}{hidden}" ]; then
@@ -219,6 +201,29 @@ in
             else
               bspc node $hidden --flag hidden=off --focus $hidden;
             fi;
+          else
+            bspc node 'any.local.hidden.window' --flag hidden=off;
+          fi;
+        '';
+
+      # swap current window with next hidden window
+      "super + shift + Tab" =
+        ''
+          hidden=$(bspc query --nodes --node 'prev.local.hidden.window');
+          if [ "${dollar}{hidden}" ]; then
+            focused=$(bspc query --nodes --node 'focused.local.window');
+            unfocused=$(bspc query --nodes --node 'prev.local.!hidden.window');
+            if [ "${dollar}{unfocused}" ]; then
+              bspc node --presel-dir north --insert-receptacle --flag hidden=on;
+              bspc node $hidden --to-node $(bspc query --nodes --node 'prev.leaf.!window') +--flag hidden=off --focus $hidden;
+            elif [ "${dollar}{focused}" ]; then
+              bspc node $focused --flag hidden=on;
+              bspc node $hidden --flag hidden=off --focus $hidden;
+            else
+              bspc node $hidden --flag hidden=off --focus $hidden;
+            fi;
+          else
+            bspc node 'any.local.hidden.window' --flag hidden=off;
           fi;
         '';
 
@@ -266,20 +271,6 @@ in
 
           "shift + Right" = shrink-right;
           "shift + l" = shrink-right;
-
-          # shrink with super (lazy to move fingers)
-
-          "super + Left" = shrink-left;
-          "super + h" = shrink-left;
-
-          "super + Down" = shrink-down;
-          "super + j" = shrink-down;
-
-          "super + Up" = shrink-up;
-          "super + k" = shrink-up;
-
-          "super + Right" = shrink-right;
-          "super + l" = shrink-right;
 
           # cancel
 
