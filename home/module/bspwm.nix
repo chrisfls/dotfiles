@@ -384,32 +384,33 @@ in
       ######## #### ## #
 
       # push window to scratchpad
-      "super + apostrophe" = "bspc node --flag sticky=off --to-desktop pad";
+      "super + apostrophe" =
+        "bspc node --flag sticky=off --to-desktop pad --state !floating";
       # pop window from scratchpad
       "super + shift + apostrophe" =
+        # REVIEW: probably there's a better way for implementing this
         ''
-          pad=$(bspc query --desktops --desktop 'pad');
-          bspc node "@$pad:" --swap "@$pad:/#prev"
-          &&
-          bspc node "@$pad:" --to-desktop focused
-          bspc node "prev#@$pad:" --to-desktop focused
+          window=$(
+            bspc query --nodes --node '@pad:#next.local.window' || bspc query --nodes --node '@pad:#any.local.window'
+          );
+          bspc node $window --to-desktop focused
         '';
 
       # swap current window with previous scratchpad window
       "super + Tab" =
         ''
           pad=$(bspc query --desktops --desktop 'pad');
-          bspc node "@$pad:/#next" --swap focused
+          bspc node "@11:/#next" --swap focused
           &&
-          bspc node "@$pad:/#prev" --flag sticky=off --swap "@$pad:/#next"
+          bspc node "@11:/#prev" --flag sticky=off --swap "@11:/#next"
         '';
       # swap current window with next scratchpad window
       "super + shift + Tab" =
         ''
           pad=$(bspc query --desktops --desktop 'pad');
-          bspc node "@$pad:/#prev" --swap focused
+          bspc node "@11:/#prev" --swap focused
           &&
-          bspc node "@$pad:/#prev" --flag sticky=off --swap "@$pad:/#next"
+          bspc node "@11:/#prev" --flag sticky=off --swap "@11:/#next"
         '';
     };
   };
