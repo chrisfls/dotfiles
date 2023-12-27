@@ -289,23 +289,6 @@ in
           shrink-down = "bspc node --resize bottom 0 -${amount}";
           shrink-up = "bspc node --resize top 0 ${amount}";
           shrink-right = "bspc node --resize right -${amount} 0";
-
-
-          # TODO: make work with all windows
-          # i3-resize = vertical: grow:
-          #   let
-          #     fmt = n: toString (builtins.ceil n);
-          #     n = if grow then cfg.amount / -2 else cfg.amount / 2;
-          #     fst = if vertical then "top 0 ${fmt n}" else "left ${fmt n} 0";
-          #     snd = if vertical then "bottom 0 ${fmt (n * -1)}" else "right ${fmt (n * -1)} 0";
-          #   in
-          #   ''
-          #     bspc node --resize ${fst} --resize ${snd}
-          #   '';
-          # resize-left = i3-resize false false;
-          # resize-down = i3-resize true true;
-          # resize-up = i3-resize true false;
-          # resize-right = i3-resize false true;
         in
         {
           # enlarge
@@ -327,16 +310,6 @@ in
           "shift + k" = shrink-up;
           "shift + Right" = shrink-right;
           "shift + l" = shrink-right;
-
-          # enlarge and shrink
-          # "super + Left" = resize-left;
-          # "super + h" = resize-left;
-          # "super + Down" = resize-down;
-          # "super + j" = resize-down;
-          # "super + Up" = resize-up;
-          # "super + k" = resize-up;
-          # "super + Right" = resize-right;
-          # "super + l" = resize-right;
 
           # cancel
           "Return" = escape;
