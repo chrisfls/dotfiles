@@ -253,53 +253,6 @@ in
       "super + shift + equal" = "bspc desktop --swap next --follow";
 
       ######## #### ## #
-      # INSERT
-      ######## #### ## #
-
-      "super + i ;" =
-        let
-          insert = dir:
-            let
-              dir' =
-                if dir == "west" then
-                  "east"
-                else if dir == "south" then
-                  "north"
-                else if dir == "north" then
-                  "south"
-                else if dir == "east" then
-                  "west"
-                else
-                  throw "Invalid move direction";
-            in
-            ''
-              focused=$(bspc query --nodes --node);
-              bspc node $(bspc query --nodes @parent --node '${dir}.local.!hidden.!floating.window') --presel-dir ${dir'} --insert-receptacle
-              &&
-              bspc node $focused --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $focused;
-            '';
-        in
-        {
-          # insert at
-          "Left" = insert "west";
-          "h" = insert "west";
-          "Down" = insert "south";
-          "j" = insert "south";
-          "Up" = insert "north";
-          "k" = insert "north";
-          "Right" = insert "east";
-          "l" = insert "east";
-
-          # cancel
-          "Return" = "";
-          "space" = "";
-          "i" = "";
-        };
-
-      # remove all receptacles
-      "super + shift + i" = "while bspc node 'any.leaf.!window' -k; do :; done";
-
-      ######## #### ## #
       # RESIZE
       ######## #### ## #
 
@@ -368,6 +321,53 @@ in
           "space" = escape;
           "s" = escape;
         };
+
+      ######## #### ## #
+      # INSERT
+      ######## #### ## #
+
+      "super + i ;" =
+        let
+          insert = dir:
+            let
+              dir' =
+                if dir == "west" then
+                  "east"
+                else if dir == "south" then
+                  "north"
+                else if dir == "north" then
+                  "south"
+                else if dir == "east" then
+                  "west"
+                else
+                  throw "Invalid move direction";
+            in
+            ''
+              focused=$(bspc query --nodes --node);
+              bspc node $(bspc query --nodes @parent --node '${dir}.local.!hidden.!floating.window') --presel-dir ${dir'} --insert-receptacle
+              &&
+              bspc node $focused --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $focused;
+            '';
+        in
+        {
+          # insert at
+          "Left" = insert "west";
+          "h" = insert "west";
+          "Down" = insert "south";
+          "j" = insert "south";
+          "Up" = insert "north";
+          "k" = insert "north";
+          "Right" = insert "east";
+          "l" = insert "east";
+
+          # cancel
+          "Return" = "";
+          "space" = "";
+          "i" = "";
+        };
+
+      # remove all receptacles
+      "super + shift + i" = "while bspc node 'any.leaf.!window' -k; do :; done";
 
       ######## #### ## #
       # HIDDEN SWALLOW
