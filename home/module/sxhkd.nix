@@ -27,11 +27,11 @@ let
 
   cfg = config.module.sxhkd;
 
-  xdotool = "${pkgs.xdotool}/bin/xdotool";
-
   dollar = "$";
 
   amount = toString cfg.amount;
+
+  escape = "${pkgs.xdotool}/bin/xdotool key Escape";
 
   focus = direction:
     ''
@@ -40,7 +40,7 @@ let
       bspc node 'focused.floating' --focus '${direction}.floating.window'
     '';
 
-  swapOrMove = direction:
+  move = direction:
     let
       prefix = "bspc node 'focused.!floating.window' --swap ${direction}";
     in
@@ -57,19 +57,6 @@ let
 
     else
       builtins.throw "Invalid move direction";
-
-  # (bspc node '${direction}' -p 'south' && bspc node -n 'last.!automatic.local')
-
-  i3-resize = vertical: grow:
-    let
-      fmt = n: toString (ceil n);
-      n = if grow then cfg.amount / -2 else cfg.amount / 2;
-      fst = if vertical then "top 0 ${fmt n}" else "left ${fmt n} 0";
-      snd = if vertical then "bottom 0 ${fmt (n * -1)}" else "right ${fmt (n * -1)} 0";
-    in
-    ''
-      bspc node --resize ${fst} --resize ${snd}
-    '';
 in
 {
   options.module.sxhkd = {
@@ -103,34 +90,46 @@ in
       # WINDOW CONTROLS
       ######## #### ## #
 
-      # close app
+      # primary actions (close/float/min/max/alt+tab)
+      # ## #
+
+      # [c]lose app
       "super + c" = "bspc node --close";
-      # kill app
+      # [c]lose app (kill)
       "super + shift + c" = "bspc node -k";
 
-      # shift pair direction
-      "super + s" = "bspc node '@parent.vertical' -y horizontal || bspc node '@parent' -y vertical";
-      # flip pair direction
-      "super + shift + s" = "bspc node '@parent' --rotate 180";
-
-      # toggle floating state
+      # toggle [f]loating state
       "super + f" = "bspc node --state ~floating";
+      #  focus floating windows
+      "super + space" =
+        ''
+          bspc node 'focused.!floating' -f 'last.local.!hidden.floating.window'
+          ||
+          bspc node 'focused.floating' -f 'last.local.!hidden.!floating.window'
+        '';
 
-      # toggle maximize state (fullscreen)
+      # [m]inimize window (hide)
+      "super + m" = "bspc node --flag hidden=on";
+      # un[m]inimize window (unhide)
+      "super + shift + m" = "bspc node 'any.local.hidden.window' --flag hidden=off;";
+
+      # toggle ma[x]imize state (fullscreen)
       "super + x" = "bspc node --state ~fullscreen";
-
-      # cycle tiled/monocle layout
+      # cycle [t]iled/monocle layout
       "super + t" = "bspc desktop --layout next";
 
-      # toggle pseudo tiled state
-      "super + p" = "bspc node --state ~pseudo_tiled";
-      # toggle pinned flag (sticky)
-      "super + shift + p" = "bspc node --flag sticky";
+      # secondary actions (rotate/pseudo/pin)
+      # ## #
 
-      # minimize window (hide)
-      "super + m" = "bspc node --flag hidden=on";
-      # unminimize window (unhide)
-      "super + shift + m" = "bspc node 'any.local.hidden.window' --flag hidden=off;";
+      # shift pair direction
+      "super + r" = "bspc node '@parent.vertical' -y horizontal || bspc node '@parent' -y vertical";
+      # [r]everse pair position
+      "super + shift + r" = "bspc node '@parent' --rotate 180";
+
+      # toggle [p]seudo tiled state
+      "super + p" = "bspc node --state ~pseudo_tiled";
+      # toggle [p]inned flag (sticky)
+      "super + shift + p" = "bspc node --flag sticky";
 
       # FOCUS AND MOVEMENT
       ######## #### ## #
@@ -148,24 +147,16 @@ in
       "super + Right" = focus "east";
 
       # move with vim keys
-      "super + shift + h" = swapOrMove "west";
-      "super + shift + j" = swapOrMove "south";
-      "super + shift + k" = swapOrMove "north";
-      "super + shift + l" = swapOrMove "east";
+      "super + shift + h" = move "west";
+      "super + shift + j" = move "south";
+      "super + shift + k" = move "north";
+      "super + shift + l" = move "east";
 
       # move with arrow keys
-      "super + shift + Left" = swapOrMove "west";
-      "super + shift + Down" = swapOrMove "south";
-      "super + shift + Up" = swapOrMove "north";
-      "super + shift + Right" = swapOrMove "east";
-
-      # toggle floating focus
-      "super + space" =
-        ''
-          bspc node 'focused.!floating' -f 'last.local.!hidden.floating.window'
-          ||
-          bspc node 'focused.floating' -f 'last.local.!hidden.!floating.window'
-        '';
+      "super + shift + Left" = move "west";
+      "super + shift + Down" = move "south";
+      "super + shift + Up" = move "north";
+      "super + shift + Right" = move "east";
 
       # focus previous window
       "alt + Tab" =
@@ -174,7 +165,6 @@ in
           ||
           bspc node 'focused.floating' --focus 'prev.local.!hidden.floating.window' --flag hidden=off
         '';
-
       # focus next window
       "alt + shift + Tab" =
         ''
@@ -183,7 +173,7 @@ in
           bspc node 'focused.floating' --focus 'next.local.!hidden.floating.window' --flag hidden=off
         '';
 
-      # MANUAL SWALLOW
+      # HIDDEN SWALLOW
       ######## #### ## #
 
       # swap current window with previous hidden window
@@ -234,9 +224,8 @@ in
       # RESIZE
       ######## #### ## #
 
-      "super + r :" =
+      "super + s :" =
         let
-          escape = "${xdotool} key Escape";
           grow-left = "bspc node --resize left -${amount} 0";
           grow-down = "bspc node --resize bottom 0 ${amount}";
           grow-up = "bspc node --resize top 0 -${amount}";
@@ -246,83 +235,106 @@ in
           shrink-down = "bspc node --resize bottom 0 -${amount}";
           shrink-up = "bspc node --resize top 0 ${amount}";
           shrink-right = "bspc node --resize right -${amount} 0";
+
+
+          # TODO: make work with all windows
+          # i3-resize = vertical: grow:
+          #   let
+          #     fmt = n: toString (ceil n);
+          #     n = if grow then cfg.amount / -2 else cfg.amount / 2;
+          #     fst = if vertical then "top 0 ${fmt n}" else "left ${fmt n} 0";
+          #     snd = if vertical then "bottom 0 ${fmt (n * -1)}" else "right ${fmt (n * -1)} 0";
+          #   in
+          #   ''
+          #     bspc node --resize ${fst} --resize ${snd}
+          #   '';
+          # resize-left = i3-resize false false;
+          # resize-down = i3-resize true true;
+          # resize-up = i3-resize true false;
+          # resize-right = i3-resize false true;
         in
         {
           # enlarge
-
-          "Left" = grow-left; # i3-resize false false;
-          "h" = grow-left; # i3-resize false false;
-
-          "Down" = grow-down; # i3-resize true true;
-          "j" = grow-down; # i3-resize true true;
-
-          "Up" = grow-up; # i3-resize true false;
-          "k" = grow-up; # i3-resize true false;
-
-          "Right" = grow-right; # i3-resize false true;
-          "l" = grow-right; # i3-resize false true;
+          "Left" = grow-left;
+          "h" = grow-left;
+          "Down" = grow-down;
+          "j" = grow-down;
+          "Up" = grow-up;
+          "k" = grow-up;
+          "Right" = grow-right;
+          "l" = grow-right;
 
           # shrink
-
           "shift + Left" = shrink-left;
           "shift + h" = shrink-left;
-
           "shift + Down" = shrink-down;
           "shift + j" = shrink-down;
-
           "shift + Up" = shrink-up;
           "shift + k" = shrink-up;
-
           "shift + Right" = shrink-right;
           "shift + l" = shrink-right;
 
-          # cancel
+          # enlarge and shrink
+          # "super + Left" = resize-left;
+          # "super + h" = resize-left;
+          # "super + Down" = resize-down;
+          # "super + j" = resize-down;
+          # "super + Up" = resize-up;
+          # "super + k" = resize-up;
+          # "super + Right" = resize-right;
+          # "super + l" = resize-right;
 
+          # cancel
           "Return" = escape;
           "space" = escape;
-          "r" = escape;
+          "s" = escape;
         };
 
-      # TODO: perhaps join both modes down
-
-      # RECEPTACLE
+      # INSERT
       ######## #### ## #
 
-      "super + shift + r ;" =
+      "super + i ;" =
         let
-          escape = "${xdotool} key Escape";
-          move = dir1: dir2:
+          insert = dir:
+            let
+              dir' =
+                if dir == "west" then
+                  "east"
+                else if dir == "south" then
+                  "north"
+                else if dir == "north" then
+                  "south"
+                else if dir == "east" then
+                  "west"
+                else
+                  builtins.throw "Invalid move direction";
+            in
             ''
               focused=$(bspc query --nodes --node);
-              bspc node $(bspc query --nodes @parent --node '${dir1}.local.!hidden.!floating.window') --presel-dir ${dir2} --insert-receptacle
+              bspc node $(bspc query --nodes @parent --node '${dir}.local.!hidden.!floating.window') --presel-dir ${dir'} --insert-receptacle
               &&
               bspc node $focused --to-node $(bspc query --nodes --node 'prev.leaf.!window') --focus $focused;
             '';
-          move-left = move "west" "east";
-          move-down = move "south" "north";
-          move-up = move "north" "south";
-          move-right = move "east" "west";
         in
         {
-          "Left" = move-left;
-          "h" = move-left;
+          # insert at
+          "Left" = insert "west";
+          "h" = insert "west";
+          "Down" = insert "south";
+          "j" = insert "south";
+          "Up" = insert "north";
+          "k" = insert "north";
+          "Right" = insert "east";
+          "l" = insert "east";
 
-          "Down" = move-down;
-          "j" = move-down;
-
-          "Up" = move-up;
-          "k" = move-up;
-
-          "Right" = move-right;
-          "l" = move-right;
-
-          "Return" = escape;
-          "space" = escape;
-          "r" = escape;
+          # cancel
+          "Return" = "";
+          "space" = "";
+          "i" = "";
         };
 
-      # remove receptacles that might have been created by mistake
-      "super + alt + r" = "while bspc node 'any.leaf.!window' -k; do :; done";
+      # remove all receptacles
+      "super + shift + i" = "while bspc node 'any.leaf.!window' -k; do :; done";
 
       # WORKSPACES
       ######## #### ## #
