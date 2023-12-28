@@ -78,6 +78,8 @@ in
         pkgs.alsa-utils
         pkgs.pamixer
         pkgs.xclip
+        pkgs.xorg.xev
+        pkgs.xtitle
 
         # desktop components
         pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
