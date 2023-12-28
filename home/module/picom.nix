@@ -51,9 +51,12 @@ in
         fading = true;
 
         # rounded corners -------------
-        corner-radius = 12;
+        corner-radius = 2;
         # force round corners for rofi and Dunst
-        corner-radius-rules = [ "12:class_g = 'Rofi'" "12:class_g = 'Dunst'" ];
+        corner-radius-rules = [
+          "12:class_g = 'Rofi'"
+          "12:class_g = 'Dunst'"
+        ];
         # force straight corners for polybar
         rounded-corners-exclude = [ "class_g = 'Polybar'" ];
 
