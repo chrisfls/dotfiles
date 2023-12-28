@@ -36,7 +36,7 @@ in
           width = "300";
           height = "300";
           origin = "top-right";
-          offset = "11x35"; # 12 = 16 (always multiply by dpi)
+          offset = "21x45";
           scale = "0";
           notification_limit = "0";
           progress_bar = "true";
@@ -75,7 +75,7 @@ in
           always_run_script = "true";
           title = "Dunst";
           class = "Dunst";
-          corner_radius = "9";
+          corner_radius = "8";
           ignore_dbusclose = "false";
           force_xwayland = "false";
           force_xinerama = "false";
