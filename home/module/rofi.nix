@@ -79,7 +79,7 @@ let
   # global windows
   rofi-windows = pkgs.writeShellScriptBin "rofi-windows"
     ''
-      rofi -show window -theme "${theme}"
+      rofi -modi window -show window -theme "${theme}"
     '';
 
   # current desktop windows
@@ -88,7 +88,7 @@ let
       rofi -modi windowcd -show windowcd -theme "${theme}"
     '';
 
-  # minimized windows
+  # minimized windows TODO: add process name or window class
   rofi-windows-minimized = pkgs.writeShellScriptBin "rofi-windows-minimized"
     ''
       ids=($(bspc query --nodes --node '.hidden.local.window'))
@@ -104,7 +104,7 @@ let
       fi
     '';
 
-  # minimized windows
+  # minimized windows TODO: add process name or window class
   rofi-windows-scratchpad = pkgs.writeShellScriptBin "rofi-windows-scratchpad"
     ''
       ids=($(bspc query --nodes --desktop 'pad' --node '.window'))
