@@ -145,7 +145,7 @@ in
       };
       settings = {
         border_width = 2;
-        window_gap = 18;
+        window_gap = 32;
 
         # Borders and gaps
         borderless_monocle = true;
