@@ -231,11 +231,17 @@ in
       # tertiary actions (show desktop/equalize/balance)
       # ## #
 
-      # show/hide [d]ekstop [ TODO: reverse binding at "super + shift + d" ]
+      # show/hide [d]ekstop
       "super + d" =
         ''
-          while bspc node any.local.hidden.window -g hidden=off; do false; done
-            && while bspc node 'any.local.!hidden.window' -g hidden=on; do :; done
+          while bspc node 'any.local.!hidden.window' --flag hidden=on; do false; done
+            && while bspc node 'any.local.hidden.window' --flag hidden=off; do :; done
+        '';
+      # hide/show [d]ekstop
+      "super + super + d" =
+        ''
+          while bspc node 'any.local.hidden.window' --flag hidden=off; do false; done
+            && while bspc node 'any.local.!hidden.window' --flag hidden=on; do :; done
         '';
 
       # focus [p]arent
@@ -380,14 +386,30 @@ in
           "shift + l" = shrink-right;
 
           # [e]qualize spacing
-          "e" = "bspc node @parent --equalize && ${escape}";
+          "e" =
+            ''
+              bspc node @parent --equalize;
+              ${escape}
+            '';
           # [e]qualize spacing for all
-          "shift + e" = "bspc node @/ --equalize && ${escape}";
+          "shift + e" =
+            ''
+              bspc node @/ --equalize;
+              ${escape}
+            '';
 
           # [b]alance spacing
-          "b" = "bspc node @parent --balance && ${escape}";
+          "b" =
+            ''
+              bspc node @parent --balance;
+              ${escape}
+            '';
           # [b]alance spacing for all
-          "shift + b" = "bspc node @/ --balance && ${escape}";
+          "shift + b" =
+            ''
+              bspc node @/ --balance;
+              ${escape}
+            '';
 
           # cancel
           "Return" = escape;
