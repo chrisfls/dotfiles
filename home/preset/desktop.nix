@@ -81,6 +81,7 @@ in
         pkgs.xclip
         pkgs.xorg.xev
         pkgs.xtitle
+        pkgs.xdg-utils
 
         # desktop components
         pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
@@ -117,6 +118,8 @@ in
         pkgs.telegram-desktop
         pkgs.webcord-vencord
         audiotube
+        # temp:
+        pkgs.vscode
 
         # disabled personal apps 
         /*
