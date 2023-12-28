@@ -233,23 +233,17 @@ in
           while bspc node any.local.hidden.window -g hidden=off; do false; done
             && while bspc node 'any.local.!hidden.window' -g hidden=on; do :; done
         '';
+      # TODO: "super + shift + d" hide/show [d]ekstop
 
-      "super + w ;" = {
-        # [e]qualize spacing
-        "e" = "bspc node @parent --equalize";
-        # [e]qualize spacing for all
-        "shift + e" = "bspc node @/ --equalize";
+      # [e]qualize spacing
+      "super + e" = "bspc node @parent --equalize";
+      # [e]qualize spacing for all
+      "super + shift + e" = "bspc node @/ --equalize";
 
-        # [b]alance spacing
-        "b" = "bspc node @parent --balance";
-        # [b]alance spacing for all
-        "shift + b" = "bspc node @/ --balance";
-
-        # cancel
-        "Return" = escape;
-        "space" = escape;
-        "w" = escape;
-      };
+      # [b]alance spacing
+      "super + b" = "bspc node @parent --balance";
+      # [b]alance spacing for all
+      "super + shift + b" = "bspc node @/ --balance";
 
       ######## #### ## #
       # RECEPTACLES
