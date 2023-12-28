@@ -8,17 +8,43 @@ in
   options.module.alacritty.enable = lib.mkEnableOption "Enable alacritty module";
 
   config = lib.mkIf cfg.enable {
-    module.sxhkd.keybindings = {
-      "super + semicolon" = "alacritty";
-      "super + BackSpace" = "alacritty";
-    };
+    module.sxhkd.keybindings =
+      let
+        cmd =
+          ''
+            dir=$(${pkgs.xcwd}/bin/xcwd);
+            if [ "$dir" -eq "${config.home.homeDirectory}" ]; then
+              alacritty;
+            else
+              alacritty --working-directory "$dir";
+            fi;
+          '';
+      in
+      {
+        "super + semicolon" = cmd;
+        "super + BackSpace" = cmd;
+      };
 
     programs.alacritty = {
       enable = true;
       settings = {
-        # TODO: default font
         shell.program = "${pkgs.fish}/bin/fish";
-        window.opacity = 0.9;
+        working_directory = config.xdg.userDirs.desktop;
+        window = {
+          opacity = 0.9;
+          padding = {
+            x = 8;
+            y = 8;
+          };
+        };
+        scrolling = {
+          history = 100000;
+          multiplier = 3;
+        };
+        font = {
+          family = "CaskaydiaCove NFM";
+          size = 12.0;
+        };
         colors = {
           primary = {
             background = colors.background;
@@ -44,7 +70,16 @@ in
             white = colors.whiteBright;
             yellow = colors.yellowBright;
           };
-          # TOOD: dim colors
+          dim = {
+            black = colors.blackDim;
+            blue = colors.blueDim;
+            cyan = colors.cyanDim;
+            green = colors.greenDim;
+            magenta = colors.magentaDim;
+            red = colors.redDim;
+            white = colors.whiteDim;
+            yellow = colors.yellowDim;
+          };
         };
       };
     };
