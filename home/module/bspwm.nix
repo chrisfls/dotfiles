@@ -220,8 +220,6 @@ in
       # [r]everse pair position
       "super + shift + s" = "bspc node '@parent' --rotate 180";
 
-      # toggle [p]inned flag (sticky)
-      "super + shift + p" = "bspc node --flag sticky";
 
       # ## #
       # tertiary actions (show desktop/equalize/balance)
@@ -235,15 +233,12 @@ in
         '';
       # TODO: "super + shift + d" hide/show [d]ekstop
 
-      # [e]qualize spacing
-      "super + e" = "bspc node @parent --equalize";
-      # [e]qualize spacing for all
-      "super + shift + e" = "bspc node @/ --equalize";
-
-      # [b]alance spacing
-      "super + b" = "bspc node @parent --balance";
-      # [b]alance spacing for all
-      "super + shift + b" = "bspc node @/ --balance";
+      # focus [p]arent
+      "super + p" = "bspc node --focus @parent";
+      # focus first child
+      "super + comma" = "bspc node --focus @first";
+      # focus second child
+      "super + period" = "bspc node --focus @second";
 
       ######## #### ## #
       # RECEPTACLES
@@ -381,6 +376,16 @@ in
           "shift + k" = shrink-up;
           "shift + Right" = shrink-right;
           "shift + l" = shrink-right;
+
+          # [e]qualize spacing
+          "e" = "bspc node @parent --equalize";
+          # [e]qualize spacing for all
+          "shift + e" = "bspc node @/ --equalize";
+
+          # [b]alance spacing
+          "b" = "bspc node @parent --balance";
+          # [b]alance spacing for all
+          "shift + b" = "bspc node @/ --balance";
 
           # cancel
           "Return" = escape;
