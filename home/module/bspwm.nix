@@ -116,9 +116,7 @@ in
         };
       });
       extraConfig =
-        ''
-          ${scratchpad}
-
+        /*
           # HACK: from https://www.reddit.com/r/bspwm/comments/fkgc94/monocle_true_transparency_hiding_not_focused_node/
           # TODO: remake this using picom-trans and add support for fullscreen windows
 
@@ -161,6 +159,9 @@ in
 
           manage_node_transparency &
           manage_desktop_layout &
+        */
+        ''
+          ${scratchpad}
         '';
       rules = {
         "Yad".floating = true;
@@ -214,6 +215,7 @@ in
         split_ratio = 0.50;
         initial_polarity = "second_child"; # first_child
         automatic_scheme = "longest_side"; # alternate
+        pointer_motion_interval = "16";
       };
     };
 
