@@ -8,3 +8,9 @@
 - Fix betterlockscreen (deferred because this is a desktop...)
 - Add `--layer` keybindings? (below/normal/above)
 
+### systemd
+
+- Fix cameractrls service
+- Migrate rclone service to home-manager (and ensure it is working)
+- Fix udiskie service
+- Fix xsettingsd service
