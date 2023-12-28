@@ -36,6 +36,10 @@ in
             x = 8;
             y = 8;
           };
+          dimensions = {
+            columns = 80;
+            lines = 24;
+          };
         };
         scrolling = {
           history = 100000;
