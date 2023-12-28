@@ -238,7 +238,7 @@ in
             && while bspc node 'any.local.hidden.window' --flag hidden=off; do :; done
         '';
       # hide/show [d]ekstop
-      "super + super + d" =
+      "super + shift + d" =
         ''
           while bspc node 'any.local.hidden.window' --flag hidden=off; do false; done
             && while bspc node 'any.local.!hidden.window' --flag hidden=on; do :; done
