@@ -22,6 +22,7 @@
     ./scaling.nix
     ./screenshot.nix
     ./shell.nix
+    ./sublime.nix
     ./sxhkd.nix
     ./themes.nix
     ./xdg-portal.nix

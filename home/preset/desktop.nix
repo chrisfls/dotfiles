@@ -31,7 +31,7 @@ in
         qview.enable = true;
         rofi.enable = true;
         screenshot.enable = true;
-        # sublime.enable = true;
+        sublime.enable = true;
         sxhkd = {
           enable = true;
           keybindings = {
@@ -111,7 +111,7 @@ in
         # personal apps
         pkgs.anydesk
         pkgs.gimp
-        pkgs.logseq
+        # pkgs.logseq
         pkgs.moonlight-qt
         pkgs.parsec-bin
         pkgs.qbittorrent
