@@ -21,6 +21,7 @@
 - Add `PWA` for `languagetool`
 - Migrate `vscode` settings to `codium` thru `home-manager`
 - Configure `pkgs.helix`
+- Hide rofi icons from main menu
 
 ### system
 
