@@ -119,9 +119,8 @@ in
         ''
           ${scratchpad}
 
-          #  https://www.reddit.com/r/bspwm/comments/fkgc94/monocle_true_transparency_hiding_not_focused_node/
-
-          # HACK: remake this using picom-trans
+          # HACK: from https://www.reddit.com/r/bspwm/comments/fkgc94/monocle_true_transparency_hiding_not_focused_node/
+          # TODO: remake this using picom-trans and add support for fullscreen windows
 
           #### Transparency hack: works by hiding previous focused nodes
           manage_node_transparency () {
