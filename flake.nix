@@ -2,7 +2,8 @@
   description = "kress's NixOS Flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     systems.url = "github:nix-systems/default";
 
@@ -22,16 +23,17 @@
     devenv.inputs.flake-compat.follows = "flake-compat";
 
     # still will be needed if I ever install nixos
-    nixgl.url = "github:guibou/nixGL";
-    nixgl.inputs.nixpkgs.follows = "nixpkgs";
-    nixgl.inputs.flake-utils.follows = "flake-utils";
+    # nixgl.url = "github:guibou/nixGL";
+    # nixgl.inputs.nixpkgs.follows = "nixpkgs";
+    # nixgl.inputs.flake-utils.follows = "flake-utils";
 
-    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.home-manager.follows = "home-manager";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.systems.follows = "systems";
 
     homeage.url = "github:jordanisaacs/homeage";
     homeage.inputs.nixpkgs.follows = "nixpkgs";
@@ -69,6 +71,7 @@
             ./home/module
             ./home/preset
             ./home/user/${ssot.users.arch-rmxp.kress.id}.nix
+            # chaotic.homeManagerModules.default
           ];
           extraSpecialArgs = homeSpecialArgs;
         };
