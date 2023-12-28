@@ -23,11 +23,17 @@ let
       ];
     };
 
+  xtitle = "${pkgs.xtitle}/bin/xtitle";
+
+  theme = "${config.xdg.configHome}/rofi/launchers/type-3/style-5-alt.rasi";
+
+  dollar = "$";
+
   # rofi calculator
   rofi-calc = pkgs.writeShellScriptBin "rofi-calc"
     ''
       out=$(
-      rofi -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi" \
+      rofi -theme "${theme}" \
         -show calc -modi calc -no-show-match -no-sort \
         -calc-command "echo -n '{result}'"
       )
@@ -35,8 +41,6 @@ let
         echo -n $out | xclip -sel c
       fi
     '';
-
-  dollar = "$";
 
   # rofi notifications menu
   rofi-dunst = pkgs.writeShellScriptBin "rofi-dunst"
@@ -46,7 +50,7 @@ let
       summaries=("$(echo $history | jq -r .summary.data)" "󰃢 Clear All")
       selected=$(
         printf "%s\n" "${dollar}{summaries[@]}" | grep -v '^$' \
-          | rofi -dmenu -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi" -format i -p " "
+          | rofi -dmenu -theme "${theme}" -format i -p " "
       )
       if [[ -n $selected ]]; then
         if [[ $selected -lt ${dollar}{#summaries[@]} ]]; then
@@ -60,29 +64,62 @@ let
     '';
 
   # polybar main menu
-  rofi-mainmenu = pkgs.writeShellScriptBin "rofi-mainmenu"
+  rofi-menu = pkgs.writeShellScriptBin "rofi-menu"
     "rofi -show drun -theme \"${config.module.themes.rofi}\"";
 
   # polybar session menu
-  rofi-powermenu = pkgs.writeShellScriptBin "rofi-powermenu" "${config.xdg.configHome}/rofi/powermenu/type-1/powermenu.sh";
+  rofi-power-menu = pkgs.writeShellScriptBin "rofi-power-menu" "${config.xdg.configHome}/rofi/powermenu/type-1/powermenu.sh";
 
-  # rofi run menu
+  # run menu
   rofi-run = pkgs.writeShellScriptBin "rofi-run"
     ''
-      rofi -show run -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi"
+      rofi -show run -theme "${theme}"
     '';
 
-  # rofi windows menu
-  rofi-windowscd = pkgs.writeShellScriptBin "rofi-windows"
+  # global windows
+  rofi-windows = pkgs.writeShellScriptBin "rofi-windows"
     ''
-      rofi -show window -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi" "$@"
-    '';
-  rofi-window = pkgs.writeShellScriptBin "rofi-windows"
-    ''
-      rofi -show window -theme "/home/kress/.config/rofi/launchers/type-3/style-5-alt.rasi" "$@"
+      rofi -show window -theme "${theme}"
     '';
 
-  user = config.home.username;
+  # current desktop windows
+  rofi-windows-cd = pkgs.writeShellScriptBin "rofi-windows-cd"
+    ''
+      rofi -modi windowcd -show windowcd -theme "${theme}"
+    '';
+
+  # minimized windows
+  rofi-windows-minimized = pkgs.writeShellScriptBin "rofi-windows-minimized"
+    ''
+      ids=($(bspc query --nodes --node '.hidden.local.window'))
+      if [ -z "$ids" ]; then exit 0; fi
+
+      names=$(${xtitle} ${dollar}{ids[@]})
+      selected=$(
+        printf "%s\n" "${dollar}{names[@]}" | grep -v '^$' \
+          | rofi -dmenu -theme "${theme}" -format i -p " "
+      )
+      if [ "$selected" ]; then
+          bspc node "${dollar}{ids[$selected]}" --flag hidden=off
+      fi
+    '';
+
+  # minimized windows
+  rofi-windows-scratchpad = pkgs.writeShellScriptBin "rofi-windows-scratchpad"
+    ''
+      ids=($(bspc query --nodes --desktop 'pad' --node '.window'))
+      if [ -z "$ids" ]; then exit 0; fi
+
+      names=$(${xtitle} ${dollar}{ids[@]})
+      selected=$(
+        printf "%s\n" "${dollar}{names[@]}" | grep -v '^$' \
+          | rofi -dmenu -theme "${theme}" -format i -p " "
+      )
+      if [ "$selected" ]; then
+        bspc node "${dollar}{ids[$selected]}" --to-desktop focused --follow
+      fi
+    '';
+
 in
 {
   options.module.rofi.enable = lib.mkEnableOption "Enable rofi module";
@@ -93,21 +130,31 @@ in
       pkgs.hostname
       rofi-calc
       rofi-dunst
-      rofi-mainmenu
-      rofi-powermenu
+      rofi-menu
+      rofi-power-menu
       rofi-run
-      rofi-window
-      rofi-windowcd
+      rofi-windows
+      rofi-windows-cd
+      rofi-windows-minimized
+      rofi-windows-scratchpad
     ];
 
     module.sxhkd.keybindings = {
-      "super + apostrophe" = "rofi-windowcd";
-      "super + shift + apostrophe" = "rofi-window";
-      # TODO: hidden windows menu
-      # TODO: scratchpad windows menu
-      "super + Return" = "rofi-mainmenu";
-      "super + shift + BackSpace" = "rofi-calc";
+      # main menus
+      "super + Return" = "rofi-menu";
       "super + shift + Return" = "rofi-run";
+
+      # jump to window
+      "super + apostrophe" = "rofi-windows-cd";
+      "super + shift + apostrophe" = "rofi-windows";
+
+      # jump to minimized windows
+      "super + ctrl + m" = "rofi-windows-minimized";
+      # jump to scratchpad windows
+      "super + ctrl + n" = "rofi-windows-scratchpad";
+
+      # shift cmd for alacritty
+      "super + shift + BackSpace" = "rofi-calc";
       "super + shift + semicolon" = "rofi-calc";
     };
 

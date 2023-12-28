@@ -161,7 +161,7 @@ in
         "module/menu" = {
           type = "\"custom/ipc\"";
 
-          click-left = "\"rofi-mainmenu\"";
+          click-left = "\"rofi-menu\"";
 
           # startup
           initial = "\"1\"";
@@ -181,7 +181,7 @@ in
         "module/session" = {
           type = "\"custom/text\"";
 
-          click-left = "\"rofi-powermenu\"";
+          click-left = "\"rofi-power-menu\"";
 
           format = "\"${config.home.username} %{T2}󰍃%{T-} \"";
           format-background = "\"${select}\"";
