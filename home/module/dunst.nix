@@ -36,7 +36,7 @@ in
           width = "300";
           height = "300";
           origin = "top-right";
-          offset = "21x45";
+          offset = "10x35"; # perfect align: 21x45
           scale = "0";
           notification_limit = "0";
           progress_bar = "true";
