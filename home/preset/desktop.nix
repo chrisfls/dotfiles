@@ -31,6 +31,7 @@ in
         qview.enable = true;
         rofi.enable = true;
         screenshot.enable = true;
+        # sublime.enable = true;
         sxhkd = {
           enable = true;
           keybindings = {
@@ -54,6 +55,8 @@ in
         "${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"
         "${pkgs.webcord-vencord}/bin/webcord --start-minimized"
       ];
+
+      nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
       home.file.".xinitrc" = {
         executable = true;
@@ -130,6 +133,16 @@ in
           "avahi-discover" = { name = "Avahi Zeroconf Browser"; noDisplay = true; };
           "bssh" = { name = "Avahi SSH Server Browser"; noDisplay = true; };
           "bvnc" = { name = "Avahi VNC Server Browser"; noDisplay = true; };
+          "kvantummanager" = { name = "Kvantum Manager"; noDisplay = true; };
+          "lxqt-archiver" = { name = "LXQt File Archiver"; noDisplay = true; };
+          "nm-tray" = { name = "nm-tray"; noDisplay = true; };
+          "pcmanfm-qt-desktop-pref" = { name = ""; noDisplay = true; };
+          "picom" = { name = "picom"; noDisplay = true; };
+          "qt5ct" = { name = "Qt5 Settings"; noDisplay = true; };
+          "qt6ct" = { name = "Qt6 Settings"; noDisplay = true; };
+          "rofi-theme-selector" = { name = "Rofi Theme Selector"; noDisplay = true; };
+          "rofi" = { name = "Rofi"; noDisplay = true; };
+          "fish" = { name = "fish"; noDisplay = true; };
           "micro" = {
             name = "Micro";
             genericName = "Text Editor";
