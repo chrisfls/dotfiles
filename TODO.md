@@ -14,3 +14,10 @@
 - Migrate rclone service to home-manager (and ensure it is working)
 - Fix udiskie service
 - Fix xsettingsd service
+
+### apps
+
+- Configure `pkgs.mpv`
+- Add `PWA` for `languagetool`
+- Migrate `vscode` settings to `codium` thru `home-manager`
+- Configure `pkgs.helix`
