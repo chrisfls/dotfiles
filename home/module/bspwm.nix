@@ -215,10 +215,12 @@ in
       # toggle [f]loating state
       "super + f" = "bspc node --state ~floating";
       # toggle [f]ixed state (sticky)
-      "super + m" = "bspc node --flag sticky";
+      "super + shift + f" = "bspc node --flag sticky";
 
-      # [r]otate pair direction
-      "super + s" = "bspc node '@parent.vertical' -y horizontal || bspc node '@parent' -y vertical";
+      # [r]otate clockwise
+      "super + r" = "bspc node '@parent' --rotate 90";
+      # [r]otate counter-clockwise
+      "super + shift + r" = "bspc node '@parent' --rotate -90";
 
       # focus brother
       "super + b" = "bspc node --focus @brother";
@@ -344,7 +346,7 @@ in
       # RESIZE
       ######## #### ## #
 
-      "super + r :" =
+      "super + s :" =
         let
           grow-left = "bspc node --resize left -${amount} 0";
           grow-down = "bspc node --resize bottom 0 ${amount}";
@@ -390,7 +392,7 @@ in
           # cancel
           "Return" = escape;
           "space" = escape;
-          "r" = escape;
+          "s" = escape;
         };
 
       ######## #### ## #
