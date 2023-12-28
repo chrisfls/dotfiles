@@ -189,6 +189,14 @@ in
           state = "floating";
           center = true;
         };
+        "telegram-desktop" = {
+          state = "floating";
+          center = true;
+        };
+        "WebCord" = {
+          state = "floating";
+          center = true;
+        };
       };
       settings = {
         border_width = 2;
