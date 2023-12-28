@@ -30,7 +30,15 @@ in
         ];
 
         # border opacity
-        frame-opacity = 1.0;
+        frame-opacity = 0.9;
+        opacity-rule = [
+          "0:_NET_WM_STATE@[0]:32a *= '_NET_WM_STATE_HIDDEN'"
+          "0:_NET_WM_STATE@[1]:32a *= '_NET_WM_STATE_HIDDEN'"
+          "0:_NET_WM_STATE@[2]:32a *= '_NET_WM_STATE_HIDDEN'"
+          "0:_NET_WM_STATE@[3]:32a *= '_NET_WM_STATE_HIDDEN'"
+          "0:_NET_WM_STATE@[4]:32a *= '_NET_WM_STATE_HIDDEN'"
+          "0:_COMPTON_MONOCLE@:32c = 0"
+        ];
 
         # speedup games:
         unredir-if-possible = true;
@@ -55,8 +63,8 @@ in
         blur-background-fixed = true;
         blur-background-frame = false;
         blur-strength = 4;
-        # only blur rofi and dunst
-        blur-background-exclude = "!(class_g = 'Rofi' || class_g = 'Dunst')";
+        # only blur rofi, dunst and alacritty
+        blur-background-exclude = "!(class_g = 'Rofi' || class_g = 'Alacritty' || class_g = 'Dunst')";
       };
     };
   };

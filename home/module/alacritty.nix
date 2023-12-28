@@ -18,7 +18,7 @@ in
       settings = {
         # TODO: default font
         shell.program = "${pkgs.fish}/bin/fish";
-        window.opacity = 1.0;
+        window.opacity = 0.9;
         colors = {
           primary = {
             background = colors.background;

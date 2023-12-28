@@ -115,7 +115,54 @@ in
           hash = "sha256-O4Qwdjb3p6jw8Qtcd4zGZ57cB3oCCbPZcjUQtWbyC7Y=";
         };
       });
-      extraConfig = scratchpad;
+      extraConfig =
+        ''
+          ${scratchpad}
+
+          #  https://www.reddit.com/r/bspwm/comments/fkgc94/monocle_true_transparency_hiding_not_focused_node/
+
+          # HACK: remake this using picom-trans
+
+          #### Transparency hack: works by hiding previous focused nodes
+          manage_node_transparency () {
+            # Store last ids
+            PREV_NODE_ID=
+            PREV_DESK_ID=
+            # On envery focus change
+            bspc subscribe node_focus | while read -r _ _ desktop_id node_id; do
+              # Set my custom _COMPTON_MONOCLE xprop to 1, meaning active
+              xprop -id "$node_id" -f _COMPTON_MONOCLE 32c -set _COMPTON_MONOCLE 1;
+              # Check if previous desktop is the same of now (no need to hide when changing desktops)
+              if [ "$PREV_DESK_ID" == "$desktop_id" ] && [ "$PREV_NODE_ID" != "$node_id" ]; then
+                # Get the layout of the previous node to hide
+                PREV_LAYOUT=$(bspc query -T -d "$desktop_id" | jq -r .layout);
+                # Hide the previous node only if it was on a monocle desktop
+                [ "$PREV_LAYOUT" == "monocle" ] && xprop -id "$PREV_NODE_ID" -f _COMPTON_MONOCLE 32c -set _COMPTON_MONOCLE 0;
+              fi
+              # Update previous ids
+              PREV_NODE_ID=$node_id
+              PREV_DESK_ID=$desktop_id
+            done
+
+          }
+
+          #### Manage Desktop Layout Change
+          manage_desktop_layout () {
+            # Subscribe to layout change event
+            bspc subscribe desktop_layout | while read -r _ _ desktop_id layout; do
+              if [ "$layout" == "tiled" ]; then
+                # If tiled set _COMPTON_MONOCLE to all window nodes
+                bspc query -N -n .window -d "$desktop_id" | xargs -I % xprop -id % -f _COMPTON_MONOCLE 32c -set _COMPTON_MONOCLE 1;
+              else
+                # Else, set 0 to all non focused window nodes
+                bspc query -N -n .window.!focused -d "$desktop_id" | xargs -I % xprop -id % -f _COMPTON_MONOCLE 32c -set _COMPTON_MONOCLE 0;
+              fi
+            done
+          }
+
+          manage_node_transparency &
+          manage_desktop_layout &
+        '';
       rules = {
         "Yad".floating = true;
         "copyq" = {
