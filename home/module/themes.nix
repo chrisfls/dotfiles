@@ -121,9 +121,9 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.papirus-icon-theme.override {
-          color = "paleorange";
-        };
+        default = pkgs.papirus-icon-theme/*.override {
+          color = "grey";
+        }*/;
       };
     };
 
