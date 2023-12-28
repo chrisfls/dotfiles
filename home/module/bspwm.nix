@@ -189,11 +189,15 @@ in
           state = "floating";
           center = true;
         };
-        "telegram-desktop" = {
+        "TelegramDesktop" = {
           state = "floating";
           center = true;
         };
         "WebCord" = {
+          state = "floating";
+          center = true;
+        };
+        "Alacritty" = {
           state = "floating";
           center = true;
         };
