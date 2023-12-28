@@ -21,6 +21,17 @@
 - Add `PWA` for `languagetool`
 - Migrate `vscode` settings to `codium` thru `home-manager`
 - Configure `pkgs.helix`
+- Hide desktop icons:
+  - `rofi`
+  - `rofi-theme`
+  - `kvantum`
+  - `q5ct`
+  - `q6ct`
+  - `lxqt-archive`
+  - `pcmanfm-desktop`
+  - `picom`
+  - `nmtray`
+
 
 ### system
 
