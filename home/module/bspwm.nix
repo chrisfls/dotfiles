@@ -180,7 +180,7 @@ in
       "super + shift + Escape" = "bspc wm --restart";
 
       # panic quit bspwm
-      "control + alt + Escape" = "bspc quit";
+      "ctrl + alt + Escape" = "bspc quit";
 
       ######## #### ## #
       # WINDOW CONTROLS
@@ -395,10 +395,8 @@ in
       # SCRATCHPAD
       ######## #### ## #
 
-      # REVIEW: probably there's a better way to do that
-
       # push window to scratchpad
-      "super + n" = # apostrophe
+      "super + n" =
         ''
           ${scratchpad};
           window=$(bspc query --nodes --node);
@@ -407,10 +405,10 @@ in
           bspc node '@pad:/' --circulate forward
         '';
       # pop window from scratchpad
-      "super + shift + n" = # apostrophe
+      "super + shift + n" =
         ''
           ${scratchpad};
-          bspc node '@pad:#newest.local.window' --to-desktop focused --focus $window
+          bspc node '@pad:#newest.local.window' --to-desktop focused --follow
         '';
 
       # swap current window with previous scratchpad window
