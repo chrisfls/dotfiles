@@ -118,15 +118,9 @@ in
         pkgs.telegram-desktop
         pkgs.webcord-vencord
         audiotube
-        # temp:
-        pkgs.vscode
 
         # disabled personal apps 
-        /*
-        pkgs.notepadqq # notepad++ [not needed with micro around]
-        pkgs.mpv # not configured yet
-        pkgs.languagetool # not the actual languagetool app
-        */
+        # pkgs.notepadqq # notepad++ [not needed with micro and featherpad around]
       ];
 
       xdg = {
