@@ -368,7 +368,7 @@ in
           format-background = "\"${dark}\"";
           label = "\"%percentage_used%%\"";
 
-          format-warn = "\"<label> %{T2}%{T-} \"";
+          format-warn = "\"<label-warn> %{T2}%{T-} \"";
           format-warn-foreground = "\"${light}\"";
           format-warn-background = "\"${dark}\"";
           label-warn = "\"%percentage_used%%\"";
@@ -542,4 +542,3 @@ in
     };
   };
 }
-
