@@ -378,14 +378,14 @@ in
           "shift + l" = shrink-right;
 
           # [e]qualize spacing
-          "e" = "bspc node @parent --equalize";
+          "e" = "bspc node @parent --equalize && ${escape}";
           # [e]qualize spacing for all
-          "shift + e" = "bspc node @/ --equalize";
+          "shift + e" = "bspc node @/ --equalize && ${escape}";
 
           # [b]alance spacing
-          "b" = "bspc node @parent --balance";
+          "b" = "bspc node @parent --balance && ${escape}";
           # [b]alance spacing for all
-          "shift + b" = "bspc node @/ --balance";
+          "shift + b" = "bspc node @/ --balance && ${escape}";
 
           # cancel
           "Return" = escape;
