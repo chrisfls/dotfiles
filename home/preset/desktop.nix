@@ -34,8 +34,9 @@ in
         sxhkd = {
           enable = true;
           keybindings = {
-            "super + e" = "gtk-launch pcmanfm-qt";
             "ctrl + alt + Delete" = "gtk-launch qps";
+            "super + alt + c" = "gtk-launch com.github.hluk.copyq.desktop";
+            "super + e" = "gtk-launch pcmanfm-qt";
           };
         };
         themes.enable = true;
