@@ -145,8 +145,8 @@ in
       "super + shift + Return" = "rofi-run";
 
       # jump to window
-      "super + v" = "rofi-windows-cd";
-      "super + shift + v" = "rofi-windows";
+      "super + apostrophe" = "rofi-windows-cd";
+      "super + shift + apostrophe" = "rofi-windows";
 
       # jump to minimized windows
       "super + alt + m" = "rofi-windows-minimized";

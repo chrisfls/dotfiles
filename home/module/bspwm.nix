@@ -204,7 +204,7 @@ in
       "super + x" = "bspc node --state ~fullscreen";
 
       # ## #
-      # secondary actions (layout/float/rotate/reverse/pseudo/pin)
+      # secondary actions (layout/pseudo float/fix rotate brother)
       # ## #
 
       # cycle [t]iled/monocle layout
@@ -214,24 +214,27 @@ in
 
       # toggle [f]loating state
       "super + f" = "bspc node --state ~floating";
+      # toggle [f]ixed state (sticky)
+      "super + m" = "bspc node --flag sticky";
 
       # [r]otate pair direction
       "super + s" = "bspc node '@parent.vertical' -y horizontal || bspc node '@parent' -y vertical";
-      # [r]everse pair position
-      "super + shift + s" = "bspc node '@parent' --rotate 180";
 
+      # focus brother
+      "super + b" = "bspc node --focus @brother";
+      # swap brother
+      "super + shift + b" = "bspc node --swap @brother";
 
       # ## #
       # tertiary actions (show desktop/equalize/balance)
       # ## #
 
-      # show/hide [d]ekstop
+      # show/hide [d]ekstop [ TODO: reverse binding at "super + shift + d" ]
       "super + d" =
         ''
           while bspc node any.local.hidden.window -g hidden=off; do false; done
             && while bspc node 'any.local.!hidden.window' -g hidden=on; do :; done
         '';
-      # TODO: "super + shift + d" hide/show [d]ekstop
 
       # focus [p]arent
       "super + p" = "bspc node --focus @parent";
@@ -244,10 +247,7 @@ in
       # RECEPTACLES
       ######## #### ## #
 
-      "super + i" = "bspc node --focus @parent";
-      "super + shift + i" = "bspc node --focus @brother";
-
-      "super + o" =
+      "super + i" =
         ''
           existing=$(bspc query --nodes --node any.local.leaf.!window);
           if [ "${dollar}{existing}" ]; then
@@ -257,7 +257,7 @@ in
           fi
         '';
 
-      "super + shift + o" =
+      "super + shift + i" =
         ''
           existing=$(bspc query --nodes --node 'prev.local.leaf.!window');
           if [ "$existing" ]; then bspc node --to-node $existing; fi;
