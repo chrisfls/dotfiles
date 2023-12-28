@@ -209,6 +209,8 @@ in
 
       # cycle [t]iled/monocle layout
       "super + t" = "bspc desktop --layout next";
+      # toggle pseudo [t]iled state
+      "super + shift + t" = "bspc node --state ~pseudo_tiled";
 
       # toggle [f]loating state
       "super + f" = "bspc node --state ~floating";
@@ -218,8 +220,6 @@ in
       # [r]everse pair position
       "super + shift + s" = "bspc node '@parent' --rotate 180";
 
-      # toggle [p]seudo tiled state
-      "super + p" = "bspc node --state ~pseudo_tiled";
       # toggle [p]inned flag (sticky)
       "super + shift + p" = "bspc node --flag sticky";
 
@@ -249,7 +249,10 @@ in
       # RECEPTACLES
       ######## #### ## #
 
-      "super + i" =
+      "super + i" = "bspc node --focus @parent";
+      "super + shift + i" = "bspc node --focus @brother";
+
+      "super + o" =
         ''
           existing=$(bspc query --nodes --node any.local.leaf.!window);
           if [ "${dollar}{existing}" ]; then
@@ -259,7 +262,7 @@ in
           fi
         '';
 
-      "super + shift + i" =
+      "super + shift + o" =
         ''
           existing=$(bspc query --nodes --node 'prev.local.leaf.!window');
           if [ "$existing" ]; then bspc node --to-node $existing; fi;
