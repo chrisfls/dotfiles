@@ -149,9 +149,9 @@ in
       "super + shift + v" = "rofi-windows";
 
       # jump to minimized windows
-      "super + ctrl + m" = "rofi-windows-minimized";
+      "super + alt + m" = "rofi-windows-minimized";
       # jump to scratchpad windows
-      "super + ctrl + n" = "rofi-windows-scratchpad";
+      "super + alt + n" = "rofi-windows-scratchpad";
 
       # shift cmd for alacritty
       "super + shift + BackSpace" = "rofi-calc";
