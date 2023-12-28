@@ -21,3 +21,7 @@
 - Add `PWA` for `languagetool`
 - Migrate `vscode` settings to `codium` thru `home-manager`
 - Configure `pkgs.helix`
+
+### system
+
+- Add swapfile
