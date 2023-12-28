@@ -212,8 +212,8 @@ in
 
         # Misc
         split_ratio = 0.50;
-        initial_polarity = "first_child";
-        automatic_scheme = "alternate";
+        initial_polarity = "second_child"; # first_child
+        automatic_scheme = "longest_side"; # alternate
       };
     };
 
@@ -296,6 +296,18 @@ in
       "super + comma" = "bspc node --focus @first";
       # focus second child
       "super + period" = "bspc node --focus @second";
+
+      # toggle gaps
+      "super + g" =
+        ''
+          gaps=$(bspc config 'window_gap');
+          if [ "$gaps" -eq "0" ]; then
+            bspc config 'window_gap' 32;
+          else
+            bspc config 'window_gap' 0;
+          fi
+        '';
+
 
       ######## #### ## #
       # RECEPTACLES
