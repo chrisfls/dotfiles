@@ -1,4 +1,4 @@
-
+- `$ systemctl enable systemd-timesyncd.service`
 
 Not working:
 
