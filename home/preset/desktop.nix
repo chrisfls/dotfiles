@@ -140,8 +140,8 @@ in
           "picom" = { name = "picom"; noDisplay = true; };
           "qt5ct" = { name = "Qt5 Settings"; noDisplay = true; };
           "qt6ct" = { name = "Qt6 Settings"; noDisplay = true; };
-          "rofi-theme-selector" = { name = "Rofi Theme Selector"; noDisplay = true; };
-          "rofi" = { name = "Rofi"; noDisplay = true; };
+          "rofi-theme-selector" = { name = ""; noDisplay = true; terminal = true; };
+          "rofi" = { name = ""; noDisplay = true; terminal = true; };
           "fish" = { name = "fish"; noDisplay = true; };
           "micro" = {
             name = "Micro";
