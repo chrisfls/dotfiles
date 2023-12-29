@@ -17,6 +17,10 @@ in
       # { name = "vscodeintellicode-csharp"; publisher = "ms-dotnettools"; version = "0.1.26"; sha256 = "0rdr6kp580drk35iypqa0xfqvj215fanq6vxkgigdnhjhvhwfw3x"; }
       # { name = "vscode-dotnet-runtime"; publisher = "ms-dotnettools"; version = "2.0.0"; sha256 = "1sn454mv5vb9qspaarr8wp0yqx4g20c1mf0mjhhzmj9x92r9adx1"; }
       #
+      # not playing nice with home-manager:
+      #
+      # { name = "vscode-sundial"; publisher = "muuvmuuv"; version = "3.4.1"; sha256 = "0mv4y1dspn0zgx37bpki1jdpkl8j74kf789b630kg32rc4l6mfa7"; }
+      #
       # not needed anymore:
       #
       # { name = "remote-explorer"; publisher = "ms-vscode"; version = "0.5.2023121309"; sha256 = "1n6ni7b1x2vzjqwb59ss0r6xdk8hagcfmkxm0c2iqw7ifsq4y962"; }
@@ -158,6 +162,7 @@ in
         "window.zoomLevel" = 0;
         "workbench.activityBar.iconClickBehavior" = "focus";
         "workbench.colorCustomizations" = { "[Solarized Light]" = { "editorBracketHighlight.foreground1" = "#002b36"; "editorBracketHighlight.foreground2" = "#586e75"; "editorBracketHighlight.foreground3" = "#586e75"; "editorBracketHighlight.foreground4" = "#586e75"; "editorBracketHighlight.foreground5" = "#586e75"; "editorBracketHighlight.foreground6" = "#586e75"; "editorBracketHighlight.unexpectedBracket.foreground" = "#dc322fff"; }; };
+        "workbench.colorTheme" = "Gruvbox Dark Hard";
         "workbench.editor.closeEmptyGroups" = false;
         "workbench.editor.enablePreview" = false;
         "workbench.editor.limit.enabled" = true;
