@@ -49,9 +49,8 @@ in
       };
 
       xsession.windowManager.bspwm.startupPrograms = [
-        "systemd-cat -t pcmanfm-qt systemd-run --user --scope --property=OOMPolicy=continue -u pcmanfm-qt ${pkgs.lxqt.pcmanfm-qt}/bin/pcmanfm-qt --desktop"
-        "systemd-cat -t copyq systemd-run --user --scope --property=OOMPolicy=continue -u copyq ${pkgs.copyq}/bin/copyq"
-        "systemd-cat -t nm-tray systemd-run --user --scope --property=OOMPolicy=continue -u nm-tray ${pkgs.nm-tray}/bin/nm-tray"
+        "${pkgs.copyq}/bin/copyq"
+        "${pkgs.nm-tray}/bin/nm-tray"
         "${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"
         "${pkgs.webcord-vencord}/bin/webcord --start-minimized"
       ];
