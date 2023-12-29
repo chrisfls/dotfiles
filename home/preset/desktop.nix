@@ -36,8 +36,8 @@ in
           enable = true;
           keybindings = {
             "ctrl + alt + Delete" = "gtk-launch qps";
-            "super + alt + c" = "gtk-launch com.github.hluk.copyq.desktop";
-            "super + e" = "gtk-launch pcmanfm-qt";
+            "super + a ; c" = "gtk-launch com.github.hluk.copyq.desktop";
+            "super + a ; e" = "gtk-launch pcmanfm-qt";
           };
         };
         themes.enable = true;

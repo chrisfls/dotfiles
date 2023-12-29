@@ -44,6 +44,6 @@ in
       };
     };
 
-    module.sxhkd.keybindings."super + w" = "gtk-launch brave-browser";
+    module.sxhkd.keybindings."super + a; b" = "gtk-launch brave-browser";
   };
 }
