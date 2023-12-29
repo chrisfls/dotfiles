@@ -395,6 +395,7 @@ in
       ######## #### ## #
 
       # focus workspace
+      "super + apostrophe" = "bspc desktop --focus '^0'";
       "super + 1" = "bspc desktop --focus '^1'";
       "super + 2" = "bspc desktop --focus '^2'";
       "super + 3" = "bspc desktop --focus '^3'";
@@ -407,6 +408,7 @@ in
       "super + 0" = "bspc desktop --focus '^10'";
 
       # move window to workspace
+      "super + shift + apostrophe" = "bspc node --to-desktop '^0'";
       "super + shift + 1" = "bspc node --to-desktop '^1'";
       "super + shift + 2" = "bspc node --to-desktop '^2'";
       "super + shift + 3" = "bspc node --to-desktop '^3'";
