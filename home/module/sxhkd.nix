@@ -65,6 +65,11 @@ in
         ];
       });
       extraOptions = [ "-s $SXHKD_FIFO" ];
+      extraConfig =
+        ''
+          super+a;any+{a-z}
+            :
+        '';
       keybindings =
         let
           trim = str:
