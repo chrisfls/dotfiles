@@ -69,14 +69,29 @@ in
           # x-prop-max_bpc 8
           # x-prop-non_desktop 0
         };
+        HDMI-1.enable = false;
       };
     };
     docked = {
       fingerprint = { inherit eDP-1 HDMI-1; };
       config = {
-        eDP-1.enable = false;
         DP-1.enable = false;
         DP-2.enable = false;
+        eDP-1 = {
+          enable = true;
+          crtc = 1;
+          primary = true;
+          position = "0x1830";
+          mode = "800x1280";
+          rate = "60.06";
+          rotate = "right";
+          # x-prop-aspect_ratio Automaticmn
+          # x-prop-audio auto
+          # x-prop-broadcast_rgb Automatic
+          # x-prop-colorspace Default
+          # x-prop-max_bpc 8
+          # x-prop-non_desktop 0
+        };
         HDMI-1 = {
           enable = true;
           crtc = 0;
