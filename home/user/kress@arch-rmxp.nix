@@ -125,6 +125,9 @@ in
       remove_disabled_monitors = true;
       remove_unplugged_monitors = true;
     };
+    startupPrograms = [
+      "${pkgs.feh}/bin/feh --bg-center \"${../../assets/wallpaper/23-12-29_2160p.png}\"  \"${../../assets/wallpaper/23-12-30_800p.png}\""
+    ];
   };
 
 
