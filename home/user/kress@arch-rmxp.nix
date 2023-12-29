@@ -88,7 +88,7 @@ in
           enable = true;
           crtc = 1;
           primary = false;
-          position = "0x1830";
+          position = "0x1360";
           mode = "800x1280";
           rate = "60.06";
           rotate = "right";
