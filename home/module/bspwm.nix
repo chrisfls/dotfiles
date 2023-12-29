@@ -83,10 +83,10 @@ let
   scratchpad =
     ''
       if [ -z "$(bspc query --monitors --monitor PAD)" ]; then
-        bspc wm --add-monitor PAD ${cfg.scratchpad.size};
+        bspc wm --add-monitor PAD ${cfg.scratchpad};
       fi
+      ${cfg.extraConfig}
       bspc monitor 'PAD' -d 'pad';
-      ${cfg.scratchpad.extraConfig}
     '';
 in
 {
@@ -96,14 +96,12 @@ in
       type = types.int;
       default = 100;
     };
-    scratchpad = {
-      size = lib.mkOption {
-        type = types.str;
-      };
-      extraConfig = lib.mkOption {
-        type = types.str;
-        default = "";
-      };
+    scratchpad = lib.mkOption {
+      type = types.str;
+    };
+    extraConfig = lib.mkOption {
+      type = types.str;
+      default = "";
     };
   };
 
@@ -122,8 +120,13 @@ in
           hash = "sha256-O4Qwdjb3p6jw8Qtcd4zGZ57cB3oCCbPZcjUQtWbyC7Y=";
         };
       });
+      extraConfigEarly = 
+        ''
+          ${scratchpad}
+        '';
+      /*
       extraConfig =
-        /*
+        ''
           # HACK: from https://www.reddit.com/r/bspwm/comments/fkgc94/monocle_true_transparency_hiding_not_focused_node/
           # TODO: remake this using picom-trans and add support for fullscreen windows
 
@@ -166,10 +169,8 @@ in
 
           manage_node_transparency &
           manage_desktop_layout &
-        */
-        ''
-          ${scratchpad}
         '';
+      */
       rules = {
         "Yad".floating = true;
         "copyq" = {
@@ -395,7 +396,6 @@ in
       ######## #### ## #
 
       # focus workspace
-      "super + apostrophe" = "bspc desktop --focus '^0'";
       "super + 1" = "bspc desktop --focus '^1'";
       "super + 2" = "bspc desktop --focus '^2'";
       "super + 3" = "bspc desktop --focus '^3'";
@@ -406,9 +406,9 @@ in
       "super + 8" = "bspc desktop --focus '^8'";
       "super + 9" = "bspc desktop --focus '^9'";
       "super + 0" = "bspc desktop --focus '^10'";
+      "super + apostrophe" = "bspc desktop --focus '^11'";
 
       # move window to workspace
-      "super + shift + apostrophe" = "bspc node --to-desktop '^0'";
       "super + shift + 1" = "bspc node --to-desktop '^1'";
       "super + shift + 2" = "bspc node --to-desktop '^2'";
       "super + shift + 3" = "bspc node --to-desktop '^3'";
@@ -419,6 +419,7 @@ in
       "super + shift + 8" = "bspc node --to-desktop '^8'";
       "super + shift + 9" = "bspc node --to-desktop '^9'";
       "super + shift + 0" = "bspc node --to-desktop '^10'";
+      "super + shift + apostrophe" = "bspc node --to-desktop '^11'";
 
       # focus next/prev workspace
       "super + minus" = "bspc desktop --focus prev";
