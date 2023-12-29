@@ -9,6 +9,7 @@
   { name = "EditorConfig"; publisher = "EditorConfig"; version = "0.16.4"; sha256 = "0fa4h9hk1xq6j3zfxvf483sbb4bd17fjl5cdm3rll7z9kaigdqwg"; }
   { name = "errorlens"; publisher = "usernamehw"; version = "3.16.0"; sha256 = "0p0ha65ry0ab8l4fqyys225jync64cax068j7m84qbnqk81kywv3"; }
   { name = "gistfs"; publisher = "vsls-contrib"; version = "0.6.0"; sha256 = "1grisd404jrrdv6zy7qczqzh1dn7vlv2160m18ik08scbkarh5fw"; }
+  { name = "explicit-folding"; publisher = "zokugun"; version = "0.23.1"; sha256 = "05v1z8cy5zi5ds4gbkq8bwjdi1dz7issz84yrfi0g02mh0v6ajwq"; }
   { name = "gitblame"; publisher = "waderyan"; version = "10.6.0"; sha256 = "1v8b41ckv73i472wx0w7f5df2xk8b3h3px2hhby3xswkybn93fh0"; }
   { name = "githistory"; publisher = "donjayamanne"; version = "0.6.20"; sha256 = "0x9q7sh5l1frpvfss32ypxk03d73v9npnqxif4fjwcfwvx5mhiww"; }
   { name = "gruvbox"; publisher = "jdinhlife"; version = "1.17.0"; sha256 = "1w9h4ygvgbj71npwlkg39rsw63pdz28g2msifa1hmf4y543ii069"; }
