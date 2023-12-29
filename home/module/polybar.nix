@@ -103,9 +103,9 @@ let
   darkest = colors.background;
   light = colors.foreground;
   dark = colors.black;
-  select = colors.blue;
+  select = colors.blueBright;
   danger = colors.red;
-  warning = colors.yellow;
+  warning = colors.yellowBright;
 in
 {
   options.module.polybar.enable = lib.mkEnableOption "Enable polybar module";
@@ -168,14 +168,14 @@ in
           # move
           hook-0 = "\"\"";
           format-0 = "\" %{T2}󰺮%{T-} Applications\"";
-          format-0-background = "\"${select}\"";
+          format-0-background = "\"${darkest}\"";
           format-0-foreground = "\"${light}\"";
           format-0-padding = "\"0\"";
           # resize
           hook-1 = "\"\"";
           format-1 = "\" %{T2}󰺮%{T-} Applications\"";
-          format-1-background = "\"${select}\"";
-          format-1-foreground = "\"${darkest}\"";
+          format-1-background = "\"${darkest}\"";
+          format-1-foreground = "\"${danger}\"";
           format-1-padding = "\"0\"";
         };
         "module/session" = {
@@ -184,7 +184,7 @@ in
           click-left = "\"rofi-power-menu\"";
 
           format = "\"${config.home.username} %{T2}󰍃%{T-} \"";
-          format-background = "\"${select}\"";
+          format-background = "\"${darkest}\"";
           format-foreground = "\"${light}\"";
         };
         # "module/mode" = {
@@ -483,7 +483,8 @@ in
         "module/date" = {
           type = "\"custom/script\"";
           interval = "\"1.0\"";
-          click-left = "\"${pkgs.yad}/bin/yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons --posx=3264 --posy=36 &\"";
+          # posx: 3264 + 1280
+          click-left = "\"${pkgs.yad}/bin/yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons --posx=4544 --posy=36 &\"";
           exec = "\"echo \"$(date +'%a, %d %b %Y') %{T2}󰃭%{T-}\"\"";
 
           label = "\"%output% \"";
@@ -503,13 +504,13 @@ in
         "module/menu-r" = {
           type = "\"custom/text\"";
           label-background = "\"${light}\"";
-          label-foreground = "\"${select}\"";
+          label-foreground = "\"${darkest}\"";
           label = "\"%{T3}%{T-}%{O-1}\"";
         };
         "module/menu-l" = {
           type = "\"custom/text\"";
           label = "\"%{O-1}%{O1}%{B${light}}%{T3} %{T-}%{B-}%{O-25}%{T3}%{T-}\"";
-          label-foreground = "\"${select}\"";
+          label-foreground = "\"${darkest}\"";
         };
         "module/left" = {
           type = "\"custom/text\"";
