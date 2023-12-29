@@ -17,7 +17,7 @@ in
       # general settings
       settings = {
         backend = "glx";
-        vsync = false;
+        vsync = true;
 
         # disable shadows
         shadow = true;
