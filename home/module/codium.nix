@@ -155,7 +155,7 @@ in
         "typescript.updateImportsOnFileMove.enabled" = "always";
         "update.enableWindowsBackgroundUpdates" = false;
         "update.mode" = "start";
-        "window.zoomLevel" = -1;
+        "window.zoomLevel" = 0;
         "workbench.activityBar.iconClickBehavior" = "focus";
         "workbench.colorCustomizations" = { "[Solarized Light]" = { "editorBracketHighlight.foreground1" = "#002b36"; "editorBracketHighlight.foreground2" = "#586e75"; "editorBracketHighlight.foreground3" = "#586e75"; "editorBracketHighlight.foreground4" = "#586e75"; "editorBracketHighlight.foreground5" = "#586e75"; "editorBracketHighlight.foreground6" = "#586e75"; "editorBracketHighlight.unexpectedBracket.foreground" = "#dc322fff"; }; };
         "workbench.editor.closeEmptyGroups" = false;
