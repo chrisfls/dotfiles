@@ -40,6 +40,7 @@ in
         "[jsonc]" = { "editor.defaultFormatter" = "vscode.json-language-features"; };
         "[markdown]" = { "editor.defaultFormatter" = "denoland.vscode-deno"; };
         "[typescript]" = { "editor.defaultFormatter" = "denoland.vscode-deno"; };
+        "[nix]" = { "editor.defaultFormatter" = "B4dM4n.nixpkgs-fmt"; };
         "autoHide.autoHideReferences" = false;
         "autoHide.autoHideSideBar" = false;
         "autoHide.hideOnOpen" = false;
@@ -86,7 +87,7 @@ in
         "editor.accessibilitySupport" = "off";
         "editor.bracketPairColorization.independentColorPoolPerBracketType" = true;
         "editor.codeLens" = false;
-        "editor.codeLensFontSize" = 12;
+        #"editor.codeLensFontSize" = 12;
         "editor.colorDecorators" = false;
         "editor.cursorBlinking" = "smooth";
         "editor.cursorSurroundingLines" = 12;
@@ -94,12 +95,12 @@ in
         "editor.experimental.asyncTokenization" = true;
         "editor.fontFamily" = "'Cascadia Mono'";
         "editor.fontLigatures" = "'ss01'";
-        "editor.fontSize" = 19;
+        #"editor.fontSize" = 19;
         "editor.fontWeight" = "400";
         "editor.hover.delay" = 150;
         "editor.inlayHints.enabled" = "offUnlessPressed";
-        "editor.inlayHints.fontSize" = 16;
-        "editor.lineHeight" = 28;
+        # "editor.inlayHints.fontSize" = 16;
+        # "editor.lineHeight" = 28;
         "editor.minimap.enabled" = true;
         "editor.minimap.maxColumn" = 80;
         "editor.minimap.renderCharacters" = false;
@@ -114,7 +115,7 @@ in
         "editor.suggest.localityBonus" = true;
         "editor.suggest.matchOnWordStartOnly" = false;
         "editor.suggest.showSnippets" = false;
-        "editor.suggestFontSize" = 17;
+        # "editor.suggestFontSize" = 17;
         "editor.tabSize" = 2;
         "editor.trimAutoWhitespace" = true;
         "editor.wordWrap" = "on";
@@ -144,13 +145,13 @@ in
         "omnisharp.sdkIncludePrereleases" = true;
         "omnisharp.sdkPath" = "C:\\Program Files\\dotnet\\sdk\\8.0.100-preview.7.23376.3";
         "omnisharp.useModernNet" = true;
-        "scm.inputFontSize" = 16;
+        # "scm.inputFontSize" = 16;
         "sundial.autoLocale" = false;
         "sundial.sunrise" = "06:00";
         "sundial.sunset" = "18:00";
         "terminal.integrated.defaultProfile.linux" = "fish";
-        "terminal.integrated.fontFamily" = "'JetBrains Mono'";
-        "terminal.integrated.fontSize" = 12;
+        "terminal.integrated.fontFamily" = "'Cascadia Mono'"; # JetBrains Mono
+        #"terminal.integrated.fontSize" = 12;
         "terminal.integrated.profiles.windows" = { "Command Prompt" = null; "Git Bash" = null; "PowerShell" = { "icon" = "terminal-powershell"; "path" = [ "C:\\Program Files\\PowerShell\\7\\pwsh.exe" ]; "source" = "PowerShell"; }; };
         "terminal.integrated.sendKeybindingsToShell" = true;
         "terminal.integrated.tabs.enabled" = false;
