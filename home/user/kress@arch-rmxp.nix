@@ -36,7 +36,14 @@ in
   module = {
     cloudflare-warp.enable = true;
     scaling = { enable = true; scale = 1.5; };
-    bspwm.scratchpad = "3840x2160+3840+0";
+    bspwm.scratchpad = {
+      size = "1280x720+3840+0";
+      extraConfig =
+      ''
+        bspc monitor 'eDP-1' -d '0'
+        bspc monitor 'HDMI-1' -d '1' '2' '3' '4' '5' '6' '7' '8' '9' '0'
+      '';
+    };
   };
 
   home.keyboard.layout = "br";
@@ -112,7 +119,8 @@ in
 
   # bspwm multihead behavior
   xsession.windowManager.bspwm = {
-    monitors.HDMI-1 = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ];
+    monitors.eDP-1 = [ "0" ];
+    monitors.HDMI-1 = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" ];
     settings = {
       remove_disabled_monitors = true;
       remove_unplugged_monitors = true;

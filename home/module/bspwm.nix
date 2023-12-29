@@ -83,9 +83,10 @@ let
   scratchpad =
     ''
       if [ -z "$(bspc query --monitors --monitor PAD)" ]; then
-        bspc wm --add-monitor PAD ${cfg.scratchpad};
-        bspc monitor 'PAD' -d 'pad';
+        bspc wm --add-monitor PAD ${cfg.scratchpad.size};
       fi
+      bspc monitor 'PAD' -d 'pad';
+      ${cfg.scratchpad.extraConfig}
     '';
 in
 {
@@ -95,8 +96,14 @@ in
       type = types.int;
       default = 100;
     };
-    scratchpad = lib.mkOption {
-      type = types.str;
+    scratchpad = {
+      size = lib.mkOption {
+        type = types.str;
+      };
+      extraConfig = lib.mkOption {
+        type = types.str;
+        default = "";
+      };
     };
   };
 
