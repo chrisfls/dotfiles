@@ -43,6 +43,7 @@ in
         bspc monitor 'eDP-1' -d 'apostrophe'
         bspc monitor 'HDMI-1' -d '1' '2' '3' '4' '5' '6' '7' '8' '9' '0'
         bspc wm --reorder-monitors HDMI-1 eDP-1
+        bspc desktop 'apostrophe' -l monocle
       '';
     };
   };
