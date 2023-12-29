@@ -91,7 +91,6 @@ in
         pkgs.lxqt.lxqt-sudo # gui-sudo prompter
 
         # desktop environment apps
-        pkgs.arandr # manual display config
         pkgs.libsForQt5.kdialog # dialogs and widgets
         pkgs.nm-tray # network manager
         pkgs.lxqt.pavucontrol-qt # sound mixer
