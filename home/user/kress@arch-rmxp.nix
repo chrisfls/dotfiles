@@ -37,7 +37,7 @@ in
     cloudflare-warp.enable = true;
     scaling = { enable = true; scale = 1.5; };
     bspwm.scratchpad = {
-      size = "1280x720+3840+0";
+      size = "1280x720+5120+0";
       extraConfig =
       ''
         bspc monitor 'eDP-1' -d '0'
@@ -87,7 +87,7 @@ in
         eDP-1 = {
           enable = true;
           crtc = 1;
-          primary = true;
+          primary = false;
           position = "0x1830";
           mode = "800x1280";
           rate = "60.06";
@@ -103,7 +103,7 @@ in
           enable = true;
           crtc = 0;
           primary = true;
-          position = "0x0";
+          position = "1280x0";
           mode = "3840x2160";
           rate = "60.00";
           # x-prop-aspect_ratio Automatic
