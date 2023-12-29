@@ -18,7 +18,6 @@
     { name = "material-product-icons"; publisher = "PKief"; version = "1.7.0"; sha256 = "1d0bz1yj09vsyv2k78xxx460n0zikb3g6w9w57l93mis2j82xaqp"; }
     { name = "msbuild-project-tools"; publisher = "tintoy"; version = "0.5.3"; sha256 = "12w1wng47fszx3xil9vs8hiklgchjy1kivzn531y96nydzxvg49j"; }
     { name = "Nix"; publisher = "bbenoist"; version = "1.0.1"; sha256 = "0zd0n9f5z1f0ckzfjr38xw2zzmcxg1gjrava7yahg5cvdcw6l35b"; }
-    { name = "nixfmt-vscode"; publisher = "brettm12345"; version = "0.0.1"; sha256 = "07w35c69vk1l6vipnq3qfack36qcszqxn8j3v332bl0w6m02aa7k"; }
     { name = "nixpkgs-fmt"; publisher = "B4dM4n"; version = "0.0.1"; sha256 = "1gvjqy54myss4w1x55lnyj2l887xcnxc141df85ikmw1gr9s8gdz"; }
     { name = "path-autocomplete"; publisher = "ionutvmi"; version = "1.25.0"; sha256 = "0jjqh3p456p1aafw1gl6xgxw4cqqzs3hssr74mdsmh77bjizcgcb"; }
     { name = "popping-and-locking-vscode-black"; publisher = "philsinatra"; version = "1.1.7"; sha256 = "07am1lk9n57zz251qk1gkscrdrh5vfq8bimzwymxzbd1hsm42khg"; }
