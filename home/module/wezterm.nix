@@ -28,12 +28,6 @@ in
 
     programs.wezterm = {
       enable = true;
-      /*
-        scrolling = {
-          history = 100000;
-          multiplier = 3;
-        };
-      };*/
       colorSchemes = {
         default = {
           ansi = [
@@ -63,7 +57,7 @@ in
           cursor_border = colors.foreground;
           selection_fg = colors.background;
           selection_bg = colors.foreground;
-          scrollbar_thumb = colors.blackBright;
+          scrollbar_thumb = colors.black;
         };
       };
       extraConfig =
@@ -80,7 +74,15 @@ in
           config.font_size = 12.0
           config.font = wezterm.font {
             family = 'CaskaydiaCove NFM',
-            harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
+            harfbuzz_features = {
+              'calt',
+              'clig',
+              'liga',
+              'ss01', -- cursive italics
+              'ss02', -- pretty ~=
+              'ss19', -- slashed zero
+              'ss20', -- graphical interface characters
+            },
           }
 
           config.default_cursor_style = 'SteadyBar'
@@ -108,32 +110,80 @@ in
 
           local act = wezterm.action
 
-          -- default + disabled tabs/splits
+          -- mostly defaults + disabled tabs/splits
           config.keys = {
-            -- { key = 'Tab', mods = 'CTRL', action = act.ActivateTabRelative(1) },
-            -- { key = 'Tab', mods = 'SHIFT|CTRL', action = act.ActivateTabRelative(-1) },
+            -- extras
+            { key = 'Backspace', mods = 'SUPER', action = act.SpawnWindow },
+            { key = ';', mods = 'SUPER', action = act.SpawnWindow },
+
+            -- disable tabs and splits
+            { action key = 'Tab', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = 'Tab', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '!', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = '!', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '\"', mods = 'ALT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '\"', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '#', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = '#', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '$', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = '$', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '%', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = '%', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '%', mods = 'ALT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '%', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '&', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = '&', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '${"\\\'"}', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '(', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = '(', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '*', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = '*', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '1', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '1', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '2', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '2', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '3', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '3', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '4', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '4', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '5', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '5', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '5', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '6', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '6', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '7', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '7', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '8', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '8', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '9', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '9', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '@', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = '@', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = 'N', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = 'N', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = 'T', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = 'T', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = '[', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
+            { action key = ']', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
+            { action key = '^', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = '^', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = 'n', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = 'n', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = 't', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = 't', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '{', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '{', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
+            { action key = '}', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { action key = '}', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
+            { action key = 'PageUp', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = 'PageUp', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { action key = 'PageDown', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { action key = 'PageDown', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+
+            -- [[ -- default keys
             { key = 'Enter', mods = 'ALT', action = act.ToggleFullScreen },
-            -- { key = '!', mods = 'CTRL', action = act.ActivateTab(0) },
-            -- { key = '!', mods = 'SHIFT|CTRL', action = act.ActivateTab(0) },
-            -- { key = '\"', mods = 'ALT|CTRL', action = act.SplitVertical{ domain =  'CurrentPaneDomain' } },
-            -- { key = '\"', mods = 'SHIFT|ALT|CTRL', action = act.SplitVertical{ domain =  'CurrentPaneDomain' } },
-            -- { key = '#', mods = 'CTRL', action = act.ActivateTab(2) },
-            -- { key = '#', mods = 'SHIFT|CTRL', action = act.ActivateTab(2) },
-            -- { key = '$', mods = 'CTRL', action = act.ActivateTab(3) },
-            -- { key = '$', mods = 'SHIFT|CTRL', action = act.ActivateTab(3) },
-            -- { key = '%', mods = 'CTRL', action = act.ActivateTab(4) },
-            -- { key = '%', mods = 'SHIFT|CTRL', action = act.ActivateTab(4) },
-            -- { key = '%', mods = 'ALT|CTRL', action = act.SplitHorizontal{ domain =  'CurrentPaneDomain' } },
-            -- { key = '%', mods = 'SHIFT|ALT|CTRL', action = act.SplitHorizontal{ domain =  'CurrentPaneDomain' } },
-            -- { key = '&', mods = 'CTRL', action = act.ActivateTab(6) },
-            -- { key = '&', mods = 'SHIFT|CTRL', action = act.ActivateTab(6) },
-            -- { key = '${"\\\'"}', mods = 'SHIFT|ALT|CTRL', action = act.SplitVertical{ domain =  'CurrentPaneDomain' } },
-            -- { key = '(', mods = 'CTRL', action = act.ActivateTab(-1) },
-            -- { key = '(', mods = 'SHIFT|CTRL', action = act.ActivateTab(-1) },
             { key = ')', mods = 'CTRL', action = act.ResetFontSize },
             { key = ')', mods = 'SHIFT|CTRL', action = act.ResetFontSize },
-            -- { key = '*', mods = 'CTRL', action = act.ActivateTab(7) },
-            -- { key = '*', mods = 'SHIFT|CTRL', action = act.ActivateTab(7) },
             { key = '+', mods = 'CTRL', action = act.IncreaseFontSize },
             { key = '+', mods = 'SHIFT|CTRL', action = act.IncreaseFontSize },
             { key = '-', mods = 'CTRL', action = act.DecreaseFontSize },
@@ -142,30 +192,9 @@ in
             { key = '0', mods = 'CTRL', action = act.ResetFontSize },
             { key = '0', mods = 'SHIFT|CTRL', action = act.ResetFontSize },
             { key = '0', mods = 'SUPER', action = act.ResetFontSize },
-            -- { key = '1', mods = 'SHIFT|CTRL', action = act.ActivateTab(0) },
-            -- { key = '1', mods = 'SUPER', action = act.ActivateTab(0) },
-            -- { key = '2', mods = 'SHIFT|CTRL', action = act.ActivateTab(1) },
-            -- { key = '2', mods = 'SUPER', action = act.ActivateTab(1) },
-            -- { key = '3', mods = 'SHIFT|CTRL', action = act.ActivateTab(2) },
-            -- { key = '3', mods = 'SUPER', action = act.ActivateTab(2) },
-            -- { key = '4', mods = 'SHIFT|CTRL', action = act.ActivateTab(3) },
-            -- { key = '4', mods = 'SUPER', action = act.ActivateTab(3) },
-            -- { key = '5', mods = 'SHIFT|CTRL', action = act.ActivateTab(4) },
-            -- { key = '5', mods = 'SHIFT|ALT|CTRL', action = act.SplitHorizontal{ domain =  'CurrentPaneDomain' } },
-            -- { key = '5', mods = 'SUPER', action = act.ActivateTab(4) },
-            -- { key = '6', mods = 'SHIFT|CTRL', action = act.ActivateTab(5) },
-            -- { key = '6', mods = 'SUPER', action = act.ActivateTab(5) },
-            -- { key = '7', mods = 'SHIFT|CTRL', action = act.ActivateTab(6) },
-            -- { key = '7', mods = 'SUPER', action = act.ActivateTab(6) },
-            -- { key = '8', mods = 'SHIFT|CTRL', action = act.ActivateTab(7) },
-            -- { key = '8', mods = 'SUPER', action = act.ActivateTab(7) },
-            -- { key = '9', mods = 'SHIFT|CTRL', action = act.ActivateTab(-1) },
-            -- { key = '9', mods = 'SUPER', action = act.ActivateTab(-1) },
             { key = '=', mods = 'CTRL', action = act.IncreaseFontSize },
             { key = '=', mods = 'SHIFT|CTRL', action = act.IncreaseFontSize },
             { key = '=', mods = 'SUPER', action = act.IncreaseFontSize },
-            -- { key = '@', mods = 'CTRL', action = act.ActivateTab(1) },
-            -- { key = '@', mods = 'SHIFT|CTRL', action = act.ActivateTab(1) },
             { key = 'C', mods = 'CTRL', action = act.CopyTo 'Clipboard' },
             { key = 'C', mods = 'SHIFT|CTRL', action = act.CopyTo 'Clipboard' },
             { key = 'F', mods = 'CTRL', action = act.Search 'CurrentSelectionOrEmptyString' },
@@ -176,14 +205,10 @@ in
             { key = 'L', mods = 'SHIFT|CTRL', action = act.ShowDebugOverlay },
             { key = 'M', mods = 'CTRL', action = act.Hide },
             { key = 'M', mods = 'SHIFT|CTRL', action = act.Hide },
-            -- { key = 'N', mods = 'CTRL', action = act.SpawnWindow },
-            -- { key = 'N', mods = 'SHIFT|CTRL', action = act.SpawnWindow },
             { key = 'P', mods = 'CTRL', action = act.ActivateCommandPalette },
             { key = 'P', mods = 'SHIFT|CTRL', action = act.ActivateCommandPalette },
             { key = 'R', mods = 'CTRL', action = act.ReloadConfiguration },
             { key = 'R', mods = 'SHIFT|CTRL', action = act.ReloadConfiguration },
-            -- { key = 'T', mods = 'CTRL', action = act.SpawnTab 'CurrentPaneDomain' },
-            -- { key = 'T', mods = 'SHIFT|CTRL', action = act.SpawnTab 'CurrentPaneDomain' },
             { key = 'U', mods = 'CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
             { key = 'U', mods = 'SHIFT|CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
             { key = 'V', mods = 'CTRL', action = act.PasteFrom 'Clipboard' },
@@ -194,10 +219,6 @@ in
             { key = 'X', mods = 'SHIFT|CTRL', action = act.ActivateCopyMode },
             { key = 'Z', mods = 'CTRL', action = act.TogglePaneZoomState },
             { key = 'Z', mods = 'SHIFT|CTRL', action = act.TogglePaneZoomState },
-            -- { key = '[', mods = 'SHIFT|SUPER', action = act.ActivateTabRelative(-1) },
-            -- { key = ']', mods = 'SHIFT|SUPER', action = act.ActivateTabRelative(1) },
-            -- { key = '^', mods = 'CTRL', action = act.ActivateTab(5) },
-            -- { key = '^', mods = 'SHIFT|CTRL', action = act.ActivateTab(5) },
             { key = '_', mods = 'CTRL', action = act.DecreaseFontSize },
             { key = '_', mods = 'SHIFT|CTRL', action = act.DecreaseFontSize },
             { key = 'c', mods = 'SHIFT|CTRL', action = act.CopyTo 'Clipboard' },
@@ -209,13 +230,9 @@ in
             { key = 'l', mods = 'SHIFT|CTRL', action = act.ShowDebugOverlay },
             { key = 'm', mods = 'SHIFT|CTRL', action = act.Hide },
             { key = 'm', mods = 'SUPER', action = act.Hide },
-            -- { key = 'n', mods = 'SHIFT|CTRL', action = act.SpawnWindow },
-            -- { key = 'n', mods = 'SUPER', action = act.SpawnWindow },
             { key = 'p', mods = 'SHIFT|CTRL', action = act.ActivateCommandPalette },
             { key = 'r', mods = 'SHIFT|CTRL', action = act.ReloadConfiguration },
             { key = 'r', mods = 'SUPER', action = act.ReloadConfiguration },
-            -- { key = 't', mods = 'SHIFT|CTRL', action = act.SpawnTab 'CurrentPaneDomain' },
-            -- { key = 't', mods = 'SUPER', action = act.SpawnTab 'CurrentPaneDomain' },
             { key = 'u', mods = 'SHIFT|CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
             { key = 'v', mods = 'SHIFT|CTRL', action = act.PasteFrom 'Clipboard' },
             { key = 'v', mods = 'SUPER', action = act.PasteFrom 'Clipboard' },
@@ -223,17 +240,9 @@ in
             { key = 'w', mods = 'SUPER', action = act.CloseCurrentTab{ confirm = true } },
             { key = 'x', mods = 'SHIFT|CTRL', action = act.ActivateCopyMode },
             { key = 'z', mods = 'SHIFT|CTRL', action = act.TogglePaneZoomState },
-            -- { key = '{', mods = 'SUPER', action = act.ActivateTabRelative(-1) },
-            -- { key = '{', mods = 'SHIFT|SUPER', action = act.ActivateTabRelative(-1) },
-            -- { key = '}', mods = 'SUPER', action = act.ActivateTabRelative(1) },
-            -- { key = '}', mods = 'SHIFT|SUPER', action = act.ActivateTabRelative(1) },
             { key = 'phys:Space', mods = 'SHIFT|CTRL', action = act.QuickSelect },
             { key = 'PageUp', mods = 'SHIFT', action = act.ScrollByPage(-1) },
-            -- { key = 'PageUp', mods = 'CTRL', action = act.ActivateTabRelative(-1) },
-            -- { key = 'PageUp', mods = 'SHIFT|CTRL', action = act.MoveTabRelative(-1) },
             { key = 'PageDown', mods = 'SHIFT', action = act.ScrollByPage(1) },
-            -- { key = 'PageDown', mods = 'CTRL', action = act.ActivateTabRelative(1) },
-            -- { key = 'PageDown', mods = 'SHIFT|CTRL', action = act.MoveTabRelative(1) },
             { key = 'LeftArrow', mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Left' },
             { key = 'LeftArrow', mods = 'SHIFT|ALT|CTRL', action = act.AdjustPaneSize{ 'Left', 1 } },
             { key = 'RightArrow', mods = 'SHIFT|CTRL', action = act.ActivatePaneDirection 'Right' },
@@ -246,12 +255,14 @@ in
             { key = 'Insert', mods = 'CTRL', action = act.CopyTo 'PrimarySelection' },
             { key = 'Copy', mods = 'NONE', action = act.CopyTo 'Clipboard' },
             { key = 'Paste', mods = 'NONE', action = act.PasteFrom 'Clipboard' },
+            ]]
           }
 
+          --[[ -- default keys
           config.key_tables = {
             copy_mode = {
-              -- { key = 'Tab', mods = 'NONE', action = act.CopyMode 'MoveForwardWord' },
-              -- { key = 'Tab', mods = 'SHIFT', action = act.CopyMode 'MoveBackwardWord' },
+              { key = 'Tab', mods = 'NONE', action = act.CopyMode 'MoveForwardWord' },
+              { key = 'Tab', mods = 'SHIFT', action = act.CopyMode 'MoveBackwardWord' },
               { key = 'Enter', mods = 'NONE', action = act.CopyMode 'MoveToStartOfNextLine' },
               { key = 'Escape', mods = 'NONE', action = act.CopyMode 'Close' },
               { key = 'Space', mods = 'NONE', action = act.CopyMode{ SetSelectionMode =  'Cell' } },
@@ -327,6 +338,7 @@ in
               { key = 'DownArrow', mods = 'NONE', action = act.CopyMode 'NextMatch' },
             },
           }
+          ]]
 
           return config
         '';
