@@ -17,7 +17,6 @@ in
   config = lib.mkMerge [
     (lib.mkIf enable {
       module = {
-        alacritty.enable = true;
         autorandr.enable = true;
         browser.enable = true;
         bspwm.enable = true;
@@ -41,6 +40,7 @@ in
           };
         };
         themes.enable = true;
+        wezterm.enable = true;
       };
 
       xsession = {

@@ -25,6 +25,7 @@
     ./sublime.nix
     ./sxhkd.nix
     ./themes.nix
+    ./wezterm.nix
     ./xdg-portal.nix
   ];
 }
