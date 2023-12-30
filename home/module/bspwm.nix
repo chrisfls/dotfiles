@@ -38,47 +38,39 @@ let
     else
       throw "Invalid move direction";
 
-  switch = age:
-    let
-      age' =
-        if age == "newer" then
-          "older"
-        else if age == "older" then
-          "newer"
+  switch = 
+    pkgs.writeShellScriptBin "bspwm-switch"
+      ''
+        bspc wm -h off;
+
+        window=$(bspc query --nodes --node 'focused.local.!hidden.!floating.window');
+
+        if [ "$window" ]; then
+          modifier="!floating";
         else
-          throw "Invalid age";
-    in
-    ''
-      bspc wm -h off;
-
-      window=$(bspc query --nodes --node 'focused.local.!hidden.!floating.window');
-
-      if [ "$window" ]; then
-        modifier="!floating";
-      else
-        modifier="floating";
-      fi;
-
-      bspc node "${age}.local.!hidden.$modifier.window" --focus || (
-        if [ -z "$window" ]; then
-          window=$(bspc query --nodes --node);
+          modifier="floating";
         fi;
 
-        while true; do
-          result=$(bspc query --nodes --node "$window#${age'}.local.!hidden.$modifier.window");
-
-          if [ -z "$result" ]; then
-            break;
-          else
-            window="$result";
+        bspc node "$1.local.!hidden.$modifier.window" --focus || (
+          if [ -z "$window" ]; then
+            window=$(bspc query --nodes --node);
           fi;
-        done;
 
-        bspc node $window --focus
-      );
+          while true; do
+            result=$(bspc query --nodes --node "$window#$2.local.!hidden.$modifier.window");
 
-      bspc wm -h on
-    '';
+            if [ -z "$result" ]; then
+              break;
+            else
+              window="$result";
+            fi;
+          done;
+
+          bspc node $window --focus
+        );
+
+        bspc wm -h on
+      '';
 
   scratchpad =
     ''
@@ -410,7 +402,11 @@ in
       # cycle [t]iled/monocle layout
       "super + t" = "bspc desktop --layout next";
       # toggle pseudo [t]iled state
-      "super + shift + t" = "bspc node --state ~pseudo_tiled";
+      "super + shift + t" = ''
+        bspc node focused.!pseudo_tiled --state pseudo_tiled
+        ||
+        bspc node focused.pseudo_tiled --state tiled
+      '';
 
       # toggle [f]loating state
       "super + f" = "bspc node --state ~floating";
@@ -519,9 +515,15 @@ in
         '';
 
       # focus previous window
-      "alt + Tab" = switch "older";
+      "alt + Tab" = 
+        ''
+          ${lock} ${switch}/bin/bspwm-switch "older" "newer"
+        '';
       # focus next window
-      "alt + shift + Tab" = switch "newer";
+      "alt + shift + Tab" =
+        ''
+          ${lock} ${switch}/bin/bspwm-switch "newer" "older"
+        '';
 
       ######## #### ## #
       # WORKSPACES
