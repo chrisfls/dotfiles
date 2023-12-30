@@ -334,9 +334,9 @@ in
         focused_border_color = colors.foreground;
         borderless_singleton = true;
 
-        # disble multihead behavior (TODO: move to user)
-        remove_disabled_monitors = true;
-        remove_unplugged_monitors = true;
+        # leave monitors alone
+        remove_disabled_monitors = lib.mkDefault false;
+        remove_unplugged_monitors = lib.mkDefault false;
 
         # Focusing behavior
         focus_follows_pointer = false;
