@@ -38,6 +38,11 @@ let
     else
       throw "Invalid move direction";
 
+  lock =
+    "flock --verbose -n $BSPWM_SCRATCHPAD/singleton.lock";
+
+  # TODO: someday port these commands to dash scripts
+
   switch = 
     pkgs.writeShellScriptBin "bspwm-switch"
       ''
@@ -80,11 +85,6 @@ let
       ${cfg.extraConfig}
       bspc monitor 'PAD' -d 'pad';
     '';
-
-  # TODO: port scratchpad commands to dash scripts
-
-  lock =
-    "flock --verbose -n $BSPWM_SCRATCHPAD/singleton.lock";
 
   minimize =
     pkgs.writeShellScriptBin "bspwm-minimize"
