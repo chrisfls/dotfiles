@@ -107,6 +107,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.sessionVariables.DESKTOP_SESSION = "bspwm";
+    home.sessionVariables.BSPWM_SCRATCHPAD = "$(mktemp -d)";
 
     xsession.initExtra = "systemctl --user import-environment DESKTOP_SESSION";
 
@@ -264,9 +265,39 @@ in
       "super + shift + c" = "bspc node -k";
 
       # [m]inimize window (hide)
-      "super + m" = "bspc node --flag hidden=on";
+      "super + m" = 
+        ''
+          desktop=$(bspc query --desktops --desktop);
+          if [ -z "$desktop" ]; then exit 1; fi;
+
+          store="$BSPWM_SCRATCHPAD/$desktop";
+          if [ ! -f "$store" ]; then touch "$store"; fi;
+          
+          node=$(bspc query --nodes --node);
+          if [ -z "$node" ]; then exit 1; fi;
+
+          echo "$node" >> $store;
+          bspc node "$node" --flag hidden=on
+        '';
+
       # un[m]inimize window (unhide)
-      "super + shift + m" = "bspc node 'any.local.hidden.window' --flag hidden=off;";
+      "super + shift + m" =
+        ''
+          desktop=$(bspc query --desktops --desktop);
+          if [ -z "$desktop" ]; then exit 1; fi;
+
+          store="$BSPWM_SCRATCHPAD/$desktop";
+          if [ ! -f "$store" ]; then exit 1; fi;
+
+          while [ -s "$store" ]; do
+            window=$(tail -n 1 $store);
+            bspc node $window --flag hidden=off
+            &&
+            sed -i '$d' $store
+            &&
+            exit 0;
+          done;
+        '';
 
       # toggle ma[x]imize state (fullscreen)
       "super + x" = "bspc node --state ~fullscreen";
@@ -534,6 +565,10 @@ in
           bspc node --swap '@pad:#newest.local.window'
           &&
           bspc node '@pad:/' --circulate backward
+        '';
+
+      "super + u" =
+        ''  
         '';
     };
   };
