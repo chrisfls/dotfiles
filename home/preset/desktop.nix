@@ -23,6 +23,7 @@ in
         dunst.enable = true;
         fontconfig.enable = true;
         fonts.enable = true;
+        jamesdsp.enable = true;
         loopback-toggle.enable = true;
         micro = { enable = true; desktop = true; };
         picom.enable = true;

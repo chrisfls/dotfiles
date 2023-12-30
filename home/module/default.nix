@@ -13,6 +13,7 @@
     ./dunst.nix
     ./fontconfig.nix
     ./fonts.nix
+    ./jamesdsp.nix
     ./loopback-toggle.nix
     ./micro.nix
     ./picom.nix
