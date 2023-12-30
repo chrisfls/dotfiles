@@ -20,6 +20,7 @@ in
       # not playing nice with home-manager:
       #
       # { name = "vscode-sundial"; publisher = "muuvmuuv"; version = "3.4.1"; sha256 = "0mv4y1dspn0zgx37bpki1jdpkl8j74kf789b630kg32rc4l6mfa7"; }
+      # { name = "nixpkgs-fmt"; publisher = "B4dM4n"; version = "0.0.1"; sha256 = "1gvjqy54myss4w1x55lnyj2l887xcnxc141df85ikmw1gr9s8gdz"; }
       #
       # not needed anymore:
       #
@@ -40,7 +41,7 @@ in
         "[jsonc]" = { "editor.defaultFormatter" = "vscode.json-language-features"; };
         "[markdown]" = { "editor.defaultFormatter" = "denoland.vscode-deno"; };
         "[typescript]" = { "editor.defaultFormatter" = "denoland.vscode-deno"; };
-        "[nix]" = { "editor.defaultFormatter" = "B4dM4n.nixpkgs-fmt"; };
+        "[nix]" = { "editor.defaultFormatter" = "jnoortheen.nix-ide"; };
         "autoHide.autoHideReferences" = false;
         "autoHide.autoHideSideBar" = false;
         "autoHide.hideOnOpen" = false;
