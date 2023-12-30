@@ -339,8 +339,8 @@ in
         borderless_singleton = true;
 
         # fixed desktops
-        remove_disabled_monitors = false;
-        remove_unplugged_monitors = false;
+        remove_disabled_monitors = lib.mkDefault false;
+        remove_unplugged_monitors = lib.mkDefault false;
 
         # Focusing behavior
         focus_follows_pointer = false;

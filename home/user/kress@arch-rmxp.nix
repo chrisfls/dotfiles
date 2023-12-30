@@ -113,10 +113,6 @@ in
   xsession.windowManager.bspwm = {
     monitors.eDP-1 = [ "apostrophe" ];
     monitors.HDMI-1 = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" ];
-    settings = {
-      remove_disabled_monitors = true;
-      remove_unplugged_monitors = true;
-    };
     extraConfig =
       ''
         bspc wm --reorder-monitors HDMI-1 eDP-1
