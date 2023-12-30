@@ -63,7 +63,7 @@ in
           cursor_border = colors.foreground;
           selection_fg = colors.background;
           selection_bg = colors.foreground;
-          scrollbar_thumb = colors.foreground;
+          scrollbar_thumb = colors.blackBright;
         };
       };
       extraConfig =
@@ -104,6 +104,7 @@ in
           config.alternate_buffer_wheel_scroll_speed = 3; -- default
 
           config.enable_tab_bar = false
+          config.mouse_wheel_scrolls_tabs = false
 
           local act = wezterm.action
 

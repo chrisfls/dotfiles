@@ -315,6 +315,10 @@ in
           state = "floating";
           center = true;
         };
+        "org.wezfurlong.wezterm" = {
+          state = "floating";
+          center = true;
+        };
       };
       settings = {
         border_width = 2;
