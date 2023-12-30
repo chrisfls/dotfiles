@@ -13,7 +13,7 @@ in
         cmd =
           ''
             dir=$(${pkgs.xcwd}/bin/xcwd);
-            if [ "$dir" -eq "${config.home.homeDirectory}" ]; then
+            if [ "$dir" = "${config.home.homeDirectory}" ]; then
               alacritty;
             else
               alacritty --working-directory "$dir";
