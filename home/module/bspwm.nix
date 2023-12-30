@@ -88,6 +88,133 @@ let
       ${cfg.extraConfig}
       bspc monitor 'PAD' -d 'pad';
     '';
+
+  minimize =
+    ''
+      node=$(bspc query --nodes --node);
+      if [ -z "$node" ]; then exit 1; fi;
+
+      desktop=$(bspc query --desktops --desktop);
+      if [ -z "$desktop" ]; then exit 1; fi;
+
+      store="$BSPWM_SCRATCHPAD/$desktop";
+      if [ ! -f "$store" ]; then touch "$store"; fi;
+
+      echo "$node" >> "$store";
+      bspc node "$node" --flag hidden=on
+    '';
+
+  restore =
+    ''
+      desktop=$(bspc query --desktops --desktop);
+      if [ -z "$desktop" ]; then exit 1; fi;
+
+      store="$BSPWM_SCRATCHPAD/$desktop";
+      if [ ! -f "$store" ]; then exit 1; fi;
+
+      while [ -s "$store" ]; do
+        window=$(tail -n 1 "$store");
+        bspc node "$window" --flag hidden=off --focus;
+        sed -i '$ d' "$store";
+        exit 0;
+      done;
+
+      exit 1;
+    '';
+
+  scratchpad-next = 
+    ''
+      desktop=$(bspc query --desktops --desktop);
+      if [ -z "$desktop" ]; then exit 1; fi;
+
+      store="$BSPWM_SCRATCHPAD/$desktop";
+      if [ ! -f "$store" ]; then exit 1; fi;
+
+      state="tiled";
+      node=$(bspc query --nodes --node "focused.$state");
+
+      if [ -z "$node" ]; then
+        state="pseudo_tiled";
+        node=$(bspc query --nodes --node "focused.$state");
+      fi;
+
+      if [ -z "$node" ]; then
+        state="fullscreen";
+        node=$(bspc query --nodes --node "focused.$state");
+      fi;
+
+      if [ -z "$node" ]; then
+        state="floating";
+        node=$(bspc query --nodes --node "focused.$state");
+      fi;
+
+      while [ -s "$store" ]; do
+        window=$(tail -n 1 "$store");
+
+        if [ -z "$(bspc query --nodes --node "$window")" ]; then
+          sed -i '$ d' "$store";
+          continue;
+        fi;
+
+        if [ "$node" ]; then
+          sed -i "1s;^;$node\n;" "$store";
+          bspc node "$node" --swap "$window" --flag hidden=on;
+        fi;
+
+        bspc node "$window" --flag hidden=off --focus --state "$state";
+        sed -i '$ d' "$store";
+        exit 0;
+      done;
+
+      exit 1;
+    '';
+
+  scratchpad-prev =
+    ''
+      desktop=$(bspc query --desktops --desktop);
+      if [ -z "$desktop" ]; then exit 1; fi;
+
+      store="$BSPWM_SCRATCHPAD/$desktop";
+      if [ ! -f "$store" ]; then exit 1; fi;
+
+      state="tiled";
+      node=$(bspc query --nodes --node "focused.$state");
+
+      if [ -z "$node" ]; then
+        state="pseudo_tiled";
+        node=$(bspc query --nodes --node "focused.$state");
+      fi;
+
+      if [ -z "$node" ]; then
+        state="fullscreen";
+        node=$(bspc query --nodes --node "focused.$state");
+      fi;
+
+      if [ -z "$node" ]; then
+        state="floating";
+        node=$(bspc query --nodes --node "focused.$state");
+      fi;
+
+      while [ -s "$store" ]; do
+        window=$(head -n 1 "$store");
+
+        if [ -z "$(bspc query --nodes --node "$window")" ]; then
+          sed -i '1d' "$store";
+          continue;
+        fi;
+
+        if [ "$node" ]; then
+          echo "$node" >> "$store";
+          bspc node "$node" --swap "$window" --flag hidden=on;
+        fi;
+
+        bspc node "$window" --flag hidden=off --focus --state "$state";
+        sed -i '1d' "$store";
+        exit 0;
+      done;
+
+      exit 1;
+    '';
 in
 {
   options.module.bspwm = {
@@ -221,7 +348,7 @@ in
         single_monocle = true;
 
         # Border colors
-        normal_border_color = colors.background;
+        normal_border_color = colors.blackBright;
         focused_border_color = colors.foreground;
         borderless_singleton = true;
 
@@ -256,48 +383,13 @@ in
       ######## #### ## #
 
       # ## #
-      # primary actions (close/min/max)
+      # primary actions (close/maximize)
       # ## #
 
       # [c]lose app
       "super + c" = "bspc node --close";
       # [c]lose app (kill)
       "super + shift + c" = "bspc node -k";
-
-      # [m]inimize window (hide)
-      "super + m" = 
-        ''
-          desktop=$(bspc query --desktops --desktop);
-          if [ -z "$desktop" ]; then exit 1; fi;
-
-          store="$BSPWM_SCRATCHPAD/$desktop";
-          if [ ! -f "$store" ]; then touch "$store"; fi;
-          
-          node=$(bspc query --nodes --node);
-          if [ -z "$node" ]; then exit 1; fi;
-
-          echo "$node" >> $store;
-          bspc node "$node" --flag hidden=on
-        '';
-
-      # un[m]inimize window (unhide)
-      "super + shift + m" =
-        ''
-          desktop=$(bspc query --desktops --desktop);
-          if [ -z "$desktop" ]; then exit 1; fi;
-
-          store="$BSPWM_SCRATCHPAD/$desktop";
-          if [ ! -f "$store" ]; then exit 1; fi;
-
-          while [ -s "$store" ]; do
-            window=$(tail -n 1 $store);
-            bspc node $window --flag hidden=off
-            &&
-            sed -i '$d' $store
-            &&
-            exit 0;
-          done;
-        '';
 
       # toggle ma[x]imize state (fullscreen)
       "super + x" = "bspc node --state ~fullscreen";
@@ -378,7 +470,7 @@ in
       "super + shift + i" =
         ''
           existing=$(bspc query --nodes --node 'prev.local.leaf.!window');
-          if [ "$existing" ]; then bspc node --to-node $existing; fi;
+          if [ "$existing" ]; then bspc node --to-node "$existing"; fi;
         '';
 
       ######## #### ## #
@@ -533,43 +625,17 @@ in
       # SCRATCHPAD
       ######## #### ## #
 
-      # push window to scratchpad
-      "super + n" =
-        ''
-          ${scratchpad};
-          window=$(bspc query --nodes --node);
-          if [ -z "$window" ]; then exit 1; fi;
-          bspc node $window --flag sticky=off --to-desktop pad --state tiled;
-          bspc node '@pad:/' --circulate forward
-        '';
-      # pop window from scratchpad
-      "super + shift + n" =
-        ''
-          ${scratchpad};
-          bspc node '@pad:#newest.local.window' --to-desktop focused --follow
-        '';
+      # [m]inimize window (hide)
+      "super + m" = minimize;
+
+      # un[m]inimize window (unhide)
+      "super + shift + m" = restore;
 
       # swap current window with previous scratchpad window
-      "super + Tab" =
-        ''
-          ${scratchpad};
-          bspc node '@pad:/' --circulate forward
-          &&
-          bspc node --swap '@pad:#newest.local.window'
-        '';
+      "super + Tab" = scratchpad-next;
 
       # swap current window with next scratchpad window
-      "super + shift + Tab" =
-        ''
-          ${scratchpad};
-          bspc node --swap '@pad:#newest.local.window'
-          &&
-          bspc node '@pad:/' --circulate backward
-        '';
-
-      "super + u" =
-        ''  
-        '';
+      "super + shift + Tab" = scratchpad-prev;
     };
   };
 }
