@@ -1,5 +1,10 @@
 - `$ systemctl enable systemd-timesyncd.service`
 
+Files:
+
+- `/etc/X11/xorg.conf.d/30-monitor.conf` come from [here](https://wiki.archlinux.org/title/GPD_Win_Max)
+- `/etc/X11/xorg.conf.d/20-intel.conf` allows having vsync off with no tearing
+
 Not working:
 
 - `/etc/X11/xorg.conf.d/30-monitor.conf`
