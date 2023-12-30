@@ -7,30 +7,23 @@ let
 
   brave = "brave-browser.desktop";
 
-  pkg = pkgs.brave;
-
-  # the wrapper is injecting mesa/libva...
-  wrapper = pkgs.symlinkJoin {
-    name = "brave";
-    paths = [
-      (pkgs.writeShellScriptBin "brave"
-        (replaceStrings
-          [ "mesa" "libva" "--enable-features=" ]
-          [
-            "dummy-mesa"
-            "dummy-libva"
-            "--enable-features=VaapiIgnoreDriverChecks,VaapiVideoDecodeLinuxGL,"
-          ]
-          (readFile "${pkg}/bin/brave")))
-      pkg
-    ];
-  };
+  pkg = pkgs.brave.overrideAttrs (old: {
+    postFixup =
+      ''
+        substituteInPlace $out/bin/brave \
+          --replace mesa dummy-mesa
+        substituteInPlace $out/bin/brave \
+          --replace libva dummy-libva
+        substituteInPlace $out/bin/brave \
+          --replace "--enable-features=" "--enable-features=VaapiVideoDecodeLinuxGL,"
+      '';
+  });
 in
 {
   options.module.brave.enable = lib.mkEnableOption "Enable brave module";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ wrapper ];
+    home.packages = [ pkg ];
 
     xdg.mimeApps = {
       enable = true;
