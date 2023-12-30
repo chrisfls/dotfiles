@@ -53,6 +53,7 @@ in
         "${pkgs.nm-tray}/bin/nm-tray"
         "${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"
         "${pkgs.webcord-vencord}/bin/webcord --start-minimized"
+        "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"
       ];
 
       nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
@@ -107,9 +108,10 @@ in
         pkgs.qalculate-qt # calculator
 
         # personal apps
+        # pkgs.logseq
+        audiotube
         pkgs.anydesk
         pkgs.gimp
-        # pkgs.logseq
         pkgs.moonlight-qt
         pkgs.parsec-bin
         pkgs.qbittorrent
@@ -118,7 +120,7 @@ in
         pkgs.steam
         pkgs.telegram-desktop
         pkgs.webcord-vencord
-        audiotube
+        pkgs.whatsapp-for-linux
 
         # disabled personal apps 
         # pkgs.notepadqq # notepad++ [not needed with micro and featherpad around]
