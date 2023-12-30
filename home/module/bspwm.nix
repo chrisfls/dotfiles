@@ -338,9 +338,9 @@ in
         focused_border_color = colors.foreground;
         borderless_singleton = true;
 
-        # leave monitors alone
-        remove_disabled_monitors = lib.mkDefault false;
-        remove_unplugged_monitors = lib.mkDefault false;
+        # fixed desktops
+        remove_disabled_monitors = false;
+        remove_unplugged_monitors = false;
 
         # Focusing behavior
         focus_follows_pointer = false;
