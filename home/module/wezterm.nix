@@ -15,9 +15,9 @@ in
           ''
             dir=$(${pkgs.xcwd}/bin/xcwd);
             if [ "$dir" = "${config.home.homeDirectory}" ]; then
-              wezterm;
+              wezterm start;
             else
-              wezterm --cwd "$dir";
+              wezterm start --cwd "$dir";
             fi;
           '';
       in
@@ -110,77 +110,79 @@ in
 
           local act = wezterm.action
 
-          -- mostly defaults + disabled tabs/splits
+          config.disable_default_key_bindings = true
+
           config.keys = {
-            -- extras
+            -- extra bindings
             { key = 'Backspace', mods = 'SUPER', action = act.SpawnWindow },
             { key = ';', mods = 'SUPER', action = act.SpawnWindow },
 
-            -- disable tabs and splits
-            { action key = 'Tab', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = 'Tab', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '!', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = '!', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '\"', mods = 'ALT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '\"', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '#', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = '#', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '$', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = '$', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '%', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = '%', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '%', mods = 'ALT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '%', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '&', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = '&', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '${"\\\'"}', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '(', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = '(', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '*', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = '*', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '1', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '1', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '2', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '2', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '3', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '3', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '4', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '4', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '5', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '5', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '5', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '6', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '6', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '7', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '7', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '8', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '8', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '9', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '9', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '@', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = '@', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = 'N', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = 'N', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = 'T', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = 'T', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = '[', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
-            { action key = ']', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
-            { action key = '^', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = '^', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = 'n', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = 'n', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = 't', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = 't', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '{', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '{', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
-            { action key = '}', mods = 'SUPER', action = act.DisableDefaultAssignment },
-            { action key = '}', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
-            { action key = 'PageUp', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = 'PageUp', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
-            { action key = 'PageDown', mods = 'CTRL', action = act.DisableDefaultAssignment },
-            { action key = 'PageDown', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            --[[ -- disabled defaults
+            { key = 'Tab', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = 'Tab', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '!', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = '!', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '\"', mods = 'ALT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '\"', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '#', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = '#', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '$', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = '$', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '%', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = '%', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '%', mods = 'ALT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '%', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '&', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = '&', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '${"\\\'"}', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '(', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = '(', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '*', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = '*', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '1', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '1', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '2', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '2', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '3', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '3', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '4', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '4', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '5', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '5', mods = 'SHIFT|ALT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '5', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '6', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '6', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '7', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '7', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '8', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '8', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '9', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '9', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '@', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = '@', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = 'N', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = 'N', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = 'T', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = 'T', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = '[', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
+            { key = ']', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
+            { key = '^', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = '^', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = 'n', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = 'n', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = 't', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = 't', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '{', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '{', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
+            { key = '}', mods = 'SUPER', action = act.DisableDefaultAssignment },
+            { key = '}', mods = 'SHIFT|SUPER', action = act.DisableDefaultAssignment },
+            { key = 'PageUp', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = 'PageUp', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            { key = 'PageDown', mods = 'CTRL', action = act.DisableDefaultAssignment },
+            { key = 'PageDown', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
+            --]]
 
-            -- [[ -- default keys
+            -- default bindings
             { key = 'Enter', mods = 'ALT', action = act.ToggleFullScreen },
             { key = ')', mods = 'CTRL', action = act.ResetFontSize },
             { key = ')', mods = 'SHIFT|CTRL', action = act.ResetFontSize },
@@ -255,10 +257,9 @@ in
             { key = 'Insert', mods = 'CTRL', action = act.CopyTo 'PrimarySelection' },
             { key = 'Copy', mods = 'NONE', action = act.CopyTo 'Clipboard' },
             { key = 'Paste', mods = 'NONE', action = act.PasteFrom 'Clipboard' },
-            ]]
           }
 
-          --[[ -- default keys
+          -- also default bindings
           config.key_tables = {
             copy_mode = {
               { key = 'Tab', mods = 'NONE', action = act.CopyMode 'MoveForwardWord' },
@@ -338,7 +339,6 @@ in
               { key = 'DownArrow', mods = 'NONE', action = act.CopyMode 'NextMatch' },
             },
           }
-          ]]
 
           return config
         '';
