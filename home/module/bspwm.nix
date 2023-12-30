@@ -105,9 +105,7 @@ let
         while [ -s "$store" ]; do
           window=$(tail -n 1 "$store");
           sed -i '$ d' "$store";
-          bspc node "$window" --flag hidden=off --focus
-          &&
-          exit 0;
+          bspc node "$window" --flag hidden=off --focus && exit 0;
         done;
 
         exit 1;
@@ -154,9 +152,7 @@ let
         fi;
 
         sed -i '$ d' "$store";
-        bspc node "$window" --flag hidden=off --focus --state "$state"
-        &&
-        exit 0;
+        bspc node "$window" --flag hidden=off --focus --state "$state" && exit 0;
       done;
 
       exit 1;
@@ -203,9 +199,7 @@ let
           fi;
 
           sed -i '1d' "$store";
-          bspc node "$window" --flag hidden=off --focus --state "$state"
-          &&
-          exit 0;
+          bspc node "$window" --flag hidden=off --focus --state "$state" && exit 0;
         done;
 
         exit 1;
