@@ -18,7 +18,7 @@ in
     (lib.mkIf enable {
       module = {
         autorandr.enable = true;
-        browser.enable = true;
+        brave.enable = true;
         bspwm.enable = true;
         dunst.enable = true;
         fontconfig.enable = true;
