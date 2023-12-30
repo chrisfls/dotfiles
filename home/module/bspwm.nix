@@ -77,15 +77,6 @@ let
         bspc wm -h on
       '';
 
-  scratchpad =
-    ''
-      if [ -z "$(bspc query --monitors --monitor PAD)" ]; then
-        bspc wm --add-monitor PAD ${cfg.scratchpad};
-      fi
-      ${cfg.extraConfig}
-      bspc monitor 'PAD' -d 'pad';
-    '';
-
   minimize =
     pkgs.writeShellScriptBin "bspwm-minimize"
       ''
@@ -113,8 +104,9 @@ let
 
         while [ -s "$store" ]; do
           window=$(tail -n 1 "$store");
-          bspc node "$window" --flag hidden=off --focus;
           sed -i '$ d' "$store";
+          bspc node "$window" --flag hidden=off --focus
+          &&
           exit 0;
         done;
 
@@ -161,8 +153,9 @@ let
           bspc node "$node" --swap "$window" --flag hidden=on;
         fi;
 
-        bspc node "$window" --flag hidden=off --focus --state "$state";
         sed -i '$ d' "$store";
+        bspc node "$window" --flag hidden=off --focus --state "$state"
+        &&
         exit 0;
       done;
 
@@ -209,8 +202,9 @@ let
             bspc node "$node" --swap "$window" --flag hidden=on;
           fi;
 
-          bspc node "$window" --flag hidden=off --focus --state "$state";
           sed -i '1d' "$store";
+          bspc node "$window" --flag hidden=off --focus --state "$state"
+          &&
           exit 0;
         done;
 
@@ -223,13 +217,6 @@ in
     amount = lib.mkOption {
       type = types.int;
       default = 100;
-    };
-    scratchpad = lib.mkOption {
-      type = types.str;
-    };
-    extraConfig = lib.mkOption {
-      type = types.str;
-      default = "";
     };
   };
 
@@ -249,10 +236,6 @@ in
           hash = "sha256-O4Qwdjb3p6jw8Qtcd4zGZ57cB3oCCbPZcjUQtWbyC7Y=";
         };
       });
-      extraConfigEarly = 
-        ''
-          ${scratchpad}
-        '';
       /*
       extraConfig =
         ''
@@ -427,6 +410,8 @@ in
       # tertiary actions (show desktop/equalize/balance)
       # ## #
 
+      # TOO LAZY TO FIX THIS NOW
+      /*
       # show/hide [d]ekstop
       "super + d" =
         ''
@@ -439,6 +424,7 @@ in
           while bspc node 'any.local.hidden.window' --flag hidden=off; do false; done
             && while bspc node 'any.local.!hidden.window' --flag hidden=on; do :; done
         '';
+      */
 
       # focus [p]arent
       "super + p" = "bspc node --focus @parent";

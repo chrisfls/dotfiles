@@ -36,16 +36,6 @@ in
   module = {
     cloudflare-warp.enable = true;
     scaling = { enable = true; scale = 1.5; };
-    bspwm = {
-      scratchpad = "1280x720+5120+0";
-      extraConfig =
-      ''
-        bspc monitor 'eDP-1' -d 'apostrophe'
-        bspc monitor 'HDMI-1' -d '1' '2' '3' '4' '5' '6' '7' '8' '9' '0'
-        bspc wm --reorder-monitors HDMI-1 eDP-1
-        bspc desktop 'apostrophe' -l monocle
-      '';
-    };
   };
 
   home.keyboard.layout = "br";
@@ -121,10 +111,17 @@ in
 
   # bspwm multihead behavior
   xsession.windowManager.bspwm = {
+    monitors.eDP-1 = [ "apostrophe" ];
+    monitors.HDMI-1 = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" ];
     settings = {
       remove_disabled_monitors = true;
       remove_unplugged_monitors = true;
     };
+    extraConfig =
+      ''
+        bspc wm --reorder-monitors HDMI-1 eDP-1
+        bspc desktop 'apostrophe' -l monocle
+      '';
     startupPrograms = [
       "${pkgs.feh}/bin/feh --bg-center \"${../../assets/wallpaper/23-12-29_2160p.png}\"  \"${../../assets/wallpaper/23-12-30_800p.png}\""
     ];
