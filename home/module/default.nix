@@ -5,7 +5,7 @@
     ./alacritty.nix
     ./autorandr.nix
     ./betterlockscreen.nix
-    ./browser.nix
+    ./brave.nix
     ./bspwm.nix
     ./cloudflare-warp.nix
     ./codium.nix
