@@ -30,7 +30,7 @@ in
         ];
 
         # border opacity
-        frame-opacity = 0.9;
+        frame-opacity = 0.85;
         opacity-rule = [
           "0:_NET_WM_STATE@[0]:32a *= '_NET_WM_STATE_HIDDEN'"
           "0:_NET_WM_STATE@[1]:32a *= '_NET_WM_STATE_HIDDEN'"
