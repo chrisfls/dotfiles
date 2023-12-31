@@ -19,14 +19,14 @@ let
       bspc node 'focused.!floating' --focus '${direction}.!floating.window'
       ||
       bspc node 'focused.floating' --focus '${direction}.floating.window';
-      bspc config 'pointer_follows_focus' 'off';
+      bspc config 'pointer_follows_focus' 'off'
     '';
 
   focus-worksapce = num:
     ''
       bspc config 'pointer_follows_focus' 'on';
       bspc desktop --focus '^${toString num}';
-      bspc config 'pointer_follows_focus' 'off';
+      bspc config 'pointer_follows_focus' 'off'
     '';
 
   move = direction:
@@ -35,7 +35,7 @@ let
         ''
           bspc config 'pointer_follows_focus' 'on';
           bspc node 'focused.!floating.window' --swap ${direction} || ${str};
-          bspc config 'pointer_follows_focus' 'off';
+          bspc config 'pointer_follows_focus' 'off'
         '';
     in
     if direction == "west" then
@@ -85,10 +85,12 @@ let
             fi;
           done;
 
-          bspc node $window --focus
+          bspc config 'pointer_follows_focus' 'on';
+          bspc node $window --focus;
+          bspc config 'pointer_follows_focus' 'off'
         );
 
-        bspc wm -h on
+        bspc wm -h on;
       '';
 
   minimize =
@@ -119,7 +121,10 @@ let
         while [ -s "$store" ]; do
           window=$(tail -n 1 "$store");
           sed -i '$ d' "$store";
-          bspc node "$window" --flag hidden=off --focus && exit 0;
+          bspc config 'pointer_follows_focus' 'on' \
+           && bspc node "$window" --flag hidden=off --focus \
+           && bspc config 'pointer_follows_focus' 'off' \
+           && exit 0;
         done;
 
         exit 1;
@@ -513,9 +518,11 @@ in
       # focus floating windows
       "super + space" =
         ''
+          bspc config 'pointer_follows_focus' 'on';
           bspc node 'focused.!floating' -f 'last.local.!hidden.floating.window'
           ||
-          bspc node 'focused.floating' -f 'last.local.!hidden.!floating.window'
+          bspc node 'focused.floating' -f 'last.local.!hidden.!floating.window';
+          bspc config 'pointer_follows_focus' 'off'
         '';
 
       # focus previous window
