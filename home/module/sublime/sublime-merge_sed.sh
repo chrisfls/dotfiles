@@ -1,34 +1,48 @@
 #!/bin/bash
 
-# tested with sublime_merge_build_2091_x64.tar.xz
+# tested with sublime_merge_build_2092_x64.tar.xz
 
 xxd -c 0 -p $1 > "$1.txt"
 
-sed -i 's;ff498d7e284883c3284889dee85d46ffff4c89f04883c4085b415ec34156534881ec180300004889fb488d3dfd56c6ffe8a2ec1800488d1562f7c7ff4c8db424;ff498d7e284883c3284889dee85d46ffff4c89f04883c4085b415ec3c356534881ec180300004889fb488d3dfd56c6ffe8a2ec1800488d1562f7c7ff4c8db424;g' "$1.txt"
+orig=$(cat $1.txt | grep -oP '554157415641554154534881ec..240000')
+
+if [ -z "$orig" ]; then
+  echo "Failed to find offset" >&2
+  exit 1
+fi
+
+sed -i "s;$orig;48c7c001000000c3${orig:16};g" "$1.txt"
 
 if [ $? -ne 0 ]; then
   echo "Failed to apply patch 1" >&2
   exit 1
 fi
 
-sed -i 's;b00159c385f67401c3488b7f08e9227bffff554157415641554154534881ec682400004d89c74989cd48899424f80100004889b424f00100004889fd31c0488d;b00159c385f67401c3488b7f08e9227bffff48c7c001000000c354534881ec682400004d89c74989cd48899424f80100004889b424f00100004889fd31c0488d;g' "$1.txt"
+sed -i 's;ba88130000e8........;ba881300009090909090;g' "$1.txt"
 
 if [ $? -ne 0 ]; then
   echo "Failed to apply patch 2" >&2
   exit 1
 fi
 
-sed -i 's;c048394e08488d4f08480f44c1c3488d05fbcc5400c3554156534189f64889fd6a205fe8a89af6ff4889c34889c74889eee8cabaf6ff44897318488d3d270000;c048394e08488d4f08480f44c1c3488d05fbcc5400c3c34156534189f64889fd6a205fe8a89af6ff4889c34889c74889eee8cabaf6ff44897318488d3d270000;g' "$1.txt"
+sed -i 's;ba983a0000e8........;ba983a00009090909090;g' "$1.txt"
 
 if [ $? -ne 0 ]; then
   echo "Failed to apply patch 3" >&2
   exit 1
 fi
 
-sed -i 's;bf98020000e86a664200488bb3c0020000488d3d4a0f0000ba88130000e810d81800488bb3c0020000488d3d43110000ba983a0000e8f8d71800488d3dc7607d;bf98020000e86a664200488bb3c0020000488d3d4a0f0000ba881300009090909090488bb3c0020000488d3d43110000ba983a00009090909090488d3dc7607d;g' "$1.txt"
+sed -i 's;f04883c4085b415ec3..56534881ec1803;f04883c4085b415ec3c356534881ec1803;g' "$1.txt" # '..' should be '41'
 
 if [ $? -ne 0 ]; then
   echo "Failed to apply patch 4" >&2
+  exit 1
+fi
+
+sed -i 's;c3488d05fbcc5400c3..4156534189f648;c3488d05fbcc5400c3c34156534189f648;g' "$1.txt" # '..' should be '55'
+
+if [ $? -ne 0 ]; then
+  echo "Failed to apply patch 5" >&2
   exit 1
 fi
 
