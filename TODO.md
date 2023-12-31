@@ -2,6 +2,7 @@
 
 - Fix opacity for monocle/fullscreen apps in bspwm
 - Add [swallow](https://github.com/JopStro/bspswallow) or alternative
+- Increase border to 3px (it's looking better)
 
 #### low priority
 
