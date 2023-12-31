@@ -15,7 +15,14 @@ sublime4-dev.overrideAttrs
             
             ${xxd}/bin/xxd -c 0 -p sublime_text > sublime_text.txt
             
-            sed -i 's;554157415641554154534881ec..240000;b800000000c3554154534881ec58240000;g' "sublime_text.txt"
+            orig=$(cat "sublime_text.txt" | grep -oP '554157415641554154534881ec..240000')
+
+            if [ -z "$orig" ]; then
+              echo "Failed to find offset" >&2
+              exit 1
+            fi
+
+            sed -i "s;$orig;b800000000c3${orig:12};g" "sublime_text.txt"
 
             if [ $? -ne 0 ]; then
               echo "Failed to apply patch 1" >&2
