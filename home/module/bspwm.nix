@@ -15,25 +15,39 @@ let
 
   focus = direction:
     ''
+      bspc config 'pointer_follows_focus' 'on';
       bspc node 'focused.!floating' --focus '${direction}.!floating.window'
       ||
-      bspc node 'focused.floating' --focus '${direction}.floating.window'
+      bspc node 'focused.floating' --focus '${direction}.floating.window';
+      bspc config 'pointer_follows_focus' 'off';
+    '';
+
+  focus-worksapce = num:
+    ''
+      bspc config 'pointer_follows_focus' 'on';
+      bspc desktop --focus '^${toString num}';
+      bspc config 'pointer_follows_focus' 'off';
     '';
 
   move = direction:
     let
-      prefix = "bspc node 'focused.!floating.window' --swap ${direction}";
+      wrap = str:
+        ''
+          bspc config 'pointer_follows_focus' 'on';
+          bspc node 'focused.!floating.window' --swap ${direction} || ${str};
+          bspc config 'pointer_follows_focus' 'off';
+        '';
     in
     if direction == "west" then
-      "${prefix} || bspc node 'focused.floating.window' --move -${amount} 0"
+      wrap "bspc node 'focused.floating.window' --move -${amount} 0;"
     else if direction == "south" then
-      "${prefix} || bspc node 'focused.floating.window' --move 0 ${amount}"
+      wrap "bspc node 'focused.floating.window' --move 0 ${amount};"
 
     else if direction == "north" then
-      "${prefix} || bspc node 'focused.floating.window' --move 0 -${amount}"
+      wrap "bspc node 'focused.floating.window' --move 0 -${amount};"
 
     else if direction == "east" then
-      "${prefix} || bspc node 'focused.floating.window' --move ${amount} 0"
+      wrap "bspc node 'focused.floating.window' --move ${amount} 0;"
 
     else
       throw "Invalid move direction";
@@ -41,9 +55,9 @@ let
   lock =
     "flock --verbose -n $BSPWM_SCRATCHPAD/singleton.lock";
 
-  # TODO: someday port these commands to dash scripts
+  # TODO: **someday** port these commands to dash scripts
 
-  switch = 
+  switch =
     pkgs.writeShellScriptBin "bspwm-switch"
       ''
         bspc wm -h off;
@@ -111,54 +125,54 @@ let
         exit 1;
       '';
 
-  scratchpad-next = 
+  scratchpad-next =
     pkgs.writeShellScriptBin "bspwm-scratchpad-next"
-    ''
-      desktop=$(bspc query --desktops --desktop);
-      if [ -z "$desktop" ]; then exit 1; fi;
+      ''
+        desktop=$(bspc query --desktops --desktop);
+        if [ -z "$desktop" ]; then exit 1; fi;
 
-      store="$BSPWM_SCRATCHPAD/$desktop";
-      if [ ! -f "$store" ]; then exit 1; fi;
+        store="$BSPWM_SCRATCHPAD/$desktop";
+        if [ ! -f "$store" ]; then exit 1; fi;
 
-      state="tiled";
-      node=$(bspc query --nodes --node "focused.$state");
-
-      if [ -z "$node" ]; then
-        state="pseudo_tiled";
+        state="tiled";
         node=$(bspc query --nodes --node "focused.$state");
-      fi;
 
-      if [ -z "$node" ]; then
-        state="fullscreen";
-        node=$(bspc query --nodes --node "focused.$state");
-      fi;
+        if [ -z "$node" ]; then
+          state="pseudo_tiled";
+          node=$(bspc query --nodes --node "focused.$state");
+        fi;
 
-      if [ -z "$node" ]; then
-        state="floating";
-        node=$(bspc query --nodes --node "focused.$state");
-      fi;
+        if [ -z "$node" ]; then
+          state="fullscreen";
+          node=$(bspc query --nodes --node "focused.$state");
+        fi;
 
-      while [ -s "$store" ]; do
-        window=$(tail -n 1 "$store");
+        if [ -z "$node" ]; then
+          state="floating";
+          node=$(bspc query --nodes --node "focused.$state");
+        fi;
 
-        if [ -z "$(bspc query --nodes --node "$window")" ]; then
+        while [ -s "$store" ]; do
+          window=$(tail -n 1 "$store");
+
+          if [ -z "$(bspc query --nodes --node "$window")" ]; then
+            sed -i '$ d' "$store";
+            continue;
+          fi;
+
+          if [ "$node" ]; then
+            sed -i "1s;^;$node\n;" "$store";
+            bspc node "$node" --swap "$window" --flag hidden=on;
+          fi;
+
           sed -i '$ d' "$store";
-          continue;
-        fi;
+          bspc node "$window" --flag hidden=off --focus --state "$state" && exit 0;
+        done;
 
-        if [ "$node" ]; then
-          sed -i "1s;^;$node\n;" "$store";
-          bspc node "$node" --swap "$window" --flag hidden=on;
-        fi;
+        exit 1;
+      '';
 
-        sed -i '$ d' "$store";
-        bspc node "$window" --flag hidden=off --focus --state "$state" && exit 0;
-      done;
-
-      exit 1;
-    '';
-
-  scratchpad-prev = 
+  scratchpad-prev =
     pkgs.writeShellScriptBin "bspwm-scratchpad-prev"
       ''
         desktop=$(bspc query --desktops --desktop);
@@ -344,6 +358,8 @@ in
 
         # Focusing behavior
         focus_follows_pointer = false;
+        pointer_follows_focus = false;
+        pointer_follows_monitor = false;
 
         # Misc
         split_ratio = 0.50;
@@ -503,7 +519,7 @@ in
         '';
 
       # focus previous window
-      "alt + Tab" = 
+      "alt + Tab" =
         ''
           ${lock} ${switch}/bin/bspwm-switch "older" "newer"
         '';
@@ -518,17 +534,17 @@ in
       ######## #### ## #
 
       # focus workspace
-      "super + 1" = "bspc desktop --focus '^1'";
-      "super + 2" = "bspc desktop --focus '^2'";
-      "super + 3" = "bspc desktop --focus '^3'";
-      "super + 4" = "bspc desktop --focus '^4'";
-      "super + 5" = "bspc desktop --focus '^5'";
-      "super + 6" = "bspc desktop --focus '^6'";
-      "super + 7" = "bspc desktop --focus '^7'";
-      "super + 8" = "bspc desktop --focus '^8'";
-      "super + 9" = "bspc desktop --focus '^9'";
-      "super + 0" = "bspc desktop --focus '^10'";
-      "super + apostrophe" = "bspc desktop --focus '^11'";
+      "super + 1" = focus-worksapce 1;
+      "super + 2" = focus-worksapce 2;
+      "super + 3" = focus-worksapce 3;
+      "super + 4" = focus-worksapce 4;
+      "super + 5" = focus-worksapce 5;
+      "super + 6" = focus-worksapce 6;
+      "super + 7" = focus-worksapce 7;
+      "super + 8" = focus-worksapce 8;
+      "super + 9" = focus-worksapce 9;
+      "super + 0" = focus-worksapce 10;
+      "super + apostrophe" = focus-worksapce 11;
 
       # move window to workspace
       "super + shift + 1" = "bspc node --to-desktop '^1'";

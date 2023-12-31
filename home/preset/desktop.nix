@@ -52,9 +52,10 @@ in
       xsession.windowManager.bspwm.startupPrograms = [
         "${pkgs.copyq}/bin/copyq"
         "${pkgs.nm-tray}/bin/nm-tray"
-        "${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"
+        "env -u QT_SCREEN_SCALE_FACTORS ${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"
         "${pkgs.webcord-vencord}/bin/webcord --start-minimized"
         "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"
+        "${pkgs.jamesdsp}/bin/bin/jamesdsp"
       ];
 
       nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
