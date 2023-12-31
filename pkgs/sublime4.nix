@@ -18,7 +18,7 @@ sublime4.overrideAttrs
             # echo "00416CA4: C3" | ${xxd}/bin/xxd -r - sublime_text
             # echo "00414C82: C3" | ${xxd}/bin/xxd -r - sublime_text
 
-            # working patch, thanks to SAUCE
+            # working patch, thanks to SAUCE-2
             sed -i 's;\x80\x78\x05\x00\x0f\x94\xc1;\xc6\x40\x05\x01\x48\x85\xc9;g' "sublime_text" || (
               echo "Failed to apply activation patch" >&2
               exit 1
