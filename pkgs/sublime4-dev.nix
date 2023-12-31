@@ -4,7 +4,6 @@ sublime4-dev.overrideAttrs
   (old: {
     sublime_text = old.sublime_text.overrideAttrs
       (_: {
-
         prePatch =
           # SOURCES
           #   - first patches: 
@@ -49,26 +48,30 @@ sublime4-dev.overrideAttrs
           ''
           });
       })
-# NOT REALLY WORKING WITH LATEST (MADE FOR 4156)
+# OTHER METHODS:
 #
-# $ echo "00444894: 48 C7 C0 00 00 00 00 C3" | xxd -r - sublime_text 
-# $ echo "0042BA70: 90 90 90 90 90" | xxd -r - sublime_text
-# $ echo "0042BA88: 90 90 90 90 90" | xxd -r - sublime_text
-# $ echo "004467B6: C3" | xxd -r - sublime_text
-# $ echo "004444F8: C3" | xxd -r - sublime_text
+#   NOT REALLY WORKING WITH LATEST (MADE FOR 4156)
 #
-# really brittle patch in this form, made for v4156, but any update will break
-# it, convert it to sed might solve that
+#   $ echo "00444894: 48 C7 C0 00 00 00 00 C3" | xxd -r - sublime_text 
+#   $ echo "0042BA70: 90 90 90 90 90" | xxd -r - sublime_text
+#   $ echo "0042BA88: 90 90 90 90 90" | xxd -r - sublime_text
+#   $ echo "004467B6: C3" | xxd -r - sublime_text
+#   $ echo "004444F8: C3" | xxd -r - sublime_text
 #
-# SOURCE: github [DOT] com [SLASH] CodigoCristo [SLASH] sublimepatch [SLASH] blob [SLASH] main [SLASH] src [SLASH] main.c
+#   really brittle patch in this form, made for v4156, but any update will break
+#   it, convert it to sed might solve that
 #
-# ---
+#   SOURCE: github [DOT] com [SLASH] CodigoCristo [SLASH] sublimepatch [SLASH] blob [SLASH] main [SLASH] src [SLASH] main.c
 #
-# ALSO NOT WORKING, ALSO BREAKS NIX PACKAGE
-# 
-# $ sed -i 's;\x41\x57\x41\x56\x56\x57\x55\x53\xB8\x28\x21\x00\x00;33\xC0\xFE\xC0\xC3\x57\x55\x53\xB8\x28\x21\x00\x00;g' "sublime_text"
-# $ sed -i 's;\x6C\x69\x63\x65\x6E\x73\x65\x2E\x73\x75\x62\x6C\x69\x6D\x65\x68\x71\x2E\x63\x6F\x6D;73\x75\x62\x6C\x69\x6D\x65\x68\x71\x2E\x6C\x6F\x63\x61\x6C\x68\x6F\x73\x74\x00\x00;g' "sublime_text"
+#   ---
 #
-# made for an older (unknown) version
+#   ALSO NOT WORKING, ALSO BREAKS NIX PACKAGE
+#   
+#   $ sed -i 's;\x41\x57\x41\x56\x56\x57\x55\x53\xB8\x28\x21\x00\x00;33\xC0\xFE\xC0\xC3\x57\x55\x53\xB8\x28\x21\x00\x00;g' \
+#       "sublime_text"
+#   $ sed -i 's;\x6C\x69\x63\x65\x6E\x73\x65\x2E\x73\x75\x62\x6C\x69\x6D\x65\x68\x71\x2E\x63\x6F\x6D;73\x75\x62\x6C\x69\x6D\x65\x68\x71\x2E\x6C\x6F\x63\x61\x6C\x68\x6F\x73\x74\x00\x00;g' \
+#       "sublime_text"
 #
-# SOURCE: nairatag [DOT] com [SLASH] programming [SLASH] crack-sublime-text-4-easily
+#   made for an older (unknown) version
+#
+#   SOURCE: nairatag [DOT] com [SLASH] programming [SLASH] crack-sublime-text-4-easily
