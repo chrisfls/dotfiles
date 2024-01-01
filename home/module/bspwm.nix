@@ -243,6 +243,8 @@ in
 
     xsession.initExtra = "systemctl --user import-environment DESKTOP_SESSION";
 
+    services.polybar.settings."bar/topbar".wm-restack = "\"bspwm\"";
+
     xsession.windowManager.bspwm = {
       enable = true;
       package = pkgs.bspwm.overrideAttrs (old: {

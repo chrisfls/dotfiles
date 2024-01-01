@@ -109,7 +109,6 @@ in
     };
   };
 
-  # bspwm multihead behavior
   xsession.windowManager.bspwm = {
     monitors.eDP-1 = [ "apostrophe" ];
     monitors.HDMI-1 = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" ];
@@ -119,10 +118,34 @@ in
         bspc desktop 'apostrophe' -l monocle
       '';
     startupPrograms = [
+      # TODO: move to home/modules/feh.nix
       "${pkgs.feh}/bin/feh --bg-center \"${../../assets/wallpaper/23-12-29_2160p.png}\"  \"${../../assets/wallpaper/23-12-30_800p.png}\""
     ];
   };
 
+  xsession.windowManager.i3.config = {
+    workspaceOutputAssign = let output = "HDMI-1"; in [
+      { workspace = "0"; output = "eDP-1"; }
+    ] ++ [
+      { workspace = "1"; inherit output; }
+      { workspace = "2"; inherit output; }
+      { workspace = "3"; inherit output; }
+      { workspace = "4"; inherit output; }
+      { workspace = "5"; inherit output; }
+      { workspace = "6"; inherit output; }
+      { workspace = "7"; inherit output; }
+      { workspace = "8"; inherit output; }
+      { workspace = "9"; inherit output; }
+      { workspace = "10"; inherit output; }
+    ];
+    startup = [
+      # TODO: move to home/modules/feh.nix
+      {
+        command = "${pkgs.feh}/bin/feh --bg-center \"${../../assets/wallpaper/23-12-29_2160p.png}\"  \"${../../assets/wallpaper/23-12-30_800p.png}\"";
+        notification = false;
+      }
+    ];
+  };
 
   home.username = ssot.users.arch-rmxp.kress.username;
   home.homeDirectory = ssot.users.arch-rmxp.kress.home;

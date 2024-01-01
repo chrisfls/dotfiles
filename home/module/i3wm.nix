@@ -84,11 +84,11 @@ in
           titlebar = false;
         };
         workspaceAutoBackAndForth = true;
-        workspaceOutputAssign = {
-          #.*.workspace
-        };
+        workspaceLayout = "tabbed";
       };
     };
+
+    services.polybar.settings."bar/topbar".wm-restack = "\"i3\"";
 
     services.polybar.settings = {
       "module/workspaces" = {

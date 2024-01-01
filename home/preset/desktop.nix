@@ -19,7 +19,7 @@ in
       module = {
         autorandr.enable = true;
         brave.enable = true;
-        bspwm.enable = true;
+        i3wm.enable = true;
         dunst.enable = true;
         fontconfig.enable = true;
         fonts.enable = true;
@@ -31,15 +31,15 @@ in
         qview.enable = true;
         rofi.enable = true;
         screenshot.enable = true;
-        sublime.enable = true;
-        sxhkd = {
-          enable = true;
+        /*sxhkd = {
+          enable = false;
           keybindings = {
             "ctrl + alt + Delete" = "gtk-launch qps";
             "super + a ; c" = "gtk-launch com.github.hluk.copyq.desktop";
             "super + a ; e" = "gtk-launch pcmanfm-qt";
           };
         };
+        */
         themes.enable = true;
         wezterm.enable = true;
       };
@@ -56,6 +56,15 @@ in
         "${pkgs.webcord-vencord}/bin/webcord --start-minimized"
         "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"
         "${pkgs.jamesdsp}/bin/bin/jamesdsp"
+      ];
+
+      xsession.windowManager.i3.config.startup = [
+        { notification = false; command = "${pkgs.copyq}/bin/copyq"; }
+        { notification = false; command = "${pkgs.nm-tray}/bin/nm-tray"; }
+        { notification = false; command = "env -u QT_SCREEN_SCALE_FACTORS ${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"; }
+        { notification = false; command = "${pkgs.webcord-vencord}/bin/webcord --start-minimized"; }
+        { notification = false; command = "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"; }
+        { notification = false; command = "${pkgs.jamesdsp}/bin/bin/jamesdsp"; }
       ];
 
       nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
@@ -185,7 +194,12 @@ in
       services.udiskie.enable = true;
     })
     (lib.mkIf (enable && development) {
-      module.codium.enable = true;
+      module = {
+        code.enable = true;
+        sublime.enable = true;
+        #helix.enable = true;
+        #emacs.enable = true;
+      };
     })
     (lib.mkIf (enable && non-nixos) {
       home.sessionVariables = {

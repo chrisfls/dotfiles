@@ -88,7 +88,7 @@ let
     in
     "${script}/bin/sxhkd-mode";
 
-  dunst-toggle = 
+  dunst-toggle =
     let
       script = pkgs.writeShellScriptBin "dunst-toggle"
         ''
@@ -109,12 +109,19 @@ in
   options.module.polybar.enable = lib.mkEnableOption "Enable polybar module";
 
   config = lib.mkIf cfg.enable {
-    # HACK: disable polybar service
+    # HACK: disable polybar service, it would be great to use it if systemd adopted all the envars by default
     systemd.user.services.polybar = lib.mkForce { };
 
     xsession.windowManager.bspwm.startupPrograms = [
       "systemd-cat -t polybar systemd-run --user --scope --property=OOMPolicy=continue -u polybar ${pkgs.polybar}/bin/polybar"
       "systemd-cat -t sxhkd-mode systemd-run --user --scope --property=OOMPolicy=continue -u sxhkd-mode ${sxhkd-mode}"
+    ];
+
+    xsession.windowManager.i3.config.startup = [
+      {
+        command = "${pkgs.polybar}/bin/polybar topbar -r";
+        notification = false;
+      }
     ];
 
     services.polybar = {
@@ -125,7 +132,6 @@ in
         "bar/topbar" = {
           # settings
           enable-ipc = "\"true\"";
-          wm-restack = "\"bspwm\"";
 
           # layout
           dpi = "\"144\"";
@@ -263,7 +269,7 @@ in
           hook-1 = "\"\"";
           format-1 = "\"%{O-12}%{T2}%{T-}\"";
           format-1-foreground = "\"${light}\"";
-          
+
           format-1-background = "\"${dark}\"";
           format-1-padding = "\"1\"";
         };

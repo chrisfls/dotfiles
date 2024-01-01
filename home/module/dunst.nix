@@ -15,6 +15,13 @@ in
       "systemd-cat -t dunst systemd-run --user --scope --property=OOMPolicy=continue -u dunst ${pkgs.dunst}/bin/dunst -config ${config.services.dunst.configFile}"
     ];
 
+    xsession.windowManager.i3.config.startup = [
+      {
+        command = "${pkgs.dunst}/bin/dunst -config ${config.services.dunst.configFile}";
+        notification = false;
+      }
+    ];
+
     services.dunst = {
       enable = true;
       iconTheme = {
