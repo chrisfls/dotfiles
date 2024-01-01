@@ -1,5 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, specialArgs, ... }:
 let
+  inherit (specialArgs) qt;
+
   enable = config.preset.desktop;
   development = config.preset.development;
   non-nixos = config.preset.non-nixos;
@@ -131,7 +133,7 @@ in
         pkgs.rclone
         pkgs.soulseekqt
         pkgs.steam
-        pkgs.telegram-desktop
+        (qt.fixScaling { package = pkgs.telegram-desktop; })
         pkgs.webcord-vencord
         pkgs.whatsapp-for-linux
 

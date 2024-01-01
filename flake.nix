@@ -40,8 +40,8 @@
 
   outputs = { nixpkgs, home-manager, ... }@inputs:
     let
-      specialArgs = (import ./special nixpkgs) // { inherit inputs; };
-      ssot = specialArgs.ssot;
+      inherit (import ./special inputs) specialArgs mkExtraSpecialArgs;
+      inherit (specialArgs) ssot;
       forEachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
     in
     {
@@ -49,17 +49,19 @@
         devenv = inputs.devenv.packages.${system}.devenv;
       });
       homeConfigurations = {
-        "${ssot.users.arch-rmxp.kress.id}" = home-manager.lib.homeManagerConfiguration {
+        "${ssot.users.arch-rmxp.kress.id}" = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import inputs.nixpkgs {
             system = "x86_64-linux";
             overlays = [ (import ./pkgs) ];
           };
+
+          extraSpecialArgs = mkExtraSpecialArgs pkgs;
+
           modules = [
             ./home/module
             ./home/preset
             ./home/user/${ssot.users.arch-rmxp.kress.id}.nix
           ];
-          extraSpecialArgs = specialArgs;
         };
       };
     };
