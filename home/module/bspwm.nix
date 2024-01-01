@@ -6,6 +6,10 @@ let
   cfg = config.module.bspwm;
 
   colors = config.module.themes.color-scheme;
+  light = colors.foreground;
+  dark = colors.black;
+  select = colors.blueBright;
+  warning = colors.yellowBright;
 
   dollar = "$";
 
@@ -223,12 +227,6 @@ let
 
         exit 1;
       '';
-
-  colors = config.module.themes.color-scheme;
-  light = colors.foreground;
-  dark = colors.black;
-  select = colors.blueBright;
-  warning = colors.yellowBright;
 in
 {
   options.module.bspwm = {
