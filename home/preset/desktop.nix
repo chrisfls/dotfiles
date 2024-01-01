@@ -49,6 +49,8 @@ in
         numlock.enable = true;
       };
 
+      systemd.user.sessionVariables = config.home.sessionVariables;
+
       xsession.windowManager.bspwm.startupPrograms = [
         "${pkgs.copyq}/bin/copyq"
         "${pkgs.nm-tray}/bin/nm-tray"
