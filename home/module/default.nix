@@ -7,7 +7,9 @@
     ./betterlockscreen.nix
     ./brave.nix
     ./bspwm.nix
+    ./i3wm.nix
     ./cloudflare-warp.nix
+    ./code.nix
     ./codium.nix
     ./copy-file.nix
     ./dunst.nix
