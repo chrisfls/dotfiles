@@ -223,6 +223,12 @@ let
 
         exit 1;
       '';
+
+  colors = config.module.themes.color-scheme;
+  light = colors.foreground;
+  dark = colors.black;
+  select = colors.blueBright;
+  warning = colors.yellowBright;
 in
 {
   options.module.bspwm = {
@@ -670,6 +676,39 @@ in
         ''
           ${lock} ${scratchpad-prev}/bin/bspwm-scratchpad-prev
         '';
+    };
+
+    services.polybar.settings = {
+      "module/workspaces" = {
+        type = "\"internal/bspwm\"";
+
+        pin-workspaces = "\"true\"";
+        enable-scroll = "\"true\"";
+        reverse-scroll = "\"false\"";
+        fuzzy-match = "\"false\"";
+        occupied-scroll = "\"true\"";
+
+        format = "\"%{O-1}%{T1}%{O2}<label-state>%{T-}%{O-12}\"";
+        label-focused = "";
+        label-focused-background = "\"${light}\"";
+        label-focused-foreground = "\"${select}\"";
+        label-focused-padding = "\"1\"";
+
+        label-empty = "\"\"";
+        label-empty-background = "\"${light}\"";
+        label-empty-foreground = "\"${dark}\"";
+        label-empty-padding = "\"1\"";
+
+        label-occupied = "\"\"";
+        label-occupied-background = "\"${light}\"";
+        label-occupied-foreground = "\"${dark}\"";
+        label-occupied-padding = "\"1\"";
+
+        label-urgent = "\"\"";
+        label-urgent-background = "\"${light}\"";
+        label-urgent-foreground = "\"${warning}\"";
+        label-urgent-padding = "\"1\"";
+      };
     };
   };
 }
