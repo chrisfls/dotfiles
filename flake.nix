@@ -40,16 +40,9 @@
 
   outputs = { nixpkgs, home-manager, ... }@inputs:
     let
+      specialArgs = (import ./special nixpkgs) // { inherit inputs; };
+      ssot = specialArgs.ssot;
       forEachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
-
-      # specialArgs / extraSpecialArgs
-      attrsets = import ./special/attrsets.nix;
-      color-schemes = import ./special/color-schemes.nix;
-      ssot = import ./special/ssot.nix;
-      string = import ./special/string.nix;
-      homeSpecialArgs = {
-        inherit inputs attrsets color-schemes ssot string;
-      };
     in
     {
       packages = forEachSystem (system: {
@@ -66,7 +59,7 @@
             ./home/preset
             ./home/user/${ssot.users.arch-rmxp.kress.id}.nix
           ];
-          extraSpecialArgs = homeSpecialArgs;
+          extraSpecialArgs = specialArgs;
         };
       };
     };
