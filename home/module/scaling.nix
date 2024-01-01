@@ -2,10 +2,8 @@
 let
   cfg = config.module.scaling;
 
-  scale = cfg.scale;
-
-  # gdk-scale = builtins.ceil scale;
-  # gdk-dpi-scale = scale / gdk-scale;
+  scale = builtins.ceil cfg.scale;
+  gdk-dpi-scale = cfg.scale / scale;
 in
 {
   options.module.scaling = {
@@ -23,21 +21,23 @@ in
 
     dpiScaled = lib.mkOption {
       type = lib.types.int;
-      default = builtins.floor (cfg.dpi * scale);
+      default = cfg.dpi * scale;
     };
   };
 
   # when using GDK/QT scaling, the DPI must be hardcoded
   config = lib.mkIf cfg.enable {
+    xresources.properties."Xft.dpi" = toString config.module.scaling.dpiScaled;
+
     home.sessionVariables = {
-      GDK_SCALE = 1;
-      GDK_DPI_SCALE = 1;
+      GDK_SCALE = toString 1;
+      GDK_DPI_SCALE = toString gdk-dpi-scale;
 
-      QT_AUTO_SCREEN_SCALE_FACTOR = 0;
-      QT_ENABLE_HIGHDPI_SCALING = 1;
-      QT_SCALE_FACTOR = scale;
+      QT_AUTO_SCREEN_SCALE_FACTOR = toString 0;
+      QT_ENABLE_HIGHDPI_SCALING = toString 1;
+      QT_SCALE_FACTOR = toString cfg.scale;
 
-      QT_FONT_DPI = cfg.dpi;
+      QT_FONT_DPI = toString cfg.dpi;
     };
   };
 }

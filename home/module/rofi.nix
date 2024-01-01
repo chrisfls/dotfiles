@@ -9,20 +9,6 @@ let
     sha256 = "sha256-ucUAFI5O+wYGkRqNSdkve9j21Xguzn3WhizzXNBSJ/0=";
   };
 
-  dpi = builtins.toString (builtins.floor config.module.scaling.dpiScaled);
-
-  pkg =
-    let
-      pkg = pkgs.rofi.override { plugins = [ pkgs.rofi-calc ]; };
-    in
-    pkgs.symlinkJoin {
-      name = "rofi";
-      paths = [
-        (pkgs.writeShellScriptBin "rofi" "${pkg}/bin/rofi -dpi ${dpi} \"$@\"")
-        pkg
-      ];
-    };
-
   xtitle = "${pkgs.xtitle}/bin/xtitle";
 
   theme = "${config.xdg.configHome}/rofi/launchers/type-3/style-5-alt.rasi";
@@ -126,7 +112,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = [
-      pkg
+      pkgs.rofi
       pkgs.hostname
       rofi-calc
       rofi-dunst

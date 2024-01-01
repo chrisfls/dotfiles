@@ -2,8 +2,6 @@
 let
   cfg = config.module.fontconfig;
 
-  dpi = toString config.module.scaling.dpiScaled;
-
   toInt = bool: if bool then 1 else 0;
 
   fromBool = bool: if bool then "true" else "false";
@@ -62,7 +60,6 @@ in
       "Xft.hintstyle" = cfg.hintstyle;
       "Xft.lcdfilter" = cfg.lcdfilter;
       "Xft.rgba" = cfg.rgba;
-      "Xft.dpi" = dpi;
     };
 
     xdg.configFile."fontconfig/fonts.conf".text = ''
@@ -89,7 +86,7 @@ in
                   <const>${cfg.lcdfilter}</const>
               </edit>
               <edit name="dpi" mode="assign">
-                  <double>${dpi}</double>
+                  <double>${toString config.module.scaling.dpi}</double>
               </edit>
           </match>
           <match target="font">

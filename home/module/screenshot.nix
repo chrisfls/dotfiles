@@ -2,8 +2,6 @@
 let
   cfg = config.module.screenshot;
 
-  scale = toString (builtins.ceil config.module.scaling.scale);
-
   shotgun = "${pkgs.shotgun}/bin/shotgun"; # or pkgs.maim
   slop = "${pkgs.slop}/bin/slop"; # or pkgs.hacksaw
   xclip = "${pkgs.xclip}/bin/xclip";
@@ -15,7 +13,7 @@ let
 
   screenshot-copy-area = pkgs.writeShellScriptBin "screenshot-copy-area"
     ''
-      ${shotgun} -g "$(${slop} -r guides -b ${scale})" - | ${xclip} -t 'image/png' -selection clipboard
+      ${shotgun} -g "$(${slop} -r guides)" - | ${xclip} -t 'image/png' -selection clipboard
     '';
 
   screenshot-save = pkgs.writeShellScriptBin "screenshot-save"
