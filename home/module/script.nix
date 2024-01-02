@@ -1,16 +1,6 @@
 # put dash scripts in the tmp and call them with $SCRIPT/name
 { config, lib, pkgs, ... }:
-let
-  inherit (builtins) concatStringsSep;
-
-  inherit (lib.attrsets) concatMapAttrs mapAttrsToList;
-  inherit (lib.trivial) pipe;
-  inherit (lib) mkIf;
-
-  inherit (config.module.script) enable install;
-  inherit (config.xdg) dataHome;
-in
-{
+let inherit (config.module.script) enable install; in {
   options.module.script = {
     enable = lib.mkEnableOption "Enable script module";
 
@@ -20,11 +10,11 @@ in
     };
   };
 
-  config = mkIf enable {
+  config = lib.mkIf enable {
     home.sessionVariables.SCRIPT = "$(mktemp -d)";
 
     xdg.dataFile =
-      concatMapAttrs
+      lib.attrsets.concatMapAttrs
         (name: text: {
           "scripts/${name}" = {
             text =
@@ -38,9 +28,10 @@ in
         install;
 
     programs.bash.profileExtra =
-      pipe install [
-        (mapAttrsToList (str: _: "cp -f \"${dataHome}/scripts/${str}\" \"$SCRIPT/${str}\""))
-        (concatStringsSep "\n")
+      lib.trivial.pipe install [
+        (lib.attrsets.mapAttrsToList
+          (str: _: "cp -f \"${config.xdg.dataHome}/scripts/${str}\" \"$SCRIPT/${str}\""))
+        (builtins.concatStringsSep "\n")
       ];
   };
 }

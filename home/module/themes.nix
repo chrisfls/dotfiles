@@ -1,8 +1,14 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.module.themes;
+  inherit (config.module.themes)
+    cursor
+    enable
+    font
+    gtk
+    icon
+    qt;
 
-  scale = config.module.scaling.scale;
+  inherit (config.module.scaling) scale;
 
   toINI = lib.generators.toINI { };
 
@@ -34,14 +40,14 @@ let
       Appearance = {
         color_scheme_path = "${pkg}/share/${name}/colors/airy.conf";
         custom_palette = false;
-        icon_theme = cfg.icon.name;
+        icon_theme = icon.name;
         standard_dialogs = "xdgdesktopportal";
-        style = cfg.qt.style;
+        style = qt.style;
       };
 
       Fonts = {
-        general = fmtFont cfg.font.general;
-        fixed = fmtFont cfg.font.fixed;
+        general = fmtFont font.general;
+        fixed = fmtFont font.fixed;
       };
 
       Interface = {
@@ -121,9 +127,7 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.papirus-icon-theme/*.override {
-          color = "grey";
-        }*/;
+        default = pkgs.papirus-icon-theme;
       };
     };
 
@@ -192,12 +196,12 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     home.packages = [
-      cfg.qt.package
-      cfg.gtk.package
-      cfg.cursor.package
-      cfg.icon.package
+      qt.package
+      gtk.package
+      cursor.package
+      icon.package
     ];
 
     qt = {
@@ -208,21 +212,21 @@ in
 
     gtk = {
       enable = true;
-      font = { inherit (cfg.font.general) name package size; };
-      iconTheme = { inherit (cfg.icon) name package; };
-      cursorTheme = { inherit (cfg.cursor) name package size; };
-      theme = { inherit (cfg.gtk) name package; };
+      font = { inherit (font.general) name package size; };
+      iconTheme = { inherit (icon) name package; };
+      cursorTheme = { inherit (cursor) name package size; };
+      theme = { inherit (gtk) name package; };
     };
 
     home.pointerCursor = rec {
-      inherit (cfg.cursor) name package size;
+      inherit (cursor) name package size;
       gtk.enable = true;
       x11.enable = true;
     };
 
     xdg.configFile = {
       "Kvantum/kvantum.kvconfig".text = toINI {
-        General.theme = cfg.qt.kvantum-theme;
+        General.theme = qt.kvantum-theme;
       };
       "qt5ct/qt5ct.conf".text = toQtct pkgs.qt5ct;
       "qt6ct/qt6ct.conf".text = toQtct pkgs.qt6ct;

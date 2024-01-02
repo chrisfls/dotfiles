@@ -1,11 +1,8 @@
 { config, lib, pkgs, ... }:
-let
-  cfg = config.module.autorandr;
-in
-{
+let inherit (config.module.autorandr) enable; in {
   options.module.autorandr.enable = lib.mkEnableOption "Enable autorandr module";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     services.autorandr.enable = true;
     programs.autorandr.enable = true;
     xsession.initExtra = "${pkgs.autorandr}/bin/autorandr -c";

@@ -1,9 +1,10 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.module.scaling;
+  inherit (config.module.scaling)
+    dpi
+    enable
+    scale;
 
-  dpi = cfg.dpi;
-  scale = cfg.scale;
   dpi-scaled = builtins.floor (dpi * scale);
   # not using this anymore, better having more space
   # gdk-scale = builtins.ceil scale;
@@ -25,7 +26,7 @@ in
   };
 
   # when using GDK/QT scaling, the DPI must be hardcoded
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     xresources.properties."Xft.dpi" = toString dpi-scaled;
 
     home.sessionVariables = {

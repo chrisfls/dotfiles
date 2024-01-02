@@ -1,8 +1,7 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.module.polybar;
-
-  colors = config.module.themes.color-scheme;
+  inherit (config.module.polybar) enable;
+  inherit (config.module.themes) color-scheme;
 
   polybar-msg = "${config.services.polybar.package}/bin/polybar-msg";
   bluetoothctl = "${pkgs.bluez}/bin/bluetoothctl";
@@ -87,17 +86,15 @@ let
     in
     "${script}/bin/dunst-toggle";
 
-  dollar = "$";
-
-  darkest = colors.background;
-  light = colors.foreground;
-  dark = colors.black;
-  danger = colors.red;
+  darkest = color-scheme.background;
+  light = color-scheme.foreground;
+  dark = color-scheme.black;
+  danger = color-scheme.red;
 in
 {
   options.module.polybar.enable = lib.mkEnableOption "Enable polybar module";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     # xsession.windowManager.bspwm.startupPrograms = [
     #   "systemd-cat -t polybar systemd-run --user --scope --property=OOMPolicy=continue -u polybar ${pkgs.polybar}/bin/polybar"
     # ];
@@ -113,7 +110,7 @@ in
       # i3wm fix
       Unit.After = lib.mkIf (config.module.i3wm.enable) [ "graphical-session-i3.target" ];
       Install.WantedBy = lib.mkIf (config.module.i3wm.enable) (lib.mkForce [ "graphical-session-i3.target" ]);
-      
+
       # home manager fix
       Service.Environment = lib.mkIf (config.preset.non-nixos) (lib.mkForce [ ]);
     };

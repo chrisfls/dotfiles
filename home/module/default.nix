@@ -3,7 +3,6 @@
   imports = [
     ./agenix.nix
     ./autorandr.nix
-    ./betterlockscreen.nix
     ./brave.nix
     ./cloudflare-warp.nix
     ./code.nix

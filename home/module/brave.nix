@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
-with {
-  inherit (builtins) replaceStrings readFile;
-};
 let
-  cfg = config.module.brave;
+  inherit (config.module.brave) enable;
 
   brave = "brave-browser.desktop";
 
@@ -22,27 +19,24 @@ in
 {
   options.module.brave.enable = lib.mkEnableOption "Enable brave module";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     home.packages = [ pkg ];
 
-    xdg.mimeApps = {
-      enable = true;
-      defaultApplications = {
-        "x-scheme-handler/http" = brave;
-        "x-scheme-handler/https" = brave;
-        "x-scheme-handler/chrome" = brave;
-        "text/html" = brave;
-        "application/x-extension-htm" = brave;
-        "application/x-extension-html" = brave;
-        "application/x-extension-shtml" = brave;
-        "application/xhtml+xml" = brave;
-        "application/x-extension-xhtml" = brave;
-        "application/x-extension-xht" = brave;
-      };
+    xdg.mimeApps.defaultApplications = {
+      "x-scheme-handler/http" = brave;
+      "x-scheme-handler/https" = brave;
+      "x-scheme-handler/chrome" = brave;
+      "text/html" = brave;
+      "application/x-extension-htm" = brave;
+      "application/x-extension-html" = brave;
+      "application/x-extension-shtml" = brave;
+      "application/xhtml+xml" = brave;
+      "application/x-extension-xhtml" = brave;
+      "application/x-extension-xht" = brave;
     };
 
     # module.sxhkd.keybindings."super + a; b" = "gtk-launch brave-browser";
 
-    xsession.windowManager.i3.config.modes.apps."b" = "exec gtk-launch brave-browser";
+    xsession.windowManager.i3.config.modes.apps."b" = lib.mkIf config.module.i3wm.enable "exec gtk-launch brave-browser";
   };
 }

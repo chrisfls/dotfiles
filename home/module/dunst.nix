@@ -1,13 +1,13 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.module.dunst;
-  themes = config.module.themes;
-  scale = config.module.scaling.scale;
-  colors = config.module.themes.color-scheme;
+  inherit (config.module.dunst) enable;
+  inherit (config.module.scaling) scale;
+  inherit (config.module.themes) icon color-scheme;
 in
 {
   options.module.dunst.enable = lib.mkEnableOption "Enable dunst module";
-  config = lib.mkIf cfg.enable {
+
+  config = lib.mkIf enable {
     # xsession.windowManager.bspwm.startupPrograms = [
     #   "systemd-cat -t dunst systemd-run --user --scope --property=OOMPolicy=continue -u dunst ${pkgs.dunst}/bin/dunst -config ${config.services.dunst.configFile}"
     # ];
@@ -17,15 +17,15 @@ in
 
     services.dunst = {
       enable = true;
+
       iconTheme = {
-        name = themes.icon.name;
-        package = themes.icon.package;
+        name = icon.name;
+        package = icon.package;
         size =
-          let
-            size = builtins.toString (builtins.floor (32 * scale));
-          in
-          "${size}x${size}";
+          let size = toString (builtins.floor (32 * scale));
+          in "${size}x${size}";
       };
+
       # forked from https://github.com/dracula/dunst/blob/master/dunstrc
       settings = {
         global = {
@@ -51,7 +51,7 @@ in
           horizontal_padding = "10";
           text_icon_padding = "0";
           frame_width = "2";
-          frame_color = colors.background;
+          frame_color = color-scheme.background;
           separator_color = "frame";
           sort = "yes";
           idle_threshold = "120";
@@ -85,20 +85,20 @@ in
         };
         experimental.per_monitor_dpi = "false";
         urgency_low = {
-          background = colors.background;
-          foreground = colors.foreground;
+          background = color-scheme.background;
+          foreground = color-scheme.foreground;
           timeout = "10";
         };
         urgency_normal = {
-          background = colors.background;
-          foreground = colors.foreground;
-          frame_color = colors.foreground;
+          background = color-scheme.background;
+          foreground = color-scheme.foreground;
+          frame_color = color-scheme.foreground;
           timeout = "10";
         };
         urgency_critical = {
-          background = colors.background;
-          foreground = colors.foreground;
-          frame_color = colors.yellow;
+          background = color-scheme.background;
+          foreground = color-scheme.foreground;
+          frame_color = color-scheme.yellow;
           timeout = "0";
         };
       };

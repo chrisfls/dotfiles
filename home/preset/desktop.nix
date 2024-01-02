@@ -1,10 +1,10 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (specialArgs) qt;
+  inherit (config.preset) development non-nixos;
 
   enable = config.preset.desktop;
-  development = config.preset.development;
-  non-nixos = config.preset.non-nixos;
+
 
   # needed until these are done:
   #  - https://github.com/NixOS/nixpkgs/issues/228179
@@ -16,8 +16,8 @@ in
 {
   options.preset.desktop = lib.mkEnableOption "Enable desktop preset";
 
-  config = lib.mkMerge [
-    (lib.mkIf enable {
+  config = lib.mkIf enable (lib.mkMerge [
+    {
       module = {
         autorandr.enable = true;
         brave.enable = true;
@@ -49,6 +49,23 @@ in
       xsession = {
         enable = true;
         numlock.enable = true;
+        windowManager.i3.config = {
+          keybindings."ctrl+alt+Delete" = "exec gtk-launch qps";
+
+          modes.apps = {
+            "c" = "exec gtk-launch com.github.hluk.copyq";
+            "d" = "exec gtk-launch webcord";
+            "e" = "exec gtk-launch pcmanfm-qt";
+            "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux";
+          };
+
+          startup = [
+            { notification = false; command = "${pkgs.copyq}/bin/copyq"; }
+            { notification = false; command = "${pkgs.nm-tray}/bin/nm-tray"; }
+            { notification = false; command = "${pkgs.webcord-vencord}/bin/webcord --start-minimized"; }
+            { notification = false; command = "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"; }
+          ];
+        };
       };
 
       # xsession.windowManager.bspwm.startupPrograms = [
@@ -60,23 +77,6 @@ in
       #   "${pkgs.jamesdsp}/bin/bin/jamesdsp"
       # ];
 
-      xsession.windowManager.i3.config = {
-        keybindings."ctrl+alt+Delete" = "exec gtk-launch qps";
-
-        modes.apps = {
-          "c" = "exec gtk-launch com.github.hluk.copyq";
-          "d" = "exec gtk-launch webcord";
-          "e" = "exec gtk-launch pcmanfm-qt";
-          "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux";
-        };
-
-        startup = [
-          { notification = false; command = "${pkgs.copyq}/bin/copyq"; }
-          { notification = false; command = "${pkgs.nm-tray}/bin/nm-tray"; }
-          { notification = false; command = "${pkgs.webcord-vencord}/bin/webcord --start-minimized"; }
-          { notification = false; command = "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"; }
-        ];
-      };
 
       nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
@@ -147,6 +147,7 @@ in
 
       xdg = {
         enable = true;
+        mimeApps.enable = true;
         userDirs.enable = true;
         desktopEntries = {
           "avahi-discover" = { name = "Avahi Zeroconf Browser"; noDisplay = true; };
@@ -200,8 +201,8 @@ in
 
       services.xsettingsd.enable = true;
       services.udiskie.enable = true;
-    })
-    (lib.mkIf (enable && development) {
+    }
+    (lib.mkIf development {
       module = {
         code.enable = true;
         sublime.enable = true;
@@ -209,7 +210,7 @@ in
         #emacs.enable = true;
       };
     })
-    (lib.mkIf (enable && non-nixos) {
+    (lib.mkIf non-nixos {
       xsession.importedVariables = [
         "PATH"
         "LIBGL_DRIVERS_PATH"
@@ -235,5 +236,5 @@ in
         VK_ICD_FILENAMES = "$(find /usr/share/vulkan/icd.d/ -name '*.json' | tr '\\n' ':' | sed 's/:$//')";
       };
     })
-  ];
+  ]);
 }

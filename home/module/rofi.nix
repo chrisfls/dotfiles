@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  cfg = config.module.rofi;
+  inherit (config.module.rofi) enable;
 
   settings = pkgs.fetchFromGitHub {
     owner = "kress95";
@@ -114,7 +114,7 @@ in
 {
   options.module.rofi.enable = lib.mkEnableOption "Enable rofi module";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     home.packages = [
       pkgs.rofi
       pkgs.hostname

@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.module.shell;
+  inherit (config.module.shell) enable;
 
   bin = "${config.programs.fish.package}/bin/fish";
 
@@ -9,7 +9,7 @@ in
 {
   options.module.shell.enable = lib.mkEnableOption "Enable shell module";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     home.packages = [
       pkgs.jq
     ];
@@ -101,38 +101,3 @@ in
     module.micro.enable = true;
   };
 }
-
-/* 
-
-  home.packages = with pkgs; [
-  openssh
-  p7zip
-  unrar
-  unzip
-
-  # tooling
-  xplr
-  htop
-  traceroute
-  killall
-  neofetch
-  nix-index
-  ];
-
-  home.packages = with pkgs; [
-  # tools
-  wget
-  jq
-  which
-
-  # nix
-  nixpkgs-fmt
-  any-nix-shell
-
-  # languagetool
-  ltex-ls
-  adoptopenjdk-jre-openj9-bin-16
-  nodejs-16_x
-  ];
-
-*/

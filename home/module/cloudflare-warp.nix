@@ -1,17 +1,9 @@
 { config, inputs, lib, pkgs, ... }:
-let
-  cfg = config.module.cloudflare-warp;
-in
-{
+let inherit (config.module.cloudflare-warp) enable; in {
   options.module.cloudflare-warp.enable = lib.mkEnableOption "Enable cloudflare-warp module";
 
-  config = lib.mkIf cfg.enable {
-    xdg = {
-      enable = true;
-      dataFile = {
-        "warp/accepted-teams-tos.txt".text = "yes\n";
-        "warp/accepted-tos.txt".text = "yes\n";
-      };
-    };
+  config.xdg.dataFile = lib.mkIf enable {
+    "warp/accepted-teams-tos.txt".text = "yes\n";
+    "warp/accepted-tos.txt".text = "yes\n";
   };
 }

@@ -1,25 +1,23 @@
 { config, lib, pkgs, ... }:
-let
-  cfg = config.module.fonts;
-in
-{
+let inherit (config.module.fonts) enable; in {
   options.module.fonts.enable = lib.mkEnableOption "Enable fonts module";
 
-  config = lib.mkIf cfg.enable {
-    home.packages = [
-      # good heading fonts
-      pkgs.overpass
-      pkgs.montserrat
+  config.home.packages = lib.mkIf enable [
+    # good generic font
+    pkgs.noto-fonts
 
-      # terminal fonts
-      (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "CascadiaCode" ]; })
+    # good emoji font
+    pkgs.noto-fonts-color-emoji
 
-      # programming fonts
-      pkgs.jetbrains-mono
-      pkgs.cascadia-code
+    # good heading fonts
+    pkgs.overpass
+    pkgs.montserrat
 
-      # emoji fonts
-      pkgs.noto-fonts-color-emoji
-    ];
-  };
+    # good terminal fonts
+    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "CascadiaCode" ]; })
+
+    # good programming fonts
+    pkgs.jetbrains-mono
+    pkgs.cascadia-code
+  ];
 }

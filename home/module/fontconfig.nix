@@ -1,6 +1,14 @@
 { config, lib, ... }:
 let
-  cfg = config.module.fontconfig;
+  inherit (config.module.fontconfig)
+    antialias
+    autohint
+    enable
+    hinting
+    hintstyle
+    lcdfilter
+    rgba
+    weight;
 
   toInt = bool: if bool then 1 else 0;
 
@@ -50,16 +58,16 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     fonts.fontconfig.enable = true;
 
     xresources.properties = {
-      "Xft.antialias" = toInt cfg.antialias;
-      "Xft.autohint" = toInt cfg.autohint;
-      "Xft.hinting" = toInt cfg.hinting;
-      "Xft.hintstyle" = cfg.hintstyle;
-      "Xft.lcdfilter" = cfg.lcdfilter;
-      "Xft.rgba" = cfg.rgba;
+      "Xft.antialias" = toInt antialias;
+      "Xft.autohint" = toInt autohint;
+      "Xft.hinting" = toInt hinting;
+      "Xft.hintstyle" = hintstyle;
+      "Xft.lcdfilter" = lcdfilter;
+      "Xft.rgba" = rgba;
     };
 
     xdg.configFile."fontconfig/fonts.conf".text = ''
@@ -68,22 +76,22 @@ in
       <fontconfig>
           <match target="font">
               <edit name="antialias" mode="assign">
-                  <bool>${fromBool cfg.antialias}</bool>
+                  <bool>${fromBool antialias}</bool>
               </edit>
               <edit name="hinting" mode="assign">
-                  <bool>${fromBool cfg.hinting}</bool>
+                  <bool>${fromBool hinting}</bool>
               </edit>
               <edit name="hintstyle" mode="assign">
-                  <const>${cfg.hintstyle}</const>
+                  <const>${hintstyle}</const>
               </edit>
               <edit name="rgba" mode="assign">
-                  <const>${cfg.rgba}</const>
+                  <const>${rgba}</const>
               </edit>
               <edit name="autohint" mode="assign">
-                  <bool>${fromBool cfg.autohint}</bool>
+                  <bool>${fromBool autohint}</bool>
               </edit>
               <edit name="lcdfilter" mode="assign">
-                  <const>${cfg.lcdfilter}</const>
+                  <const>${lcdfilter}</const>
               </edit>
               <edit name="dpi" mode="assign">
                   <double>${toString config.module.scaling.dpi}</double>
@@ -91,10 +99,10 @@ in
           </match>
           <match target="font">
               <test name="weight" compare="more">
-                  <const>${cfg.weight}</const>
+                  <const>${weight}</const>
               </test>
               <edit name="autohint" mode="assign">
-                  <bool>${fromBool cfg.autohint}</bool>
+                  <bool>${fromBool autohint}</bool>
               </edit>
           </match>
       </fontconfig>

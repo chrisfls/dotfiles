@@ -1,13 +1,13 @@
 { config, lib, pkgs, ... }:
-let
-  cfg = config.module.xdg-portal;
-in
-{
+let inherit (config.module.xdg-portal) enable; in {
   options.module.xdg-portal.enable = lib.mkEnableOption "Enable xdg-portal module";
+
   # TODO: review this
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     home.packages = [ pkgs.lxqt.xdg-desktop-portal-lxqt ];
+
     home.sessionVariables.GTK_USE_PORTAL = 1;
+
     xdg.configFile = {
       "xdg-desktop-portal/portals.conf".text =
         ''

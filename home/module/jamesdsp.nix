@@ -1,14 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (lib) types;
-  inherit (lib.attrsets) foldlAttrs;
+  inherit (config.module.jamesdsp) enable presets;
 
-  cfg = config.module.jamesdsp;
-
-  buildEQ = path:
-    let
-      graphicEQ = lib.readFile path;
-    in
+  buildBase = path:
+    let graphicEQ = lib.readFile path; in
     ''
       graphiceq_enable=true
       graphiceq_param=${graphicEQ}
@@ -35,7 +30,7 @@ let
       crossfeed_bs2b_fcut=700
       crossfeed_bs2b_feed=60
 
-      ${buildEQ target}
+      ${buildBase target}
     '';
 
   buildIR = target:
@@ -44,14 +39,23 @@ let
       convolver_enable=true
       convolver_file=${./../../assets/audio/convolver/kress130.wav}
 
-      ${buildEQ target}
+      ${buildBase target}
+    '';
+
+  buildEQ = target:
+    ''
+      convolver_enable=false
+      crossfeed_enable=false
+
+      ${buildBase target}
     '';
 in
 {
   options.module.jamesdsp = {
     enable = lib.mkEnableOption "Enable jamesdsp module";
+
     presets = lib.mkOption {
-      type = types.attrsOf types.path;
+      type = lib.types.attrsOf lib.types.path;
       default = {
         "7Hz-Salnotes Zero" = ../../assets/audio/equalizer/${"7Hz-Salnotes Zero +.txt"};
         "CCA CRA" = ../../assets/audio/equalizer/${"CCA CRA +.txt"};
@@ -64,20 +68,20 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     home.packages = [ pkgs.jamesdsp ];
 
     xsession.windowManager.i3.config.startup = lib.mkIf config.module.i3wm.enable [
       { notification = false; command = "${pkgs.jamesdsp}/bin/jamesdsp --tray"; }
     ];
 
-    xdg.configFile = foldlAttrs
+    xdg.configFile = lib.attrsets.foldlAttrs
       (acc: name: path: acc // {
         "jamesdsp/presets/${name} (EQ).conf".text = buildEQ path;
         "jamesdsp/presets/${name} (CF).conf".text = buildCF path;
         "jamesdsp/presets/${name} (IR).conf".text = buildIR path;
       })
       { }
-      cfg.presets;
+      presets;
   };
 }

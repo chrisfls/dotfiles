@@ -1,8 +1,7 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  cfg = config.module.wezterm;
-
-  colors = config.module.themes.color-scheme;
+  inherit (config.module.wezterm) enable;
+  inherit (config.module.themes) color-scheme;
 
   wezterm = "${config.programs.wezterm.package}/bin/wezterm";
 
@@ -22,7 +21,7 @@ in
 {
   options.module.wezterm.enable = lib.mkEnableOption "Enable wezterm module";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     # module.sxhkd.keybindings = {
     #   "super + semicolon" = launch;
     #   "super + BackSpace" = launch;
@@ -45,33 +44,33 @@ in
       colorSchemes = {
         default = {
           ansi = [
-            colors.black
-            colors.red
-            colors.green
-            colors.yellow
-            colors.blue
-            colors.magenta
-            colors.cyan
-            colors.white
+            color-scheme.black
+            color-scheme.red
+            color-scheme.green
+            color-scheme.yellow
+            color-scheme.blue
+            color-scheme.magenta
+            color-scheme.cyan
+            color-scheme.white
           ];
           brights = [
-            colors.blackBright
-            colors.redBright
-            colors.greenBright
-            colors.yellowBright
-            colors.blueBright
-            colors.magentaBright
-            colors.cyanBright
-            colors.whiteBright
+            color-scheme.blackBright
+            color-scheme.redBright
+            color-scheme.greenBright
+            color-scheme.yellowBright
+            color-scheme.blueBright
+            color-scheme.magentaBright
+            color-scheme.cyanBright
+            color-scheme.whiteBright
           ];
-          background = colors.background;
-          foreground = colors.foreground;
-          cursor_fg = colors.foreground;
-          cursor_bg = colors.foreground;
-          cursor_border = colors.foreground;
-          selection_fg = colors.background;
-          selection_bg = colors.foreground;
-          scrollbar_thumb = colors.black;
+          background = color-scheme.background;
+          foreground = color-scheme.foreground;
+          cursor_fg = color-scheme.foreground;
+          cursor_bg = color-scheme.foreground;
+          cursor_border = color-scheme.foreground;
+          selection_fg = color-scheme.background;
+          selection_bg = color-scheme.foreground;
+          scrollbar_thumb = color-scheme.black;
         };
       };
       extraConfig =

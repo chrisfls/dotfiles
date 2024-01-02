@@ -1,10 +1,7 @@
 { config, lib, pkgs, ... }:
-let
-  cfg = config.module.sublime;
-in
-{
+let inherit (config.module.sublime) enable; in {
   options.module.sublime.enable = lib.mkEnableOption "Enable sublime module";
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     home.packages = [
       pkgs.sublime4
       pkgs.sublime-merge-dev

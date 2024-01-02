@@ -1,11 +1,6 @@
 { config, lib, pkgs, ... }:
-let
-  cfg = config.module.code;
-in
-{
+let inherit (config.module.code) enable; in {
   options.module.code.enable = lib.mkEnableOption "Enable code module";
 
-  config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.vscode ];
-  };
+  config.home.packages = lib.mkIf enable [ pkgs.vscode ];
 }
