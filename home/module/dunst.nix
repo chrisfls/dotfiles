@@ -8,19 +8,12 @@ in
 {
   options.module.dunst.enable = lib.mkEnableOption "Enable dunst module";
   config = lib.mkIf cfg.enable {
-    # HACK: disable dunst service
-    systemd.user.services.dunst = lib.mkForce { };
+    # xsession.windowManager.bspwm.startupPrograms = [
+    #   "systemd-cat -t dunst systemd-run --user --scope --property=OOMPolicy=continue -u dunst ${pkgs.dunst}/bin/dunst -config ${config.services.dunst.configFile}"
+    # ];
 
-    xsession.windowManager.bspwm.startupPrograms = [
-      "systemd-cat -t dunst systemd-run --user --scope --property=OOMPolicy=continue -u dunst ${pkgs.dunst}/bin/dunst -config ${config.services.dunst.configFile}"
-    ];
-
-    xsession.windowManager.i3.config.startup = [
-      {
-        command = "${pkgs.dunst}/bin/dunst -config ${config.services.dunst.configFile}";
-        notification = false;
-      }
-    ];
+    # home manager fix
+    systemd.user.services.dunst.Service.Environment = lib.mkIf (config.preset.non-nixos) (lib.mkForce [ ]);
 
     services.dunst = {
       enable = true;
