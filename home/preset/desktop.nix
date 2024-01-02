@@ -21,10 +21,10 @@ in
       module = {
         autorandr.enable = true;
         brave.enable = true;
-        i3wm.enable = true;
         dunst.enable = true;
         fontconfig.enable = true;
         fonts.enable = true;
+        i3wm.enable = true;
         jamesdsp.enable = true;
         loopback-toggle.enable = true;
         micro = { enable = true; desktop = true; };
@@ -33,6 +33,9 @@ in
         qview.enable = true;
         rofi.enable = true;
         screenshot.enable = true;
+        telegram.enable = true;
+        themes.enable = true;
+        wezterm.enable = true;
         # sxhkd = {
         #   enable = false;
         #   keybindings = {
@@ -41,8 +44,6 @@ in
         #     "super + a ; e" = "gtk-launch pcmanfm-qt";
         #   };
         # };
-        themes.enable = true;
-        wezterm.enable = true;
       };
 
       xsession = {
@@ -64,8 +65,8 @@ in
 
         modes.apps = {
           "c" = "exec gtk-launch com.github.hluk.copyq";
-          "e" = "exec gtk-launch pcmanfm-qt";
           "d" = "exec gtk-launch webcord";
+          "e" = "exec gtk-launch pcmanfm-qt";
           "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux";
         };
 

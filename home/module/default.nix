@@ -24,6 +24,7 @@
     ./script.nix
     ./shell.nix
     ./sublime.nix
+    ./telegram.nix
     ./themes.nix
     ./wezterm.nix
     ./xdg-portal.nix
