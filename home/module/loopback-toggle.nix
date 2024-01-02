@@ -40,10 +40,12 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    module.sxhkd.keybindings = {
-      # TODO: map to F24 (keycode: 202) 
-      "super + Pause" = "${loopback-toggle}/bin/loopback-toggle";
-    };
+    # module.sxhkd.keybindings = {
+    #  # TODO: map to F24 (keycode: 202) 
+    #   "super + Pause" = "${loopback-toggle}/bin/loopback-toggle";
+    # };
+
+    xsession.windowManager.i3.config.keybindings."Mod4+Pause" = "${loopback-toggle}/bin/loopback-toggle";
 
     systemd.user.services.loopback-offd = {
       Unit.Description = "Disables audio loopback by default";

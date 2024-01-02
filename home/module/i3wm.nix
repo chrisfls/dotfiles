@@ -52,8 +52,6 @@ in
       enable = true;
       config = {
         modifier = "Mod4";
-        terminal = "wezterm start";
-        menu = "rofi-menu";
         bars = [ ];
         colors = {
           background = colors.background;
@@ -178,7 +176,7 @@ in
           titlebar = false;
         };
         workspaceAutoBackAndForth = true;
-        workspaceLayout = "tabbed";
+        workspaceLayout = "default";
         keybindings = {
           ######## #### ## #
           # MISC
@@ -289,17 +287,17 @@ in
           "${mod}+0" = "workspace number 10; ${script "mouse-warp"}";
           "${mod}+m" = "scratchpad show";
 
-          "${mod}+Shift+apostrophe" = "move container to workspace number 0; ${script "mouse-warp"}";
-          "${mod}+Shift+1" = "move container to workspace number 1; ${script "mouse-warp"}";
-          "${mod}+Shift+2" = "move container to workspace number 2; ${script "mouse-warp"}";
-          "${mod}+Shift+3" = "move container to workspace number 3; ${script "mouse-warp"}";
-          "${mod}+Shift+4" = "move container to workspace number 4; ${script "mouse-warp"}";
-          "${mod}+Shift+5" = "move container to workspace number 5; ${script "mouse-warp"}";
-          "${mod}+Shift+6" = "move container to workspace number 6; ${script "mouse-warp"}";
-          "${mod}+Shift+7" = "move container to workspace number 7; ${script "mouse-warp"}";
-          "${mod}+Shift+8" = "move container to workspace number 8; ${script "mouse-warp"}";
-          "${mod}+Shift+9" = "move container to workspace number 9; ${script "mouse-warp"}";
-          "${mod}+Shift+0" = "move container to workspace number 10; ${script "mouse-warp"}";
+          "${mod}+Shift+apostrophe" = "move container to workspace number 0";
+          "${mod}+Shift+1" = "move container to workspace number 1";
+          "${mod}+Shift+2" = "move container to workspace number 2";
+          "${mod}+Shift+3" = "move container to workspace number 3";
+          "${mod}+Shift+4" = "move container to workspace number 4";
+          "${mod}+Shift+5" = "move container to workspace number 5";
+          "${mod}+Shift+6" = "move container to workspace number 6";
+          "${mod}+Shift+7" = "move container to workspace number 7";
+          "${mod}+Shift+8" = "move container to workspace number 8";
+          "${mod}+Shift+9" = "move container to workspace number 9";
+          "${mod}+Shift+0" = "move container to workspace number 10";
           "${mod}+shift+m" = "move scratchpad";
         };
       };

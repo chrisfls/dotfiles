@@ -13,7 +13,9 @@ let
 
   theme = "${config.xdg.configHome}/rofi/launchers/type-3/style-5-alt.rasi";
 
-  dollar = "$";
+  mod = config.xsession.windowManager.i3.config.modifier;
+
+  # TODO: port to module.script.install
 
   # rofi calculator
   rofi-calc = pkgs.writeShellScriptBin "rofi-calc"
@@ -35,14 +37,14 @@ let
       ids=($(echo $history | jq -r .id.data))
       summaries=("$(echo $history | jq -r .summary.data)" "󰃢 Clear All")
       selected=$(
-        printf "%s\n" "${dollar}{summaries[@]}" | grep -v '^$' \
+        printf "%s\n" "$\{summaries[@]}" | grep -v '^$' \
           | rofi -dmenu -theme "${theme}" -format i -p " "
       )
       if [[ -n $selected ]]; then
-        if [[ $selected -lt ${dollar}{#summaries[@]} ]]; then
-          dunstctl history-pop "${dollar}{ids[$selected]}"
+        if [[ $selected -lt $\{#summaries[@]} ]]; then
+          dunstctl history-pop "$\{ids[$selected]}"
         else
-          for id in "${dollar}{ids[@]}"; do
+          for id in "$\{ids[@]}"; do
             dunstctl history-rm "$id"
           done
         fi
@@ -74,37 +76,39 @@ let
       rofi -modi windowcd -show windowcd -theme "${theme}"
     '';
 
-  # minimized windows TODO: add process name or window class
-  rofi-windows-minimized = pkgs.writeShellScriptBin "rofi-windows-minimized"
+  /*
+    # minimized windows TODO: add process name or window class
+    rofi-windows-minimized = pkgs.writeShellScriptBin "rofi-windows-minimized"
     ''
       ids=($(bspc query --nodes --node '.hidden.local.window'))
       if [ -z "$ids" ]; then exit 0; fi
 
-      names=$(${xtitle} ${dollar}{ids[@]})
+      names=$(${xtitle} $\{ids[@]})
       selected=$(
-        printf "%s\n" "${dollar}{names[@]}" | grep -v '^$' \
+        printf "%s\n" "$\{names[@]}" | grep -v '^$' \
           | rofi -dmenu -theme "${theme}" -format i -p " "
       )
       if [ "$selected" ]; then
-          bspc node "${dollar}{ids[$selected]}" --flag hidden=off
+          bspc node "$\{ids[$selected]}" --flag hidden=off
       fi
     '';
 
-  # minimized windows TODO: add process name or window class
-  rofi-windows-scratchpad = pkgs.writeShellScriptBin "rofi-windows-scratchpad"
+    # minimized windows TODO: add process name or window class
+    rofi-windows-scratchpad = pkgs.writeShellScriptBin "rofi-windows-scratchpad"
     ''
       ids=($(bspc query --nodes --desktop 'pad' --node '.window'))
       if [ -z "$ids" ]; then exit 0; fi
 
-      names=$(${xtitle} ${dollar}{ids[@]})
+      names=$(${xtitle} $\{ids[@]})
       selected=$(
-        printf "%s\n" "${dollar}{names[@]}" | grep -v '^$' \
+        printf "%s\n" "$\{names[@]}" | grep -v '^$' \
           | rofi -dmenu -theme "${theme}" -format i -p " "
       )
       if [ "$selected" ]; then
-        bspc node "${dollar}{ids[$selected]}" --to-desktop focused --follow
+        bspc node "$\{ids[$selected]}" --to-desktop focused --follow
       fi
     '';
+  */
 
 in
 {
@@ -121,27 +125,43 @@ in
       rofi-run
       rofi-windows
       rofi-windows-cd
-      rofi-windows-minimized
-      rofi-windows-scratchpad
+      # rofi-windows-minimized
+      # rofi-windows-scratchpad
     ];
 
-    module.sxhkd.keybindings = {
-      # main menus
-      "super + Return" = "rofi-menu";
-      "super + shift + Return" = "rofi-run";
+    # module.sxhkd.keybindings = {
+    #   # main menus
+    #   "super + Return" = "rofi-menu";
+    #   "super + shift + Return" = "rofi-run";
 
-      # jump to window
-      "super + w" = "rofi-windows-cd";
-      "super + shift + w" = "rofi-windows";
+    #   # jump to window
+    #   "super + w" = "rofi-windows-cd";
+    #   "super + shift + w" = "rofi-windows";
 
-      # jump to minimized windows
-      "super + alt + m" = "rofi-windows-minimized";
-      # jump to scratchpad windows
-      "super + alt + n" = "rofi-windows-scratchpad";
+    #   # jump to minimized windows
+    #   "super + alt + m" = "rofi-windows-minimized";
+    #   # jump to scratchpad windows
+    #   "super + alt + n" = "rofi-windows-scratchpad";
 
-      # shift cmd for alacritty
-      "super + shift + BackSpace" = "rofi-calc";
-      "super + shift + semicolon" = "rofi-calc";
+    #   # shift cmd for alacritty
+    #   "super + shift + BackSpace" = "rofi-calc";
+    #   "super + shift + semicolon" = "rofi-calc";
+    # };
+
+    xsession.windowManager.i3.config = {
+      menu = "rofi-menu";
+      keybindings = {
+        # main menus
+        "${mod}+Shift+Return" = "exec rofi-run";
+
+        # jump to window
+        "${mod}+w" = "exec rofi-windows-cd";
+        "${mod}+Shift+w" = "exec rofi-windows";
+
+        # Shift cmd for alacritty
+        "${mod}+Shift+BackSpace" = "exec rofi-calc";
+        "${mod}+Shift+semicolon" = "exec rofi-calc";
+      };
     };
 
     xdg.dataFile = {

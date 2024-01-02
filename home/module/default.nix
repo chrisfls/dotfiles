@@ -6,7 +6,6 @@
     ./autorandr.nix
     ./betterlockscreen.nix
     ./brave.nix
-    ./bspwm.nix
     ./cloudflare-warp.nix
     ./code.nix
     ./codium.nix
@@ -27,7 +26,6 @@
     ./screenshot.nix
     ./shell.nix
     ./sublime.nix
-    ./sxhkd.nix
     ./themes.nix
     ./wezterm.nix
     ./xdg-portal.nix

@@ -33,15 +33,14 @@ in
         qview.enable = true;
         rofi.enable = true;
         screenshot.enable = true;
-        /*sxhkd = {
-          enable = false;
-          keybindings = {
-            "ctrl + alt + Delete" = "gtk-launch qps";
-            "super + a ; c" = "gtk-launch com.github.hluk.copyq.desktop";
-            "super + a ; e" = "gtk-launch pcmanfm-qt";
-          };
-        };
-        */
+        # sxhkd = {
+        #   enable = false;
+        #   keybindings = {
+        #     "ctrl + alt + Delete" = "gtk-launch qps";
+        #     "super + a ; c" = "gtk-launch com.github.hluk.copyq.desktop";
+        #     "super + a ; e" = "gtk-launch pcmanfm-qt";
+        #   };
+        # };
         themes.enable = true;
         wezterm.enable = true;
       };
@@ -53,23 +52,35 @@ in
 
       systemd.user.sessionVariables = config.home.sessionVariables;
 
-      xsession.windowManager.bspwm.startupPrograms = [
-        "${pkgs.copyq}/bin/copyq"
-        "${pkgs.nm-tray}/bin/nm-tray"
-        "env -u QT_SCREEN_SCALE_FACTORS ${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"
-        "${pkgs.webcord-vencord}/bin/webcord --start-minimized"
-        "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"
-        "${pkgs.jamesdsp}/bin/bin/jamesdsp"
-      ];
+      # xsession.windowManager.bspwm.startupPrograms = [
+      #   "${pkgs.copyq}/bin/copyq"
+      #   "${pkgs.nm-tray}/bin/nm-tray"
+      #   "env -u QT_SCREEN_SCALE_FACTORS ${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"
+      #   "${pkgs.webcord-vencord}/bin/webcord --start-minimized"
+      #   "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"
+      #   "${pkgs.jamesdsp}/bin/bin/jamesdsp"
+      # ];
 
-      xsession.windowManager.i3.config.startup = [
-        { notification = false; command = "${pkgs.copyq}/bin/copyq"; }
-        { notification = false; command = "${pkgs.nm-tray}/bin/nm-tray"; }
-        { notification = false; command = "env -u QT_SCREEN_SCALE_FACTORS ${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"; }
-        { notification = false; command = "${pkgs.webcord-vencord}/bin/webcord --start-minimized"; }
-        { notification = false; command = "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"; }
-        { notification = false; command = "${pkgs.jamesdsp}/bin/bin/jamesdsp"; }
-      ];
+      xsession.windowManager.i3.config = {
+        keybindings."ctrl+alt+Delete" = "exec gtk-launch qps";
+
+        modes.apps = {
+          "c" = "exec gtk-launch com.github.hluk.copyq";
+          "e" = "exec gtk-launch pcmanfm-qt";
+          "t" = "exec gtk-launch org.telegram";
+          "d" = "exec gtk-launch webcord";
+          "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux";
+        };
+
+        startup = [
+          { notification = false; command = "${pkgs.copyq}/bin/copyq"; }
+          { notification = false; command = "${pkgs.nm-tray}/bin/nm-tray"; }
+          { notification = false; command = "${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"; }
+          { notification = false; command = "${pkgs.webcord-vencord}/bin/webcord --start-minimized"; }
+          { notification = false; command = "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"; }
+          { notification = false; command = "${pkgs.jamesdsp}/bin/jamesdsp"; }
+        ];
+      };
 
       nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
@@ -136,9 +147,6 @@ in
         (qt.fixScaling { package = pkgs.telegram-desktop; })
         pkgs.webcord-vencord
         pkgs.whatsapp-for-linux
-
-        # disabled personal apps 
-        # pkgs.notepadqq # notepad++ [not needed with micro and featherpad around]
       ];
 
       xdg = {
@@ -222,8 +230,9 @@ in
         VK_ICD_FILENAMES = "$(find /usr/share/vulkan/icd.d/ -name '*.json' | tr '\\n' ':' | sed 's/:$//')";
       };
 
-      xsession.initExtra =
-        "systemctl --user import-environment LIBGL_DRIVERS_PATH LIBVA_DRIVERS_PATH __EGL_VENDOR_LIBRARY_FILENAMES LD_LIBRARY_PATH VK_ICD_FILENAMES";
+      # hopefully `systemd.user.sessionVariables = config.home.sessionVariables` already embeds these
+      # xsession.initExtra =
+      #   "systemctl --user import-environment LIBGL_DRIVERS_PATH LIBVA_DRIVERS_PATH __EGL_VENDOR_LIBRARY_FILENAMES LD_LIBRARY_PATH VK_ICD_FILENAMES";
     })
   ];
 }

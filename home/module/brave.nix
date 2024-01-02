@@ -41,6 +41,8 @@ in
       };
     };
 
-    module.sxhkd.keybindings."super + a; b" = "gtk-launch brave-browser";
+    # module.sxhkd.keybindings."super + a; b" = "gtk-launch brave-browser";
+
+    xsession.windowManager.i3.config.modes.apps."b" = "exec gtk-launch brave-browser";
   };
 }

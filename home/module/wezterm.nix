@@ -3,28 +3,42 @@ let
   cfg = config.module.wezterm;
 
   colors = config.module.themes.color-scheme;
+
+  wezterm = "${config.programs.wezterm.package}/bin/wezterm";
+
+  # launch =
+  #   # LATER: https://wezfurlong.org/wezterm/config/lua/config/default_cwd.html
+  #   ''
+  #     dir=$(${pkgs.xcwd}/bin/xcwd);
+  #     if [ "$dir" = "${config.home.homeDirectory}" ]; then
+  #       ${wezterm} start;
+  #     else
+  #       ${wezterm} start --cwd "$dir";
+  #     fi;
+  #   '';
+
+  launch = "exec \"$SCRIPT/wezterm\"";
 in
 {
   options.module.wezterm.enable = lib.mkEnableOption "Enable wezterm module";
 
   config = lib.mkIf cfg.enable {
-    module.sxhkd.keybindings =
-      let
-        cmd =
-          # LATER: https://wezfurlong.org/wezterm/config/lua/config/default_cwd.html
-          ''
-            dir=$(${pkgs.xcwd}/bin/xcwd);
-            if [ "$dir" = "${config.home.homeDirectory}" ]; then
-              wezterm start;
-            else
-              wezterm start --cwd "$dir";
-            fi;
-          '';
-      in
-      {
-        "super + semicolon" = cmd;
-        "super + BackSpace" = cmd;
-      };
+    # module.sxhkd.keybindings = {
+    #   "super + semicolon" = launch;
+    #   "super + BackSpace" = launch;
+    # };
+
+    xsession.windowManager.i3.config.terminal = launch;
+
+    module.script.install.wezterm =
+      ''
+        dir=$(${pkgs.xcwd}/bin/xcwd);
+        if [ "$dir" = "${config.home.homeDirectory}" ]; then
+          ${wezterm} start;
+        else
+          ${wezterm} start --cwd "$dir";
+        fi;
+      '';
 
     programs.wezterm = {
       enable = true;
@@ -182,7 +196,7 @@ in
             { key = 'PageDown', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
             --]]
 
-            -- default bindings
+            -- mostly default bindings
             { key = 'Enter', mods = 'ALT', action = act.ToggleFullScreen },
             { key = ')', mods = 'CTRL', action = act.ResetFontSize },
             { key = ')', mods = 'SHIFT|CTRL', action = act.ResetFontSize },
@@ -197,7 +211,7 @@ in
             { key = '=', mods = 'CTRL', action = act.IncreaseFontSize },
             { key = '=', mods = 'SHIFT|CTRL', action = act.IncreaseFontSize },
             { key = '=', mods = 'SUPER', action = act.IncreaseFontSize },
-            { key = 'C', mods = 'CTRL', action = act.CopyTo 'Clipboard' },
+            -- { key = 'C', mods = 'CTRL', action = act.CopyTo 'Clipboard' },
             { key = 'C', mods = 'SHIFT|CTRL', action = act.CopyTo 'Clipboard' },
             { key = 'F', mods = 'CTRL', action = act.Search 'CurrentSelectionOrEmptyString' },
             { key = 'F', mods = 'SHIFT|CTRL', action = act.Search 'CurrentSelectionOrEmptyString' },
@@ -211,9 +225,9 @@ in
             { key = 'P', mods = 'SHIFT|CTRL', action = act.ActivateCommandPalette },
             { key = 'R', mods = 'CTRL', action = act.ReloadConfiguration },
             { key = 'R', mods = 'SHIFT|CTRL', action = act.ReloadConfiguration },
-            { key = 'U', mods = 'CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
-            { key = 'U', mods = 'SHIFT|CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
-            { key = 'V', mods = 'CTRL', action = act.PasteFrom 'Clipboard' },
+            -- { key = 'U', mods = 'CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
+            -- { key = 'U', mods = 'SHIFT|CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
+            -- { key = 'V', mods = 'CTRL', action = act.PasteFrom 'Clipboard' },
             { key = 'V', mods = 'SHIFT|CTRL', action = act.PasteFrom 'Clipboard' },
             { key = 'W', mods = 'CTRL', action = act.CloseCurrentTab{ confirm = true } },
             { key = 'W', mods = 'SHIFT|CTRL', action = act.CloseCurrentTab{ confirm = true } },
@@ -224,7 +238,7 @@ in
             { key = '_', mods = 'CTRL', action = act.DecreaseFontSize },
             { key = '_', mods = 'SHIFT|CTRL', action = act.DecreaseFontSize },
             { key = 'c', mods = 'SHIFT|CTRL', action = act.CopyTo 'Clipboard' },
-            { key = 'c', mods = 'SUPER', action = act.CopyTo 'Clipboard' },
+            -- { key = 'c', mods = 'SUPER', action = act.CopyTo 'Clipboard' },
             { key = 'f', mods = 'SHIFT|CTRL', action = act.Search 'CurrentSelectionOrEmptyString' },
             { key = 'f', mods = 'SUPER', action = act.Search 'CurrentSelectionOrEmptyString' },
             { key = 'k', mods = 'SHIFT|CTRL', action = act.ClearScrollback 'ScrollbackOnly' },
@@ -235,9 +249,9 @@ in
             { key = 'p', mods = 'SHIFT|CTRL', action = act.ActivateCommandPalette },
             { key = 'r', mods = 'SHIFT|CTRL', action = act.ReloadConfiguration },
             { key = 'r', mods = 'SUPER', action = act.ReloadConfiguration },
-            { key = 'u', mods = 'SHIFT|CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
+            -- { key = 'u', mods = 'SHIFT|CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
             { key = 'v', mods = 'SHIFT|CTRL', action = act.PasteFrom 'Clipboard' },
-            { key = 'v', mods = 'SUPER', action = act.PasteFrom 'Clipboard' },
+            -- { key = 'v', mods = 'SUPER', action = act.PasteFrom 'Clipboard' },
             { key = 'w', mods = 'SHIFT|CTRL', action = act.CloseCurrentTab{ confirm = true } },
             { key = 'w', mods = 'SUPER', action = act.CloseCurrentTab{ confirm = true } },
             { key = 'x', mods = 'SHIFT|CTRL', action = act.ActivateCopyMode },

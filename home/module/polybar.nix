@@ -72,22 +72,6 @@ let
     in
     "${script}/bin/polybar-pipewire";
 
-  sxhkd-mode =
-    let
-      script = pkgs.writeShellScriptBin "sxhkd-mode"
-        ''
-          cat $SXHKD_FIFO | while read -r line; do
-              echo $line
-              if [[ $line == *"BBegin chain"* ]]; then
-                  polybar-msg action menu hook 1
-              elif [[ $line == *"EEnd chain"* ]]; then
-                  polybar-msg action menu hook 0
-              fi
-          done
-        '';
-    in
-    "${script}/bin/sxhkd-mode";
-
   dunst-toggle =
     let
       script = pkgs.writeShellScriptBin "dunst-toggle"
@@ -114,7 +98,6 @@ in
 
     xsession.windowManager.bspwm.startupPrograms = [
       "systemd-cat -t polybar systemd-run --user --scope --property=OOMPolicy=continue -u polybar ${pkgs.polybar}/bin/polybar"
-      "systemd-cat -t sxhkd-mode systemd-run --user --scope --property=OOMPolicy=continue -u sxhkd-mode ${sxhkd-mode}"
     ];
 
     xsession.windowManager.i3.config.startup = [

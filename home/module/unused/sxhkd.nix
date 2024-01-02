@@ -23,6 +23,24 @@ let
     isAttrs;
 
   cfg = config.module.sxhkd;
+
+
+  sxhkd-mode =
+    let
+      script = pkgs.writeShellScriptBin "sxhkd-mode"
+        ''
+          cat $SXHKD_FIFO | while read -r line; do
+              echo $line
+              if [[ $line == *"BBegin chain"* ]]; then
+                  polybar-msg action menu hook 1
+              elif [[ $line == *"EEnd chain"* ]]; then
+                  polybar-msg action menu hook 0
+              fi
+          done
+        '';
+    in
+    "${script}/bin/sxhkd-mode";
+
 in
 {
   options.module.sxhkd = {
@@ -36,6 +54,10 @@ in
   config = lib.mkIf cfg.enable {
     # reload sxhkd configs
     module.sxhkd.keybindings."super + Escape" = "pkill -USR1 -x sxhkd";
+
+    xsession.windowManager.bspwm.startupPrograms = [
+      "systemd-cat -t sxhkd-mode systemd-run --user --scope --property=OOMPolicy=continue -u sxhkd-mode ${sxhkd-mode}"
+    ];
 
     xsession.initExtra =
       ''
