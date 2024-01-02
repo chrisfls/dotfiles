@@ -31,6 +31,12 @@ in
       autotile =
         ''
           ${i3-msg} -t subscribe -m '[ "window", "binding" ]' | while IFS= read -r line; do
+            layout=$(${i3-msg} -t get_tree | ${jaq} -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')
+
+            if [ "$layout" = "tabbed" ]; then
+              continue
+            fi
+
             eval $(${xdotool} getwindowfocus getwindowgeometry --shell)
 
             if [ "$WIDTH" -gt "$HEIGHT" ]; then
@@ -46,6 +52,11 @@ in
           eval $(${xdotool} getwindowfocus getwindowgeometry --shell)
           ${xdotool} mousemove $((X + (WIDTH / 2))) $((Y + (HEIGHT / 2)))
         '';
+    };
+
+    systemd.user.services.polybar = lib.mkIf (config.services.polybar.enable && cfg.enable) {
+      Unit.After = [ "graphical-session-i3.target" ];
+      Install.WantedBy = lib.mkForce [ "graphical-session-i3.target" ];
     };
 
     xsession.windowManager.i3 = {
