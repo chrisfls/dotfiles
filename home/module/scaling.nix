@@ -5,8 +5,9 @@ let
   dpi = cfg.dpi;
   scale = cfg.scale;
   dpi-scaled = builtins.floor (dpi * scale);
-  gdk-scale = builtins.ceil scale;
-  gdk-dpi-scale = 1.0 / gdk-scale;
+  # not using this anymore, better having more space
+  # gdk-scale = builtins.ceil scale;
+  # gdk-dpi-scale = 1.0 / gdk-scale;
 in
 {
   options.module.scaling = {
@@ -35,8 +36,8 @@ in
       QT_FONT_DPI = toString dpi;
 
       # double size of icons (slows down gtk3 rendering a bit)
-      GDK_SCALE = toString gdk-scale;
-      GDK_DPI_SCALE = toString gdk-dpi-scale;
+      # GDK_SCALE = toString gdk-scale;
+      # GDK_DPI_SCALE = toString gdk-dpi-scale;
     };
   };
 }
