@@ -50,8 +50,6 @@ in
         numlock.enable = true;
       };
 
-      systemd.user.sessionVariables = config.home.sessionVariables;
-
       # xsession.windowManager.bspwm.startupPrograms = [
       #   "${pkgs.copyq}/bin/copyq"
       #   "${pkgs.nm-tray}/bin/nm-tray"
@@ -214,6 +212,15 @@ in
       };
     })
     (lib.mkIf (enable && non-nixos) {
+      xsession.importedVariables = [
+        "PATH"
+        "LIBGL_DRIVERS_PATH"
+        "LIBVA_DRIVERS_PATH"
+        "__EGL_VENDOR_LIBRARY_FILENAMES"
+        "LD_LIBRARY_PATH"
+        "VK_ICD_FILENAMES"
+      ];
+
       home.sessionVariables = {
         LIBGL_DRIVERS_PATH = "/usr/lib/dri";
         LIBVA_DRIVERS_PATH = "/usr/lib/dri";
@@ -229,10 +236,6 @@ in
         LD_LIBRARY_PATH = "/usr/lib:/usr/lib/vdpau:$LD_LIBRARY_PATH";
         VK_ICD_FILENAMES = "$(find /usr/share/vulkan/icd.d/ -name '*.json' | tr '\\n' ':' | sed 's/:$//')";
       };
-
-      # hopefully `systemd.user.sessionVariables = config.home.sessionVariables` already embeds these
-      # xsession.initExtra =
-      #   "systemctl --user import-environment LIBGL_DRIVERS_PATH LIBVA_DRIVERS_PATH __EGL_VENDOR_LIBRARY_FILENAMES LD_LIBRARY_PATH VK_ICD_FILENAMES";
     })
   ];
 }
