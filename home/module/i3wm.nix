@@ -54,10 +54,6 @@ in
         '';
     };
 
-    systemd.user.services.polybar = lib.mkIf (config.services.polybar.enable && cfg.enable) {
-      Unit.After = [ "graphical-session-i3.target" ];
-      Install.WantedBy = lib.mkForce [ "graphical-session-i3.target" ];
-    };
 
     xsession.windowManager.i3 = {
       enable = true;
