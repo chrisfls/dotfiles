@@ -109,13 +109,13 @@ in
     #   }
     # ];
 
-    # home manager fix
-    systemd.user.services.polybar.Service.Environment = lib.mkIf (config.preset.non-nixos) (lib.mkForce [ ]);
-
-    # i3wm fix
-    systemd.user.services.polybar = lib.mkIf (config.module.i3wm.enable) {
-      Unit.After = [ "graphical-session-i3.target" ];
-      Install.WantedBy = lib.mkForce [ "graphical-session-i3.target" ];
+    systemd.user.services.polybar = {
+      # i3wm fix
+      Unit.After = lib.mkIf (config.module.i3wm.enable) [ "graphical-session-i3.target" ];
+      Install.WantedBy = lib.mkIf (config.module.i3wm.enable) (lib.mkForce [ "graphical-session-i3.target" ]);
+      
+      # home manager fix
+      Service.Environment = lib.mkIf (config.preset.non-nixos) (lib.mkForce [ ]);
     };
 
     # i3wm launch
