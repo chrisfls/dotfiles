@@ -7,7 +7,6 @@
     ./betterlockscreen.nix
     ./brave.nix
     ./bspwm.nix
-    ./i3wm.nix
     ./cloudflare-warp.nix
     ./code.nix
     ./codium.nix
@@ -15,6 +14,8 @@
     ./dunst.nix
     ./fontconfig.nix
     ./fonts.nix
+    ./i3wm.nix
+    ./script.nix
     ./jamesdsp.nix
     ./loopback-toggle.nix
     ./micro.nix
