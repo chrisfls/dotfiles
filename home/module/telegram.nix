@@ -9,7 +9,7 @@ in
   config = lib.mkIf enable {
     home.packages = [ pkg ];
 
-    xsession.windowManager.i3.config = lib.mkIf config.i3wm.enable {
+    xsession.windowManager.i3.config = lib.mkIf config.module.i3wm.enable {
       modes.apps."t" = "exec gtk-launch org.telegram";
       startup = [
         { notification = false; command = "${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"; }

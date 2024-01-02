@@ -67,7 +67,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.jamesdsp ];
 
-    xsession.windowManager.i3.config.startup = lib.mkIf config.i3wm.enable [
+    xsession.windowManager.i3.config.startup = lib.mkIf config.module.i3wm.enable [
       { notification = false; command = "${pkgs.jamesdsp}/bin/jamesdsp --tray"; }
     ];
 
