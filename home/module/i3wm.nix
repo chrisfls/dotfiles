@@ -139,15 +139,15 @@ in
             "r" = "mode default";
           };
           insert = {
-            "h" = "focus child; move left; mode default";
-            "j" = "focus child; move down; mode default";
-            "k" = "focus child; move up; mode default";
-            "l" = "focus child; move right; mode default";
+            "h" = "focus child; move left; mode default; ${script "mouse-warp"}";
+            "j" = "focus child; move down; mode default; ${script "mouse-warp"}";
+            "k" = "focus child; move up; mode default; ${script "mouse-warp"}";
+            "l" = "focus child; move right; mode default; ${script "mouse-warp"}";
 
-            "Left" = "focus child; move left; mode default";
-            "Down" = "focus child; move down; mode default";
-            "Up" = "focus child; move up; mode default";
-            "Right" = "focus child; move right; mode default";
+            "Left" = "focus child; move left; mode default; ${script "mouse-warp"}";
+            "Down" = "focus child; move down; mode default; ${script "mouse-warp"}";
+            "Up" = "focus child; move up; mode default; ${script "mouse-warp"}";
+            "Right" = "focus child; move right; mode default; ${script "mouse-warp"}";
 
             "Escape" = "mode default";
             "Return" = "mode default";
