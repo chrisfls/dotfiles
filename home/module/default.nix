@@ -2,7 +2,6 @@
 {
   imports = [
     ./agenix.nix
-    ./alacritty.nix
     ./autorandr.nix
     ./betterlockscreen.nix
     ./brave.nix
@@ -14,7 +13,6 @@
     ./fontconfig.nix
     ./fonts.nix
     ./i3wm.nix
-    ./script.nix
     ./jamesdsp.nix
     ./loopback-toggle.nix
     ./micro.nix
@@ -24,6 +22,7 @@
     ./rofi.nix
     ./scaling.nix
     ./screenshot.nix
+    ./script.nix
     ./shell.nix
     ./sublime.nix
     ./themes.nix
