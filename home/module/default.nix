@@ -7,7 +7,6 @@
     ./brave.nix
     ./cloudflare-warp.nix
     ./code.nix
-    ./codium.nix
     ./copy-file.nix
     ./dunst.nix
     ./fontconfig.nix
