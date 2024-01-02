@@ -67,6 +67,10 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.jamesdsp ];
 
+    xsession.windowManager.i3.config.startup = lib.mkIf config.i3wm.enable [
+      { notification = false; command = "${pkgs.jamesdsp}/bin/jamesdsp --tray"; }
+    ];
+
     xdg.configFile = foldlAttrs
       (acc: name: path: acc // {
         "jamesdsp/presets/${name} (EQ).conf".text = buildEQ path;

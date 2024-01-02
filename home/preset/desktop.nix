@@ -65,7 +65,6 @@ in
         modes.apps = {
           "c" = "exec gtk-launch com.github.hluk.copyq";
           "e" = "exec gtk-launch pcmanfm-qt";
-          "t" = "exec gtk-launch org.telegram";
           "d" = "exec gtk-launch webcord";
           "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux";
         };
@@ -73,10 +72,8 @@ in
         startup = [
           { notification = false; command = "${pkgs.copyq}/bin/copyq"; }
           { notification = false; command = "${pkgs.nm-tray}/bin/nm-tray"; }
-          { notification = false; command = "${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"; }
           { notification = false; command = "${pkgs.webcord-vencord}/bin/webcord --start-minimized"; }
           { notification = false; command = "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"; }
-          { notification = false; command = "${pkgs.jamesdsp}/bin/jamesdsp"; }
         ];
       };
 
