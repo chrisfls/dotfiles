@@ -4,6 +4,11 @@ let
 
   colors = config.module.themes.color-scheme;
 
+  polybar-msg = "${config.services.polybar.package}/bin/polybar-msg";
+  bluetoothctl = "${pkgs.bluez}/bin/bluetoothctl";
+  pamixer = "${pkgs.pamixer}/bin/pamixer";
+  dunstctl = "${pkgs.dunst}/bin/dunstctl";
+
   toggle =
     let
       script = pkgs.writeShellScriptBin "polybar-toggle"
@@ -12,10 +17,10 @@ let
           shift
 
           for arg in "$@"; do
-            polybar-msg action "#$arg.module_toggle"
+            ${polybar-msg} action "#$arg.module_toggle"
           done
 
-          polybar-msg action $fst next
+          ${polybar-msg} action $fst next
         '';
     in
     "${script}/bin/polybar-toggle";
@@ -40,7 +45,7 @@ let
               fi
           fi
 
-          polybar-msg action bluetooth hook $hook
+          ${polybar-msg} action bluetooth hook $hook
         '';
     in
     "${script}/bin/polybar-bluetooth";
@@ -51,23 +56,23 @@ let
         ''
           case $1 in
             "--up")
-              pamixer --increase 5
+              ${pamixer} --increase 5
               ;;
             "--down")
-              pamixer --decrease 5  
+              ${pamixer} --decrease 5  
               ;;
             "--mute")
-              pamixer --toggle-mute
+              ${pamixer} --toggle-mute
               ;;
           esac
 
-          if [ "$(pamixer --get-volume-human)" = "muted" ]; then
+          if [ "$(${pamixer} --get-volume-human)" = "muted" ]; then
             hook=1
           else
             hook=2
           fi
 
-          polybar-msg action audio hook $hook
+          ${polybar-msg} action audio hook $hook
         '';
     in
     "${script}/bin/polybar-pipewire";
@@ -76,8 +81,8 @@ let
     let
       script = pkgs.writeShellScriptBin "dunst-toggle"
         ''
-          dunstctl set-paused toggle
-          polybar-msg action notifications next
+          ${dunstctl} set-paused toggle
+          ${polybar-msg} action notifications next
         '';
     in
     "${script}/bin/dunst-toggle";
@@ -93,23 +98,23 @@ in
   options.module.polybar.enable = lib.mkEnableOption "Enable polybar module";
 
   config = lib.mkIf cfg.enable {
-    # HACK: disable polybar service, it would be great to use it if systemd adopted all the envars by default
-    systemd.user.services.polybar = lib.mkForce { };
+    # xsession.windowManager.bspwm.startupPrograms = [
+    #   "systemd-cat -t polybar systemd-run --user --scope --property=OOMPolicy=continue -u polybar ${pkgs.polybar}/bin/polybar"
+    # ];
 
-    xsession.windowManager.bspwm.startupPrograms = [
-      "systemd-cat -t polybar systemd-run --user --scope --property=OOMPolicy=continue -u polybar ${pkgs.polybar}/bin/polybar"
-    ];
+    # xsession.windowManager.i3.config.startup = [
+    #   {
+    #     command = "${pkgs.polybar}/bin/polybar topbar -r";
+    #     notification = false;
+    #   }
+    # ];
 
-    xsession.windowManager.i3.config.startup = [
-      {
-        command = "${pkgs.polybar}/bin/polybar topbar -r";
-        notification = false;
-      }
-    ];
+    # home manager fix
+    systemd.user.services.polybar.Service.Environment = lib.mkIf (config.preset.non-nixos) (lib.mkForce []);
 
     services.polybar = {
       enable = true;
-      script = "";
+      script = "polybar topbar &";
       settings = {
         settings.screenchange-reload = "\"true\"";
         "bar/topbar" = {
@@ -123,7 +128,6 @@ in
           line-size = "\"2pt\"";
           padding-left = "\"0\"";
           padding-right = "\"0\"";
-          # dim-value = "\"0.5\"";
 
           # styling
 
@@ -241,8 +245,8 @@ in
           hidden = "\"true\"";
           click-left = "\"${dunst-toggle} &\"";
           click-right = "\"rofi-dunst &\"";
-          scroll-down = "\"dunstctl history-pop &\"";
-          scroll-up = "\"dunstctl close &\"";
+          scroll-down = "\"${dunstctl} history-pop &\"";
+          scroll-up = "\"${dunstctl} close &\"";
           initial = "\"1\"";
           hook-0 = "\"\"";
           format-0 = "\"%{O-12}%{T2}%{T-}\"";
@@ -427,13 +431,13 @@ in
           format-1 = "\"<label> %{T2}󰝟%{T-} \"";
           format-1-background = "\"${light}\"";
           format-1-foreground = "\"${dark}\"";
-          hook-1 = "\"pamixer --get-volume\"";
+          hook-1 = "\"${pamixer} --get-volume\"";
 
           # low volume
           format-2 = "\"<label> %{T2}󰕾%{T-} \"";
           format-2-background = "\"${light}\"";
           format-2-foreground = "\"${dark}\"";
-          hook-2 = "\"pamixer --get-volume\"";
+          hook-2 = "\"${pamixer} --get-volume\"";
 
         };
         # TODO: replace with custom module to support calendar
@@ -442,7 +446,7 @@ in
           interval = "\"1.0\"";
           # posx: 3264 + 1280
           click-left = "\"${pkgs.yad}/bin/yad --calendar --undecorated --fixed --close-on-unfocus --no-buttons --posx=4544 --posy=36 &\"";
-          exec = "\"echo \"$(date +'%a, %d %b %Y') %{T2}󰃭%{T-}\"\"";
+          exec = "\"echo \"$(${pkgs.toybox}/bin/date +'%a, %d %b %Y') %{T2}󰃭%{T-}\"\"";
 
           label = "\"%output% \"";
           label-background = "\"${dark}\"";
