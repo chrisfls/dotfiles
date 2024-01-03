@@ -118,7 +118,7 @@ in
     home.packages = [
       pkgs.rofi
       pkgs.rofi-calc
-      pkgs.hostname
+      pkgs.hostname # TODO: update rofi theme to not need this
       rofi-calc
       rofi-dunst
       rofi-menu
