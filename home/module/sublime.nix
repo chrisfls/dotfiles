@@ -4,10 +4,13 @@ let inherit (config.module.sublime) enable; in {
   config = lib.mkIf enable {
     home.packages = [
       pkgs.sublime4
-      pkgs.sublime-merge-dev
+      pkgs.sublime-merge
     ];
 
-    pacman.overrides.sublime4 = [ "chaotic-aur/sublime-text-4" ];
+    pacman.overrides = {
+      sublime4 = [ "chaotic-aur/sublime-text-4" ];
+      sublime-merge = [ "aur/sublime-merge" ];
+    };
 
     nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
   };
