@@ -4,23 +4,25 @@ let
 
   brave = "brave-browser.desktop";
 
-  pkg = pkgs.brave.overrideAttrs (old: {
-    postFixup =
-      ''
-        substituteInPlace $out/bin/brave \
-          --replace mesa dummy-mesa
-        substituteInPlace $out/bin/brave \
-          --replace libva dummy-libva
-        substituteInPlace $out/bin/brave \
-          --replace "--enable-features=" "--enable-features=VaapiVideoDecodeLinuxGL,"
-      '';
-  });
+  # pkg = pkgs.brave.overrideAttrs (old: {
+  #   postFixup =
+  #     ''
+  #       substituteInPlace $out/bin/brave \
+  #         --replace mesa dummy-mesa
+  #       substituteInPlace $out/bin/brave \
+  #         --replace libva dummy-libva
+  #       substituteInPlace $out/bin/brave \
+  #         --replace "--enable-features=" "--enable-features=VaapiVideoDecodeLinuxGL,"
+  #     '';
+  # });
 in
 {
   options.module.brave.enable = lib.mkEnableOption "Enable brave module";
 
   config = lib.mkIf enable {
-    home.packages = [ pkg ];
+    home.packages = [ pkgs.brave ];
+
+    module.pacman.packages.brave = [ "chaotic-aur/brave-bin" ];
 
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/http" = brave;
