@@ -164,6 +164,7 @@ in
         pkgs.webcord-vencord
         pkgs.whatsapp-for-linux
         pkgs.libsForQt5.audiotube
+        pkgs.xvfb-run
       ];
 
       pacman.overrides = {
@@ -197,14 +198,10 @@ in
         xdotool = [ "extra/xdotool" ];
         xorg.xev = [ "extra/xorg-xev" ];
         xorg.xinit = [ "extra/xorg-xinit" ];
-        xorg.xinput = [ "extra/xorg-input" ];
+        xorg.xinput = [ "extra/xorg-xinput" ];
         xorg.xkill = [ "extra/xorg-xkill" ];
-
-        # xorg.xorgserver = [ "xorg-server-git" ];
-        # mesa = [ "extra/mesa" ];
-        # shared-mime-info = [ "extra/shared-mime-info" ];
-        # xdg-utils = [ "extra/xdg-utils" ];
-        # man-db = [ "core/man-db" ]
+        xorg.xrdb = [ "extra/xorg-xrdb" ];
+        xorg.xsetroot = [ "extra/xorg-xsetroot" ];
       };
 
       xdg = {
