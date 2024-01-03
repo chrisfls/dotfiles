@@ -6,6 +6,7 @@ let
   inherit (lib.attrsets) attrValues getAttrFromPath hasAttrByPath mapAttrsRecursive recursiveUpdate;
   inherit (lib.lists) concatMap foldl';
   inherit (lib.trivial) pipe;
+  inherit (lib.strings) hasPrefix removePrefix;
   inherit (lib) mkEnableOption mkIf mkOption mkOptionType types;
 
 
@@ -45,12 +46,21 @@ let
   overlay = prev: recursiveUpdate prev
     (mapPathsRecursive (package prev) overrides);
 
+  repo-packages =
+    filter (name: !(hasPrefix "aur/" name)) packages;
+
+  aur-packages = pipe packages [
+    (filter (name: hasPrefix "aur/" name))
+    (map (removePrefix "aur/"))
+  ];
+
   # install or update all packages required by nix  
   pacman-switch-pkg = pkgs.writeShellScriptBin "pacman-switch"
     (concatStringsSep " && "
       [
         "sudo pacman -Sy --needed --noconfirm archlinux-keyring chaotic-keyring"
-        "sudo pacman -Su --needed --noconfirm ${concatStringsSep " " packages}"
+        "sudo pacman -Su --needed --noconfirm ${concatStringsSep " " repo-packages}"
+        "paru -Sua --needed --noconfirm ${concatStringsSep " " aur-packages}"
       ]
     );
 
