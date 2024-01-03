@@ -1,10 +1,17 @@
 { config, lib, pkgs, ... }:
-let inherit (config.module.xdg-portal) enable; in {
-  options.module.xdg-portal.enable = lib.mkEnableOption "Enable xdg-portal module";
+let inherit (config.module.xdg-desktop-portal) enable; in {
+  options.module.xdg-desktop-portal.enable = lib.mkEnableOption "Enable xdg-desktop-portal module";
 
-  # TODO: review this
   config = lib.mkIf enable {
-    home.packages = [ pkgs.lxqt.xdg-desktop-portal-lxqt ];
+    home.packages = [
+      pkgs.xdg-desktop-portal
+      pkgs.lxqt.xdg-desktop-portal-lxqt
+    ];
+
+    pacman.overrides = {
+      xdg-desktop-portal = [ "extra/xdg-desktop-portal" ];
+      lxqt.xdg-desktop-portal-lxqt = [ "extra/xdg-desktop-portal-lxqt" ];
+    };
 
     home.sessionVariables.GTK_USE_PORTAL = 1;
 

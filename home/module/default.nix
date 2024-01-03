@@ -27,6 +27,6 @@
     ./telegram.nix
     ./themes.nix
     ./wezterm.nix
-    ./xdg-portal.nix
+    ./xdg-desktop-portal.nix
   ];
 }

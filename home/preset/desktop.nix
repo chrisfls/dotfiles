@@ -9,9 +9,9 @@ let
   # needed until these are done:
   #  - https://github.com/NixOS/nixpkgs/issues/228179
   #  - https://github.com/NixOS/nixpkgs/pull/273263 
-  audiotube = pkgs.libsForQt5.audiotube.overrideAttrs (old: {
-    buildInputs = old.buildInputs ++ [ pkgs.libsForQt5.kpurpose ];
-  });
+  #audiotube = pkgs.libsForQt5.audiotube.overrideAttrs (old: {
+  #  buildInputs = old.buildInputs ++ [ pkgs.libsForQt5.kpurpose ];
+  #});
 
   /*hahaha =
     (pkgs.stdenvNoCC.mkDerivation {
@@ -55,6 +55,7 @@ in
         telegram.enable = true;
         themes.enable = true;
         wezterm.enable = true;
+        xdg-desktop-portal.enable = true;
         # sxhkd = {
         #   enable = false;
         #   keybindings = {
@@ -126,6 +127,7 @@ in
         pkgs.xorg.xev
         pkgs.xtitle # TODO: check if needed
         pkgs.xdg-utils
+        pkgs.xdotool
 
         # desktop components
         pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
@@ -150,25 +152,26 @@ in
 
         # personal apps
         # pkgs.logseq
-        audiotube
         pkgs.anydesk
         pkgs.gimp
         pkgs.moonlight-qt
         pkgs.parsec-bin
         pkgs.qbittorrent
         pkgs.rclone
-        pkgs.soulseekqt
+        # pkgs.soulseekqt
         # pkgs.steam
         pkgs.webcord-vencord
         pkgs.whatsapp-for-linux
+        pkgs.libsForQt5.audiotube
       ];
 
       pacman.overrides = {
         xclip = [ "extra/xclip" ];
         alsa-utils = [ "extra/alsa-utils" ];
         pamixer = [ "extra/pamixer" ];
-        #xorg.xev = [ "extra/xorg-xev" ];
+        xorg.xev = [ "extra/xorg-xev" ];
         #xdg-utils = [ "extra/xdg-utils" ];
+        xdotool = [ "extra/xdotool" ];
         lxqt.lxqt-openssh-askpass = [ "extra/lxqt-openssh-askpass" ];
         lxqt.lxqt-policykit = [ "extra/lxqt-policykit" ];
         lxqt.lxqt-sudo = [ "extra/lxqt-sudo" ];
@@ -190,6 +193,8 @@ in
         qbittorrent = [ "extra/qbittorrent" ];
         rclone = [ "extra/rclone" ];
         whatsapp-for-linux = [ "chaotic-aur/whatsapp-for-linux" ];
+        libsForQt5.audiotube = [ "extra/audiotube" ];
+        # man-db = [ "core/man-db" ]
       };
 
       xdg = {
