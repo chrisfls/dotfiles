@@ -199,12 +199,14 @@ in
 
   config = lib.mkIf enable {
     pacman.overrides = {
-      materia-kde-theme = [ "extra/materia-kde" ];
+      materia-kde-theme = [ "extra/materia-kde" "extra/kvantum-theme-materia" ];
       materia-theme = [ "extra/materia-gtk-theme" ];
       papirus-icon-theme = [ "extra/papirus-icon-theme" ];
       libsForQt5.breeze-qt5 = [ "extra/breeze" ];
       qt5ct = [ "extra/qt5ct" ];
       qt6ct = [ "extra/qt6ct" ];
+      libsForQt5.qtstyleplugin-kvantum = ["extra/kvantum"];
+      qt6Packages.qtstyleplugin-kvantum = ["extra/kvantum"];
     };
 
     home.packages = [
