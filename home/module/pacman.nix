@@ -9,6 +9,17 @@ let
   inherit (lib.strings) hasPrefix removePrefix;
   inherit (lib) mkEnableOption mkIf mkOption mkOptionType types;
 
+  pkg =
+    pkgs.stdenvNoCC.mkDerivation {
+      pname = "pacman";
+      version = "dummy";
+      dontUnpack = true;
+      dontBuild = true;
+      dontFixup = true;
+      installPhase = ''
+        ln -s "/usr/" "$out"
+      '';
+    };
 
   # base package to copy files from pacman into nix
   package = prev: path:
@@ -34,6 +45,8 @@ let
       dontBuild = true;
       dontFixup = true;
       nativeBuildInputs = [ replacer ];
+      buildInputs = [];
+      configureFlags = [];
       installPhase = ''
         find . -type f -exec replace "$src" '{}' "$out" ';'
       '';
@@ -49,10 +62,7 @@ let
   repo-packages =
     filter (name: !(hasPrefix "aur/" name)) packages;
 
-  aur-packages = pipe packages [
-    (filter (name: hasPrefix "aur/" name))
-    (map (removePrefix "aur/"))
-  ];
+  aur-packages = filter (name: hasPrefix "aur/" name) packages;
 
   # install or update all packages required by nix  
   pacman-switch-pkg = pkgs.writeShellScriptBin "pacman-switch"
