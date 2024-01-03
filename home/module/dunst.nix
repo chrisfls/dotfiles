@@ -8,9 +8,7 @@ in
   options.module.dunst.enable = lib.mkEnableOption "Enable dunst module";
 
   config = lib.mkIf enable {
-    # xsession.windowManager.bspwm.startupPrograms = [
-    #   "systemd-cat -t dunst systemd-run --user --scope --property=OOMPolicy=continue -u dunst ${pkgs.dunst}/bin/dunst -config ${config.services.dunst.configFile}"
-    # ];
+    pacman.overrides.dunst = [ "extra/dunst" ];
 
     # home manager fix
     systemd.user.services.dunst.Service.Environment = lib.mkIf (config.preset.non-nixos) (lib.mkForce [ ]);

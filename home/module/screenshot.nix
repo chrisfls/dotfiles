@@ -33,6 +33,11 @@ in
       screenshot-save
     ];
 
+    pacman.overrides = {
+      shotgun = [ "extra/shotgun" ];
+      slop = [ "extra/slop" ];
+    };
+
     xdg.configFile = {
       "slop/guides.vert".text =
         ''

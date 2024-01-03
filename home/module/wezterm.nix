@@ -22,10 +22,7 @@ in
   options.module.wezterm.enable = lib.mkEnableOption "Enable wezterm module";
 
   config = lib.mkIf enable {
-    # module.sxhkd.keybindings = {
-    #   "super + semicolon" = launch;
-    #   "super + BackSpace" = launch;
-    # };
+    pacman.overrides.wezterm = [ "extra/wezterm" ];
 
     xsession.windowManager.i3.config.terminal = launch;
 
@@ -350,6 +347,14 @@ in
               { key = 'PageDown', mods = 'NONE', action = act.CopyMode 'NextMatchPage' },
               { key = 'UpArrow', mods = 'NONE', action = act.CopyMode 'PriorMatch' },
               { key = 'DownArrow', mods = 'NONE', action = act.CopyMode 'NextMatch' },
+            },
+          }
+
+          config.mouse_bindings = {
+            {
+              event = { Up = { streak = 1, button = "Left" } },
+              mods = "NONE",
+              action = wezterm.action.Nop,
             },
           }
 

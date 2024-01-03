@@ -117,6 +117,7 @@ in
   config = lib.mkIf enable {
     home.packages = [
       pkgs.rofi
+      pkgs.rofi-calc
       pkgs.hostname
       rofi-calc
       rofi-dunst
@@ -128,6 +129,11 @@ in
       # rofi-windows-minimized
       # rofi-windows-scratchpad
     ];
+
+    pacman.overrides = {
+      rofi = [ "extra/rofi" ];
+      rofi-calc = [ "extra/rofi-calc" ];
+    };
 
     # module.sxhkd.keybindings = {
     #   # main menus

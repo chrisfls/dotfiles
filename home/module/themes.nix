@@ -1,4 +1,5 @@
 { config, lib, pkgs, specialArgs, ... }:
+# TODO: migrate back to breeze (really)
 let
   inherit (config.module.themes)
     cursor
@@ -197,6 +198,15 @@ in
   };
 
   config = lib.mkIf enable {
+    pacman.overrides = {
+      materia-kde-theme = [ "extra/materia-kde" ];
+      materia-theme = [ "extra/materia-gtk-theme" ];
+      papirus-icon-theme = [ "extra/papirus-icon-theme" ];
+      libsForQt5.breeze-qt5 = [ "extra/breeze" ];
+      qt5ct = [ "extra/qt5ct" ];
+      qt6ct = [ "extra/qt6ct" ];
+    };
+
     home.packages = [
       qt.package
       gtk.package
@@ -233,5 +243,3 @@ in
     };
   };
 }
-
-

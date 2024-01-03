@@ -11,11 +11,10 @@ in
       agenix.enable = true;
     };
 
+
     home.packages = [
       # nix-shell / nix flake develop
       pkgs.any-nix-shell
-      pkgs.which
-
       # devenv
       pkgs.cachix
       inputs.devenv.packages.${pkgs.system}.devenv

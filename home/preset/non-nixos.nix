@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   enable = config.preset.non-nixos;
 in
@@ -7,5 +7,8 @@ in
 
   config = (lib.mkIf enable {
     targets.genericLinux.enable = true;
+    pacman.enable = true;
+
+    # pacman.overrides.mesa = [ "extra/mesa" ];
   });
 }

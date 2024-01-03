@@ -6,6 +6,9 @@ let inherit (config.module.sublime) enable; in {
       pkgs.sublime4
       pkgs.sublime-merge-dev
     ];
+
+    pacman.overrides.sublime4 = [ "chaotic-aur/sublime-text-4" ];
+
     nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
   };
 }

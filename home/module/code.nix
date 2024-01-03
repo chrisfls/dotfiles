@@ -2,5 +2,8 @@
 let inherit (config.module.code) enable; in {
   options.module.code.enable = lib.mkEnableOption "Enable code module";
 
-  config.home.packages = lib.mkIf enable [ pkgs.vscode ];
+  config = lib.mkIf enable {
+    home.packages = [ pkgs.vscode ];
+    pacman.overrides.vscode = [ "chaotic-aur/visual-studio-code-bin" ];
+  };
 }

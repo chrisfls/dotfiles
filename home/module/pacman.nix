@@ -1,10 +1,16 @@
+# TODO: add aur support
 { config, lib, pkgs, ... }:
 let
-  inherit (config.module.pacman) enable packages;
+  inherit (config.pacman) enable overrides packages;
 
   package = prev: path: _:
     let
-      pkg = lib.attrsets.getAttrFromPath path prev;
+      pkg = {
+        pname = "pacman";
+        version = "dummy";
+        meta = { };
+        passthru = { };
+      } // (lib.attrsets.getAttrFromPath path prev);
 
       replacer = prev.writeShellScriptBin "replace" ''
         set -eu
@@ -26,15 +32,25 @@ let
     };
 
   overlay = prev: lib.attrsets.recursiveUpdate prev
-    (lib.attrsets.mapAttrsRecursive (package prev) packages);
+    (lib.attrsets.mapAttrsRecursive (package prev) overrides);
 
   flatten = attrs:
     lib.lists.concatMap
       (value: if builtins.isAttrs value then flatten value else value)
       (lib.attrsets.attrValues attrs);
 
+  packages-by-name = lib.trivial.pipe overrides [
+    (lib.attrsets.mapAttrsRecursive
+      (path:
+        let inherit (lib.attrsets.getAttrFromPath path pkgs) name;
+        in _: [ "${name}" ]))
+    flatten
+    (map (name: { inherit name; value = true; }))
+    builtins.listToAttrs
+  ];
+
   pacman-packages =
-    builtins.concatStringsSep " " (flatten packages);
+    builtins.concatStringsSep " " config.pacman.packages;
 
   pacman-switch = pkgs.writeShellScriptBin "pacman-switch"
     (builtins.concatStringsSep " && "
@@ -45,17 +61,31 @@ let
     );
 in
 {
-  options.module.pacman = {
+  options.pacman = {
     enable = lib.mkEnableOption "Enable pacman module";
 
-    packages = lib.mkOption {
+    overrides = lib.mkOption {
       type = lib.types.attrs;
       default = { };
+    };
+
+    packages = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
     };
   };
 
   config = lib.mkIf enable {
     home.packages = [ pacman-switch ];
     nixpkgs.overlays = [ (final: overlay) ];
+    pacman.packages = (flatten overrides);
+
+    # report packages installed with nix (debug)
+    home.file.".nixpkgs".text =
+      lib.trivial.pipe config.home.packages [
+        (map (pkg: "${pkg.name}"))
+        (builtins.filter (name: !(lib.attrsets.hasAttrByPath [ name ] packages-by-name)))
+        (builtins.concatStringsSep "\n")
+      ];
   };
 }

@@ -31,6 +31,8 @@ in
       autotile =
         ''
           ${i3-msg} -t subscribe -m '[ "window", "binding" ]' | while IFS= read -r line; do
+            sleep ${toString (1.0 / 30.0)}
+
             layout=$(${i3-msg} -t get_tree | ${jaq} -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')
 
             if [ "$layout" = "tabbed" ]; then
@@ -197,9 +199,12 @@ in
           # quit sessionss
           "Control+Mod1+Escape" = "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
 
-          # TODO: move to modules
+          # open terminal
           "${mod}+BackSpace" = "exec ${config.xsession.windowManager.i3.config.terminal}";
+
+          # open menu
           "${mod}+Return" = "exec ${config.xsession.windowManager.i3.config.menu}";
+          "${mod}+semicolon" = "exec ${config.xsession.windowManager.i3.config.menu}";
 
           ######## #### ## #
           # WINDOW CONTROLS
@@ -309,62 +314,59 @@ in
       };
     };
 
-    services.polybar = {
-      package = pkgs.polybarFull;
-      settings = {
-        "bar/topbar".wm-restack = "\"i3\"";
-        "module/workspaces" = {
-          type = "\"internal/i3\"";
+    services.polybar.settings = {
+      "bar/topbar".wm-restack = "\"i3\"";
+      "module/workspaces" = {
+        type = "\"internal/i3\"";
 
-          pin-workspaces = "\"true\"";
-          show-urgent = "\"true\"";
-          strip-wsnumbers = "\"true\"";
-          index-sort = "\"true\"";
-          enable-click = "\"true\"";
-          enable-scroll = "\"true\"";
-          wrapping-scroll = "\"true\"";
-          reverse-scroll = "\"false\"";
-          fuzzy-match = "\"false\"";
+        pin-workspaces = "\"true\"";
+        show-urgent = "\"true\"";
+        strip-wsnumbers = "\"true\"";
+        index-sort = "\"true\"";
+        enable-click = "\"true\"";
+        enable-scroll = "\"true\"";
+        wrapping-scroll = "\"true\"";
+        reverse-scroll = "\"false\"";
+        fuzzy-match = "\"false\"";
 
-          format = "\"%{O-1}%{O2}%{T2}<label-state>%{T-}%{O-1}\"";
-          label-mode = "%{T2}%mode%%{T-}";
-          label-mode-background = "\"${colors.foreground}\"";
-          label-mode-foreground = "\"${colors.background}\"";
-          label-mode-padding = "\"0\"";
+        format = "\"%{O-1}%{O2}%{T2}<label-state>%{T-}%{O-1}\"";
+        label-mode = "%{T2}%mode%%{T-}";
+        label-mode-background = "\"${colors.foreground}\"";
+        label-mode-foreground = "\"${colors.background}\"";
+        label-mode-padding = "\"0\"";
 
-          label-focused = "\"%{O12}%icon%%{O2}\"";
-          label-focused-background = "\"${colors.foreground}\"";
-          label-focused-foreground = "\"${colors.blueBright}\"";
-          label-focused-padding = "\"0\"";
+        label-focused = "\"%{O12}%icon%%{O2}\"";
+        label-focused-background = "\"${colors.foreground}\"";
+        label-focused-foreground = "\"${colors.blueBright}\"";
+        label-focused-padding = "\"0\"";
 
-          label-visible = "\"%{O12}%icon%%{O2}\"";
-          label-visible-background = "\"${colors.foreground}\"";
-          label-visible-foreground = "\"${colors.background}\"";
-          label-visible-padding = "\"0\"";
+        label-visible = "\"%{O12}%icon%%{O2}\"";
+        label-visible-background = "\"${colors.foreground}\"";
+        label-visible-foreground = "\"${colors.background}\"";
+        label-visible-padding = "\"0\"";
 
-          label-unfocused = "\"%{O12}%icon%%{O2}\"";
-          label-unfocused-background = "\"${colors.foreground}\"";
-          label-unfocused-foreground = "\"${colors.black}\"";
-          label-unfocused-padding = "\"0\"";
+        label-unfocused = "\"%{O12}%icon%%{O2}\"";
+        label-unfocused-background = "\"${colors.foreground}\"";
+        label-unfocused-foreground = "\"${colors.black}\"";
+        label-unfocused-padding = "\"0\"";
 
-          label-urgent = "\"%{O12}%icon%%{O2}\"";
-          label-urgent-background = "\"${colors.foreground}\"";
-          label-urgent-foreground = "\"${colors.yellowBright}\"";
-          label-urgent-padding = "\"0\"";
+        label-urgent = "\"%{O12}%icon%%{O2}\"";
+        label-urgent-background = "\"${colors.foreground}\"";
+        label-urgent-foreground = "\"${colors.yellowBright}\"";
+        label-urgent-padding = "\"0\"";
 
-          ws-icon-0 = "\"0;󰪥\"";
-          ws-icon-1 = "\"1;󰲠\"";
-          ws-icon-2 = "\"2;󰲢\"";
-          ws-icon-3 = "\"3;󰲤\"";
-          ws-icon-4 = "\"4;󰲦\"";
-          ws-icon-5 = "\"5;󰲨\"";
-          ws-icon-6 = "\"6;󰲪\"";
-          ws-icon-7 = "\"7;󰲬\"";
-          ws-icon-8 = "\"8;󰲮\"";
-          ws-icon-9 = "\"9;󰲰\"";
-          ws-icon-10 = "\"10;󰲞\"";
-          ws-icon-default = "\"󰝦\"";
-        };
+        ws-icon-0 = "\"0;󰪥\"";
+        ws-icon-1 = "\"1;󰲠\"";
+        ws-icon-2 = "\"2;󰲢\"";
+        ws-icon-3 = "\"3;󰲤\"";
+        ws-icon-4 = "\"4;󰲦\"";
+        ws-icon-5 = "\"5;󰲨\"";
+        ws-icon-6 = "\"6;󰲪\"";
+        ws-icon-7 = "\"7;󰲬\"";
+        ws-icon-8 = "\"8;󰲮\"";
+        ws-icon-9 = "\"9;󰲰\"";
+        ws-icon-10 = "\"10;󰲞\"";
+        ws-icon-default = "\"󰝦\"";
       };
     };
   };

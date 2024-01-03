@@ -10,9 +10,22 @@ in
   options.module.shell.enable = lib.mkEnableOption "Enable shell module";
 
   config = lib.mkIf enable {
+    module.micro.enable = true;
+
     home.packages = [
       pkgs.jq
+      pkgs.jaq
+      pkgs.which
     ];
+
+    pacman.overrides = {
+      # REBUILD WARNING: 'which'
+      # BREAKAGE WARNING: 'bash' 'git' 'fish' 'jq'
+      jaq = [ "extra/jaq" ];
+      keychain = [ "extra/keychain" ];
+      direnv = [ "extra/direnv" ];
+      zoxide = [ "extra/zoxide" ];
+    };
 
     home.sessionVariables = {
       EDITOR = "micro";
@@ -97,7 +110,5 @@ in
       enableBashIntegration = true;
       enableFishIntegration = true;
     };
-
-    module.micro.enable = true;
   };
 }

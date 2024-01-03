@@ -15,6 +15,13 @@ in
       pkgs.lmms
     ];
 
+    pacman.overrides = {
+      # aseprite = [ "aur/aseprite" ];
+      krita = [ "extra/krita" ];
+      tiled = [ "extra/tiled" ];
+      lmms = [ "extra/lmms" ];
+    };
+
     nixpkgs.config.allowUnfree = true;
   });
 }

@@ -12,7 +12,26 @@ let
   audiotube = pkgs.libsForQt5.audiotube.overrideAttrs (old: {
     buildInputs = old.buildInputs ++ [ pkgs.libsForQt5.kpurpose ];
   });
+
+  /*hahaha =
+    (pkgs.stdenvNoCC.mkDerivation {
+      pname = pkgs.i3.pname;
+      version = pkgs.i3.version;
+      src = pkgs.i3;
+      dontBuild = false;
+      /*installPhase = ''
+          find $src -type f | while read -r line; do
+            file="$(realpath --relative-to="$src" "$line")"
+
+            mkdir -p $(dirname "$out/$fil"
+          donee")
+            ln -s "$src/$file" "$out/$file
+        '';
+    });
+        */
+
 in
+
 {
   options.preset.desktop = lib.mkEnableOption "Enable desktop preset";
 
@@ -105,7 +124,7 @@ in
         pkgs.pamixer
         pkgs.xclip
         pkgs.xorg.xev
-        pkgs.xtitle
+        pkgs.xtitle # TODO: check if needed
         pkgs.xdg-utils
 
         # desktop components
@@ -122,7 +141,7 @@ in
 
         # desktop apps
         pkgs.lxqt.qps # system monitor
-        pkgs.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpc-qt/mpv]
+        pkgs.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
         pkgs.copyq # clipboard manager [or: qlipper]
         pkgs.featherpad # simple txt editor
         pkgs.libsForQt5.kolourpaint # simple image editor [or pkgs.photoflare]
@@ -139,11 +158,39 @@ in
         pkgs.qbittorrent
         pkgs.rclone
         pkgs.soulseekqt
-        pkgs.steam
-        (qt.fixScaling { package = pkgs.telegram-desktop; })
+        # pkgs.steam
         pkgs.webcord-vencord
         pkgs.whatsapp-for-linux
       ];
+
+      pacman.overrides = {
+        xclip = [ "extra/xclip" ];
+        alsa-utils = [ "extra/alsa-utils" ];
+        pamixer = [ "extra/pamixer" ];
+        #xorg.xev = [ "extra/xorg-xev" ];
+        #xdg-utils = [ "extra/xdg-utils" ];
+        lxqt.lxqt-openssh-askpass = [ "extra/lxqt-openssh-askpass" ];
+        lxqt.lxqt-policykit = [ "extra/lxqt-policykit" ];
+        lxqt.lxqt-sudo = [ "extra/lxqt-sudo" ];
+        libsForQt5.kdialog = [ "extra/kdialog" ];
+        nm-tray = [ "chaotic-aur/nm-tray" ];
+        lxqt.pavucontrol-qt = [ "extra/pavucontrol-qt" ];
+        lxqt.pcmanfm-qt = [ "extra/pcmanfm-qt" ];
+        lxqt.lxqt-archiver = [ "extra/lxqt-archiver" ];
+        lxqt.qps = [ "extra/qps" ];
+        copyq = [ "extra/copyq" ];
+        featherpad = [ "extra/featherpad" ];
+        libsForQt5.kolourpaint = [ "extra/kolourpaint" ];
+        libsForQt5.vvave = [ "extra/vvave" ];
+        qalculate-qt = [ "extra/qalculate-qt" ];
+        anydesk = [ "chaotic-aur/anydesk-bin" ];
+        gimp = [ "extra/gimp" ];
+        moonlight-qt = [ "chaotic-aur/moonlight-qt" ];
+        parsec-bin = [ "chaotic-aur/parsec-bin" ];
+        qbittorrent = [ "extra/qbittorrent" ];
+        rclone = [ "extra/rclone" ];
+        whatsapp-for-linux = [ "chaotic-aur/whatsapp-for-linux" ];
+      };
 
       xdg = {
         enable = true;

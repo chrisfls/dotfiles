@@ -106,6 +106,8 @@ in
     #   }
     # ];
 
+    pacman.overrides.polybarFull = [ "chaotic-aur/polybar-git" ];
+
     systemd.user.services.polybar = {
       # i3wm fix
       Unit.After = lib.mkIf (config.module.i3wm.enable) [ "graphical-session-i3.target" ];
@@ -126,6 +128,7 @@ in
 
     services.polybar = {
       enable = true;
+      package = pkgs.polybarFull;
       script = "polybar topbar &";
       settings = {
         settings.screenchange-reload = "\"true\"";
