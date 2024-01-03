@@ -22,11 +22,6 @@ in
   config = lib.mkIf cfg.enable {
     module.script.enable = true;
 
-    home.packages = [
-      pkgs.xdotool
-      pkgs.xorg.xkill
-    ];
-
     module.script.install = {
       autotile =
         ''
