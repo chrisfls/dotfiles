@@ -16,7 +16,7 @@ in
     ];
 
     pacman.overrides = {
-      # aseprite = [ "aur/aseprite" ];
+      aseprite = [ "aur/aseprite" ];
       krita = [ "extra/krita" ];
       tiled = [ "extra/tiled" ];
       lmms = [ "extra/lmms" ];
