@@ -126,6 +126,7 @@ in
         pkgs.xclip
         pkgs.xorg.xev
         pkgs.xtitle # TODO: check if needed
+        pkgs.xorg.xkill
         pkgs.xdg-utils
         pkgs.xdotool
 
@@ -166,34 +167,43 @@ in
       ];
 
       pacman.overrides = {
-        xclip = [ "extra/xclip" ];
         alsa-utils = [ "extra/alsa-utils" ];
-        pamixer = [ "extra/pamixer" ];
-        xorg.xev = [ "extra/xorg-xev" ];
-        #xdg-utils = [ "extra/xdg-utils" ];
-        xdotool = [ "extra/xdotool" ];
+        anydesk = [ "chaotic-aur/anydesk-bin" ];
+        copyq = [ "extra/copyq" ];
+        featherpad = [ "extra/featherpad" ];
+        gimp = [ "extra/gimp" ];
+        libsForQt5.audiotube = [ "extra/audiotube" ];
+        libsForQt5.kdialog = [ "extra/kdialog" ];
+        libsForQt5.kolourpaint = [ "extra/kolourpaint" ];
+        libsForQt5.vvave = [ "extra/vvave" ];
+        lxqt.lxqt-archiver = [ "extra/lxqt-archiver" ];
         lxqt.lxqt-openssh-askpass = [ "extra/lxqt-openssh-askpass" ];
         lxqt.lxqt-policykit = [ "extra/lxqt-policykit" ];
         lxqt.lxqt-sudo = [ "extra/lxqt-sudo" ];
-        libsForQt5.kdialog = [ "extra/kdialog" ];
-        nm-tray = [ "chaotic-aur/nm-tray" ];
         lxqt.pavucontrol-qt = [ "extra/pavucontrol-qt" ];
         lxqt.pcmanfm-qt = [ "extra/pcmanfm-qt" ];
-        lxqt.lxqt-archiver = [ "extra/lxqt-archiver" ];
         lxqt.qps = [ "extra/qps" ];
-        copyq = [ "extra/copyq" ];
-        featherpad = [ "extra/featherpad" ];
-        libsForQt5.kolourpaint = [ "extra/kolourpaint" ];
-        libsForQt5.vvave = [ "extra/vvave" ];
-        qalculate-qt = [ "extra/qalculate-qt" ];
-        anydesk = [ "chaotic-aur/anydesk-bin" ];
-        gimp = [ "extra/gimp" ];
         moonlight-qt = [ "chaotic-aur/moonlight-qt" ];
+        mpc-qt = [ "chaotic-aur/mpc-qt" ];
+        nm-tray = [ "chaotic-aur/nm-tray" ];
+        pamixer = [ "extra/pamixer" ];
         parsec-bin = [ "chaotic-aur/parsec-bin" ];
+        qalculate-qt = [ "extra/qalculate-qt" ];
         qbittorrent = [ "extra/qbittorrent" ];
         rclone = [ "extra/rclone" ];
+        webcord-vencord = [ "aur/webcord-vencord-git" ];
         whatsapp-for-linux = [ "chaotic-aur/whatsapp-for-linux" ];
-        libsForQt5.audiotube = [ "extra/audiotube" ];
+        xclip = [ "extra/xclip" ];
+        xdotool = [ "extra/xdotool" ];
+        xorg.xev = [ "extra/xorg-xev" ];
+        xorg.xinit = [ "extra/xorg-xinit" ];
+        xorg.xinput = [ "extra/xorg-input" ];
+        xorg.xkill = [ "extra/xorg-xkill" ];
+
+        # xorg.xorgserver = [ "xorg-server-git" ];
+        # mesa = [ "extra/mesa" ];
+        # shared-mime-info = [ "extra/shared-mime-info" ];
+        # xdg-utils = [ "extra/xdg-utils" ];
         # man-db = [ "core/man-db" ]
       };
 
