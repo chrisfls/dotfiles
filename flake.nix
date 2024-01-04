@@ -16,11 +16,6 @@
     pre-commit-hooks.inputs.flake-utils.follows = "flake-utils";
     pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
 
-    devenv.url = "github:cachix/devenv";
-    devenv.inputs.nixpkgs.follows = "nixpkgs";
-    devenv.inputs.pre-commit-hooks.follows = "pre-commit-hooks";
-    devenv.inputs.flake-compat.follows = "flake-compat";
-
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -34,8 +29,8 @@
   };
 
   nixConfig = {
-    extra-trusted-public-keys = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
-    extra-substituters = "https://nix-community.cachix.org https://devenv.cachix.org";
+    extra-trusted-public-keys = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+    extra-substituters = "https://nix-community.cachix.org";
   };
 
   outputs = { nixpkgs, home-manager, ... }@inputs:
@@ -45,9 +40,6 @@
       forEachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
     in
     {
-      packages = forEachSystem (system: {
-        devenv = inputs.devenv.packages.${system}.devenv;
-      });
       homeConfigurations = {
         "${ssot.users.arch-rmxp.kress.id}" = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import inputs.nixpkgs {

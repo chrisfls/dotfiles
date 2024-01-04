@@ -9,15 +9,17 @@ in
     module = {
       shell.enable = true;
       agenix.enable = true;
+      copyFile."Desktop/work/flake.nix" = ../../assets/devenv/flake.nix;
     };
 
+    home.file."Desktop/work/.envrc".source = ../../assets/devenv/.envrc;
 
     home.packages = [
       # nix-shell / nix flake develop
       pkgs.any-nix-shell
+
       # devenv
       pkgs.cachix
-      inputs.devenv.packages.${pkgs.system}.devenv
 
       # misc
       pkgs.nixpkgs-fmt
@@ -28,10 +30,10 @@ in
 
       direnv.config.whitelist.prefix = [ "${config.xdg.userDirs.desktop}" ];
 
-      nix-index = {
-        enable = true;
-        enableFishIntegration = true;
-      };
+      # nix-index = {
+      #   enable = true;
+      #   enableFishIntegration = true;
+      # };
     };
   });
 }

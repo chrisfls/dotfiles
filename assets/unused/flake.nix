@@ -56,13 +56,7 @@
         kress = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "x86_64-linux";
-            config = {
-              allowUnfree = true;
-              permittedInsecurePackages = [
-                # required by elm lsp
-                "nodejs-16.20.2"  
-              ];
-            };
+            config.allowUnfree = true;
           };
           modules = [
             homeage.homeManagerModules.homeage
