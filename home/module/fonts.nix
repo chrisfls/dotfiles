@@ -20,21 +20,21 @@ let inherit (config.module.fonts) enable; in {
 
     home.packages = [
       # good generic font
-      pkgs.usr.noto-fonts
+      pkgs.noto-fonts
 
       # good emoji font
-      pkgs.usr.noto-fonts-color-emoji
+      pkgs.noto-fonts-color-emoji
 
       # good heading fonts
-      pkgs.usr.overpass
-      pkgs.usr.montserrat
+      pkgs.overpass
+      pkgs.montserrat
 
       # good terminal fonts
       (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "CascadiaCode" ]; })
 
       # good programming fonts
-      pkgs.usr.jetbrains-mono
-      pkgs.usr.cascadia-code
+      pkgs.jetbrains-mono
+      pkgs.cascadia-code
     ];
   };
 }

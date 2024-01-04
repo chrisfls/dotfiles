@@ -7,7 +7,7 @@ let inherit (config.module.picom) enable; in {
 
     services.picom = {
       enable = true;
-      package = pkgs.usr.picom-next;
+      package = pkgs.picom-next;
       extraArgs = [
         "--vsync-use-glfinish"
         "--glx-no-stencil"

@@ -4,8 +4,8 @@ let inherit (config.module.xdg-desktop-portal) enable; in {
 
   config = lib.mkIf enable {
     home.packages = [
-      pkgs.usr.xdg-desktop-portal
-      pkgs.usr.lxqt.xdg-desktop-portal-lxqt
+      pkgs.xdg-desktop-portal
+      pkgs.lxqt.xdg-desktop-portal-lxqt
     ];
 
     pacman.usr = {

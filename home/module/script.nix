@@ -21,7 +21,7 @@ let inherit (config.module.script) enable install; in {
           "scripts/${name}" = {
             text =
               ''
-                #!${pkgs.usr.dash}/bin/dash
+                #!${pkgs.dash}/bin/dash
                 ${text}
               '';
             executable = true;

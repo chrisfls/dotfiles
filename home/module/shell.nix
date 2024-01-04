@@ -13,9 +13,9 @@ in
     module.micro.enable = true;
 
     home.packages = [
-      pkgs.usr.jq
-      pkgs.usr.jaq
-      pkgs.usr.which
+      pkgs.jq
+      pkgs.jaq
+      pkgs.which
     ];
 
     pacman.usr = {
@@ -75,13 +75,13 @@ in
 
     programs.keychain = {
       enable = true;
-      package = pkgs.usr.keychain;
+      package = pkgs.keychain;
       keys = [ "id_ed25519" ];
     };
 
     programs.git = {
       enable = true;
-      package = pkgs.usr.git;
+      package = pkgs.git;
       userName = ssot.contact.name;
       userEmail = ssot.contact.email;
       extraConfig = {
@@ -106,14 +106,14 @@ in
 
     programs.direnv = {
       enable = true;
-      package = pkgs.usr.direnv;
+      package = pkgs.direnv;
       nix-direnv.enable = true;
       enableBashIntegration = true;
     };
 
     programs.zoxide = {
       enable = true;
-      package = pkgs.usr.zoxide;
+      package = pkgs.zoxide;
       enableBashIntegration = true;
       enableFishIntegration = true;
     };

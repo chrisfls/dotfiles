@@ -10,7 +10,7 @@ let
 
   i3-msg = "${pkgs.i3}/bin/i3-msg";
 
-  jaq = "${pkgs.usr.jaq}/bin/jaq";
+  jaq = "${pkgs.jaq}/bin/jaq";
 
   xdotool = "${pkgs.xdotool}/bin/xdotool";
 
@@ -26,19 +26,23 @@ in
       autotile =
         ''
           ${i3-msg} -t subscribe -m '[ "window", "binding" ]' | while IFS= read -r line; do
-            sleep ${toString (1.0 / 30.0)}
+            sleep ${toString (1.0 / 10.0)}
 
-            layout=$(${i3-msg} -t get_tree | ${jaq} -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')
+            mouse=$(xinput --list | grep -i -m 1 'Logitech USB Optical Mouse' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
+            state=$(xinput --query-state $mouse | grep 'button\[2\]=up')
 
-            if [ "$layout" = "tabbed" ]; then
+            # avoid https://github.com/i3/i3/issues/5447
+            if [ -z "$state" ]; then
               continue
             fi
+            
+            layout=$(${i3-msg} -t get_tree | ${jaq} -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')
 
             eval $(${xdotool} getwindowfocus getwindowgeometry --shell)
 
-            if [ "$WIDTH" -gt "$HEIGHT" ]; then
+            if [ "$WIDTH" -gt "$HEIGHT" ] && [ "$layout" = "splitv" ]; then
               ${i3-msg} "split horizontal"
-            else
+            elif [ "$layout" = "splith" ]; then
               ${i3-msg} "split vertical"
             fi
           done
@@ -159,11 +163,11 @@ in
           };
         };
         startup = [
-          {
-            command = "$SCRIPT/autotile";
-            always = true;
-            notification = false;
-          }
+          #{
+          #  command = "$SCRIPT/autotile";
+          #  always = true;
+          #  notification = false;
+          #}
         ];
         window = {
           border = 2;

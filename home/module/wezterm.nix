@@ -38,7 +38,7 @@ in
 
     programs.wezterm = {
       enable = true;
-      package = pkgs.usr.wezterm;
+      package = pkgs.wezterm;
       colorSchemes = {
         default = {
           ansi = [

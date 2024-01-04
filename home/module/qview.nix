@@ -8,7 +8,7 @@ in
   options.module.qview.enable = lib.mkEnableOption "Enable qview module";
 
   config = lib.mkIf enable {
-    home.packages = [ pkgs.usr.qview ];
+    home.packages = [ pkgs.qview ];
     pacman.usr.qview = [ "chaotic-aur/qview" ];
 
     xdg.mimeApps.defaultApplications = {

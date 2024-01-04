@@ -9,10 +9,10 @@ in
     preset.development = true;
 
     home.packages = [
-      pkgs.usr.aseprite
-      pkgs.usr.krita
-      pkgs.usr.tiled
-      pkgs.usr.lmms
+      pkgs.aseprite
+      pkgs.krita
+      pkgs.tiled
+      pkgs.lmms
     ];
 
     pacman.usr = {

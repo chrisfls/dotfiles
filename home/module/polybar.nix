@@ -128,7 +128,7 @@ in
 
     services.polybar = {
       enable = true;
-      package = pkgs.usr.polybarFull;
+      package = pkgs.polybarFull;
       script = "polybar topbar &";
       settings = {
         settings.screenchange-reload = "\"true\"";

@@ -12,7 +12,7 @@ let
           exe = "telegram-desktop";
         }
     */
-    pkgs.usr.telegram-desktop
+    pkgs.telegram-desktop
   ;
 in
 {

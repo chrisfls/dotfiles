@@ -116,7 +116,7 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.usr.materia-theme;
+        default = pkgs.materia-theme;
       };
     };
 
@@ -128,7 +128,7 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.usr.papirus-icon-theme;
+        default = pkgs.papirus-icon-theme;
       };
     };
 
@@ -145,7 +145,7 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.usr.libsForQt5.breeze-qt5;
+        default = pkgs.libsForQt5.breeze-qt5;
       };
     };
 
@@ -163,7 +163,7 @@ in
 
         package = lib.mkOption {
           type = lib.types.package;
-          default = pkgs.usr.noto-fonts;
+          default = pkgs.noto-fonts;
         };
       };
 
@@ -180,7 +180,7 @@ in
 
         package = lib.mkOption {
           type = lib.types.package;
-          default = pkgs.usr.noto-fonts;
+          default = pkgs.noto-fonts;
         };
       };
     };
@@ -240,8 +240,8 @@ in
       "Kvantum/kvantum.kvconfig".text = toINI {
         General.theme = qt.kvantum-theme;
       };
-      "qt5ct/qt5ct.conf".text = toQtct pkgs.usr.qt5ct;
-      "qt6ct/qt6ct.conf".text = toQtct pkgs.usr.qt6ct;
+      "qt5ct/qt5ct.conf".text = toQtct pkgs.qt5ct;
+      "qt6ct/qt6ct.conf".text = toQtct pkgs.qt6ct;
     };
   };
 }

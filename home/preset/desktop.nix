@@ -82,10 +82,10 @@ in
           };
 
           startup = [
-            { notification = false; command = "${pkgs.usr.copyq}/bin/copyq"; }
-            { notification = false; command = "${pkgs.usr.nm-tray}/bin/nm-tray"; }
+            { notification = false; command = "${pkgs.copyq}/bin/copyq"; }
+            { notification = false; command = "${pkgs.nm-tray}/bin/nm-tray"; }
             { notification = false; command = "${pkgs.webcord-vencord}/bin/webcord --start-minimized"; }
-            { notification = false; command = "${pkgs.usr.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"; }
+            { notification = false; command = "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"; }
           ];
         };
       };
@@ -132,39 +132,39 @@ in
         pkgs.xdotool
 
         # desktop components
-        pkgs.usr.lxqt.lxqt-openssh-askpass # ssh prompter
-        pkgs.usr.lxqt.lxqt-policykit # policykit prompter
-        pkgs.usr.lxqt.lxqt-sudo # gui-sudo prompter
+        pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
+        pkgs.lxqt.lxqt-policykit # policykit prompter
+        pkgs.lxqt.lxqt-sudo # gui-sudo prompter
 
         # desktop environment apps
-        pkgs.usr.libsForQt5.kdialog # dialogs and widgets
-        pkgs.usr.nm-tray # network manager
-        pkgs.usr.lxqt.pavucontrol-qt # sound mixer
-        pkgs.usr.lxqt.pcmanfm-qt # file manager
-        pkgs.usr.lxqt.lxqt-archiver # archiver
+        pkgs.libsForQt5.kdialog # dialogs and widgets
+        pkgs.nm-tray # network manager
+        pkgs.lxqt.pavucontrol-qt # sound mixer
+        pkgs.lxqt.pcmanfm-qt # file manager
+        pkgs.lxqt.lxqt-archiver # archiver
 
         # desktop apps
-        pkgs.usr.lxqt.qps # system monitor
-        pkgs.usr.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
-        pkgs.usr.copyq # clipboard manager [or: qlipper]
-        pkgs.usr.featherpad # simple txt editor
-        pkgs.usr.libsForQt5.kolourpaint # simple image editor [or pkgs.photoflare]
-        pkgs.usr.libsForQt5.vvave # music player [or elisa/vvave]
-        pkgs.usr.qalculate-qt # calculator
+        pkgs.lxqt.qps # system monitor
+        pkgs.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
+        pkgs.copyq # clipboard manager [or: qlipper]
+        pkgs.featherpad # simple txt editor
+        pkgs.libsForQt5.kolourpaint # simple image editor [or pkgs.photoflare]
+        pkgs.libsForQt5.vvave # music player [or elisa/vvave]
+        pkgs.qalculate-qt # calculator
 
         # personal apps
         # pkgs.logseq
-        pkgs.usr.anydesk
-        pkgs.usr.gimp
-        pkgs.usr.moonlight-qt
-        pkgs.usr.parsec-bin
-        pkgs.usr.qbittorrent
-        pkgs.usr.rclone
+        pkgs.anydesk
+        pkgs.gimp
+        pkgs.moonlight-qt
+        pkgs.parsec-bin
+        pkgs.qbittorrent
+        pkgs.rclone
         # pkgs.soulseekqt
         # pkgs.steam
         pkgs.webcord-vencord
-        pkgs.usr.whatsapp-for-linux
-        pkgs.usr.libsForQt5.audiotube
+        pkgs.whatsapp-for-linux
+        pkgs.libsForQt5.audiotube
       ];
 
       pacman.usr = {

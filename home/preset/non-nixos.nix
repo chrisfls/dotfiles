@@ -7,6 +7,5 @@ in
 
   config = (lib.mkIf enable {
     targets.genericLinux.enable = true;
-    pacman.enable = true;
   });
 }
