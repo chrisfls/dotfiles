@@ -37,6 +37,8 @@ in
 
   config = lib.mkIf enable (lib.mkMerge [
     {
+      pacman.packages = [ "kwallet-pam" ];
+
       module = {
         autorandr.enable = true;
         brave.enable = true;
@@ -212,6 +214,11 @@ in
         enable = true;
         mimeApps.enable = true;
         userDirs.enable = true;
+        configFile."kwalletrc".text =
+          ''
+            [Wallet]
+            Enabled=false
+          '';
         desktopEntries = {
           "avahi-discover" = { name = "Avahi Zeroconf Browser"; noDisplay = true; };
           "bssh" = { name = "Avahi SSH Server Browser"; noDisplay = true; };
