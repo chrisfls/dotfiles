@@ -106,7 +106,7 @@ in
     #   }
     # ];
 
-    pacman.usr.polybarFull = [ "chaotic-aur/polybar-git" ];
+    # pacman.usr.polybarFull = [ "chaotic-aur/polybar-git" ];
 
     systemd.user.services.polybar = {
       # i3wm fix

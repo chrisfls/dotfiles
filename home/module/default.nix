@@ -14,7 +14,6 @@
     ./jamesdsp.nix
     ./loopback-toggle.nix
     ./micro.nix
-    ./pacman.nix
     ./picom.nix
     ./polybar.nix
     ./qview.nix

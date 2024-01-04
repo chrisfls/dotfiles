@@ -3,6 +3,7 @@ let inherit (config.module.fonts) enable; in {
   options.module.fonts.enable = lib.mkEnableOption "Enable fonts module";
 
   config = lib.mkIf enable {
+    /*
     pacman.usr = {
       noto-fonts = [ "extra/noto-fonts" ];
       noto-fonts-color-emoji = [ "extra/noto-fonts-emoji" "chaotic-aur/noto-color-emoji-fontconfig" ];
@@ -17,6 +18,7 @@ let inherit (config.module.fonts) enable; in {
       "extra/ttf-cascadia-mono-nerd"
       "extra/ttf-jetbrains-mono-nerd"
     ];
+    */
 
     home.packages = [
       # good generic font

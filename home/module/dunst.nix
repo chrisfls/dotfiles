@@ -8,14 +8,13 @@ in
   options.module.dunst.enable = lib.mkEnableOption "Enable dunst module";
 
   config = lib.mkIf enable {
-    pacman.usr.dunst = [ "extra/dunst" ];
+    # pacman.usr.dunst = [ "extra/dunst" ];
 
     # home manager fix
     systemd.user.services.dunst.Service.Environment = lib.mkIf (config.preset.non-nixos) (lib.mkForce [ ]);
 
     services.dunst = {
       enable = true;
-      package = pkgs.dunst;
 
       iconTheme = {
         name = icon.name;

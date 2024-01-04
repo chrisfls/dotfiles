@@ -18,16 +18,16 @@ in
       pkgs.which
     ];
 
-    pacman.usr = {
-      # BREAKAGE WARNING: 'bash' 'fish'
-      direnv = [ "extra/direnv" ];
-      git = [ "extra/git" ];
-      jaq = [ "extra/jaq" ];
-      jq = [ "extra/jq" ];
-      keychain = [ "extra/keychain" ];
-      which =  [ "core/which" ];
-      zoxide = [ "extra/zoxide" ];
-    };
+    # pacman.usr = {
+    #   # BREAKAGE WARNING: 'bash' 'fish'
+    #   direnv = [ "extra/direnv" ];
+    #   git = [ "extra/git" ];
+    #   jaq = [ "extra/jaq" ];
+    #   jq = [ "extra/jq" ];
+    #   keychain = [ "extra/keychain" ];
+    #   which =  [ "core/which" ];
+    #   zoxide = [ "extra/zoxide" ];
+    # };
 
     home.sessionVariables = {
       EDITOR = "micro";
@@ -48,7 +48,6 @@ in
 
     programs.fish = {
       enable = true;
-      package = pkgs.fish; # no rebuild here
       shellAliases."g" = "git";
       plugins = [
         { name = "autopair-fish"; src = pkgs.fishPlugins.autopair-fish.src; }
@@ -75,13 +74,11 @@ in
 
     programs.keychain = {
       enable = true;
-      package = pkgs.keychain;
       keys = [ "id_ed25519" ];
     };
 
     programs.git = {
       enable = true;
-      package = pkgs.git;
       userName = ssot.contact.name;
       userEmail = ssot.contact.email;
       extraConfig = {
@@ -106,14 +103,12 @@ in
 
     programs.direnv = {
       enable = true;
-      package = pkgs.direnv;
       nix-direnv.enable = true;
       enableBashIntegration = true;
     };
 
     programs.zoxide = {
       enable = true;
-      package = pkgs.zoxide;
       enableBashIntegration = true;
       enableFishIntegration = true;
     };

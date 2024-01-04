@@ -33,10 +33,10 @@ in
       screenshot-save
     ];
 
-    pacman.usr = {
-      shotgun = [ "extra/shotgun" ];
-      slop = [ "extra/slop" ];
-    };
+    # pacman.usr = {
+    #  shotgun = [ "extra/shotgun" ];
+    #  slop = [ "extra/slop" ];
+    # };
 
     xdg.configFile = {
       "slop/guides.vert".text =

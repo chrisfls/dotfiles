@@ -70,7 +70,8 @@ in
 
   config = lib.mkIf enable {
     home.packages = [ pkgs.jamesdsp ];
-    pacman.usr.jamesdsp = [ "chaotic-aur/jamesdsp" ];
+    
+    # pacman.usr.jamesdsp = [ "chaotic-aur/jamesdsp" ];
 
     xsession.windowManager.i3.config.startup = lib.mkIf config.module.i3wm.enable [
       { notification = false; command = "${pkgs.jamesdsp}/bin/jamesdsp --tray"; }

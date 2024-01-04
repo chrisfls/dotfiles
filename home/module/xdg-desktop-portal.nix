@@ -8,10 +8,10 @@ let inherit (config.module.xdg-desktop-portal) enable; in {
       pkgs.lxqt.xdg-desktop-portal-lxqt
     ];
 
-    pacman.usr = {
-      xdg-desktop-portal = [ "extra/xdg-desktop-portal" ];
-      lxqt.xdg-desktop-portal-lxqt = [ "extra/xdg-desktop-portal-lxqt" ];
-    };
+    # pacman.usr = {
+    #   xdg-desktop-portal = [ "extra/xdg-desktop-portal" ];
+    #   lxqt.xdg-desktop-portal-lxqt = [ "extra/xdg-desktop-portal-lxqt" ];
+    # };
 
     home.sessionVariables.GTK_USE_PORTAL = 1;
 

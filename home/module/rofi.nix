@@ -130,10 +130,10 @@ in
       # rofi-windows-scratchpad
     ];
 
-    pacman.usr = {
-      rofi = [ "extra/rofi" ];
-      rofi-calc = [ "extra/rofi-calc" ];
-    };
+    #pacman.usr = {
+    #  rofi = [ "extra/rofi" ];
+    #  rofi-calc = [ "extra/rofi-calc" ];
+    #};
 
     # module.sxhkd.keybindings = {
     #   # main menus

@@ -21,7 +21,7 @@ in
 
   config = lib.mkIf enable {
     home.packages = [ pkg ];
-    pacman.usr.brave = [ "chaotic-aur/brave-bin" ];
+    # pacman.usr.brave = [ "chaotic-aur/brave-bin" ];
 
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/http" = brave;

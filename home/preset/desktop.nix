@@ -37,7 +37,7 @@ in
 
   config = lib.mkIf enable (lib.mkMerge [
     {
-      pacman.packages = [ "kwallet-pam" ];
+      # pacman.packages = [ "kwallet-pam" ];
 
       module = {
         autorandr.enable = true;
@@ -167,48 +167,48 @@ in
         pkgs.libsForQt5.audiotube
       ];
 
-      pacman.usr = {
-        anydesk = [ "chaotic-aur/anydesk-bin" ];
-        copyq = [ "extra/copyq" ];
-        featherpad = [ "extra/featherpad" ];
-        gimp = [ "extra/gimp" ];
-        libsForQt5.audiotube = [ "extra/audiotube" ];
-        libsForQt5.kdialog = [ "extra/kdialog" ];
-        libsForQt5.kolourpaint = [ "extra/kolourpaint" ];
-        libsForQt5.vvave = [ "extra/vvave" ];
-        lxqt.lxqt-archiver = [ "extra/lxqt-archiver" ];
-        lxqt.lxqt-openssh-askpass = [ "extra/lxqt-openssh-askpass" ];
-        lxqt.lxqt-policykit = [ "extra/lxqt-policykit" ];
-        lxqt.lxqt-sudo = [ "extra/lxqt-sudo" ];
-        lxqt.pavucontrol-qt = [ "extra/pavucontrol-qt" ];
-        lxqt.pcmanfm-qt = [ "extra/pcmanfm-qt" ];
-        lxqt.qps = [ "extra/qps" ];
-        moonlight-qt = [ "chaotic-aur/moonlight-qt" ];
-        mpc-qt = [ "chaotic-aur/mpc-qt" ];
-        nm-tray = [ "chaotic-aur/nm-tray" ];
-        parsec-bin = [ "chaotic-aur/parsec-bin" ];
-        qalculate-qt = [ "extra/qalculate-qt" ];
-        qbittorrent = [ "extra/qbittorrent" ];
-        rclone = [ "extra/rclone" ];
-        whatsapp-for-linux = [ "chaotic-aur/whatsapp-for-linux" ];
-        xclip = [ "extra/xclip" ];
-      };
+      # pacman.usr = {
+      #   anydesk = [ "chaotic-aur/anydesk-bin" ];
+      #   copyq = [ "extra/copyq" ];
+      #   featherpad = [ "extra/featherpad" ];
+      #   gimp = [ "extra/gimp" ];
+      #   libsForQt5.audiotube = [ "extra/audiotube" ];
+      #   libsForQt5.kdialog = [ "extra/kdialog" ];
+      #   libsForQt5.kolourpaint = [ "extra/kolourpaint" ];
+      #   libsForQt5.vvave = [ "extra/vvave" ];
+      #   lxqt.lxqt-archiver = [ "extra/lxqt-archiver" ];
+      #   lxqt.lxqt-openssh-askpass = [ "extra/lxqt-openssh-askpass" ];
+      #   lxqt.lxqt-policykit = [ "extra/lxqt-policykit" ];
+      #   lxqt.lxqt-sudo = [ "extra/lxqt-sudo" ];
+      #   lxqt.pavucontrol-qt = [ "extra/pavucontrol-qt" ];
+      #   lxqt.pcmanfm-qt = [ "extra/pcmanfm-qt" ];
+      #   lxqt.qps = [ "extra/qps" ];
+      #   moonlight-qt = [ "chaotic-aur/moonlight-qt" ];
+      #   mpc-qt = [ "chaotic-aur/mpc-qt" ];
+      #   nm-tray = [ "chaotic-aur/nm-tray" ];
+      #   parsec-bin = [ "chaotic-aur/parsec-bin" ];
+      #   qalculate-qt = [ "extra/qalculate-qt" ];
+      #   qbittorrent = [ "extra/qbittorrent" ];
+      #   rclone = [ "extra/rclone" ];
+      #   whatsapp-for-linux = [ "chaotic-aur/whatsapp-for-linux" ];
+      #   xclip = [ "extra/xclip" ];
+      # };
 
       # services.xsettingsd.package
 
 
-      pacman.nix = {
-        alsa-utils = [ "extra/alsa-utils" ];
-        pamixer = [ "extra/pamixer" ];
-        xdotool = [ "extra/xdotool" ];
-        xorg.xev = [ "extra/xorg-xev" ];
-        xorg.xinit = [ "extra/xorg-xinit" ];
-        xorg.xinput = [ "extra/xorg-xinput" ];
-        xorg.xkill = [ "extra/xorg-xkill" ];
-        xorg.xrdb = [ "extra/xorg-xrdb" ];
-        xorg.xsetroot = [ "extra/xorg-xsetroot" ];
-        xsettingsd = [ "extra/xsettingsd" ];
-      };
+      # pacman.nix = {
+      #   alsa-utils = [ "extra/alsa-utils" ];
+      #   pamixer = [ "extra/pamixer" ];
+      #   xdotool = [ "extra/xdotool" ];
+      #   xorg.xev = [ "extra/xorg-xev" ];
+      #   xorg.xinit = [ "extra/xorg-xinit" ];
+      #   xorg.xinput = [ "extra/xorg-xinput" ];
+      #   xorg.xkill = [ "extra/xorg-xkill" ];
+      #   xorg.xrdb = [ "extra/xorg-xrdb" ];
+      #   xorg.xsetroot = [ "extra/xorg-xsetroot" ];
+      #   xsettingsd = [ "extra/xsettingsd" ];
+      # };
 
       xdg = {
         enable = true;

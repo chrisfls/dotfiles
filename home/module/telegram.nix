@@ -20,7 +20,7 @@ in
 
   config = lib.mkIf enable {
     home.packages = [ pkg ];
-    pacman.usr.telegram-desktop = [ "extra/telegram-desktop" ];
+    # pacman.usr.telegram-desktop = [ "extra/telegram-desktop" ];
 
     xsession.windowManager.i3.config = lib.mkIf config.module.i3wm.enable {
       modes.apps."t" = "exec gtk-launch org.telegram";

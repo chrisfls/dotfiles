@@ -7,10 +7,10 @@ let inherit (config.module.sublime) enable; in {
       pkgs.sublime-merge
     ];
 
-    pacman.usr = {
-      sublime4 = [ "chaotic-aur/sublime-text-4" ];
-      sublime-merge = [ "aur/sublime-merge" ];
-    };
+    # pacman.usr = {
+    #   sublime4 = [ "chaotic-aur/sublime-text-4" ];
+    #   sublime-merge = [ "aur/sublime-merge" ];
+    # };
 
     nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
   };

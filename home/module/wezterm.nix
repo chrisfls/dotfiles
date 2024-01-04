@@ -22,7 +22,7 @@ in
   options.module.wezterm.enable = lib.mkEnableOption "Enable wezterm module";
 
   config = lib.mkIf enable {
-    pacman.usr.wezterm = [ "extra/wezterm" ];
+    # pacman.usr.wezterm = [ "extra/wezterm" ];
 
     xsession.windowManager.i3.config.terminal = launch;
 
@@ -38,7 +38,6 @@ in
 
     programs.wezterm = {
       enable = true;
-      package = pkgs.wezterm;
       colorSchemes = {
         default = {
           ansi = [
