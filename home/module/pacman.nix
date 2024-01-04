@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.pacman) enable overrides packages;
+  inherit (config.pacman) enable usr nix packages;
 
   inherit (builtins) concatStringsSep filter isAttrs isList listToAttrs;
   inherit (lib) mkEnableOption mkIf mkMerge mkOption mkOptionType types getExe;
@@ -45,6 +45,8 @@ let
       '';
     };
 
+  overlay = prev: recursiveUpdate prev
+    (mapPathsRecursive (package prev) nix);
 
   repo-packages =
     filter (name: !(hasPrefix "aur/" name)) packages;
@@ -80,7 +82,18 @@ in
   options.pacman = {
     enable = mkEnableOption "Enable pacman module";
 
-    overrides = mkOption {
+    usr = mkOption {
+      type = mkOptionType {
+        name = "attrs";
+        description = "attribute set";
+        check = isAttrs;
+        merge = loc: foldl' (res: def: recursiveUpdate res def.value) { };
+        emptyValue = { value = { }; };
+      };
+      default = { };
+    };
+
+    nix = mkOption {
       type = mkOptionType {
         name = "attrs";
         description = "attribute set";
@@ -100,36 +113,12 @@ in
   config = mkMerge [
     {
       nixpkgs.overlays = mkIfElse enable
-        [ (final: prev: prev // { usr = mapPathsRecursive (package prev) overrides; }) ]
+        [ (final: prev: (overlay prev) // { usr = mapPathsRecursive (package prev) usr; }) ]
         [ (final: prev: prev // { usr = prev; }) ];
     }
     (mkIf enable {
       home.packages = [ pacman-switch-pkg ];
-      pacman.packages = attrLeafs overrides;
-
-      # report packages installed with nix
-      home.file.".nixpkgs".text =
-        let
-          packages-by-name = pipe overrides [
-            (mapPathsRecursive (path: (getAttrFromPath path pkgs).name))
-            attrLeafs
-            (map (name: { inherit name; value = true; }))
-            listToAttrs
-          ];
-        in
-        pipe config.home.packages [
-          (map (pkg: "${pkg.name}"))
-          (filter (name: !(hasAttrByPath [ name ] packages-by-name)))
-          concatLines
-        ];
-
-      # report packages installed with pacman
-      home.file.".pacman".text =
-        pipe overrides [
-          (mapPathsRecursive (path: (concatStringsSep "." path)))
-          attrLeafs
-          concatLines
-        ];
+      pacman.packages = attrLeafs nix ++ attrLeafs usr;
     })
   ];
 }

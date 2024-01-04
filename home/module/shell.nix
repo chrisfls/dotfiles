@@ -18,7 +18,7 @@ in
       pkgs.usr.which
     ];
 
-    pacman.overrides = {
+    pacman.usr = {
       # BREAKAGE WARNING: 'bash' 'fish'
       direnv = [ "extra/direnv" ];
       git = [ "extra/git" ];

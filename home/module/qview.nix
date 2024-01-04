@@ -9,7 +9,7 @@ in
 
   config = lib.mkIf enable {
     home.packages = [ pkgs.usr.qview ];
-    pacman.overrides.qview = [ "chaotic-aur/qview" ];
+    pacman.usr.qview = [ "chaotic-aur/qview" ];
 
     xdg.mimeApps.defaultApplications = {
       "image/jpeg" = desktop;

@@ -130,7 +130,7 @@ in
       # rofi-windows-scratchpad
     ];
 
-    pacman.overrides = {
+    pacman.usr = {
       rofi = [ "extra/rofi" ];
       rofi-calc = [ "extra/rofi-calc" ];
     };

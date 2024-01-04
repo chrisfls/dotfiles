@@ -15,7 +15,7 @@ in
       pkgs.usr.lmms
     ];
 
-    pacman.overrides = {
+    pacman.usr = {
       aseprite = [ "aur/aseprite" ];
       krita = [ "extra/krita" ];
       tiled = [ "extra/tiled" ];

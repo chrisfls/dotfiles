@@ -82,7 +82,7 @@ in
           startup = [
             { notification = false; command = "${pkgs.usr.copyq}/bin/copyq"; }
             { notification = false; command = "${pkgs.usr.nm-tray}/bin/nm-tray"; }
-            { notification = false; command = "${pkgs.usr.webcord-vencord}/bin/webcord --start-minimized"; }
+            { notification = false; command = "${pkgs.webcord-vencord}/bin/webcord --start-minimized"; }
             { notification = false; command = "${pkgs.usr.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"; }
           ];
         };
@@ -121,13 +121,13 @@ in
 
       home.packages = [
         # cli apps
-        pkgs.usr.alsa-utils
-        pkgs.usr.pamixer
-        pkgs.usr.xclip
-        pkgs.usr.xorg.xev
+        pkgs.alsa-utils
+        pkgs.pamixer
+        pkgs.xclip
+        pkgs.xorg.xev
         pkgs.xtitle # TODO: check if needed
-        pkgs.usr.xorg.xkill
-        pkgs.usr.xdotool
+        pkgs.xorg.xkill
+        pkgs.xdotool
 
         # desktop components
         pkgs.usr.lxqt.lxqt-openssh-askpass # ssh prompter
@@ -160,13 +160,12 @@ in
         pkgs.usr.rclone
         # pkgs.soulseekqt
         # pkgs.steam
-        pkgs.usr.webcord-vencord
+        pkgs.webcord-vencord
         pkgs.usr.whatsapp-for-linux
         pkgs.usr.libsForQt5.audiotube
       ];
 
-      pacman.overrides = {
-        alsa-utils = [ "extra/alsa-utils" ];
+      pacman.usr = {
         anydesk = [ "chaotic-aur/anydesk-bin" ];
         copyq = [ "extra/copyq" ];
         featherpad = [ "extra/featherpad" ];
@@ -185,14 +184,20 @@ in
         moonlight-qt = [ "chaotic-aur/moonlight-qt" ];
         mpc-qt = [ "chaotic-aur/mpc-qt" ];
         nm-tray = [ "chaotic-aur/nm-tray" ];
-        pamixer = [ "extra/pamixer" ];
         parsec-bin = [ "chaotic-aur/parsec-bin" ];
         qalculate-qt = [ "extra/qalculate-qt" ];
         qbittorrent = [ "extra/qbittorrent" ];
         rclone = [ "extra/rclone" ];
-        webcord-vencord = [ "aur/webcord-vencord-git" ];
         whatsapp-for-linux = [ "chaotic-aur/whatsapp-for-linux" ];
         xclip = [ "extra/xclip" ];
+      };
+
+      # services.xsettingsd.package
+
+
+      pacman.nix = {
+        alsa-utils = [ "extra/alsa-utils" ];
+        pamixer = [ "extra/pamixer" ];
         xdotool = [ "extra/xdotool" ];
         xorg.xev = [ "extra/xorg-xev" ];
         xorg.xinit = [ "extra/xorg-xinit" ];
@@ -200,6 +205,7 @@ in
         xorg.xkill = [ "extra/xorg-xkill" ];
         xorg.xrdb = [ "extra/xorg-xrdb" ];
         xorg.xsetroot = [ "extra/xorg-xsetroot" ];
+        xsettingsd = [ "extra/xsettingsd" ];
       };
 
       xdg = {

@@ -116,7 +116,7 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.materia-theme;
+        default = pkgs.usr.materia-theme;
       };
     };
 
@@ -128,7 +128,7 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.papirus-icon-theme;
+        default = pkgs.usr.papirus-icon-theme;
       };
     };
 
@@ -145,7 +145,7 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.libsForQt5.breeze-qt5;
+        default = pkgs.usr.libsForQt5.breeze-qt5;
       };
     };
 
@@ -163,7 +163,7 @@ in
 
         package = lib.mkOption {
           type = lib.types.package;
-          default = pkgs.noto-fonts;
+          default = pkgs.usr.noto-fonts;
         };
       };
 
@@ -180,7 +180,7 @@ in
 
         package = lib.mkOption {
           type = lib.types.package;
-          default = pkgs.noto-fonts;
+          default = pkgs.usr.noto-fonts;
         };
       };
     };
@@ -198,7 +198,7 @@ in
   };
 
   config = lib.mkIf enable {
-    pacman.overrides = {
+    pacman.usr = {
       materia-kde-theme = [ "extra/materia-kde" "extra/kvantum-theme-materia" ];
       materia-theme = [ "extra/materia-gtk-theme" ];
       papirus-icon-theme = [ "extra/papirus-icon-theme" ];

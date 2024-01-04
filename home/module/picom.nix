@@ -3,7 +3,7 @@ let inherit (config.module.picom) enable; in {
   options.module.picom.enable = lib.mkEnableOption "Enable picom module";
 
   config = lib.mkIf enable {
-    pacman.overrides.picom-next = [ "chaotic-aur/picom-git" ];
+    pacman.usr.picom-next = [ "chaotic-aur/picom-git" ];
 
     services.picom = {
       enable = true;

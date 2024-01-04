@@ -4,7 +4,7 @@ let
 
   shotgun = "${pkgs.usr.shotgun}/bin/shotgun"; # or pkgs.usr.maim
   slop = "${pkgs.usr.slop}/bin/slop"; # or pkgs.usr.hacksaw
-  xclip = "${pkgs.usr.xclip}/bin/xclip";
+  xclip = "${pkgs.xclip}/bin/xclip";
 
   screenshot-copy = pkgs.writeShellScriptBin "screenshot-copy"
     ''
@@ -33,7 +33,7 @@ in
       screenshot-save
     ];
 
-    pacman.overrides = {
+    pacman.usr = {
       shotgun = [ "extra/shotgun" ];
       slop = [ "extra/slop" ];
     };

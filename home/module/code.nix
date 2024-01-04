@@ -4,6 +4,6 @@ let inherit (config.module.code) enable; in {
 
   config = lib.mkIf enable {
     home.packages = [ pkgs.usr.vscode ];
-    pacman.overrides.vscode = [ "chaotic-aur/visual-studio-code-bin" ];
+    pacman.usr.vscode = [ "chaotic-aur/visual-studio-code-bin" ];
   };
 }

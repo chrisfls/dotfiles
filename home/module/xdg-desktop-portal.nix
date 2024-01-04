@@ -8,7 +8,7 @@ let inherit (config.module.xdg-desktop-portal) enable; in {
       pkgs.usr.lxqt.xdg-desktop-portal-lxqt
     ];
 
-    pacman.overrides = {
+    pacman.usr = {
       xdg-desktop-portal = [ "extra/xdg-desktop-portal" ];
       lxqt.xdg-desktop-portal-lxqt = [ "extra/xdg-desktop-portal-lxqt" ];
     };

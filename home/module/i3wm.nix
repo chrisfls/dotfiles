@@ -12,7 +12,7 @@ let
 
   jaq = "${pkgs.usr.jaq}/bin/jaq";
 
-  xdotool = "${pkgs.usr.xdotool}/bin/xdotool";
+  xdotool = "${pkgs.xdotool}/bin/xdotool";
 
   mod = config.xsession.windowManager.i3.config.modifier;
 in
@@ -51,7 +51,7 @@ in
         '';
     };
 
-    # pacman.overrides.i3 = [ "extra/i3wm" ];
+    # pacman.usr.i3 = [ "extra/i3wm" ];
 
     xsession.windowManager.i3 = {
       enable = true;

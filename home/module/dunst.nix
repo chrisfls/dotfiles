@@ -8,7 +8,7 @@ in
   options.module.dunst.enable = lib.mkEnableOption "Enable dunst module";
 
   config = lib.mkIf enable {
-    pacman.overrides.dunst = [ "extra/dunst" ];
+    pacman.usr.dunst = [ "extra/dunst" ];
 
     # home manager fix
     systemd.user.services.dunst.Service.Environment = lib.mkIf (config.preset.non-nixos) (lib.mkForce [ ]);

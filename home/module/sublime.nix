@@ -7,7 +7,7 @@ let inherit (config.module.sublime) enable; in {
       pkgs.usr.sublime-merge
     ];
 
-    pacman.overrides = {
+    pacman.usr = {
       sublime4 = [ "chaotic-aur/sublime-text-4" ];
       sublime-merge = [ "aur/sublime-merge" ];
     };
