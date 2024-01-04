@@ -51,6 +51,8 @@ in
         '';
     };
 
+    pacman.overrides.i3 = [ "extra/i3wm" ];
+
     xsession.windowManager.i3 = {
       enable = true;
       config = {
