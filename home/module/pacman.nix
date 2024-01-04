@@ -9,10 +9,10 @@ let
   inherit (lib.strings) hasPrefix removePrefix;
   inherit (lib) mkEnableOption mkIf mkOption mkOptionType types;
 
-  pkg =
+  usr =
     pkgs.stdenvNoCC.mkDerivation {
-      pname = "pacman";
-      version = "dummy";
+      pname = "usr";
+      version = "latest";
       dontUnpack = true;
       dontBuild = true;
       dontFixup = true;
