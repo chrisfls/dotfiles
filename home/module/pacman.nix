@@ -98,8 +98,8 @@ in
   config = mkMerge [
     {
       nixpkgs.overlays = mkIfElse enable
-        [ (final: prev: prev // { pacman = mapPathsRecursive (package prev) overrides; }) ]
-        [ (final: prev: prev // { pacman = prev; }) ];
+        [ (final: prev: prev // { usr = mapPathsRecursive (package prev) overrides; }) ]
+        [ (final: prev: prev // { usr = prev; }) ];
     }
     (mkIf enable {
       home.packages = [ pacman-switch-pkg ];
