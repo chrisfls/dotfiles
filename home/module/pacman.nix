@@ -3,7 +3,7 @@ let
   inherit (config.pacman) enable overrides packages;
 
   inherit (builtins) concatStringsSep filter isAttrs isList listToAttrs;
-  inherit (lib) mkEnableOption mkIf mkMerge mkOption mkOptionType types;
+  inherit (lib) mkEnableOption mkIf mkMerge mkOption mkOptionType types getExe;
   inherit (lib.attrsets) attrValues getAttrFromPath hasAttrByPath mapAttrsRecursive recursiveUpdate;
   inherit (lib.lists) concatMap foldl';
   inherit (lib.strings) hasPrefix removePrefix;
@@ -31,8 +31,10 @@ let
       '';
     in
     prev.stdenvNoCC.mkDerivation {
-      inherit (pkg) pname version meta passthru;
+      inherit (pkg) pname version;
       src = pkg;
+      # TODO: cleanup
+      meta = { mainProgram = builtins.baseNameOf (getExe pkg); };
       dontBuild = true;
       dontFixup = true;
       nativeBuildInputs = [ replacer ];

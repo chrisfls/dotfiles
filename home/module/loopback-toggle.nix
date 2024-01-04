@@ -6,7 +6,7 @@ let
     volume;
 
   amixer =
-    "${pkgs.alsa-utils}/bin/amixer";
+    "${pkgs.usr.alsa-utils}/bin/amixer";
 
   loopback-toggle = pkgs.writeShellScriptBin "loopback-toggle"
     ''

@@ -2,9 +2,9 @@
 let
   inherit (config.module.screenshot) enable;
 
-  shotgun = "${pkgs.shotgun}/bin/shotgun"; # or pkgs.maim
-  slop = "${pkgs.slop}/bin/slop"; # or pkgs.hacksaw
-  xclip = "${pkgs.xclip}/bin/xclip";
+  shotgun = "${pkgs.usr.shotgun}/bin/shotgun"; # or pkgs.usr.maim
+  slop = "${pkgs.usr.slop}/bin/slop"; # or pkgs.usr.hacksaw
+  xclip = "${pkgs.usr.xclip}/bin/xclip";
 
   screenshot-copy = pkgs.writeShellScriptBin "screenshot-copy"
     ''

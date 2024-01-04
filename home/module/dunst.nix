@@ -15,6 +15,7 @@ in
 
     services.dunst = {
       enable = true;
+      package = pkgs.usr.dunst;
 
       iconTheme = {
         name = icon.name;

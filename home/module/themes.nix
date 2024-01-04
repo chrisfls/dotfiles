@@ -240,8 +240,8 @@ in
       "Kvantum/kvantum.kvconfig".text = toINI {
         General.theme = qt.kvantum-theme;
       };
-      "qt5ct/qt5ct.conf".text = toQtct pkgs.qt5ct;
-      "qt6ct/qt6ct.conf".text = toQtct pkgs.qt6ct;
+      "qt5ct/qt5ct.conf".text = toQtct pkgs.usr.qt5ct;
+      "qt6ct/qt6ct.conf".text = toQtct pkgs.usr.qt6ct;
     };
   };
 }

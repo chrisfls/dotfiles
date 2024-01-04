@@ -116,8 +116,8 @@ in
 
   config = lib.mkIf enable {
     home.packages = [
-      pkgs.rofi
-      pkgs.rofi-calc
+      pkgs.usr.rofi
+      pkgs.usr.rofi-calc
       pkgs.hostname # TODO: update rofi theme to not need this
       rofi-calc
       rofi-dunst

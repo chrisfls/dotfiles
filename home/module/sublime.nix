@@ -3,8 +3,8 @@ let inherit (config.module.sublime) enable; in {
   options.module.sublime.enable = lib.mkEnableOption "Enable sublime module";
   config = lib.mkIf enable {
     home.packages = [
-      pkgs.sublime4
-      pkgs.sublime-merge
+      pkgs.usr.sublime4
+      pkgs.usr.sublime-merge
     ];
 
     pacman.overrides = {

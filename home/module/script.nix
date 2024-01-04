@@ -13,13 +13,15 @@ let inherit (config.module.script) enable install; in {
   config = lib.mkIf enable {
     home.sessionVariables.SCRIPT = "$(mktemp -d)";
 
+    pacman.overrides.dash = [ "core/dash" ];
+
     xdg.dataFile =
       lib.attrsets.concatMapAttrs
         (name: text: {
           "scripts/${name}" = {
             text =
               ''
-                #!${pkgs.dash}/bin/dash
+                #!${pkgs.usr.dash}/bin/dash
                 ${text}
               '';
             executable = true;

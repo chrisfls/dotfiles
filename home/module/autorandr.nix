@@ -6,6 +6,6 @@ let inherit (config.module.autorandr) enable; in {
     pacman.overrides.autorandr = [ "extra/autorandr" ];
     programs.autorandr.enable = true;
     services.autorandr.enable = true;
-    xsession.initExtra = "${pkgs.autorandr}/bin/autorandr -c";
+    xsession.initExtra = "${pkgs.usr.autorandr}/bin/autorandr -c";
   };
 }

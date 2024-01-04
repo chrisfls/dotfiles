@@ -69,11 +69,11 @@ in
   };
 
   config = lib.mkIf enable {
-    home.packages = [ pkgs.jamesdsp ];
+    home.packages = [ pkgs.usr.jamesdsp ];
     pacman.overrides.jamesdsp = [ "chaotic-aur/jamesdsp" ];
 
     xsession.windowManager.i3.config.startup = lib.mkIf config.module.i3wm.enable [
-      { notification = false; command = "${pkgs.jamesdsp}/bin/jamesdsp --tray"; }
+      { notification = false; command = "${pkgs.usr.jamesdsp}/bin/jamesdsp --tray"; }
     ];
 
     xdg.configFile = lib.attrsets.foldlAttrs

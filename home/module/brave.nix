@@ -20,7 +20,7 @@ in
   options.module.brave.enable = lib.mkEnableOption "Enable brave module";
 
   config = lib.mkIf enable {
-    home.packages = [ pkgs.brave ];
+    home.packages = [ pkgs.usr.brave ];
     pacman.overrides.brave = [ "chaotic-aur/brave-bin" ];
 
     xdg.mimeApps.defaultApplications = {

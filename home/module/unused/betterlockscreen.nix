@@ -8,7 +8,7 @@ in
   options.module.betterlockscreen.enable = lib.mkEnableOption "Enable betterlockscreen module";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.feh ];
+    home.packages = [ pkgs.usr.feh ];
 
     services.betterlockscreen = {
       enable = true;
