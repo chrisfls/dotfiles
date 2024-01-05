@@ -9,10 +9,7 @@ in
     module = {
       shell.enable = true;
       agenix.enable = true;
-      copyFile."Desktop/work/flake.nix" = ../../assets/devenv/flake.nix;
     };
-
-    home.file."Desktop/work/.envrc".source = ../../assets/devenv/.envrc;
 
     home.packages = [
       # nix-shell / nix flake develop
