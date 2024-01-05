@@ -27,22 +27,52 @@
               config.permittedInsecurePackages = [
                 # required by elm lsp
                 "nodejs-16.20.2"
+
+                # needed for postgres
+                "openssl-1.1.1w"
               ];
             };
+
+            otp = pkgs.beam.packages.erlangR23;
           in
           {
             default = devenv.lib.mkShell {
               inherit inputs pkgs;
               modules = [
                 {
-                  # https://devenv.sh/reference/options/
                   packages = [
                     pkgs.elmPackages.elm-format
                     pkgs.elmPackages.elm-language-server
                     pkgs.nodejs-16_x # vscode's nodejs version for elm lsp
-                    pkgs.yarn
                     pkgs.python39 # needed for node gyp
+                    pkgs.asdf-vm # probably will not even gonna use it
+                    pkgs.erlang_23
+                    pkgs.elixir_1_14
+                    pkgs.inotify-tools
+                    pkgs.rebar3
                   ];
+
+                  services.postgres = {
+                    enable = true;
+                    listen_addresses = "localhost";
+                    initialScript =
+                      ''
+                        CREATE ROLE postgres WITH SUPERUSER LOGIN PASSWORD 'postgres';
+                      '';
+                  };
+
+                  enterShell = ''
+                    mkdir -p .nix-mix
+                    mkdir -p .nix-hex
+                    export MIX_HOME=$PWD/.nix-mix
+                    export HEX_HOME=$PWD/.nix-hex
+                    export PATH=$MIX_HOME/bin:$PATH
+                    export PATH=$HEX_HOME/bin:$PATH
+                    export LANG=en_US.UTF-8
+                    export ERL_AFLAGS="-kernel shell_history enabled"
+                    export ERL_LIBS=$HEX_HOME/lib/erlang/lib
+                    export LD_LIBRARY_PATH=
+                  '';
                 }
               ];
             };
