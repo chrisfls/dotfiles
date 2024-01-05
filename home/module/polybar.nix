@@ -106,8 +106,6 @@ in
     #   }
     # ];
 
-    # pacman.usr.polybarFull = [ "chaotic-aur/polybar-git" ];
-
     systemd.user.services.polybar = {
       # i3wm fix
       Unit.After = lib.mkIf (config.module.i3wm.enable) [ "graphical-session-i3.target" ];

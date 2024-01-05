@@ -16,6 +16,7 @@
     ./micro.nix
     ./picom.nix
     ./polybar.nix
+    ./pacman.nix
     ./qview.nix
     ./rofi.nix
     ./scaling.nix
@@ -25,6 +26,7 @@
     ./sublime.nix
     ./telegram.nix
     ./themes.nix
+    #./usr.nix
     ./wezterm.nix
     ./xdg-desktop-portal.nix
   ];

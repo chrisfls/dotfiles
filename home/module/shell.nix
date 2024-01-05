@@ -18,17 +18,6 @@ in
       pkgs.which
     ];
 
-    # pacman.usr = {
-    #   # BREAKAGE WARNING: 'bash' 'fish'
-    #   direnv = [ "extra/direnv" ];
-    #   git = [ "extra/git" ];
-    #   jaq = [ "extra/jaq" ];
-    #   jq = [ "extra/jq" ];
-    #   keychain = [ "extra/keychain" ];
-    #   which =  [ "core/which" ];
-    #   zoxide = [ "extra/zoxide" ];
-    # };
-
     home.sessionVariables = {
       EDITOR = "micro";
       TERM = "xterm-256color";
