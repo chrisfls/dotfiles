@@ -59,6 +59,7 @@
                       ''
                         CREATE ROLE postgres WITH SUPERUSER LOGIN PASSWORD 'postgres';
                       '';
+                    initialDatabases = [{ name = "core_dev"; }];
                   };
 
                   enterShell = ''
@@ -71,7 +72,6 @@
                     export LANG=en_US.UTF-8
                     export ERL_AFLAGS="-kernel shell_history enabled"
                     export ERL_LIBS=$HEX_HOME/lib/erlang/lib
-                    export LD_LIBRARY_PATH=
                   '';
                 }
               ];
