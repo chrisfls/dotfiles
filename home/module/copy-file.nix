@@ -15,9 +15,6 @@ in
         "copy-file:${dest}" = entryAfter [ "writeBoundary" ] ''
           $DRY_RUN_CMD mkdir -p $(dirname "${dest}")
           $DRY_RUN_CMD cp -u "${orig}" "${dest}"
-          if [ $? -eq 0 ]; then
-            $DRY_RUN_CMD chmod 400 "${dest}"
-          fi
         '';
       })
       copyFile;
