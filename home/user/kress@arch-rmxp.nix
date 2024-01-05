@@ -38,13 +38,32 @@ in
     scaling = { enable = true; scale = 1.5; };
   };
 
-  home.keyboard.layout = "br";
+  usr = {
+    micro = true;
+    xorg = {
+      xmodmap = true;
+      xrdb = true;
+    };
+  };
 
-  home.packages = [
-    upgrade
-    upgrade-system
-    upgrade-home
-    cleanup
+  pacman = {
+    enable = true;
+    packages = [
+      "chaotic-aur/cloudflare-warp-bin"
+      "extra/micro"
+      "extra/xorg-server-git"
+      "extra/xorg-xinit"
+      "extra/xorg-xinput"
+    ];
+  };
+
+  nixpkgs.overlays = [
+    (final: prev: prev // {
+      micro = prev.usr.micro;
+      xorg = prev.xorg // {
+        inherit (prev.usr.xorg) xmodmap xrdb;
+      };
+    })
   ];
 
   programs.autorandr.profiles = {
@@ -109,20 +128,6 @@ in
     };
   };
 
-  xsession.windowManager.bspwm = {
-    monitors.eDP-1 = [ "apostrophe" ];
-    monitors.HDMI-1 = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" ];
-    extraConfig =
-      ''
-        bspc wm --reorder-monitors HDMI-1 eDP-1
-        bspc desktop 'apostrophe' -l monocle
-      '';
-    startupPrograms = [
-      # TODO: move to home/modules/feh.nix
-      "${pkgs.feh}/bin/feh --bg-center \"${../../assets/wallpaper/23-12-29_2160p.png}\"  \"${../../assets/wallpaper/23-12-30_800p.png}\""
-    ];
-  };
-
   xsession.windowManager.i3.config = {
     workspaceOutputAssign = let output = "HDMI-1"; in [
       { workspace = "0"; output = "eDP-1"; }
@@ -146,6 +151,15 @@ in
       }
     ];
   };
+
+  home.keyboard.layout = "br";
+
+  home.packages = [
+    upgrade
+    upgrade-system
+    upgrade-home
+    cleanup
+  ];
 
   home.username = ssot.users.arch-rmxp.kress.username;
   home.homeDirectory = ssot.users.arch-rmxp.kress.home;

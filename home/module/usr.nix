@@ -28,7 +28,7 @@ let
     prev.stdenvNoCC.mkDerivation {
       inherit (pkg) pname version;
       src = pkg;
-      meta = { mainProgram = builtins.baseNameOf (getExe pkg); };
+      meta = pkg.meta // { mainProgram = builtins.baseNameOf (getExe pkg); };
       dontBuild = true;
       dontFixup = true;
       nativeBuildInputs = [ replacer ];

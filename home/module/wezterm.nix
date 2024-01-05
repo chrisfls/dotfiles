@@ -2,19 +2,10 @@
 let
   inherit (config.module.wezterm) enable;
   inherit (config.module.themes) color-scheme;
+  inherit (specialArgs) mkIfElse;
 
+  mesa = specialArgs.mesa.wrapIf config.preset.non-nixos;
   wezterm = "${config.programs.wezterm.package}/bin/wezterm";
-
-  # launch =
-  #   # LATER: https://wezfurlong.org/wezterm/config/lua/config/default_cwd.html
-  #   ''
-  #     dir=$(${pkgs.xcwd}/bin/xcwd);
-  #     if [ "$dir" = "${config.home.homeDirectory}" ]; then
-  #       ${wezterm} start;
-  #     else
-  #       ${wezterm} start --cwd "$dir";
-  #     fi;
-  #   '';
 
   launch = "exec \"$SCRIPT/wezterm\"";
 in
@@ -22,8 +13,6 @@ in
   options.module.wezterm.enable = lib.mkEnableOption "Enable wezterm module";
 
   config = lib.mkIf enable {
-    # pacman.usr.wezterm = [ "extra/wezterm" ];
-
     xsession.windowManager.i3.config.terminal = launch;
 
     module.script.install.wezterm =
@@ -38,6 +27,7 @@ in
 
     programs.wezterm = {
       enable = true;
+      package = mesa { package = pkgs.wezterm; exe = "wezterm"; };
       colorSchemes = {
         default = {
           ansi = [

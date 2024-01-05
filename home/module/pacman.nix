@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.pacman) enable usr packages;
+  inherit (config.pacman) enable packages;
 
   inherit (builtins) concatStringsSep filter isAttrs isList;
   inherit (lib) mkEnableOption mkIf mkOption types;
@@ -37,27 +37,10 @@ in
       [
         (pkgs.writeShellScriptBin "pacman-switch"
           ''
-            sudo pacman -Sy --needed --noconfirm archlinux-keyring chaotic-keyring
-            &&
-            sudo pacman -Su --needed --noconfirm ${concatStringsSep " " repo-packages}
-            &&
+            sudo pacman -Sy --needed --noconfirm archlinux-keyring chaotic-keyring && \
+            sudo pacman -Su --needed --noconfirm ${concatStringsSep " " repo-packages} && \
             paru -Sua --needed --noconfirm ${concatStringsSep " " aur-packages}
           '')
       ];
-
-    pacman.packages =
-      let
-        attrLeafs = attrs:
-          concatMap
-            (value:
-              if isAttrs value then
-                attrLeafs value
-              else if isList value then
-                value
-              else
-                [ value ])
-            (attrValues attrs);
-      in
-      attrLeafs usr;
   };
 }

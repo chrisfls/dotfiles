@@ -1,10 +1,7 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (specialArgs) qt;
-  inherit (config.preset) development non-nixos;
-
-  enable = config.preset.desktop;
-
+  inherit (config.preset) desktop development non-nixos;
+  mesa = specialArgs.mesa.wrapIf non-nixos;
 
   # needed until these are done:
   #  - https://github.com/NixOS/nixpkgs/issues/228179
@@ -12,33 +9,13 @@ let
   #audiotube = pkgs.libsForQt5.audiotube.overrideAttrs (old: {
   #  buildInputs = old.buildInputs ++ [ pkgs.libsForQt5.kpurpose ];
   #});
-
-  /*hahaha =
-    (pkgs.stdenvNoCC.mkDerivation {
-      pname = pkgs.i3.pname;
-      version = pkgs.i3.version;
-      src = pkgs.i3;
-      dontBuild = false;
-      /*installPhase = ''
-          find $src -type f | while read -r line; do
-            file="$(realpath --relative-to="$src" "$line")"
-
-            mkdir -p $(dirname "$out/$fil"
-          donee")
-            ln -s "$src/$file" "$out/$file
-        '';
-    });
-        */
-
 in
 
 {
   options.preset.desktop = lib.mkEnableOption "Enable desktop preset";
 
-  config = lib.mkIf enable (lib.mkMerge [
+  config = lib.mkIf desktop (lib.mkMerge [
     {
-      # pacman.packages = [ "kwallet-pam" ];
-
       module = {
         autorandr.enable = true;
         brave.enable = true;
@@ -57,79 +34,19 @@ in
         telegram.enable = true;
         themes.enable = true;
         wezterm.enable = true;
-        xdg-desktop-portal.enable = true;
-        # sxhkd = {
-        #   enable = false;
-        #   keybindings = {
-        #     "ctrl + alt + Delete" = "gtk-launch qps";
-        #     "super + a ; c" = "gtk-launch com.github.hluk.copyq.desktop";
-        #     "super + a ; e" = "gtk-launch pcmanfm-qt";
-        #   };
-        # };
+        # xdg-desktop-portal.enable = true;
       };
-
-      xsession = {
-        enable = true;
-        numlock.enable = true;
-        windowManager.i3.config = {
-          keybindings."ctrl+alt+Delete" = "exec gtk-launch qps";
-
-          modes.apps = {
-            "c" = "exec gtk-launch com.github.hluk.copyq";
-            "d" = "exec gtk-launch webcord";
-            "e" = "exec gtk-launch pcmanfm-qt";
-            "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux";
-          };
-
-          startup = [
-            { notification = false; command = "${pkgs.copyq}/bin/copyq"; }
-            { notification = false; command = "${pkgs.nm-tray}/bin/nm-tray"; }
-            { notification = false; command = "${pkgs.webcord-vencord}/bin/webcord --start-minimized"; }
-            { notification = false; command = "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"; }
-          ];
-        };
-      };
-
-      # xsession.windowManager.bspwm.startupPrograms = [
-      #   "${pkgs.copyq}/bin/copyq"
-      #   "${pkgs.nm-tray}/bin/nm-tray"
-      #   "env -u QT_SCREEN_SCALE_FACTORS ${pkgs.telegram-desktop}/bin/telegram-desktop -startintray"
-      #   "${pkgs.webcord-vencord}/bin/webcord --start-minimized"
-      #   "${pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux --start-minimized"
-      #   "${pkgs.jamesdsp}/bin/bin/jamesdsp"
-      # ];
-
 
       nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
-
-      home.file.".xinitrc" = {
-        executable = true;
-        text =
-          ''
-            #!/bin/sh
-
-            # this is the last if block from /etc/X11/xinit/xinitrc
-            if [ -d /etc/X11/xinit/xinitrc.d ] ; then
-              for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
-                [ -x "$f" ] && . "$f"
-              done
-
-              unset f
-            fi
-
-            [[ -f ~/.xsession ]] && . ~/.xsession
-          '';
-      };
 
       home.packages = [
         # cli apps
         pkgs.alsa-utils
         pkgs.pamixer
         pkgs.xclip
-        pkgs.xorg.xev
-        pkgs.xtitle # TODO: check if needed
-        pkgs.xorg.xkill
         pkgs.xdotool
+        pkgs.xorg.xev
+        pkgs.xorg.xkill
 
         # desktop components
         pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
@@ -162,53 +79,31 @@ in
         pkgs.rclone
         # pkgs.soulseekqt
         # pkgs.steam
-        pkgs.webcord-vencord
-        pkgs.whatsapp-for-linux
+
+        (mesa { package = pkgs.pkgs.webcord-vencord; })
+        (mesa { package = pkgs.whatsapp-for-linux; exe = "whatsapp-for-linux"; })
+
         pkgs.libsForQt5.audiotube
       ];
 
-      # pacman.usr = {
-      #   anydesk = [ "chaotic-aur/anydesk-bin" ];
-      #   copyq = [ "extra/copyq" ];
-      #   featherpad = [ "extra/featherpad" ];
-      #   gimp = [ "extra/gimp" ];
-      #   libsForQt5.audiotube = [ "extra/audiotube" ];
-      #   libsForQt5.kdialog = [ "extra/kdialog" ];
-      #   libsForQt5.kolourpaint = [ "extra/kolourpaint" ];
-      #   libsForQt5.vvave = [ "extra/vvave" ];
-      #   lxqt.lxqt-archiver = [ "extra/lxqt-archiver" ];
-      #   lxqt.lxqt-openssh-askpass = [ "extra/lxqt-openssh-askpass" ];
-      #   lxqt.lxqt-policykit = [ "extra/lxqt-policykit" ];
-      #   lxqt.lxqt-sudo = [ "extra/lxqt-sudo" ];
-      #   lxqt.pavucontrol-qt = [ "extra/pavucontrol-qt" ];
-      #   lxqt.pcmanfm-qt = [ "extra/pcmanfm-qt" ];
-      #   lxqt.qps = [ "extra/qps" ];
-      #   moonlight-qt = [ "chaotic-aur/moonlight-qt" ];
-      #   mpc-qt = [ "chaotic-aur/mpc-qt" ];
-      #   nm-tray = [ "chaotic-aur/nm-tray" ];
-      #   parsec-bin = [ "chaotic-aur/parsec-bin" ];
-      #   qalculate-qt = [ "extra/qalculate-qt" ];
-      #   qbittorrent = [ "extra/qbittorrent" ];
-      #   rclone = [ "extra/rclone" ];
-      #   whatsapp-for-linux = [ "chaotic-aur/whatsapp-for-linux" ];
-      #   xclip = [ "extra/xclip" ];
-      # };
+      home.file.".xinitrc" = {
+        executable = true;
+        text =
+          ''
+            #!/bin/sh
 
-      # services.xsettingsd.package
+            # this is the last if block from /etc/X11/xinit/xinitrc
+            if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+              for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+                [ -x "$f" ] && . "$f"
+              done
 
+              unset f
+            fi
 
-      # pacman.nix = {
-      #   alsa-utils = [ "extra/alsa-utils" ];
-      #   pamixer = [ "extra/pamixer" ];
-      #   xdotool = [ "extra/xdotool" ];
-      #   xorg.xev = [ "extra/xorg-xev" ];
-      #   xorg.xinit = [ "extra/xorg-xinit" ];
-      #   xorg.xinput = [ "extra/xorg-xinput" ];
-      #   xorg.xkill = [ "extra/xorg-xkill" ];
-      #   xorg.xrdb = [ "extra/xorg-xrdb" ];
-      #   xorg.xsetroot = [ "extra/xorg-xsetroot" ];
-      #   xsettingsd = [ "extra/xsettingsd" ];
-      # };
+            [[ -f ~/.xsession ]] && . ~/.xsession
+          '';
+      };
 
       xdg = {
         enable = true;
@@ -269,6 +164,28 @@ in
         };
       };
 
+      xsession = {
+        enable = true;
+        numlock.enable = true;
+        windowManager.i3.config = {
+          keybindings."ctrl+alt+Delete" = "exec gtk-launch qps";
+
+          modes.apps = {
+            "c" = "exec gtk-launch copyq";
+            "d" = "exec gtk-launch webcord";
+            "e" = "exec gtk-launch pcmanfm-qt";
+            "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux";
+          };
+
+          startup = [
+            { notification = false; command = "copyq"; }
+            { notification = false; command = "nm-tray"; }
+            { notification = false; command = "webcord --start-minimized"; }
+            { notification = false; command = "whatsapp-for-linux --start-minimized"; }
+          ];
+        };
+      };
+
       services.xsettingsd.enable = true;
       services.udiskie.enable = true;
     }
@@ -276,34 +193,8 @@ in
       module = {
         code.enable = true;
         sublime.enable = true;
-        #helix.enable = true;
-        #emacs.enable = true;
-      };
-    })
-    (lib.mkIf non-nixos {
-      xsession.importedVariables = [
-        "PATH"
-        "LIBGL_DRIVERS_PATH"
-        "LIBVA_DRIVERS_PATH"
-        "__EGL_VENDOR_LIBRARY_FILENAMES"
-        "LD_LIBRARY_PATH"
-        "VK_ICD_FILENAMES"
-      ];
-
-      home.sessionVariables = {
-        LIBGL_DRIVERS_PATH = "/usr/lib/dri";
-        LIBVA_DRIVERS_PATH = "/usr/lib/dri";
-        __EGL_VENDOR_LIBRARY_FILENAMES = "/usr/share/glvnd/egl_vendor.d/50_mesa.json";
-        # vulkan  will not work without 
-        # zlib-*/lib
-        # libdrm-*/lib
-        # libX11-*/lib
-        # libxcb-*/lib
-        # libxshmfence-*/lib
-        # wayland-*/lib
-        # gcc-*/lib
-        LD_LIBRARY_PATH = "/usr/lib:/usr/lib/vdpau:$LD_LIBRARY_PATH";
-        VK_ICD_FILENAMES = "$(find /usr/share/vulkan/icd.d/ -name '*.json' | tr '\\n' ':' | sed 's/:$//')";
+        # helix.enable = true;
+        # emacs.enable = true;
       };
     })
   ]);

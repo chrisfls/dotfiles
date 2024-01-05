@@ -1,16 +1,17 @@
-{ config, lib, pkgs, ... }:
-let inherit (config.module.sublime) enable; in {
+{ config, lib, pkgs, specialArgs, ... }:
+let
+  inherit (config.module.sublime) enable;
+  inherit (specialArgs) mkIfElse;
+  mesa = specialArgs.mesa.wrapIf config.preset.non-nixos;
+in
+{
   options.module.sublime.enable = lib.mkEnableOption "Enable sublime module";
+
   config = lib.mkIf enable {
     home.packages = [
-      pkgs.sublime4
-      pkgs.sublime-merge
+      (mesa { package = pkgs.sublime4; exe = "sublime_text"; })
+      (mesa { package = pkgs.sublime-merge; exe = "sublime_merge"; })
     ];
-
-    # pacman.usr = {
-    #   sublime4 = [ "chaotic-aur/sublime-text-4" ];
-    #   sublime-merge = [ "aur/sublime-merge" ];
-    # };
 
     nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
   };

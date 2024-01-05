@@ -1,13 +1,15 @@
-{ config, lib, pkgs, ... }:
-let inherit (config.module.picom) enable; in {
+{ config, lib, pkgs, specialArgs, ... }:
+let
+  inherit (config.module.picom) enable;
+  mesa = specialArgs.mesa.wrapIf config.preset.non-nixos;
+in
+{
   options.module.picom.enable = lib.mkEnableOption "Enable picom module";
 
   config = lib.mkIf enable {
-    # pacman.usr.picom-next = [ "chaotic-aur/picom-git" ];
-
     services.picom = {
       enable = true;
-      package = pkgs.picom-next;
+      package = mesa { package = pkgs.picom-next; exe = "picom"; };
       extraArgs = [
         "--vsync-use-glfinish"
         "--glx-no-stencil"

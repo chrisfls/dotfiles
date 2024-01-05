@@ -1,43 +1,54 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.module.brave) enable;
+  inherit (specialArgs) mesa mkIfElse;
+  inherit (lib.trivial) pippe;
 
-  brave = "brave-browser.desktop";
+  pkg =
+    if config.targets.genericLinux.enable then
+      mesa.wrap
+        {
+          package = pkgs.brave.overrideAttrs
+            (old: {
+              postFixup =
+                ''
+                  substituteInPlace $out/bin/brave \
+                    --replace mesa dummy-mesa
+                  substituteInPlace $out/bin/brave \
+                    --replace libva dummy-libva
+                  substituteInPlace $out/bin/brave \
+                    --replace "--enable-features=" "--enable-features=VaapiVideoDecodeLinuxGL,"
+                '';
+            });
+          exe = "brave";
+        }
 
-  pkg = pkgs.brave.overrideAttrs (old: {
-    postFixup =
-      ''
-        substituteInPlace $out/bin/brave \
-          --replace mesa dummy-mesa
-        substituteInPlace $out/bin/brave \
-          --replace libva dummy-libva
-        substituteInPlace $out/bin/brave \
-          --replace "--enable-features=" "--enable-features=VaapiVideoDecodeLinuxGL,"
-      '';
-  });
+    else
+      pkgs.brave;
 in
 {
   options.module.brave.enable = lib.mkEnableOption "Enable brave module";
 
   config = lib.mkIf enable {
     home.packages = [ pkg ];
-    # pacman.usr.brave = [ "chaotic-aur/brave-bin" ];
 
-    xdg.mimeApps.defaultApplications = {
-      "x-scheme-handler/http" = brave;
-      "x-scheme-handler/https" = brave;
-      "x-scheme-handler/chrome" = brave;
-      "text/html" = brave;
-      "application/x-extension-htm" = brave;
-      "application/x-extension-html" = brave;
-      "application/x-extension-shtml" = brave;
-      "application/xhtml+xml" = brave;
-      "application/x-extension-xhtml" = brave;
-      "application/x-extension-xht" = brave;
-    };
+    xdg.mimeApps.defaultApplications =
+      let desktop = "brave-browser.desktop";
+      in {
+        "x-scheme-handler/http" = desktop;
+        "x-scheme-handler/https" = desktop;
+        "x-scheme-handler/chrome" = desktop;
+        "text/html" = desktop;
+        "application/x-extension-htm" = desktop;
+        "application/x-extension-html" = desktop;
+        "application/x-extension-shtml" = desktop;
+        "application/xhtml+xml" = desktop;
+        "application/x-extension-xhtml" = desktop;
+        "application/x-extension-xht" = desktop;
+      };
 
-    # module.sxhkd.keybindings."super + a; b" = "gtk-launch brave-browser";
-
-    xsession.windowManager.i3.config.modes.apps."b" = lib.mkIf config.module.i3wm.enable "exec gtk-launch brave-browser";
+    xsession.windowManager.i3.config.modes.apps."b" =
+      lib.mkIf config.module.i3wm.enable
+        "exec gtk-launch brave-browser";
   };
 }

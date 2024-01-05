@@ -26,7 +26,7 @@
     ./sublime.nix
     ./telegram.nix
     ./themes.nix
-    #./usr.nix
+    ./usr.nix
     ./wezterm.nix
     ./xdg-desktop-portal.nix
   ];

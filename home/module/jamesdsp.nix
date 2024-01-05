@@ -72,7 +72,7 @@ in
     home.packages = [ pkgs.jamesdsp ];
     
     xsession.windowManager.i3.config.startup = lib.mkIf config.module.i3wm.enable [
-      { notification = false; command = "${pkgs.jamesdsp}/bin/jamesdsp --tray"; }
+      { notification = false; command = "jamesdsp --tray"; }
     ];
 
     xdg.configFile = lib.attrsets.foldlAttrs
