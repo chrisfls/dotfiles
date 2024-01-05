@@ -38,8 +38,8 @@ rec {
       email = "664520-kress95@users.noreply.gitlab.com";
     };
     work = {
-      name = contact.name;
-      email = contact.email;
+      name = "Christian";
+      email = builtins.concatStringsSep "" [ "christian" "@" "timeline" "." "co"  ];
     };
   };
 }
