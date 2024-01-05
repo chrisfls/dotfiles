@@ -11,5 +11,6 @@ rec {
   mkExtraSpecialArgs = args: specialArgs // {
     qt = import ./qt.nix args;
     mkIfElse = import ./mk-if-else.nix args;
+    mesa = import ./mesa.nix args;
   };
 }
