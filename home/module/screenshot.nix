@@ -100,13 +100,6 @@ in
         '';
     };
 
-    # module.sxhkd.keybindings = {
-    #   "Print" = "screenshot-copy";
-    #   "shift + Print" = "screenshot-save";
-    #   "super + Print" = "screenshot-copy-area";
-    # };
-
-
     xsession.windowManager.i3.config.keybindings = {
       "Print" = "exec screenshot-copy";
       "shift+Print" = "exec screenshot-save";

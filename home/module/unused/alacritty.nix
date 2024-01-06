@@ -8,23 +8,6 @@ in
   options.module.alacritty.enable = lib.mkEnableOption "Enable alacritty module";
 
   config = lib.mkIf cfg.enable {
-    # module.sxhkd.keybindings =
-    #   let
-    #     cmd =
-    #       ''
-    #         dir=$(${pkgs.xcwd}/bin/xcwd);
-    #         if [ "$dir" = "${config.home.homeDirectory}" ]; then
-    #           alacritty;
-    #         else
-    #           alacritty --working-directory "$dir";
-    #         fi;
-    #       '';
-    #   in
-    #   {
-    #     "super + semicolon" = cmd;
-    #     "super + BackSpace" = cmd;
-    #   };
-
     programs.alacritty = {
       enable = true;
       settings = {

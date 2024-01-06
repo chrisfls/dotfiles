@@ -75,41 +75,6 @@ let
     ''
       rofi -modi windowcd -show windowcd -theme "${theme}"
     '';
-
-  /*
-    # minimized windows TODO: add process name or window class
-    rofi-windows-minimized = pkgs.writeShellScriptBin "rofi-windows-minimized"
-    ''
-      ids=($(bspc query --nodes --node '.hidden.local.window'))
-      if [ -z "$ids" ]; then exit 0; fi
-
-      names=$(${xtitle} $\{ids[@]})
-      selected=$(
-        printf "%s\n" "$\{names[@]}" | grep -v '^$' \
-          | rofi -dmenu -theme "${theme}" -format i -p " "
-      )
-      if [ "$selected" ]; then
-          bspc node "$\{ids[$selected]}" --flag hidden=off
-      fi
-    '';
-
-    # minimized windows TODO: add process name or window class
-    rofi-windows-scratchpad = pkgs.writeShellScriptBin "rofi-windows-scratchpad"
-    ''
-      ids=($(bspc query --nodes --desktop 'pad' --node '.window'))
-      if [ -z "$ids" ]; then exit 0; fi
-
-      names=$(${xtitle} $\{ids[@]})
-      selected=$(
-        printf "%s\n" "$\{names[@]}" | grep -v '^$' \
-          | rofi -dmenu -theme "${theme}" -format i -p " "
-      )
-      if [ "$selected" ]; then
-        bspc node "$\{ids[$selected]}" --to-desktop focused --follow
-      fi
-    '';
-  */
-
 in
 {
   options.module.rofi.enable = lib.mkEnableOption "Enable rofi module";
@@ -126,28 +91,7 @@ in
       rofi-run
       rofi-windows
       rofi-windows-cd
-      # rofi-windows-minimized
-      # rofi-windows-scratchpad
     ];
-
-    # module.sxhkd.keybindings = {
-    #   # main menus
-    #   "super + Return" = "rofi-menu";
-    #   "super + shift + Return" = "rofi-run";
-
-    #   # jump to window
-    #   "super + w" = "rofi-windows-cd";
-    #   "super + shift + w" = "rofi-windows";
-
-    #   # jump to minimized windows
-    #   "super + alt + m" = "rofi-windows-minimized";
-    #   # jump to scratchpad windows
-    #   "super + alt + n" = "rofi-windows-scratchpad";
-
-    #   # shift cmd for alacritty
-    #   "super + shift + BackSpace" = "rofi-calc";
-    #   "super + shift + semicolon" = "rofi-calc";
-    # };
 
     xsession.windowManager.i3.config = {
       menu = "rofi-menu";
