@@ -1,30 +1,24 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.module.loopback-toggle)
-    device
-    enable
-    volume;
+  inherit (config.module.loopback-toggle) device enable volume;
 
-  amixer =
-    "${pkgs.alsa-utils}/bin/amixer";
-
-  loopback-toggle = pkgs.writeShellScriptBin "loopback-toggle"
+  loopback-toggle = pkgs.writeScript "loopback-toggle"
     ''
       d=$(awk '/${device}/ {print $1; exit}' /proc/asound/cards)
-      ${amixer} -c $d sset Mic Capture 100%
-      ${amixer} -c $d sset Mic Playback ${toString volume}%
-      ${amixer} -c $d sset Mic Playback toggle
+      amixer -c $d sset Mic Capture 100%
+      amixer -c $d sset Mic Playback ${toString volume}%
+      amixer -c $d sset Mic Playback toggle
     '';
 
-  loopback-offd = pkgs.writeShellScriptBin "loopback-offd"
+  loopback-offd = pkgs.writeScript "loopback-offd"
     ''
-      ${loopback-toggle}/bin/loopback-toggle
+      ${loopback-toggle}
       pactl subscribe | grep --line-buffered "Event 'change' on source" | while read line
       do
         d=$(awk '/${device}/ {print $1; exit}' /proc/asound/cards)
-        ${amixer} -c $d sset Mic Capture 100%
-        ${amixer} -c $d sset Mic Playback ${toString volume}%
-        ${amixer} -c $d sset Mic Playback off
+        amixer -c $d sset Mic Capture 100%
+        amixer -c $d sset Mic Playback ${toString volume}%
+        amixer -c $d sset Mic Playback off
       done
     '';
 in
@@ -44,16 +38,11 @@ in
   };
 
   config = lib.mkIf enable {
-    # module.sxhkd.keybindings = {
-    #  # TODO: map to F24 (keycode: 202) 
-    #   "super + Pause" = "${loopback-toggle}/bin/loopback-toggle";
-    # };
-
-    xsession.windowManager.i3.config.keybindings."Mod4+Pause" = "${loopback-toggle}/bin/loopback-toggle";
+    xsession.windowManager.i3.config.keycodebindings."202" = "exec ${loopback-toggle}";
 
     systemd.user.services.loopback-offd = {
       Unit.Description = "Disables audio loopback by default";
-      Service.ExecStart = "${loopback-offd}/bin/loopback-offd";
+      Service.ExecStart = "exec \"${loopback-offd}\"";
     };
   };
 }
