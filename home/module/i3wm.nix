@@ -1,189 +1,286 @@
 { config, lib, pkgs, ... }:
 let
+  inherit (config.module.i3wm) enable;
   inherit (builtins) concatStringsSep;
+  inherit (config.xsession.windowManager.i3.config) terminal menu;
 
-  cfg = config.module.i3wm;
-
+  mod = config.xsession.windowManager.i3.config.modifier;
+  outer = toString config.xsession.windowManager.i3.config.gaps.outer;
+  inner = toString config.xsession.windowManager.i3.config.gaps.inner;
   colors = config.module.themes.color-scheme;
 
   script = name: "exec \"$SCRIPT/${name}\"";
 
-  i3-msg = "${pkgs.i3}/bin/i3-msg";
+  focus = dir:
+    "focus ${dir}; ${script "cursor-warp"}";
 
-  jaq = "${pkgs.jaq}/bin/jaq";
+  move = dir:
+    "mark swap; focus ${dir}; swap container with mark swap; [con_mark=\"swap\"] focus; unmark swap; ${script "cursor-warp"}";
 
-  xdotool = "${pkgs.xdotool}/bin/xdotool";
+  workspace = num:
+    "workspace number ${toString num}; ${script "cursor-warp"}";
 
-  mod = config.xsession.windowManager.i3.config.modifier;
+  get-empty-space =
+    ''
+      i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|
+        select(
+        .window == null and
+        .type == "con" and
+        .current_border_width == -1 and
+        .rect.width != 0 and
+        .rect.height != 0 and
+        .geometry.x == 0 and
+        .geometry.y == 0 and
+        .geometry.width == 0 and
+        .geometry.height == 0 and
+        .nodes == []
+        ).id'
+    '';
 in
 {
   options.module.i3wm.enable = lib.mkEnableOption "Enable i3wm module";
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     module.script.enable = true;
 
     module.script.install = {
-      autotile =
+      cursor-warp = # move mouse to center of the window
         ''
-          ${i3-msg} -t subscribe -m '[ "window", "binding" ]' | while IFS= read -r line; do
-            sleep ${toString (1.0 / 10.0)}
+          eval $(xdotool getwindowfocus getwindowgeometry --shell)
+          xdotool mousemove $((X + (WIDTH / 2))) $((Y + (HEIGHT / 2)))
+        '';
 
-            mouse=$(xinput --list | grep -i -m 1 'Logitech USB Optical Mouse' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
-            state=$(xinput --query-state $mouse | grep 'button\[2\]=up')
+      toggle-split = # toggle split layout
+        # tries to toggle an actual node
+        ''
+          id=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused or .focused).id')
+          if [ "$id" ]; then
+            i3-msg "[con_id=\"$id\"] layout toggle splitv splith"
+          fi
+        '';
 
-            # avoid https://github.com/i3/i3/issues/5447
-            if [ -z "$state" ]; then
-              continue
-            fi
-            
-            layout=$(${i3-msg} -t get_tree | ${jaq} -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')
+      select-split = # select split direction
+        # not available in tabbed containers
+        ''
+          id=$(recurse(.nodes[];.nodes!=null)|select(.nodes[].focused and .layout != "tabbed").id)
+          if [ "$id" ]; then
+            i3-msg "[con_id=\"$id\"] split toggle"
+          fi
+        '';
 
-            eval $(${xdotool} getwindowfocus getwindowgeometry --shell)
+      toggle-tabs = # toggle node layout
+        # toggle tabbed layout at the selected leaf
+        ''
+          id=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.focused).id')
+          if [ "$id" ]; then
+            i3-msg "[con_id=\"$id\"] layout toggle tabbed split"
+          fi
+        '';
+
+      make-space = # create empty space for a container
+        ''
+          id=$(${get-empty-space})
+          if [ "$id" ]; then
+            i3-msg "[con_id=\"$id\"] kill"
+          fi
+
+          i3-msg "mark focus; exec i3 open; [con_mark=\"focus\"] focus; unmark focus"
+        '';
+
+      fill-space = # fill existing empty space with focused container
+        ''
+          id=$(${get-empty-space})
+          if [ "$id" ]; then
+            i3-msg "swap container with con_id $id; [con_id=\"$id\"] kill"
+          fi
+        '';
+
+      daemon = # makes i3 more like bspwm
+        # auto splits to the best direction
+        # and move new windows to empty spaces
+        let
+          # avoid https://github.com/i3/i3/issues/5447
+          mouse-check =
+            ''
+              mouse=$(xinput --list | grep -i -m 1 'Logitech USB Optical Mouse' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
+
+              if [ -z "$(xinput --query-state $mouse | grep 'button\[3\]=up')" ]; then
+                continue
+              fi
+            '';
+        in
+        ''
+          i3-msg -t subscribe -m '[ "window" ]' | while IFS= read -r line; do
+            event=$(echo $line | jaq -r '.change')
+
+            case "$event" in
+              "new")
+                $SCRIPT/fill-space
+                ;;
+              "close")
+                ;;
+              "focus")
+                ;;
+              *)
+                continue
+                ;;
+            esac
+
+            eval $(xdotool getwindowfocus getwindowgeometry --shell)
+
+            layout=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')
 
             if [ "$WIDTH" -gt "$HEIGHT" ] && [ "$layout" = "splitv" ]; then
-              ${i3-msg} "split horizontal"
-            elif [ "$layout" = "splith" ]; then
-              ${i3-msg} "split vertical"
+              msg="split horizontal"
+            elif [ "$WIDTH" -lt "$HEIGHT" ] && [ "$layout" = "splith" ]; then
+              msg="split vertical"
+            fi
+
+            if [ "$msg" ]; then
+              if [ "$event" = "focus" ]; then
+                ${mouse-check}
+                sleep ${toString (1.0 / 30.0)}
+                ${mouse-check}
+              fi
+
+              i3-msg "$msg"
             fi
           done
         '';
-
-      mouse-warp =
-        ''
-          eval $(${xdotool} getwindowfocus getwindowgeometry --shell)
-          ${xdotool} mousemove $((X + (WIDTH / 2))) $((Y + (HEIGHT / 2)))
-        '';
     };
-
     xsession.windowManager.i3 = {
       enable = true;
       config = {
-        modifier = "Mod4";
-        bars = [ ];
+        # #### ## #
+        # THEMING
+        # #### ## #
+        fonts = {
+          names = [ "Cascadia Mono" ];
+          size = 10.0;
+        };
         colors = {
-          background = colors.background;
+          background = colors.blackDim;
           focused = {
-            background = colors.foreground;
-            border = colors.foreground;
-            childBorder = colors.foreground;
-            indicator = colors.foreground;
-            text = colors.background;
+            border = colors.foreground; # titlebar border
+            background = colors.black; # titlebar background
+            text = colors.foreground; # titlebar text
+            childBorder = colors.blackBright; # window border
+            indicator = colors.foreground; # window target border
           };
           focusedInactive = {
-            background = colors.black;
-            border = colors.black;
-            childBorder = colors.black;
-            indicator = colors.black;
-            text = colors.background;
-          };
-          placeholder = {
-            background = colors.background;
-            border = colors.background;
-            childBorder = colors.background;
-            indicator = colors.background;
-            text = colors.foreground;
+            border = colors.black; # titlebar border
+            background = colors.blackDim; # titlebar background
+            text = colors.black; # titlebar text
+            childBorder = colors.blackDim; # window border
+            indicator = colors.blackDim; # window target border
           };
           unfocused = {
-            background = colors.background;
-            border = colors.background;
-            childBorder = colors.background;
-            indicator = colors.background;
-            text = colors.black;
+            border = colors.blackDim; # titlebar border
+            background = colors.blackDim; # titlebar background
+            text = colors.black; # titlebar text
+            childBorder = colors.blackDim; # window border
+            indicator = colors.blackDim; # window target border
+          };
+          placeholder = {
+            border = colors.blackDim; # titlebar border
+            background = colors.blackDim; # titlebar background
+            text = colors.blackDim; # titlebar text
+            childBorder = colors.blackDim; # window border
+            indicator = colors.blackDim; # window target border
           };
           urgent = {
-            background = colors.background;
-            border = colors.background;
-            childBorder = colors.background;
-            indicator = colors.background;
-            text = colors.yellow;
+            border = colors.yellowDim; # titlebar border
+            background = colors.black; # titlebar background
+            text = colors.yellow; # titlebar text
+            childBorder = colors.blackBright; # window border
+            indicator = colors.blackBright; # window target border
           };
         };
-        defaultWorkspace = "1";
-        floating = {
-          border = 2;
-          criteria = [ ];
-          modifier = mod;
-          titlebar = false;
+        gaps = {
+          inner = 16;
+          outer = 0;
+          smartBorders = "on";
+          smartGaps = true;
         };
+        # #### ## #
+        # BEHAVIOR
+        # #### ## #
+        modifier = "Mod4";
+        defaultWorkspace = "1";
+        workspaceAutoBackAndForth = false;
         focus = {
           followMouse = false;
           newWindow = "focus";
           wrapping = "workspace";
         };
-        /*fonts = {
-            names = [ "DejaVu Sans Mono" "FontAwesome5Free" ];
-            style = "Bold Semi-Condensed";
-            size = 11.0;
-            };*/
-        gaps = {
-          top = 0;
-          bottom = 0;
-          left = 0;
-          right = 0;
-          horizontal = 0;
-          vertical = 0;
-          inner = 16;
-          outer = 32;
-          # smartBorders = "on";
-          smartGaps = true;
+        floating = {
+          border = 3; # theming
+          criteria = [
+            { class = "Yad"; }
+            { class = "copyq"; }
+            { class = "qalculate-qt"; }
+            { class = "pavucontrol-qt"; }
+            { class = "bluedevil-wizard"; }
+            { class = "pcmanfm-qt"; }
+            { class = "TelegramDesktop"; }
+            { class = "WebCord"; }
+            { class = "Whatsapp-for-linux"; }
+          ];
+          modifier = mod;
+          titlebar = false;
         };
-        modes = {
-          resize = {
-            "h" = "resize shrink width 100 px or 10 ppt";
-            "j" = "resize grow height 100 px or 10 ppt";
-            "k" = "resize shrink height 100 px or 10 ppt";
-            "l" = "resize grow width 100 px or 10 ppt";
-
-            "Left" = "resize shrink width 100 px or 10 ppt";
-            "Down" = "resize grow height 100 px or 10 ppt";
-            "Up" = "resize shrink height 100 px or 10 ppt";
-            "Right" = "resize grow width 100 px or 10 ppt";
-
-            "Escape" = "mode default";
-            "Return" = "mode default";
-            "r" = "mode default";
-          };
-          insert = {
-            "h" = "focus child; move left; mode default; ${script "mouse-warp"}";
-            "j" = "focus child; move down; mode default; ${script "mouse-warp"}";
-            "k" = "focus child; move up; mode default; ${script "mouse-warp"}";
-            "l" = "focus child; move right; mode default; ${script "mouse-warp"}";
-
-            "Left" = "focus child; move left; mode default; ${script "mouse-warp"}";
-            "Down" = "focus child; move down; mode default; ${script "mouse-warp"}";
-            "Up" = "focus child; move up; mode default; ${script "mouse-warp"}";
-            "Right" = "focus child; move right; mode default; ${script "mouse-warp"}";
-
-            "Escape" = "mode default";
-            "Return" = "mode default";
-            "i" = "mode default";
-            "${mod}+i" = "mode default";
-          };
-        };
-        startup = [
-          #{
-          #  command = "$SCRIPT/autotile";
-          #  always = true;
-          #  notification = false;
-          #}
-        ];
         window = {
-          border = 2;
-          /*
+          border = 1; # theming
           commands = [
             {
-              command = "border pixel 1";
-              criteria = {
-                class = "XTerm";
-              };
+              command = "resize set 1280 px 960 px, move position center";
+              criteria.class = "copyq";
+            }
+            {
+              command = "resize set 768 px 640 px, move position center";
+              criteria.class = "qalculate-qt";
+            }
+            {
+              command = "resize set 1115 px 839 px, move position center";
+              criteria.class = "pavucontrol-qt";
+            }
+            {
+              command = "resize set 750 px 678 px, move position center";
+              criteria.class = "bluedevil-wizard";
+            }
+            {
+              command = "move position center";
+              criteria.class = "pcmanfm-qt";
+            }
+            {
+              command = "move position center";
+              criteria.class = "TelegramDesktop";
+            }
+            {
+              command = "move position center";
+              criteria.class = "WebCord";
+            }
+            {
+              command = "move position center";
+              criteria.class = "Whatsapp-for-linux";
             }
           ];
-              */
           hideEdgeBorders = "smart";
           titlebar = false;
         };
-        workspaceAutoBackAndForth = true;
-        workspaceLayout = "default";
+        # #### ## #
+        # SESSION
+        # #### ## #
+        startup = [
+          {
+            command = "$SCRIPT/daemon";
+            always = true;
+            notification = false;
+          }
+        ];
+        # #### ## #
+        # KEYBINDINGS
+        # #### ## #
         keybindings = {
           ######## #### ## #
           # MISC
@@ -195,15 +292,15 @@ in
           # restart wm
           "${mod}+Shift+Escape" = "restart";
 
-          # quit sessionss
+          # quit sessions
           "Control+Mod1+Escape" = "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
 
           # open terminal
-          "${mod}+BackSpace" = "exec ${config.xsession.windowManager.i3.config.terminal}";
+          "${mod}+BackSpace" = "exec ${terminal}";
 
           # open menu
-          "${mod}+Return" = "exec ${config.xsession.windowManager.i3.config.menu}";
-          "${mod}+semicolon" = "exec ${config.xsession.windowManager.i3.config.menu}";
+          "${mod}+Return" = "exec ${menu}";
+          "${mod}+semicolon" = "exec ${menu}";
 
           ######## #### ## #
           # WINDOW CONTROLS
@@ -213,89 +310,96 @@ in
           # primary actions (close/maximize)
           # ## #
 
-          # [c]lose app
+          # [c] - close / kill
           "${mod}+c" = "kill";
-          # [c]lose app (kill) [TODO: check if appliable]
-          # "${mod}+Shift+c" = "kill";
+          "${mod}+Shift+c" = "exec xkill -id $(xdotool getwindowfocus)";
 
-          # toggle ma[x]imize state (fullscreen)
-          "${mod}+x" = "fullscreen toggle";
+          # [f] - toggle float / toggle sticky float
+          "${mod}+f" = "floating toggle";
+          "${mod}+shift+f" = "floating enable; sticky toggle";
+
+          # [m] - toggle maximize / minimize
+          "${mod}+m" = "fullscreen toggle";
+          "${mod}+shift+m" = "move scratchpad";
+
+          # [r] - resize mode
+          "${mod}+r" = "mode resize";
 
           # ## #
           # secondary actions (layout/pseudo float/fix rotate brother)
           # ## #
 
-          # cycle [t]iled/monocle layout
-          "${mod}+t" = "focus child; layout toggle tabbed split";
+          # [s] - toggle split layout
+          "${mod}+s" = script "toggle-split";
+          "${mod}+shift+s" = script "select-split";
 
-          # toggle [f]loating state
-          "${mod}+f" = "floating toggle";
-
-          # [r]otate layout
-          "${mod}+r" = "focus child; layout toggle splitv splith";
-
-          "${mod}+s" = "mode resize";
-          "${mod}+i" = "mode insert";
+          # [t] - toggle split / tabbed layouts  
+          "${mod}+t" = script "toggle-tabs";
 
           # ## #
           # tertiary actions (show desktop/equalize/balance)
           # ## #
 
-          # TODO: toggle desktop
+          # [v] - scratchpad show
+          "${mod}+v" = "scratchpad show";
 
-          "${mod}+p" = "focus parent";
-          "${mod}+Shift+p" = "focus child";
+          # [i] - insert space / fill space
+          "${mod}+i" = script "make-space";
+          "${mod}+shift+i" = script "fill-space";
 
-          "${mod}+g" = "gaps inner toggle; gaps outer toggle";
+          # [g] - toggle gaps
+          "${mod}+g" = "gaps inner all toggle ${inner}; gaps outer all toggle ${outer}";
 
           ######## #### ## #
           # FOCUS AND MOVEMENT
           ######## #### ## #
 
           # focus with vim keys
-          "${mod}+h" = "focus left; ${script "mouse-warp"}";
-          "${mod}+j" = "focus down; ${script "mouse-warp"}";
-          "${mod}+k" = "focus up; ${script "mouse-warp"}";
-          "${mod}+l" = "focus right; ${script "mouse-warp"}";
+          "${mod}+h" = focus "left";
+          "${mod}+j" = focus "down";
+          "${mod}+k" = focus "up";
+          "${mod}+l" = focus "right";
 
           # focus with arrow keys
-          "${mod}+Left" = "focus left; ${script "mouse-warp"}";
-          "${mod}+Down" = "focus down; ${script "mouse-warp"}";
-          "${mod}+Up" = "focus up; ${script "mouse-warp"}";
-          "${mod}+Right" = "focus right; ${script "mouse-warp"}";
+          "${mod}+Left" = focus "left";
+          "${mod}+Down" = focus "down";
+          "${mod}+Up" = focus "up";
+          "${mod}+Right" = focus "right";
 
           # move with vim keys
-          "${mod}+Shift+h" = "mark swap; focus left; swap container with mark swap; [con_mark=\"swap\"] focus; unmark swap; ${script "mouse-warp"}";
-          "${mod}+Shift+j" = "mark swap; focus down; swap container with mark swap; [con_mark=\"swap\"] focus; unmark swap; ${script "mouse-warp"}";
-          "${mod}+Shift+k" = "mark swap; focus up; swap container with mark swap; [con_mark=\"swap\"] focus; unmark swap; ${script "mouse-warp"}";
-          "${mod}+Shift+l" = "mark swap; focus right; swap container with mark swap; [con_mark=\"swap\"] focus; unmark swap; ${script "mouse-warp"}";
+          "${mod}+Shift+h" = move "left";
+          "${mod}+Shift+j" = move "down";
+          "${mod}+Shift+k" = move "up";
+          "${mod}+Shift+l" = move "right";
 
           # move with arrow keys
-          "${mod}+Shift+Left" = "mark swap; focus left; swap container with mark swap; [con_mark=\"swap\"] focus; unmark swap; ${script "mouse-warp"}";
-          "${mod}+Shift+Down" = "mark swap; focus down; swap container with mark swap; [con_mark=\"swap\"] focus; unmark swap; ${script "mouse-warp"}";
-          "${mod}+Shift+Up" = "mark swap; focus up; swap container with mark swap; [con_mark=\"swap\"] focus; unmark swap; ${script "mouse-warp"}";
-          "${mod}+Shift+Right" = "mark swap; focus right; swap container with mark swap; [con_mark=\"swap\"] focus; unmark swap; ${script "mouse-warp"}";
+          "${mod}+Shift+Left" = move "left";
+          "${mod}+Shift+Down" = move "down";
+          "${mod}+Shift+Up" = move "up";
+          "${mod}+Shift+Right" = move "right";
 
-          # focus floating windows
-          "${mod}+space" = "focus mode_toggle; ${script "mouse-warp"}";
-          "${mod}+o" = "mark subwindow; focus parent; focus parent; mark parent; [con_mark=\"subwindow\"] focus; move window to mark parent; [con_mark=\"subwindow\"] focus; unmark";
+          # [p] - toggle focus parent / child container
+          "${mod}+p" = "focus parent";
+          "${mod}+shift+p" = "focus child";
+
+          # toggle floating focus
+          "${mod}+space" = "focus mode_toggle; ${script "cursor-warp"}";
 
           ######## #### ## #
           # WORKSPACES
           ######## #### ## #
 
-          "${mod}+apostrophe" = "workspace number 0; ${script "mouse-warp"}";
-          "${mod}+1" = "workspace number 1; ${script "mouse-warp"}";
-          "${mod}+2" = "workspace number 2; ${script "mouse-warp"}";
-          "${mod}+3" = "workspace number 3; ${script "mouse-warp"}";
-          "${mod}+4" = "workspace number 4; ${script "mouse-warp"}";
-          "${mod}+5" = "workspace number 5; ${script "mouse-warp"}";
-          "${mod}+6" = "workspace number 6; ${script "mouse-warp"}";
-          "${mod}+7" = "workspace number 7; ${script "mouse-warp"}";
-          "${mod}+8" = "workspace number 8; ${script "mouse-warp"}";
-          "${mod}+9" = "workspace number 9; ${script "mouse-warp"}";
-          "${mod}+0" = "workspace number 10; ${script "mouse-warp"}";
-          "${mod}+m" = "scratchpad show";
+          "${mod}+apostrophe" = workspace 0;
+          "${mod}+1" = workspace 1;
+          "${mod}+2" = workspace 2;
+          "${mod}+3" = workspace 3;
+          "${mod}+4" = workspace 4;
+          "${mod}+5" = workspace 5;
+          "${mod}+6" = workspace 6;
+          "${mod}+7" = workspace 7;
+          "${mod}+8" = workspace 8;
+          "${mod}+9" = workspace 9;
+          "${mod}+0" = workspace 10;
 
           "${mod}+Shift+apostrophe" = "move container to workspace number 0";
           "${mod}+Shift+1" = "move container to workspace number 1";
@@ -308,9 +412,38 @@ in
           "${mod}+Shift+8" = "move container to workspace number 8";
           "${mod}+Shift+9" = "move container to workspace number 9";
           "${mod}+Shift+0" = "move container to workspace number 10";
-          "${mod}+shift+m" = "move scratchpad";
+
+          ######## #### ## #
+          # MISC
+          ######## #### ## #
+
+          # good pop out command, would be better if it could autotile
+          #"${mod}+o" = "mark subwindow; focus parent; focus parent; mark parent; [con_mark=\"subwindow\"] focus; move window to mark parent; [con_mark=\"subwindow\"] focus; unmark";
         };
+        modes.resize = {
+          "h" = "resize shrink width 100 px or 10 ppt";
+          "j" = "resize grow height 100 px or 10 ppt";
+          "k" = "resize shrink height 100 px or 10 ppt";
+          "l" = "resize grow width 100 px or 10 ppt";
+
+          "Left" = "resize shrink width 100 px or 10 ppt";
+          "Down" = "resize grow height 100 px or 10 ppt";
+          "Up" = "resize shrink height 100 px or 10 ppt";
+          "Right" = "resize grow width 100 px or 10 ppt";
+
+          "Escape" = "mode default";
+          "Return" = "mode default";
+          "r" = "mode default";
+        };
+        # #### ## #
+        # MISC
+        # #### ## #
+        bars = [ ];
       };
+      extraConfig =
+        ''
+          title_align center
+        '';
     };
 
     services.polybar.settings = {
@@ -370,3 +503,6 @@ in
     };
   };
 }
+/*
+  i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.layout == "tabbed" or .nodes!=null)|select(.nodes[].focused).layout'
+*/
