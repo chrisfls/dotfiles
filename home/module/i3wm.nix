@@ -292,7 +292,7 @@ in
         startup = [
           {
             command = "$SCRIPT/daemon";
-            always = false;
+            always = true;
             notification = false;
           }
         ];
