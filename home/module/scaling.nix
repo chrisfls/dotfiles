@@ -23,10 +23,16 @@ in
       type = lib.types.int;
       default = 96;
     };
+
+    dpi-scaled = lib.mkOption {
+      type = lib.types.int;
+    };
   };
 
   # when using GDK/QT scaling, the DPI must be hardcoded
   config = lib.mkIf enable {
+    module.scaling.dpi-scaled = lib.mkForce dpi-scaled;
+
     xresources.properties."Xft.dpi" = toString dpi-scaled;
 
     home.sessionVariables = {

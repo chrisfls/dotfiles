@@ -10,7 +10,7 @@ let
   inner = toString config.xsession.windowManager.i3.config.gaps.inner;
   colors = config.module.themes.color-scheme;
 
-  script = name: "exec \"$SCRIPT/${name}\"";
+  script = name: "exec --no-startup-id \"$SCRIPT/${name}\"";
 
   focus = dir:
     "focus ${dir}; ${script "cursor-warp"}";
@@ -103,15 +103,15 @@ in
           # avoid https://github.com/i3/i3/issues/5447
           mouse-check =
             ''
-              mouse=$(xinput --list | grep -i -m 1 'Logitech USB Optical Mouse' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
-
               if [ -z "$(xinput --query-state $mouse | grep 'button\[3\]=up')" ]; then
                 continue
               fi
             '';
         in
         ''
-          i3-msg -t subscribe -m '[ "window", "mode" ]' | while IFS= read -r line; do
+          mouse=$(xinput --list | grep -i -m 1 'Logitech USB Optical Mouse' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
+
+          i3-msg -t subscribe -m '[ "window", "binding", "mode" ]' | while IFS= read -r line; do
             event=$(echo $line | jaq -r '.change')
 
             case "$event" in
@@ -136,24 +136,27 @@ in
                 ;;
             esac
 
-            eval $(xdotool getwindowfocus getwindowgeometry --shell)
+            ${mouse-check}
 
-            layout=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused).layout')
+            sleep ${toString (1.0 / 30.0)}
 
-            if [ "$WIDTH" -gt "$HEIGHT" ] && [ "$layout" = "splitv" ]; then
+            tree=$(i3-msg -t get_tree)
+            layout="$(echo $tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused)|"\(.layout)"')"
+
+            eval "$(echo $tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes == [] and .focused)|"id=\(.id) width=\(.rect.width) height=\(.rect.height)"')"
+
+            if [ $width -gt $height ] && [ $layout = "splitv" ]; then
               msg="split horizontal"
-            elif [ "$WIDTH" -lt "$HEIGHT" ] && [ "$layout" = "splith" ]; then
+            elif [ $height -gt $width ] && [ $layout = "splith" ]; then
               msg="split vertical"
+            else
+              msg=""
             fi
 
             if [ "$msg" ]; then
-              if [ "$event" = "focus" ]; then
-                ${mouse-check}
-                sleep ${toString (1.0 / 30.0)}
-                ${mouse-check}
-              fi
+              ${mouse-check}
 
-              i3-msg "$msg"
+              i3-msg "[con_id=\"$id\"] $msg" > /dev/null
             fi
           done
         '';
@@ -235,6 +238,7 @@ in
             { class = "TelegramDesktop"; }
             { class = "WebCord"; }
             { class = "Whatsapp-for-linux"; }
+            { class = "qps"; }
           ];
           modifier = mod;
           titlebar = false;
@@ -274,6 +278,10 @@ in
               command = "move position center";
               criteria.class = "Whatsapp-for-linux";
             }
+            {
+              command = "move position center";
+              criteria.class = "qps";
+            }
           ];
           hideEdgeBorders = "smart";
           titlebar = false;
@@ -284,7 +292,7 @@ in
         startup = [
           {
             command = "$SCRIPT/daemon";
-            always = true;
+            always = false;
             notification = false;
           }
         ];
@@ -322,7 +330,7 @@ in
 
           # [c] - close / kill
           "${mod}+c" = "kill";
-          "${mod}+Shift+c" = "exec xkill -id $(xdotool getwindowfocus)";
+          "${mod}+Shift+c" = "exec --no-startup-id xkill -id $(xdotool getwindowfocus)";
 
           # [f] - toggle float / toggle sticky float
           "${mod}+f" = "floating toggle";

@@ -13,6 +13,8 @@ let inherit (config.module.script) enable install; in {
   config = lib.mkIf enable {
     home.sessionVariables.SCRIPT = "$(mktemp -d)";
 
+    xsession.importedVariables = [ "SCRIPT" ];
+
     xdg.dataFile =
       lib.attrsets.concatMapAttrs
         (name: text: {

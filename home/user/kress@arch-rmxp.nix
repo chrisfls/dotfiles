@@ -11,7 +11,7 @@ let
 
   upgrade-system = pkgs.writeShellScriptBin "upgrade-system"
     ''
-      sudo pacman -Sy --needed --noconfirm archlinux-keyring chaotic-keyring && sudo powerpill -Su --noconfirm && sudo paccache -r
+      pacman-switch && sudo paccache -r
     '';
 
   upgrade-home = pkgs.writeShellScriptBin "upgrade-home"
@@ -80,12 +80,6 @@ in
           mode = "800x1280";
           rate = "60.06";
           rotate = "right";
-          # x-prop-aspect_ratio Automaticmn
-          # x-prop-audio auto
-          # x-prop-broadcast_rgb Automatic
-          # x-prop-colorspace Default
-          # x-prop-max_bpc 8
-          # x-prop-non_desktop 0
         };
         HDMI-1 = {
           enable = true;
@@ -94,12 +88,6 @@ in
           position = "1280x0";
           mode = "3840x2160";
           rate = "60.00";
-          # x-prop-aspect_ratio Automatic
-          # x-prop-audio auto
-          # x-prop-broadcast_rgb Automatic
-          # x-prop-colorspace Default
-          # x-prop-max_bpc 8
-          # x-prop-non_desktop 0
         };
       };
     };

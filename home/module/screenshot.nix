@@ -101,9 +101,9 @@ in
     };
 
     xsession.windowManager.i3.config.keybindings = {
-      "Print" = "exec screenshot-copy";
-      "shift+Print" = "exec screenshot-save";
-      "${config.xsession.windowManager.i3.config.modifier}+Print" = "exec screenshot-copy-area";
+      "Print" = "exec --no-startup-id screenshot-copy";
+      "shift+Print" = "exec --no-startup-id screenshot-save";
+      "${config.xsession.windowManager.i3.config.modifier}+Print" = "exec --no-startup-id screenshot-copy-area";
     };
   };
 }

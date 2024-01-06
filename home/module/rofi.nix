@@ -9,28 +9,28 @@ let
     sha256 = "sha256-ucUAFI5O+wYGkRqNSdkve9j21Xguzn3WhizzXNBSJ/0=";
   };
 
-  xtitle = "${pkgs.xtitle}/bin/xtitle";
+  pkg =
+    let
+      pkg' =
+        pkgs.rofi.override { plugins = [ pkgs.rofi-calc ]; };
+
+      wrapped = pkgs.writeShellScriptBin "rofi"
+        "exec ${pkg'}/bin/rofi -dpi ${toString config.module.scaling.dpi-scaled} \"$@\"";
+    in
+    pkgs.symlinkJoin {
+      name = "rofi";
+      paths = [ wrapped pkg' ];
+    };
+
+  rofi = "${pkg}/bin/rofi";
 
   theme = "${config.xdg.configHome}/rofi/launchers/type-3/style-5-alt.rasi";
 
   mod = config.xsession.windowManager.i3.config.modifier;
 
-  # TODO: port to module.script.install
+  script = name: "exec \"$SCRIPT/${name}\"";
 
-  # rofi calculator
-  rofi-calc = pkgs.writeShellScriptBin "rofi-calc"
-    ''
-      out=$(
-      rofi -theme "${theme}" \
-        -show calc -modi calc -no-show-match -no-sort \
-        -calc-command "echo -n '{result}'"
-      )
-      if [[ -n $out ]]; then
-        echo -n $out | xclip -sel c
-      fi
-    '';
-
-  # rofi notifications menu
+  # rofi notifications menu, not dash because arrays
   rofi-dunst = pkgs.writeShellScriptBin "rofi-dunst"
     ''
       history=$(dunstctl history | jq -r .data[][])
@@ -38,7 +38,7 @@ let
       summaries=("$(echo $history | jq -r .summary.data)" "󰃢 Clear All")
       selected=$(
         printf "%s\n" "$\{summaries[@]}" | grep -v '^$' \
-          | rofi -dmenu -theme "${theme}" -format i -p " "
+          | ${rofi} -dmenu -theme \"${theme}\" -format i -p " "
       )
       if [[ -n $selected ]]; then
         if [[ $selected -lt $\{#summaries[@]} ]]; then
@@ -50,64 +50,128 @@ let
         fi
       fi
     '';
-
-  # polybar main menu
-  rofi-menu = pkgs.writeShellScriptBin "rofi-menu"
-    "rofi -show drun -theme \"${config.module.themes.rofi}\"";
-
-  # polybar session menu
-  rofi-power-menu = pkgs.writeShellScriptBin "rofi-power-menu" "${config.xdg.configHome}/rofi/powermenu/type-1/powermenu.sh";
-
-  # run menu
-  rofi-run = pkgs.writeShellScriptBin "rofi-run"
-    ''
-      rofi -show run -theme "${theme}"
-    '';
-
-  # global windows
-  rofi-windows = pkgs.writeShellScriptBin "rofi-windows"
-    ''
-      rofi -modi window -show window -theme "${theme}"
-    '';
-
-  # current desktop windows
-  rofi-windows-cd = pkgs.writeShellScriptBin "rofi-windows-cd"
-    ''
-      rofi -modi windowcd -show windowcd -theme "${theme}"
-    '';
 in
 {
   options.module.rofi.enable = lib.mkEnableOption "Enable rofi module";
 
   config = lib.mkIf enable {
-    home.packages = [
-      pkgs.rofi
-      pkgs.rofi-calc
-      pkgs.hostname # TODO: update rofi theme to not need this
-      rofi-calc
-      rofi-dunst
-      rofi-menu
-      rofi-power-menu
-      rofi-run
-      rofi-windows
-      rofi-windows-cd
-    ];
+    module.script.install = {
+      # rofi calculator
+      rofi-calc =
+        ''
+          out=$(
+          ${rofi} -theme "${theme}" \
+            -show calc -modi calc -no-show-match -no-sort \
+            -calc-command "echo -n '{result}'"
+          )
+          if [ -n $out ]; then
+            echo -n $out | xclip -sel c
+          fi
+        '';
+
+      # polybar main menu
+      rofi-menu = "exec ${rofi} -show drun -theme \"${config.module.themes.rofi}\"";
+
+      # polybar session menu
+      rofi-power-menu =
+        ''
+          theme="${config.home.homeDirectory}/.config/rofi/powermenu/type-1/style-1.rasi"
+
+          # options
+          shutdown=' Shutdown'
+          reboot=' Reboot'
+          suspend=' Suspend'
+          logout=' Logout'
+          yes=' Yes'
+          no=' No'
+
+          uptime=$(uptime | awk '{ total_minutes=($3 * 60) + $5; hours=int(total_minutes/60); minutes=total_minutes%60; printf("%dh\n", hours) }')
+          host=$(cat /etc/hostname)
+          
+          # run rofi
+          rofi_cmd() {
+          	${rofi} -dmenu \
+          		-p "$host" \
+          		-mesg "Uptime: $uptime" \
+          		-theme "$theme"
+          }
+
+          # confirm yes/no
+          confirm_cmd() {
+          	${rofi} -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 250px;}' \
+          		-theme-str 'mainbox {children: [ "message", "listview" ];}' \
+          		-theme-str 'listview {columns: 2; lines: 1;}' \
+          		-theme-str 'element-text {horizontal-align: 0.5;}' \
+          		-theme-str 'textbox {horizontal-align: 0.5;}' \
+          		-dmenu \
+          		-p 'Confirmation' \
+          		-mesg 'Are you Sure?' \
+          		-theme "$theme"
+          }
+
+          # perform
+          run_cmd() {
+          	if [[ "$(echo "$yes\n$no" | confirm_cmd)" == "$yes" ]]; then
+          		if [[ $1 == '--shutdown' ]]; then
+          			systemctl poweroff
+          		elif [[ $1 == '--reboot' ]]; then
+          			systemctl reboot
+          		elif [[ $1 == '--suspend' ]]; then
+          			# mpc -q pause
+          			amixer set Master mute
+          			systemctl suspend
+          		elif [[ $1 == '--logout' ]]; then
+          			i3-msg exit
+          		fi
+          	else
+          		exit 0
+          	fi
+          }
+
+          # actions
+          case "$(echo "$suspend\n$logout\n$reboot\n$shutdown" | rofi_cmd)" in
+            $shutdown)
+              run_cmd --shutdown
+              ;;
+            $reboot)
+              run_cmd --reboot
+              ;;
+            $suspend)
+              run_cmd --suspend
+              ;;
+            $logout)
+              run_cmd --logout
+              ;;
+          esac
+        '';
+
+      # run menu
+      rofi-run = "exec ${rofi} -show run -theme \"${theme}\"";
+
+      # global windows
+      rofi-windows = "exec ${rofi} -modi window -show window -theme \"${theme}\"";
+
+      # current desktop windows
+      rofi-windows-cd = "exec ${rofi} -modi windowcd -show windowcd -theme \"${theme}\"";
+    };
 
     xsession.windowManager.i3.config = {
-      menu = "rofi-menu";
+      menu = script "rofi-menu";
       keybindings = {
         # main menus
-        "${mod}+Shift+Return" = "exec rofi-run";
+        "${mod}+Shift+Return" = script "rofi-run";
 
         # jump to window
-        "${mod}+w" = "exec rofi-windows-cd";
-        "${mod}+Shift+w" = "exec rofi-windows";
+        "${mod}+w" = script "rofi-windows-cd";
+        "${mod}+Shift+w" = script "rofi-windows";
 
         # Shift cmd for alacritty
-        "${mod}+Shift+BackSpace" = "exec rofi-calc";
-        "${mod}+Shift+semicolon" = "exec rofi-calc";
+        "${mod}+Shift+BackSpace" = script "rofi-calc";
+        "${mod}+Shift+semicolon" = script "rofi-calc";
       };
     };
+
+    home.packages = [ pkg rofi-dunst ];
 
     xdg.dataFile = {
       "fonts/GrapeNuts-Regular.ttf".source = "${settings}/fonts/GrapeNuts-Regular.ttf";

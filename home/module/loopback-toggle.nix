@@ -38,7 +38,7 @@ in
   };
 
   config = lib.mkIf enable {
-    xsession.windowManager.i3.config.keycodebindings."202" = "exec ${loopback-toggle}";
+    xsession.windowManager.i3.config.keycodebindings."202" = "exec --no-startup-id ${loopback-toggle}";
 
     systemd.user.services.loopback-offd = {
       Unit.Description = "Disables audio loopback by default";

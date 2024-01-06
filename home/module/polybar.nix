@@ -8,9 +8,22 @@ let
   pamixer = "${pkgs.pamixer}/bin/pamixer";
   dunstctl = "${pkgs.dunst}/bin/dunstctl";
 
-  toggle =
-    let
-      script = pkgs.writeShellScriptBin "polybar-toggle"
+  script = name: "\"$SCRIPT/${name}\"";
+  rofi-menu = script "rofi-menu";
+  rofi-power-menu = script "rofi-power-menu";
+  toggle = script "toggle";
+  bluetooth = script "bluetooth";
+  pipewire = script "pipewire";
+  dunst-toggle = script "dunst-toggle";
+in
+{
+  options.module.polybar.enable = lib.mkEnableOption "Enable polybar module";
+
+  config = lib.mkIf enable {
+    pacman.pkgs.bluez = [ "extra/bluez" "extra/bluez-utils" ];
+
+    module.script.install = {
+      toggle =
         ''
           fst=$1
           shift
@@ -21,12 +34,7 @@ let
 
           ${polybar-msg} action $fst next
         '';
-    in
-    "${script}/bin/polybar-toggle";
-
-  bluetooth =
-    let
-      script = pkgs.writeShellScriptBin "polybar-bluetooth"
+      bluetooth =
         ''
           if bluetoothctl show | grep -q "Powered: yes"; then
               hook=2
@@ -46,12 +54,8 @@ let
 
           ${polybar-msg} action bluetooth hook $hook
         '';
-    in
-    "${script}/bin/polybar-bluetooth";
 
-  pipewire =
-    let
-      script = pkgs.writeShellScriptBin "polybar-pipewire"
+      pipewire =
         ''
           case $1 in
             "--up")
@@ -73,24 +77,14 @@ let
 
           ${polybar-msg} action audio hook $hook
         '';
-    in
-    "${script}/bin/polybar-pipewire";
 
-  dunst-toggle =
-    let
-      script = pkgs.writeShellScriptBin "dunst-toggle"
+      dunst-toggle =
         ''
           ${dunstctl} set-paused toggle
           ${polybar-msg} action notifications next
         '';
-    in
-    "${script}/bin/dunst-toggle";
+    };
 
-in
-{
-  options.module.polybar.enable = lib.mkEnableOption "Enable polybar module";
-
-  config = lib.mkIf enable {
     systemd.user.services.polybar = {
       # i3wm fix
       Unit.After = lib.mkIf (config.module.i3wm.enable) [ "graphical-session-i3.target" ];
@@ -150,7 +144,7 @@ in
         "module/menu" = {
           type = "\"custom/ipc\"";
 
-          click-left = "\"rofi-menu\"";
+          click-left = "\"${rofi-menu}\"";
 
           # startup
           initial = "\"1\"";
@@ -176,7 +170,7 @@ in
         "module/session" = {
           type = "\"custom/text\"";
 
-          click-left = "\"rofi-power-menu\"";
+          click-left = "\"${rofi-power-menu}\"";
 
           format = "\"${config.home.username} %{T2}󰍃%{T-} \"";
           format-background = "\"${background}\"";
