@@ -20,7 +20,7 @@ in
     ];
 
     xsession.windowManager.i3.config = lib.mkIf config.module.i3wm.enable {
-      modes.apps."t" = "exec gtk-launch org.telegram";
+      modes.apps."t" = "exec gtk-launch org.telegram; mode default";
       startup = [
         { notification = false; command = "telegram-desktop -startintray"; }
       ];

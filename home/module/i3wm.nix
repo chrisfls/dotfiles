@@ -5,6 +5,7 @@ let
   inherit (config.xsession.windowManager.i3.config) terminal menu;
 
   mod = config.xsession.windowManager.i3.config.modifier;
+  alt = "Mod1";
   outer = toString config.xsession.windowManager.i3.config.gaps.outer;
   inner = toString config.xsession.windowManager.i3.config.gaps.inner;
   colors = config.module.themes.color-scheme;
@@ -325,6 +326,9 @@ in
           # [r] - resize mode
           "${mod}+r" = "mode resize";
 
+          # [a] - app launcher mode
+          "${mod}+a" = "mode apps";
+
           # ## #
           # secondary actions (layout/pseudo float/fix rotate brother)
           # ## #
@@ -336,19 +340,30 @@ in
           # [t] - toggle split / tabbed layouts  
           "${mod}+t" = script "toggle-tabs";
 
+          # toggle floating focus
+          "${mod}+space" = "focus mode_toggle; ${script "cursor-warp"}";
+
+          # floating windows alt tab
+          "${alt}+Tab" = "focus prev";
+          "${alt}+shift+Tab" = "focus next";
+
           # ## #
           # tertiary actions (show desktop/equalize/balance)
           # ## #
 
-          # [v] - scratchpad show
-          "${mod}+v" = "scratchpad show";
+          # [g] - toggle gaps
+          "${mod}+g" = "gaps inner all toggle ${inner}; gaps outer all toggle ${outer}";
 
           # [i] - insert space / fill space
           "${mod}+i" = script "make-space";
           "${mod}+shift+i" = script "fill-space";
 
-          # [g] - toggle gaps
-          "${mod}+g" = "gaps inner all toggle ${inner}; gaps outer all toggle ${outer}";
+          # [v] - scratchpad show
+          "${mod}+v" = "scratchpad show";
+
+          # tabbed windows super tab
+          "${mod}+Tab" = "focus prev sibling";
+          "${mod}+shift+Tab" = "focus next sibling";
 
           ######## #### ## #
           # FOCUS AND MOVEMENT
@@ -382,9 +397,6 @@ in
           "${mod}+p" = "focus parent";
           "${mod}+shift+p" = "focus child";
 
-          # toggle floating focus
-          "${mod}+space" = "focus mode_toggle; ${script "cursor-warp"}";
-
           ######## #### ## #
           # WORKSPACES
           ######## #### ## #
@@ -412,28 +424,28 @@ in
           "${mod}+Shift+8" = "move container to workspace number 8";
           "${mod}+Shift+9" = "move container to workspace number 9";
           "${mod}+Shift+0" = "move container to workspace number 10";
-
-          ######## #### ## #
-          # MISC
-          ######## #### ## #
-
-          # good pop out command, would be better if it could autotile
-          #"${mod}+o" = "mark subwindow; focus parent; focus parent; mark parent; [con_mark=\"subwindow\"] focus; move window to mark parent; [con_mark=\"subwindow\"] focus; unmark";
         };
-        modes.resize = {
-          "h" = "resize shrink width 100 px or 10 ppt";
-          "j" = "resize grow height 100 px or 10 ppt";
-          "k" = "resize shrink height 100 px or 10 ppt";
-          "l" = "resize grow width 100 px or 10 ppt";
+        modes = {
+          apps = {
+            "Escape" = "mode default";
+            "Return" = "mode default";
+            "a" = "mode default";
+          };
+          resize = {
+            "h" = "resize shrink width 100 px or 10 ppt";
+            "j" = "resize grow height 100 px or 10 ppt";
+            "k" = "resize shrink height 100 px or 10 ppt";
+            "l" = "resize grow width 100 px or 10 ppt";
 
-          "Left" = "resize shrink width 100 px or 10 ppt";
-          "Down" = "resize grow height 100 px or 10 ppt";
-          "Up" = "resize shrink height 100 px or 10 ppt";
-          "Right" = "resize grow width 100 px or 10 ppt";
+            "Left" = "resize shrink width 100 px or 10 ppt";
+            "Down" = "resize grow height 100 px or 10 ppt";
+            "Up" = "resize shrink height 100 px or 10 ppt";
+            "Right" = "resize grow width 100 px or 10 ppt";
 
-          "Escape" = "mode default";
-          "Return" = "mode default";
-          "r" = "mode default";
+            "Escape" = "mode default";
+            "Return" = "mode default";
+            "r" = "mode default";
+          };
         };
         # #### ## #
         # MISC
@@ -503,6 +515,3 @@ in
     };
   };
 }
-/*
-  i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.layout == "tabbed" or .nodes!=null)|select(.nodes[].focused).layout'
-*/

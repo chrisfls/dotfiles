@@ -180,13 +180,13 @@ in
         enable = true;
         numlock.enable = true;
         windowManager.i3.config = {
-          keybindings."ctrl+alt+Delete" = "exec gtk-launch qps";
+          keybindings."Control+Mod1+Delete" = "exec gtk-launch qps";
 
           modes.apps = {
-            "c" = "exec gtk-launch copyq";
-            "d" = "exec gtk-launch webcord";
-            "e" = "exec gtk-launch pcmanfm-qt";
-            "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux";
+            "c" = "exec gtk-launch copyq; mode default";
+            "d" = "exec gtk-launch webcord; mode default";
+            "e" = "exec gtk-launch pcmanfm-qt; mode default";
+            "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux; mode default";
           };
 
           startup = [
