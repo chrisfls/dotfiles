@@ -181,6 +181,12 @@ in
           format-1-background = "\"${darkest}\"";
           format-1-foreground = "\"${danger}\"";
           format-1-padding = "\"0\"";
+          # launcher
+          hook-2 = "\"\"";
+          format-2 = "\" %{T2}󰺮%{T-} Applications\"";
+          format-2-background = "\"${darkest}\"";
+          format-2-foreground = "\"${color-scheme.blueBright}\"";
+          format-2-padding = "\"0\"";
         };
         "module/session" = {
           type = "\"custom/text\"";

@@ -111,7 +111,7 @@ in
             '';
         in
         ''
-          i3-msg -t subscribe -m '[ "window" ]' | while IFS= read -r line; do
+          i3-msg -t subscribe -m '[ "window", "mode" ]' | while IFS= read -r line; do
             event=$(echo $line | jaq -r '.change')
 
             case "$event" in
@@ -121,6 +121,15 @@ in
               "close")
                 ;;
               "focus")
+                ;;
+              "resize")
+                polybar-msg action menu hook 1
+                ;;
+              "apps")
+                polybar-msg action menu hook 2
+                ;;
+              "default")
+                polybar-msg action menu hook 0
                 ;;
               *)
                 continue

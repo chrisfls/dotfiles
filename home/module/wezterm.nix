@@ -19,9 +19,9 @@ in
       ''
         dir=$(${pkgs.xcwd}/bin/xcwd);
         if [ "$dir" = "${config.home.homeDirectory}" ]; then
-          ${wezterm} start;
+          exec ${wezterm} start;
         else
-          ${wezterm} start --cwd "$dir";
+          exec ${wezterm} start --cwd "$dir";
         fi;
       '';
 
