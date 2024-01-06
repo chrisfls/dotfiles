@@ -37,6 +37,18 @@ in
         # xdg-desktop-portal.enable = true;
       };
 
+      pacman =
+        {
+          packages = [
+            "extra/xorg-xinit"
+            "extra/xorg-xinput"
+          ];
+          pkgs.xorg = {
+            xmodmap = [ "extra/xorg-xmodmap" ];
+            xrdb = [ "extra/xorg-xrdb" ];
+          };
+        };
+
       nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
       home.packages = [
@@ -181,7 +193,7 @@ in
             { notification = false; command = "copyq"; }
             { notification = false; command = "nm-tray"; }
             { notification = false; command = "webcord --start-minimized"; }
-            { notification = false; command = "whatsapp-for-linux --start-minimized"; }
+            { notification = false; command = "whatsapp-for-linux"; }
           ];
         };
       };

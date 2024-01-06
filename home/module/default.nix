@@ -23,10 +23,10 @@
     ./screenshot.nix
     ./script.nix
     ./shell.nix
+    ./steam.nix
     ./sublime.nix
     ./telegram.nix
     ./themes.nix
-    ./usr.nix
     ./wezterm.nix
     ./xdg-desktop-portal.nix
   ];

@@ -38,33 +38,10 @@ in
     scaling = { enable = true; scale = 1.5; };
   };
 
-  usr = {
-    micro = true;
-    xorg = {
-      xmodmap = true;
-      xrdb = true;
-    };
-  };
-
   pacman = {
     enable = true;
-    packages = [
-      "chaotic-aur/cloudflare-warp-bin"
-      "extra/micro"
-      "extra/xorg-server-git"
-      "extra/xorg-xinit"
-      "extra/xorg-xinput"
-    ];
+    packages = [ "chaotic-aur/xorg-server-git" ];
   };
-
-  nixpkgs.overlays = [
-    (final: prev: prev // {
-      micro = prev.usr.micro;
-      xorg = prev.xorg // {
-        inherit (prev.usr.xorg) xmodmap xrdb;
-      };
-    })
-  ];
 
   programs.autorandr.profiles = {
     undocked = {
