@@ -5,8 +5,8 @@ let
   inherit (lib.trivial) pippe;
 
   pkg =
-    if config.targets.genericLinux.enable then
-      mesa.wrap
+    if config.preset.non-nixos then
+      pkgs.usr.wrapMesaIf true
         {
           pkg = pkgs.brave.overrideAttrs
             (old: {

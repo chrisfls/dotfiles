@@ -2,7 +2,7 @@
 let
   inherit (config.module.sublime) enable;
   inherit (specialArgs) mkIfElse;
-  mesa = specialArgs.mesa.wrapIf config.preset.non-nixos;
+  mesa = pkgs.usr.wrapMesaIf config.preset.non-nixos;
 in
 {
   options.module.sublime.enable = lib.mkEnableOption "Enable sublime module";

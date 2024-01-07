@@ -2,7 +2,7 @@
 let
   inherit (config.module.telegram) enable;
   inherit (specialArgs) qt mkIfElse;
-  mesa = specialArgs.mesa.wrapIf config.preset.non-nixos;
+  mesa = pkgs.usr.wrapMesaIf config.preset.non-nixos;
   exe = "telegram-desktop";
 in
 {

@@ -1,7 +1,7 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
   enable = config.preset.gamedev;
-  mesa = specialArgs.mesa.wrapIf config.preset.non-nixos;
+  mesa = pkgs.usr.wrapMesaIf config.preset.non-nixos;
 in
 {
   options.preset.gamedev = lib.mkEnableOption "Enable gamedev preset";

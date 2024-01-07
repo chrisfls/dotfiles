@@ -1,7 +1,7 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.module.picom) enable;
-  mesa = specialArgs.mesa.wrapIf config.preset.non-nixos;
+  mesa = pkgs.usr.wrapMesaIf config.preset.non-nixos;
 in
 {
   options.module.picom.enable = lib.mkEnableOption "Enable picom module";
