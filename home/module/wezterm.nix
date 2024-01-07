@@ -27,7 +27,7 @@ in
 
     programs.wezterm = {
       enable = true;
-      package = mesa { package = pkgs.wezterm; exe = "wezterm"; };
+      package = mesa { pkg = pkgs.wezterm; exe = "wezterm"; };
       colorSchemes = {
         default = {
           ansi = [

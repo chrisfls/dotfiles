@@ -4,10 +4,10 @@ let
   inherit (lib.attrsets) attrByPath;
 in
 rec {
-  wrap = { package, ... }@args:
+  wrap = { pkg, ... }@args:
     let
       exe =
-        attrByPath [ "exe" ] (baseNameOf (getExe package)) args;
+        attrByPath [ "exe" ] (baseNameOf (getExe pkg)) args;
 
       lib32 =
         attrByPath [ "lib32" ] false args;
@@ -26,7 +26,7 @@ rec {
     in
     pkgs.symlinkJoin {
       name = exe;
-      paths = [ package ];
+      paths = [ pkg ];
       buildInputs = [ pkgs.makeWrapper ];
       meta.mainProgram = exe;
       postBuild = ''
@@ -39,10 +39,10 @@ rec {
 
         for desktopFile in $out/share/applications/*; do
           cp --remove-destination $(readlink -e "$desktopFile") "$desktopFile"
-          sed -i -e 's:${package}/bin/${exe}:${exe}:' "$desktopFile"
+          sed -i -e 's:${pkg}/bin/${exe}:${exe}:' "$desktopFile"
         done
       '';
     };
 
-  wrapIf = predicate: args: if predicate then wrap args else args.package;
+  wrapIf = predicate: args: if predicate then wrap args else args.pkg;
 }

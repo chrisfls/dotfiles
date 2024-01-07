@@ -9,8 +9,8 @@ in
 
   config = lib.mkIf enable {
     home.packages = [
-      (mesa { package = pkgs.sublime4; exe = "sublime_text"; })
-      (mesa { package = pkgs.sublime-merge; exe = "sublime_merge"; })
+      (mesa { pkg = pkgs.sublime4; exe = "sublime_text"; })
+      (mesa { pkg = pkgs.sublime-merge; exe = "sublime_merge"; })
     ];
 
     nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];

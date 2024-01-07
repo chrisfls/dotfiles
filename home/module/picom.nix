@@ -9,7 +9,7 @@ in
   config = lib.mkIf enable {
     services.picom = {
       enable = true;
-      package = mesa { package = pkgs.picom-next; exe = "picom"; };
+      package = mesa { pkg = pkgs.picom-next; exe = "picom"; };
       extraArgs = [
         "--vsync-use-glfinish"
         "--glx-no-stencil"

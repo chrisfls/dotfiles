@@ -9,7 +9,7 @@ in
 
   config = lib.mkIf enable {
     home.packages = [
-      (mesa { package = pkgs.vscode; })
+      (mesa { pkg = pkgs.vscode; })
     ];
   };
 }

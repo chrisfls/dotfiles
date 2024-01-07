@@ -8,7 +8,7 @@ let
     if config.targets.genericLinux.enable then
       mesa.wrap
         {
-          package = pkgs.brave.overrideAttrs
+          pkg = pkgs.brave.overrideAttrs
             (old: {
               postFixup =
                 ''

@@ -12,9 +12,9 @@ in
     home.packages = [
       (mesa {
         inherit exe;
-        package = qt.fixScaling {
+        pkg = qt.fixScaling {
           inherit exe;
-          package = pkgs.telegram-desktop;
+          pkg = pkgs.telegram-desktop;
         };
       })
     ];
