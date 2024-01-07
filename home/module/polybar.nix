@@ -10,7 +10,7 @@ let
 
   script = name: "\"$SCRIPT/${name}\"";
   rofi-menu = script "rofi-menu";
-  rofi-power-menu = script "rofi-power-menu";
+  # rofi-power-menu = script "rofi-power-menu";
   toggle = script "toggle";
   bluetooth = script "bluetooth";
   pipewire = script "pipewire";
@@ -136,8 +136,8 @@ in
           foreground = "\"${foreground}\"";
 
           # modules
-          modules-left = "\"workspaces even-l toggle notifications tray menu right\""; # menu menu-l 
-          modules-center = "\"title\""; # left right 
+          modules-left = "\"workspaces even-l notifications menu toggle tray right title\""; # menu menu-l 
+          modules-center = "\"\""; # left title right 
           modules-right = "\"left filesystem even-r temperature odd-r memory even-r cpu odd-r wired even-r wireless odd-r bluetooth even-r audio odd-r date even-r time\""; #  menu-r session
 
           format-radius = "\"32.0\"";
@@ -179,23 +179,24 @@ in
           initial = "\"1\"";
           # move
           hook-0 = "\"\"";
-          format-0 = "\" %{O-6}%{T2}%{T-}%{O3}\"";
+          format-0 = "\"%{T2}%{T-}%{O1}\"";
           format-0-background = "\"${black}\"";
           format-0-foreground = "\"${foreground}\"";
           format-0-padding = "\"0\"";
           # resize
           hook-1 = "\"\"";
-          format-1 = "\" %{O-6}%{T2}%{T-}%{O3}\"";
+          format-1 = "\"%{T2}%{T-}%{O1}\"";
           format-1-background = "\"${black}\"";
           format-1-foreground = "\"${redBright}\"";
           format-1-padding = "\"0\"";
           # launcher
           hook-2 = "\"\"";
-          format-2 = "\" %{O-6}%{T2}%{T-}%{O3}\"";
+          format-2 = "\"%{T2}%{T-}%{O1}\"";
           format-2-background = "\"${black}\"";
           format-2-foreground = "\"${blueBright}\"";
           format-2-padding = "\"0\"";
         };
+        /*
         "module/session" = {
           type = "\"custom/text\"";
 
@@ -205,11 +206,12 @@ in
           format-background = "\"${background}\"";
           format-foreground = "\"${foreground}\"";
         };
+        */
         "module/toggle" = {
           type = "\"custom/ipc\"";
-          click-left = "\"${toggle} toggle notifications tray &\"";
-          scroll-down = "\"${toggle} toggle notifications tray &\"";
-          scroll-up = "\"${toggle} toggle notifications tray &\"";
+          click-left = "\"${toggle} toggle tray &\"";
+          scroll-down = "\"${toggle} toggle tray &\"";
+          scroll-up = "\"${toggle} toggle tray &\"";
           initial = "\"1\"";
           hook-0 = "\"\"";
           format-0 = "\"%{T2}%{T-}\"";
@@ -231,12 +233,12 @@ in
           scroll-up = "\"${dunstctl} close &\"";
           initial = "\"1\"";
           hook-0 = "\"\"";
-          format-0 = "\"%{O-12}%{T2}%{T-}\"";
+          format-0 = "\"%{T2}%{T-}\"";
           format-0-foreground = "\"${foreground}\"";
           format-0-background = "\"${black}\"";
           format-0-padding = "\"1\"";
           hook-1 = "\"\"";
-          format-1 = "\"%{O-12}%{T2}%{T-}\"";
+          format-1 = "\"%{T2}%{T-}\"";
           format-1-foreground = "\"${foreground}\"";
 
           format-1-background = "\"${black}\"";
@@ -247,7 +249,7 @@ in
           hidden = "\"false\"";
           tray-spacing = "\"1pt\"";
           tray-padding = "\"1pt\"";
-          format = "\"%{O-2}<tray>\"";
+          format = "\"%{O-4}<tray>\"";
           format-background = "\"${black}\"";
           tray-foreground = "\"${foreground}\"";
           tray-background = "\"${black}\"";
@@ -264,10 +266,11 @@ in
         */
         "module/title" = {
           type = "\"internal/xwindow\"";
-          label = "\"%title:0:96:...%\"";
+          label = "\"%title:0:256:...%\"";
           label-background = "\"${background}\"";
           label-empty = "\"Desktop\"";
           label-empty-background = "\"${background}\"";
+          format-padding = "\"3\"";
         };
         "module/filesystem" = {
           type = "\"internal/fs\"";

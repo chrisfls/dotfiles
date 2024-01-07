@@ -24,7 +24,8 @@ let
 
   rofi = "${pkg}/bin/rofi";
 
-  theme = "${config.xdg.configHome}/rofi/launchers/type-3/style-5-alt.rasi";
+  theme = "${config.xdg.configHome}/rofi/launchers/type-3/style-5.rasi";
+  theme' = "${config.xdg.configHome}/rofi/launchers/type-3/style-5-alt.rasi";
 
   mod = config.xsession.windowManager.i3.config.modifier;
 
@@ -38,7 +39,7 @@ let
       summaries=("$(echo $history | jq -r .summary.data)" "󰃢 Clear All")
       selected=$(
         printf "%s\n" "$\{summaries[@]}" | grep -v '^$' \
-          | ${rofi} -dmenu -theme \"${theme}\" -format i -p " "
+          | ${rofi} -dmenu -theme \"${theme'}\" -format i -p " "
       )
       if [[ -n $selected ]]; then
         if [[ $selected -lt $\{#summaries[@]} ]]; then
@@ -60,7 +61,7 @@ in
       rofi-calc =
         ''
           out=$(
-          ${rofi} -theme "${theme}" \
+          ${rofi} -theme "${theme'}" \
             -show calc -modi calc -no-show-match -no-sort \
             -calc-command "echo -n '{result}'"
           )
@@ -70,7 +71,7 @@ in
         '';
 
       # polybar main menu
-      rofi-menu = "exec ${rofi} -show drun -theme \"${config.module.themes.rofi}\"";
+      rofi-menu = "exec ${rofi} -show drun -theme \"${theme}\"";
 
       # polybar session menu
       rofi-power-menu =
@@ -150,20 +151,19 @@ in
 
       # global windows
       rofi-windows = "exec ${rofi} -modi window -show window -theme \"${theme}\"";
-
-      # current desktop windows
-      rofi-windows-cd = "exec ${rofi} -modi windowcd -show windowcd -theme \"${theme}\"";
     };
 
     xsession.windowManager.i3.config = {
       menu = script "rofi-menu";
       keybindings = {
-        # main menus
+        # shift for main menu
         "${mod}+Shift+Return" = script "rofi-run";
 
+        # power menu
+        "${mod}+q" = script "rofi-power-menu";
+
         # jump to window
-        "${mod}+w" = script "rofi-windows-cd";
-        "${mod}+Shift+w" = script "rofi-windows";
+        "${mod}+w" = script "rofi-windows";
 
         # Shift cmd for alacritty
         "${mod}+Shift+BackSpace" = script "rofi-calc";
