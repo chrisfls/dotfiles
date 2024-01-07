@@ -1,7 +1,10 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.preset) desktop development non-nixos;
+
   mesa = specialArgs.mesa.wrapIf non-nixos;
+
+  mesa-packages = map (pkg: mesa { pkg = pkg; });
 
   # needed until these are done:
   #  - https://github.com/NixOS/nixpkgs/issues/228179
@@ -43,16 +46,21 @@ in
             "extra/xorg-xinit"
             "extra/xorg-xinput"
           ];
-          pkgs.xorg = {
-            xmodmap = [ "extra/xorg-xmodmap" ];
-            xrdb = [ "extra/xorg-xrdb" ];
+          pkgs = {
+            nm-tray = [ "chaotic-aur/nm-tray" ];
+            xorg = {
+              xmodmap = [ "extra/xorg-xmodmap" ];
+              xrdb = [ "extra/xorg-xrdb" ];
+            };
+            lxqt.qps = [ "extra/qps" ];
+            libsForQt5.audiotube = [ "extra/audiotube" ];
           };
         };
 
       nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
       home.packages = [
-        # cli apps
+        # cli pkgs
         pkgs.alsa-utils
         pkgs.pamixer
         pkgs.xclip
@@ -60,41 +68,40 @@ in
         pkgs.xorg.xev
         pkgs.xorg.xkill
 
-        # desktop components
-        pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
-        pkgs.lxqt.lxqt-policykit # policykit prompter
-        pkgs.lxqt.lxqt-sudo # gui-sudo prompter
-
-        # desktop environment apps
-        pkgs.libsForQt5.kdialog # dialogs and widgets
-        pkgs.nm-tray # network manager
-        pkgs.lxqt.pavucontrol-qt # sound mixer
-        pkgs.lxqt.pcmanfm-qt # file manager
-        pkgs.lxqt.lxqt-archiver # archiver
+        # desktop pkgs
+        (mesa { pkg = pkgs.libsForQt5.kdialog; exe = "kdialog"; }) # dialogs and widgets
+        (mesa { pkg = pkgs.lxqt.lxqt-openssh-askpass; exe = "lxqt-openssh-askpass"; }) # ssh prompter
+        (mesa { pkg = pkgs.lxqt.lxqt-policykit; exe = "lxqt-policykit-agent"; }) # policykit prompter
+        (mesa { pkg = pkgs.lxqt.lxqt-sudo; exe = "lxqt-sudo"; }) # gui-sudo prompter
+        pkgs.nm-tray # network manager tray icon
 
         # desktop apps
+        (mesa { pkg = pkgs.lxqt.lxqt-archiver; exe = "lxqt-archiver"; }) # archiver
+        (mesa { pkg = pkgs.lxqt.pavucontrol-qt; exe = "pavucontrol-qt"; }) # sound mixer
+        (mesa { pkg = pkgs.lxqt.pcmanfm-qt; exe = "pcmanfm-qt"; }) # file manager
+
+        # common apps
+        # (mesa { pkg = pkgs.copyq; exe = "copyq"; }) # clipboard manager [ TODO: qt6 ]
+        (mesa { pkg = pkgs.featherpad; exe = "featherpad"; }) # simple text editor
+        (mesa { pkg = pkgs.libsForQt5.kcalc; exe = "kcalc"; }) # calculator
+        (mesa { pkg = pkgs.libsForQt5.kolourpaint; exe = "kolourpaint"; }) # simple image editor
+        (mesa { pkg = pkgs.libsForQt5.vvave; exe = "vvave"; }) # music player [or elisa]
+        (mesa { pkg = pkgs.mpc-qt; exe = "mpc-qt"; }) # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
         pkgs.lxqt.qps # system monitor
-        pkgs.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
-        pkgs.copyq # clipboard manager [or: qlipper]
-        pkgs.featherpad # simple txt editor
-        pkgs.libsForQt5.kolourpaint # simple image editor [or pkgs.photoflare]
-        pkgs.libsForQt5.vvave # music player [or elisa/vvave]
-        pkgs.qalculate-qt # calculator
+
+        # personal cli pkgs
+        pkgs.rclone
 
         # personal apps
-        # pkgs.logseq
-        pkgs.anydesk
-        pkgs.gimp
-        pkgs.moonlight-qt
-        pkgs.parsec-bin
-        pkgs.qbittorrent
-        pkgs.rclone
-        # pkgs.soulseekqt
-        # pkgs.steam
-
-        (mesa { package = pkgs.pkgs.webcord-vencord; })
-        (mesa { package = pkgs.whatsapp-for-linux; exe = "whatsapp-for-linux"; })
-
+        (mesa { pkg = pkgs.anydesk; exe = "anydesk"; })
+        (mesa { pkg = pkgs.gimp; exe = "gimp"; })
+        # (mesa { pkg = pkgs.logseq; exe = "logseq"; })
+        (mesa { pkg = pkgs.moonlight-qt; exe = "moonlight"; })
+        (mesa { pkg = pkgs.parsec-bin; exe = "parsecd"; })
+        (mesa { pkg = pkgs.pkgs.webcord-vencord; })
+        # (mesa { pkg = pkgs.qbittorrent-qt5; exe = "qbittorrent"; }) # broken tray icon
+        # (mesa { pkg = pkgs.soulseekqt; }) # broken tray icon
+        (mesa { pkg = pkgs.whatsapp-for-linux; exe = "whatsapp-for-linux"; })
         pkgs.libsForQt5.audiotube
       ];
 
@@ -181,14 +188,14 @@ in
           keybindings."Control+Mod1+Delete" = "exec gtk-launch qps";
 
           modes.apps = {
-            "c" = "exec gtk-launch copyq; mode default";
+            # "c" = "exec gtk-launch copyq; mode default";
             "d" = "exec gtk-launch webcord; mode default";
             "e" = "exec gtk-launch pcmanfm-qt; mode default";
             "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux; mode default";
           };
 
           startup = [
-            { notification = false; command = "copyq"; }
+            # { notification = false; command = "copyq"; }
             { notification = false; command = "nm-tray"; }
             { notification = false; command = "webcord --start-minimized"; }
             { notification = false; command = "whatsapp-for-linux"; }
