@@ -72,7 +72,7 @@ in
       toggle-tabs = # toggle node layout
         # toggle tabbed layout at the selected leaf
         ''
-          id=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.focused).id')
+          id=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes == [] and .focused).id')
           if [ "$id" ]; then
             i3-msg "[con_id=\"$id\"] layout toggle tabbed split"
           fi
