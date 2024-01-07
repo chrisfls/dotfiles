@@ -37,7 +37,7 @@ in
         telegram.enable = true;
         themes.enable = true;
         wezterm.enable = true;
-        # xdg-desktop-portal.enable = true;
+        xdg-desktop-portal.enable = true;
       };
 
       pacman = {
