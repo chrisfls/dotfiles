@@ -1,3 +1,4 @@
+# do not migrate to breeze, all qt5 apps will use gpu accel if you do
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.module.themes)
@@ -11,6 +12,66 @@ let
   inherit (config.module.scaling) scale;
 
   toINI = lib.generators.toINI { };
+
+  fmtFont = { name, size, ... }:
+    let
+      # REVIEW:
+      font = lib.strings.concatStringsSep "," [
+        name
+        (builtins.toString size)
+        # TODO: parameterize the rest
+        "-1"
+        "5"
+        "50"
+        "0"
+        "0"
+        "0"
+        "0"
+        "0"
+        "Regular"
+      ];
+    in
+    "\"${font}\"";
+
+  toQtct = pkg:
+    let
+      name = baseNameOf (lib.getExe pkg);
+    in
+    toINI {
+      Appearance = {
+        color_scheme_path = "${pkg}/share/${name}/colors/airy.conf";
+        custom_palette = false;
+        icon_theme = icon.name;
+        standard_dialogs = "xdgdesktopportal";
+        style = qt.style;
+      };
+
+      Fonts = {
+        general = fmtFont font.general;
+        fixed = fmtFont font.fixed;
+      };
+
+      Interface = {
+        activate_item_on_single_click = 0;
+        buttonbox_layout = 0;
+        cursor_flash_time = 1000;
+        dialog_buttons_have_icons = 2;
+        double_click_interval = 250;
+        gui_effects = "General, FadeMenu, AnimateCombo, FadeTooltip, AnimateToolBox";
+        keyboard_scheme = 2;
+        menus_have_icons = true;
+        show_shortcuts_in_context_menus = true;
+        stylesheets = "${pkg}/share/${name}/qss/scrollbar-simple.qss, ${pkg}/share/${name}/qss/sliders-simple.qss, ${pkg}/share/${name}/qss/tooltip-simple.qss, ${pkg}/share/${name}/qss/traynotification-simple.qss";
+        toolbutton_style = 2;
+        underline_shortcut = 2;
+        wheel_scroll_lines = 3;
+      };
+
+      Troubleshooting = {
+        force_raster_widgets = 1;
+        ignored_applications = "@Invalid()";
+      };
+    };
 in
 {
   options.module.themes = {
@@ -19,7 +80,26 @@ in
     qt = {
       style = lib.mkOption {
         type = lib.types.str;
-        default = "breeze";
+        default = "kvantum-dark";
+      };
+
+      kvantum-theme = lib.mkOption {
+        type = lib.types.str;
+        default = "MateriaDark";
+        description = ''
+          Other decent kvantum themes (ordered by stars):
+
+          - https://github.com/EliverLara/Nordic [★★★☆☆]
+          - https://github.com/PapirusDevelopmentTeam/arc-kde [★★★★★]
+          - https://github.com/vinceliuice/WhiteSur-kde [★★★★☆]
+          - https://github.com/PapirusDevelopmentTeam/materia-kde [★★★★★]
+          - https://github.com/catppuccin/Kvantum [?????]
+          - https://github.com/vinceliuice/Colloid-kde [★★★★☆]
+          - https://github.com/HimDek/Utterly-Nord-Plasma [★★☆☆☆]
+          - https://github.com/EliverLara/Andromeda-KDE (no pkg)
+          - https://github.com/HimDek/Utterly-Sweet-Plasma [★★☆☆☆]
+          - https://github.com/HimDek/Utterly-Round-Plasma-Style [★★☆☆☆]
+        '';
       };
 
       package = lib.mkOption {
@@ -31,24 +111,24 @@ in
     gtk = {
       name = lib.mkOption {
         type = lib.types.str;
-        default = "Breeze-Dark";
+        default = "Materia-dark-compact";
       };
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.libsForQt5.breeze-gtk;
+        default = pkgs.materia-theme;
       };
     };
 
     icon = {
       name = lib.mkOption {
         type = lib.types.str;
-        default = "breeze-dark";
+        default = "Papirus-Dark";
       };
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.libsForQt5.breeze-icons;
+        default = pkgs.papirus-icon-theme;
       };
     };
 
@@ -122,11 +202,8 @@ in
 
     qt = {
       enable = true;
-      platformTheme = "kde";
-      style = {
-        name = "breeze";
-        package = qt.package;
-      };
+      platformTheme = "qtct";
+      style.name = "kvantum";
     };
 
     gtk = {
@@ -144,174 +221,11 @@ in
     };
 
     xdg.configFile = {
-      # breezerc.text = toINI {
-      #   Style.TabBarDrawCenteredTabs = true;
-      # };
-
-      # yes, kde nowdays just embeds the whole colorscheme to the config
-      kdeglobals.text = toINI {
-        General = {
-          Name = "Breeze Dark";
-          ColorScheme = "BreezeDark";
-          XftHintStyle = "hintslight";
-          XftSubPixel = "rgb";
-          fixed = "Noto Sans Mono,10,-1,5,50,0,0,0,0,0";
-          shadeSortColumn = true;
-          smallestReadableFont = "Noto Sans,8,-1,5,50,0,0,0,0,0";
-        };
-        Icons.Theme = "breeze-dark";
-        KDE = {
-          contrast = 4;
-          LookAndFeelPackage = "org.kde.breezedark.desktop";
-        };
-        WM = {
-          activeBackground = "49,54,59";
-          activeBlend = "252,252,252";
-          activeForeground = "252,252,252";
-          inactiveBackground = "42,46,50";
-          inactiveBlend = "161,169,177";
-          inactiveForeground = "161,169,177";
-        };
-        "ColorEffects:Disabled" = {
-          Color = "56,56,56";
-          ColorAmount = "0";
-          ColorEffect = "0";
-          ContrastAmount = "0.65";
-          ContrastEffect = "1";
-          IntensityAmount = "0.1";
-          IntensityEffect = "2";
-        };
-        "ColorEffects:Inactive" = {
-          ChangeSelectionColor = "true";
-          Color = "112,111,110";
-          ColorAmount = "0.025";
-          ColorEffect = "2";
-          ContrastAmount = "0.1";
-          ContrastEffect = "2";
-          Enable = "false";
-          IntensityAmount = "0";
-          IntensityEffect = "0";
-
-        };
-        "Colors:Button" = {
-          BackgroundAlternate = "30,87,116";
-          BackgroundNormal = "49,54,59";
-          DecorationFocus = "61,174,233";
-          DecorationHover = "61,174,233";
-          ForegroundActive = "61,174,233";
-          ForegroundInactive = "161,169,177";
-          ForegroundLink = "29,153,243";
-          ForegroundNegative = "218,68,83";
-          ForegroundNeutral = "246,116,0";
-          ForegroundNormal = "252,252,252";
-          ForegroundPositive = "39,174,96";
-          ForegroundVisited = "155,89,182";
-
-        };
-        "Colors:Complementary" = {
-          BackgroundAlternate = "30,87,116";
-          BackgroundNormal = "42,46,50";
-          DecorationFocus = "61,174,233";
-          DecorationHover = "61,174,233";
-          ForegroundActive = "61,174,233";
-          ForegroundInactive = "161,169,177";
-          ForegroundLink = "29,153,243";
-          ForegroundNegative = "218,68,83";
-          ForegroundNeutral = "246,116,0";
-          ForegroundNormal = "252,252,252";
-          ForegroundPositive = "39,174,96";
-          ForegroundVisited = "155,89,182";
-
-        };
-        "Colors:Header" = {
-          BackgroundAlternate = "42,46,50";
-          BackgroundNormal = "49,54,59";
-          DecorationFocus = "61,174,233";
-          DecorationHover = "61,174,233";
-          ForegroundActive = "61,174,233";
-          ForegroundInactive = "161,169,177";
-          ForegroundLink = "29,153,243";
-          ForegroundNegative = "218,68,83";
-          ForegroundNeutral = "246,116,0";
-          ForegroundNormal = "252,252,252";
-          ForegroundPositive = "39,174,96";
-          ForegroundVisited = "155,89,182";
-
-        };
-        "Colors:Header][Inactive" = {
-          BackgroundAlternate = "49,54,59";
-          BackgroundNormal = "42,46,50";
-          DecorationFocus = "61,174,233";
-          DecorationHover = "61,174,233";
-          ForegroundActive = "61,174,233";
-          ForegroundInactive = "161,169,177";
-          ForegroundLink = "29,153,243";
-          ForegroundNegative = "218,68,83";
-          ForegroundNeutral = "246,116,0";
-          ForegroundNormal = "252,252,252";
-          ForegroundPositive = "39,174,96";
-          ForegroundVisited = "155,89,182";
-
-        };
-        "Colors:Selection" = {
-          BackgroundAlternate = "30,87,116";
-          BackgroundNormal = "61,174,233";
-          DecorationFocus = "61,174,233";
-          DecorationHover = "61,174,233";
-          ForegroundActive = "252,252,252";
-          ForegroundInactive = "161,169,177";
-          ForegroundLink = "253,188,75";
-          ForegroundNegative = "176,55,69";
-          ForegroundNeutral = "198,92,0";
-          ForegroundNormal = "252,252,252";
-          ForegroundPositive = "23,104,57";
-          ForegroundVisited = "155,89,182";
-
-        };
-        "Colors:Tooltip" = {
-          BackgroundAlternate = "42,46,50";
-          BackgroundNormal = "49,54,59";
-          DecorationFocus = "61,174,233";
-          DecorationHover = "61,174,233";
-          ForegroundActive = "61,174,233";
-          ForegroundInactive = "161,169,177";
-          ForegroundLink = "29,153,243";
-          ForegroundNegative = "218,68,83";
-          ForegroundNeutral = "246,116,0";
-          ForegroundNormal = "252,252,252";
-          ForegroundPositive = "39,174,96";
-          ForegroundVisited = "155,89,182";
-
-        };
-        "Colors:View" = {
-          BackgroundAlternate = "35,38,41";
-          BackgroundNormal = "27,30,32";
-          DecorationFocus = "61,174,233";
-          DecorationHover = "61,174,233";
-          ForegroundActive = "61,174,233";
-          ForegroundInactive = "161,169,177";
-          ForegroundLink = "29,153,243";
-          ForegroundNegative = "218,68,83";
-          ForegroundNeutral = "246,116,0";
-          ForegroundNormal = "252,252,252";
-          ForegroundPositive = "39,174,96";
-          ForegroundVisited = "155,89,182";
-
-        };
-        "Colors:Window" = {
-          BackgroundAlternate = "49,54,59";
-          BackgroundNormal = "42,46,50";
-          DecorationFocus = "61,174,233";
-          DecorationHover = "61,174,233";
-          ForegroundActive = "61,174,233";
-          ForegroundInactive = "161,169,177";
-          ForegroundLink = "29,153,243";
-          ForegroundNegative = "218,68,83";
-          ForegroundNeutral = "246,116,0";
-          ForegroundNormal = "252,252,252";
-          ForegroundPositive = "39,174,96";
-        };
+      "Kvantum/kvantum.kvconfig".text = toINI {
+        General.theme = qt.kvantum-theme;
       };
+      "qt5ct/qt5ct.conf".text = toQtct pkgs.qt5ct;
+      "qt6ct/qt6ct.conf".text = toQtct pkgs.qt6ct;
     };
   };
 }
