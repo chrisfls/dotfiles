@@ -11,13 +11,14 @@ in
     home.packages = [ pkgs.qview ];
 
     xdg.mimeApps.defaultApplications = {
+      "image/*" = desktop;
+      "image/bmp" = desktop;
+      "image/gif" = desktop;
       "image/jpeg" = desktop;
       "image/png" = desktop;
-      "image/gif" = desktop;
-      "image/bmp" = desktop;
+      "image/svg+xml" = desktop;
       "image/tiff" = desktop;
       "image/webp" = desktop;
-      "image/svg+xml" = desktop;
       "image/x-icon" = desktop;
     };
   };

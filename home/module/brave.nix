@@ -35,16 +35,20 @@ in
     xdg.mimeApps.defaultApplications =
       let desktop = "brave-browser.desktop";
       in {
-        "x-scheme-handler/http" = desktop;
-        "x-scheme-handler/https" = desktop;
-        "x-scheme-handler/chrome" = desktop;
-        "text/html" = desktop;
+        "application/pdf" = desktop;
         "application/x-extension-htm" = desktop;
         "application/x-extension-html" = desktop;
         "application/x-extension-shtml" = desktop;
-        "application/xhtml+xml" = desktop;
-        "application/x-extension-xhtml" = desktop;
         "application/x-extension-xht" = desktop;
+        "application/x-extension-xhtml" = desktop;
+        "application/xhtml+xml" = desktop;
+        "text/html" = desktop;
+        "x-scheme-handler/about" = desktop;
+        "x-scheme-handler/chrome" = desktop;
+        "x-scheme-handler/ftp" = desktop;
+        "x-scheme-handler/http" = desktop;
+        "x-scheme-handler/https" = desktop;
+        "x-scheme-handler/unknown" = desktop;
       };
 
     xsession.windowManager.i3.config.modes.apps."b" =

@@ -282,6 +282,10 @@ in
               command = "move position center";
               criteria.class = "qps";
             }
+            { 
+              command = "resize set 1280 px 720 px, move position center";
+              criteria.class = "WebCord";
+            }
           ];
           hideEdgeBorders = "smart";
           titlebar = false;

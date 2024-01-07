@@ -61,6 +61,7 @@ in
         pkgs.xdotool
         pkgs.xorg.xev
         pkgs.xorg.xkill
+        pkgs.xdg-utils
 
         # desktop pkgs
         pkgs.libsForQt5.kdialog # dialogs and widgets
@@ -77,11 +78,11 @@ in
         # common apps
         pkgs.copyq # clipboard manager
         pkgs.featherpad # simple text editor
-        pkgs.libsForQt5.kcalc # calculator
+        pkgs.qalculate-qt # calculator
         pkgs.libsForQt5.kolourpaint # simple image editor
-        pkgs.libsForQt5.vvave # music player [or elisa]
+        (mesa { pkg = pkgs.libsForQt5.vvave; exe = "vvave"; }) # music player [or elisa]
         pkgs.lxqt.qps # system monitor
-        pkgs.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
+        (mesa { pkg = pkgs.mpc-qt; exe = "mpc-qt"; }) # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
 
         # personal cli pkgs
         pkgs.rclone
@@ -120,7 +121,20 @@ in
 
       xdg = {
         enable = true;
-        mimeApps.enable = true;
+        mimeApps = {
+          enable = true;
+          defaultApplications = {
+            "inode/directory" = "pcmanfm-qt.desktop";
+            "text/plain" = "featherpad.desktop";
+            "application/zip" = "lxqt-archiver.desktop";
+            "application/rar" = "lxqt-archiver.desktop";
+            "application/7z" = "lxqt-archiver.desktop";
+            "application/*tar" = "lxqt-archiver.desktop";
+            "video/*" = "io.github.mpc_qt.Mpc-Qt.desktop";
+            "audio/*" = "org.kde.vvave.desktop";
+            "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
+          };
+        };
         userDirs.enable = true;
         configFile."kwalletrc".text =
           ''
@@ -182,7 +196,8 @@ in
           keybindings."Control+Mod1+Delete" = "exec gtk-launch qps";
 
           modes.apps = {
-            "c" = "exec gtk-launch copyq; mode default";
+            "c" = "exec gtk-launch io.github.Qalculate.qalculate-qt; mode default";
+            "shift+c" = "exec gtk-launch com.github.hluk.copyq; mode default";
             "d" = "exec gtk-launch webcord; mode default";
             "e" = "exec gtk-launch pcmanfm-qt; mode default";
             "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux; mode default";
