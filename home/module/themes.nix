@@ -135,7 +135,7 @@ in
     cursor = {
       name = lib.mkOption {
         type = lib.types.str;
-        default = "breeze_cursors";
+        default = "Simp1e-Mix-Dark"; # breeze_cursors
       };
 
       size = lib.mkOption {
@@ -145,7 +145,16 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.libsForQt5.breeze-qt5;
+        default = pkgs.simp1e-cursors.overrideAttrs (prev: rec {
+          version = "20230817";
+          src = pkgs.fetchFromGitLab {
+            owner = "cursors";
+            repo = "simp1e";
+            rev = "3de6aa81683311bfca85e97cff520b3729ebc42a";
+            sha256 = "sha256-p8+3LbPQ1siqSfyxMBEOiB0pR7x+c8/nAwZxZAN5sXU=";
+            fetchSubmodules = true;
+          };
+        }); # pkgs.libsForQt5.breeze-qt5
       };
     };
 
