@@ -159,15 +159,16 @@ in
         # shift for main menu
         "${mod}+Shift+Return" = script "rofi-run";
 
+        # shift for terminal
+        "${mod}+Shift+BackSpace" = script "rofi-calc";
+        "${mod}+Shift+semicolon" = script "rofi-calc";
+
         # power menu
         "${mod}+q" = script "rofi-power-menu";
 
         # jump to window
         "${mod}+w" = script "rofi-windows";
 
-        # Shift cmd for alacritty
-        "${mod}+Shift+BackSpace" = script "rofi-calc";
-        "${mod}+Shift+semicolon" = script "rofi-calc";
       };
     };
 

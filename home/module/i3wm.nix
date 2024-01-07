@@ -313,12 +313,12 @@ in
           # quit sessions
           "Control+Mod1+Escape" = "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
 
+          # open main menu
+          "${mod}+Return" = "exec ${menu}";
+
           # open terminal
           "${mod}+BackSpace" = "exec ${terminal}";
-
-          # open menu
-          "${mod}+Return" = "exec ${menu}";
-          "${mod}+semicolon" = "exec ${menu}";
+          "${mod}+semicolon" = "exec ${terminal}";
 
           ######## #### ## #
           # WINDOW CONTROLS
