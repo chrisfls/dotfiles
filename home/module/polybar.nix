@@ -1,7 +1,7 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.module.polybar) enable;
-  inherit (config.module.themes.color-scheme) background foreground black red blue;
+  inherit (config.module.themes.color-scheme) background foreground black redBright blueBright;
 
   polybar-msg = "${config.services.polybar.package}/bin/polybar-msg";
   bluetoothctl = "${pkgs.bluez}/bin/bluetoothctl";
@@ -136,11 +136,13 @@ in
           foreground = "\"${foreground}\"";
 
           # modules
-          modules-left = "\"menu menu-l workspaces even-l toggle notifications tray right\"";
-          modules-center = "\"left title right \"";
-          modules-right = "\"left filesystem even-r temperature odd-r memory even-r cpu odd-r wired even-r wireless odd-r bluetooth even-r audio odd-r date even-r time menu-r session\"";
+          modules-left = "\"workspaces even-l toggle notifications tray menu right\""; # menu menu-l 
+          modules-center = "\"title\""; # left right 
+          modules-right = "\"left filesystem even-r temperature odd-r memory even-r cpu odd-r wired even-r wireless odd-r bluetooth even-r audio odd-r date even-r time\""; #  menu-r session
+
           format-radius = "\"32.0\"";
         };
+        /*
         "module/menu" = {
           type = "\"custom/ipc\"";
 
@@ -167,6 +169,33 @@ in
           format-2-foreground = "\"${blue}\"";
           format-2-padding = "\"0\"";
         };
+        */
+        "module/menu" = {
+          type = "\"custom/ipc\"";
+
+          click-left = "\"${rofi-menu}\"";
+
+          # startup
+          initial = "\"1\"";
+          # move
+          hook-0 = "\"\"";
+          format-0 = "\" %{O-6}%{T2}%{T-}%{O3}\"";
+          format-0-background = "\"${black}\"";
+          format-0-foreground = "\"${foreground}\"";
+          format-0-padding = "\"0\"";
+          # resize
+          hook-1 = "\"\"";
+          format-1 = "\" %{O-6}%{T2}%{T-}%{O3}\"";
+          format-1-background = "\"${black}\"";
+          format-1-foreground = "\"${redBright}\"";
+          format-1-padding = "\"0\"";
+          # launcher
+          hook-2 = "\"\"";
+          format-2 = "\" %{O-6}%{T2}%{T-}%{O3}\"";
+          format-2-background = "\"${black}\"";
+          format-2-foreground = "\"${blueBright}\"";
+          format-2-padding = "\"0\"";
+        };
         "module/session" = {
           type = "\"custom/text\"";
 
@@ -183,19 +212,19 @@ in
           scroll-up = "\"${toggle} toggle notifications tray &\"";
           initial = "\"1\"";
           hook-0 = "\"\"";
-          format-0 = "\"%{T2}%{T-}\"";
+          format-0 = "\"%{T2}%{T-}\"";
           format-0-foreground = "\"${foreground}\"";
           format-0-background = "\"${black}\"";
           format-0-padding = "\"1\"";
           hook-1 = "\"\"";
-          format-1 = "\"%{T2}%{T-}\"";
+          format-1 = "\"%{T2}%{T-}\"";
           format-1-foreground = "\"${background}\"";
           format-1-background = "\"${black}\"";
           format-1-padding = "\"1\"";
         };
         "module/notifications" = {
           type = "\"custom/ipc\"";
-          hidden = "\"true\"";
+          hidden = "\"false\"";
           click-left = "\"${dunst-toggle} &\"";
           click-right = "\"rofi-dunst &\"";
           scroll-down = "\"${dunstctl} history-pop &\"";
@@ -215,7 +244,7 @@ in
         };
         "module/tray" = {
           type = "\"internal/tray\"";
-          hidden = "\"true\"";
+          hidden = "\"false\"";
           tray-spacing = "\"1pt\"";
           tray-padding = "\"1pt\"";
           format = "\"%{O-2}<tray>\"";
@@ -224,12 +253,21 @@ in
           tray-background = "\"${black}\"";
           tray-size = "\"75%\"";
         };
+        /*
         "module/title" = {
           type = "\"internal/xwindow\"";
           label = "\"%title:0:64:...%\"";
           label-background = "\"${black}\"";
           label-empty = "\"Desktop\"";
           label-empty-background = "\"${black}\"";
+        };
+        */
+        "module/title" = {
+          type = "\"internal/xwindow\"";
+          label = "\"%title:0:96:...%\"";
+          label-background = "\"${background}\"";
+          label-empty = "\"Desktop\"";
+          label-empty-background = "\"${background}\"";
         };
         "module/filesystem" = {
           type = "\"internal/fs\"";
@@ -305,7 +343,7 @@ in
           format-foreground = "\"${black}\"";
           format-background = "\"${foreground}\"";
 
-          format-warn = "\"%{F${red}}<ramp-load>%{F${red}} %{T2}%{T-} \"";
+          format-warn = "\"%{F${redBright}}<ramp-load>%{F${redBright}} %{T2}%{T-} \"";
           format-warn-foreground = "\"${black}\"";
           format-warn-background = "\"${foreground}\"";
         };
@@ -394,6 +432,7 @@ in
 
         };
         # TODO: replace with custom module to support calendar
+        /*
         "module/date" = {
           type = "\"custom/script\"";
           interval = "\"1.0\"";
@@ -405,6 +444,16 @@ in
           label-background = "\"${black}\"";
           label-foreground = "\"${foreground}\"";
           label-padding-right = "\"1\"";
+        };
+        */
+        "module/date" = {
+          type = "\"internal/date\"";
+          interval = "\"1.0\"";
+          time = "\"%a, %d %b %Y %{T2}󰃭%{T-}\"";
+
+          label = "\"%time% \"";
+          format-background = "\"${black}\"";
+          format-foreground = "\"${foreground}\"";
         };
         "module/time" = {
           type = "\"internal/date\"";
