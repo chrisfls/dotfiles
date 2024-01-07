@@ -5,8 +5,8 @@ let
   settings = pkgs.fetchFromGitHub {
     owner = "kress95";
     repo = "rofi";
-    rev = "6d280453c6a4d5baf284bc29dcb922567dc2b9ec";
-    sha256 = "sha256-ucUAFI5O+wYGkRqNSdkve9j21Xguzn3WhizzXNBSJ/0=";
+    rev = "62110b40c0c4a15ae45b6fbc7958d5a5cb6cbf62";
+    sha256 = "sha256-R0cr7io8m2z9r0T/4xbVtm5sGVaPDj80GEfXyBTWJI0=";
   };
 
   pkg =
