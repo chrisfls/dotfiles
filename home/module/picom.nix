@@ -1,15 +1,12 @@
 { config, lib, pkgs, specialArgs, ... }:
-let
-  inherit (config.module.picom) enable;
-  mesa = pkgs.usr.wrapMesaIf config.preset.non-nixos;
-in
+let inherit (config.module.picom) enable; in
 {
   options.module.picom.enable = lib.mkEnableOption "Enable picom module";
 
   config = lib.mkIf enable {
     services.picom = {
       enable = true;
-      package = mesa { pkg = pkgs.picom-next; exe = "picom"; };
+      package = pkgs.picom-next;
       extraArgs = [
         "--vsync-use-glfinish"
         "--glx-no-stencil"

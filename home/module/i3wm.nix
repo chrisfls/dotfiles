@@ -321,8 +321,8 @@ in
           "${mod}+Return" = "exec ${menu}";
 
           # open terminal
-          "${mod}+BackSpace" = "exec ${terminal}";
-          "${mod}+semicolon" = "exec ${terminal}";
+          "${mod}+BackSpace" = "exec --no-startup-id ${terminal}";
+          "${mod}+semicolon" = "exec --no-startup-id ${terminal}";
 
           ######## #### ## #
           # WINDOW CONTROLS

@@ -43,6 +43,11 @@ in
     packages = [ "chaotic-aur/xorg-server-git" ];
   };
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-25.9.0"
+    "openssl-1.1.1w"
+  ];
+
   programs.autorandr.profiles = {
     undocked = {
       fingerprint = { inherit eDP-1; };

@@ -2,17 +2,14 @@
 let
   inherit (config.module.sublime) enable;
   inherit (specialArgs) mkIfElse;
-  mesa = pkgs.usr.wrapMesaIf config.preset.non-nixos;
 in
 {
   options.module.sublime.enable = lib.mkEnableOption "Enable sublime module";
 
   config = lib.mkIf enable {
     home.packages = [
-      (mesa { pkg = pkgs.sublime4; exe = "sublime_text"; })
-      (mesa { pkg = pkgs.sublime-merge; exe = "sublime_merge"; })
+      pkgs.sublime4
+      pkgs.sublime-merge
     ];
-
-    nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1w" ];
   };
 }

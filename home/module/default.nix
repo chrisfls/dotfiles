@@ -21,13 +21,13 @@
     ./rofi.nix
     ./scaling.nix
     ./screenshot.nix
+    ./kitty.nix
     ./script.nix
     ./shell.nix
     ./steam.nix
     ./sublime.nix
     ./telegram.nix
     ./themes.nix
-    ./wezterm.nix
     ./xdg-desktop-portal.nix
   ];
 }

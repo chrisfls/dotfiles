@@ -6,22 +6,18 @@ let
 
   pkg =
     if config.preset.non-nixos then
-      pkgs.usr.wrapMesaIf true
-        {
-          pkg = pkgs.brave.overrideAttrs
-            (old: {
-              postFixup =
-                ''
-                  substituteInPlace $out/bin/brave \
-                    --replace mesa dummy-mesa
-                  substituteInPlace $out/bin/brave \
-                    --replace libva dummy-libva
-                  substituteInPlace $out/bin/brave \
-                    --replace "--enable-features=" "--enable-features=VaapiVideoDecodeLinuxGL,"
-                '';
-            });
-          exe = "brave";
-        }
+      pkgs.brave.overrideAttrs
+        (old: {
+          postFixup =
+            ''
+              substituteInPlace $out/bin/brave \
+                --replace mesa dummy-mesa
+              substituteInPlace $out/bin/brave \
+                --replace libva dummy-libva
+              substituteInPlace $out/bin/brave \
+                --replace "--enable-features=" "--enable-features=VaapiVideoDecodeLinuxGL,"
+            '';
+        })
 
     else
       pkgs.brave;

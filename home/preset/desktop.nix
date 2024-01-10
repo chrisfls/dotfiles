@@ -2,16 +2,10 @@
 let
   inherit (config.preset) desktop development non-nixos;
 
-  mesa = pkgs.usr.wrapMesaIf non-nixos;
-
-  mesa-packages = map (pkg: mesa { pkg = pkg; });
-
   # needed until these are done:
   #  - https://github.com/NixOS/nixpkgs/issues/228179
   #  - https://github.com/NixOS/nixpkgs/pull/273263 
-  audiotube = pkgs.libsForQt5.audiotube.overrideAttrs (old: {
-    buildInputs = old.buildInputs ++ [ pkgs.libsForQt5.kpurpose ];
-  });
+
 in
 
 {
@@ -36,7 +30,7 @@ in
         screenshot.enable = true;
         telegram.enable = true;
         themes.enable = true;
-        wezterm.enable = true;
+        kitty.enable = true;
         xdg-desktop-portal.enable = true;
       };
 
@@ -50,8 +44,6 @@ in
           xrdb = [ "extra/xorg-xrdb" ];
         };
       };
-
-      nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
       home.packages = [
         # cli pkgs
@@ -80,24 +72,26 @@ in
         pkgs.featherpad # simple text editor
         pkgs.qalculate-qt # calculator
         pkgs.libsForQt5.kolourpaint # simple image editor
-        (mesa { pkg = pkgs.libsForQt5.vvave; exe = "vvave"; }) # music player [or elisa]
+        pkgs.libsForQt5.juk # music player [or elisa]
         pkgs.lxqt.qps # system monitor
-        (mesa { pkg = pkgs.mpc-qt; exe = "mpc-qt"; }) # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
+        pkgs.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
 
         # personal cli pkgs
         pkgs.rclone
 
         # personal apps
         pkgs.qbittorrent
-        (mesa { pkg = audiotube; exe = "audiotube"; })
-        (mesa { pkg = pkgs.anydesk; exe = "anydesk"; })
-        (mesa { pkg = pkgs.gimp; exe = "gimp"; })
-        (mesa { pkg = pkgs.moonlight-qt; exe = "moonlight"; })
-        (mesa { pkg = pkgs.parsec-bin; exe = "parsecd"; })
-        (mesa { pkg = pkgs.pkgs.webcord-vencord; })
-        (mesa { pkg = pkgs.whatsapp-for-linux; exe = "whatsapp-for-linux"; })
-        # (mesa { pkg = pkgs.logseq; exe = "logseq"; })
-        # (mesa { pkg = pkgs.soulseekqt; })
+        pkgs.anydesk
+        pkgs.gimp
+        pkgs.moonlight-qt
+        pkgs.parsec-bin
+        pkgs.webcord-vencord
+        pkgs.whatsapp-for-linux
+        pkgs.logseq
+        # pkgs.soulseekqt; })
+        (pkgs.libsForQt5.audiotube.overrideAttrs (old: {
+          buildInputs = old.buildInputs ++ [ pkgs.libsForQt5.kpurpose ];
+        }))
       ];
 
       home.file.".xinitrc" = {
@@ -193,14 +187,14 @@ in
         enable = true;
         numlock.enable = true;
         windowManager.i3.config = {
-          keybindings."Control+Mod1+Delete" = "exec gtk-launch qps";
+          keybindings."Control+Mod1+Delete" = "exec --no-startup-id gtk-launch qps";
 
           modes.apps = {
-            "c" = "exec gtk-launch io.github.Qalculate.qalculate-qt; mode default";
-            "shift+c" = "exec gtk-launch com.github.hluk.copyq; mode default";
-            "d" = "exec gtk-launch webcord; mode default";
-            "e" = "exec gtk-launch pcmanfm-qt; mode default";
-            "w" = "exec gtk-launch com.github.eneshecan.WhatsAppForLinux; mode default";
+            "c" = "exec --no-startup-id gtk-launch io.github.Qalculate.qalculate-qt; mode default";
+            "shift+c" = "exec --no-startup-id gtk-launch com.github.hluk.copyq; mode default";
+            "d" = "exec --no-startup-id  gtk-launch webcord; mode default";
+            "e" = "exec --no-startup-id  gtk-launch pcmanfm-qt; mode default";
+            "w" = "exec --no-startup-id  gtk-launch com.github.eneshecan.WhatsAppForLinux; mode default";
           };
 
           startup = [

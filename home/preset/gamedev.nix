@@ -1,9 +1,5 @@
 { config, lib, pkgs, specialArgs, ... }:
-let
-  enable = config.preset.gamedev;
-  mesa = pkgs.usr.wrapMesaIf config.preset.non-nixos;
-in
-{
+let enable = config.preset.gamedev; in {
   options.preset.gamedev = lib.mkEnableOption "Enable gamedev preset";
 
   config = (lib.mkIf enable {
