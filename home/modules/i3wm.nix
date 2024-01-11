@@ -183,7 +183,7 @@ in
           focusedInactive = {
             border = colors.black; # titlebar border
             background = colors.blackDim; # titlebar background
-            text = colors.black; # titlebar text
+            text = colors.blackBright; # titlebar text
             childBorder = colors.blackDim; # window border
             indicator = colors.blackDim; # window target border
           };
