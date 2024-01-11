@@ -7,7 +7,9 @@ in
 
   config = (lib.mkIf enable {
     targets.genericLinux.enable = true;
+    
     xsession.importedVariables = [ "PATH" ];
+
     programs.fish.shellInit =
       ''
         set -e LIBGL_DRIVERS_PATH

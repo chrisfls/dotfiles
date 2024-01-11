@@ -28,6 +28,7 @@
     ./sublime.nix
     ./telegram.nix
     ./themes.nix
-    ./xdg-desktop-portal.nix
+    ./xdg.nix
+    ./xorg.nix
   ];
 }
