@@ -73,6 +73,7 @@ let inherit (config.presets) desktop; in {
       pkgs.webcord-vencord
       pkgs.whatsapp-for-linux
       pkgs.logseq
+      pkgs.ferdium
       # pkgs.soulseekqt
 
       # needed until these are done:

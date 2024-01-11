@@ -55,9 +55,10 @@ let inherit (config.modules.xorg) enable; in {
         modes.apps = {
           "c" = "exec --no-startup-id gtk-launch io.github.Qalculate.qalculate-qt; mode default";
           "shift+c" = "exec --no-startup-id gtk-launch com.github.hluk.copyq; mode default";
-          "d" = "exec --no-startup-id  gtk-launch webcord; mode default";
-          "e" = "exec --no-startup-id  gtk-launch pcmanfm-qt; mode default";
-          "w" = "exec --no-startup-id  gtk-launch com.github.eneshecan.WhatsAppForLinux; mode default";
+          "d" = "exec --no-startup-id gtk-launch webcord; mode default";
+          "e" = "exec --no-startup-id gtk-launch pcmanfm-qt; mode default";
+          "w" = "exec --no-startup-id gtk-launch com.github.eneshecan.WhatsAppForLinux; mode default";
+          "f" = "exec --no-startup-id gtk-launch ferdium; mode default";
         };
 
         startup = [
