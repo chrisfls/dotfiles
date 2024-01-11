@@ -1,11 +1,13 @@
 { config, lib, pkgs, specialArgs, ... }:
-let enable = config.preset.gamedev; in {
+let
+  inherit (config.preset) desktop gamedev;
+  enable = desktop && gamedev;
+in
+{
   options.preset.gamedev = lib.mkEnableOption "Enable gamedev preset";
 
-  config = (lib.mkIf enable {
+  config = lib.mkIf enable {
     preset.development = true;
-
-    module.steam.enable = true;
 
     home.packages = [
       pkgs.aseprite
@@ -15,5 +17,5 @@ let enable = config.preset.gamedev; in {
     ];
 
     nixpkgs.config.allowUnfree = true;
-  });
+  };
 }

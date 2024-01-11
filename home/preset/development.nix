@@ -7,8 +7,9 @@ in
 
   config = (lib.mkIf enable {
     module = {
-      shell.enable = true;
       agenix.enable = true;
+      podman.enable = true;
+      shell.enable = true;
     };
 
     home.packages = [
