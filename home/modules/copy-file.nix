@@ -14,7 +14,7 @@ in
       (dest: orig: {
         "copy-file:${dest}" = entryAfter [ "writeBoundary" ] ''
           $DRY_RUN_CMD mkdir -p $(dirname "${dest}")
-          $DRY_RUN_CMD ${pkgs.rsync}/bin/rsync -auv "${orig}" "${dest}"
+          $DRY_RUN_CMD cp -Ru "${orig}" "${dest}"
         '';
       })
       copyFile;
