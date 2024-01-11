@@ -1,10 +1,10 @@
 { config, lib, specialArgs, ... }:
 let
-  enable = config.preset.work;
+  enable = config.presets.work;
   ssot = specialArgs.ssot;
 in
 {
-  options.preset.work = lib.mkEnableOption "Enable work preset";
+  options.presets.work = lib.mkEnableOption "Enable work preset";
 
   config = (lib.mkIf enable {
     programs.git.includes = [

@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.preset) desktop development;
+  inherit (config.presets) desktop development;
   enable = desktop && development;
 in
 lib.mkIf enable {

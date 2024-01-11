@@ -1,9 +1,9 @@
 { config, inputs, lib, pkgs, ... }:
 let
-  enable = config.preset.development;
+  enable = config.presets.development;
 in
 {
-  options.preset.development = lib.mkEnableOption "Enable development preset";
+  options.presets.development = lib.mkEnableOption "Enable development preset";
 
   config = (lib.mkIf enable {
     modules = {

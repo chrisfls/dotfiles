@@ -1,13 +1,13 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.preset) desktop gamedev;
+  inherit (config.presets) desktop gamedev;
   enable = desktop && gamedev;
 in
 {
-  options.preset.gamedev = lib.mkEnableOption "Enable gamedev preset";
+  options.presets.gamedev = lib.mkEnableOption "Enable gamedev preset";
 
   config = lib.mkIf enable {
-    preset.development = true;
+    presets.development = true;
 
     home.packages = [
       pkgs.aseprite

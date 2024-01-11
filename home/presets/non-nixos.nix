@@ -1,9 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  enable = config.preset.non-nixos;
+  enable = config.presets.non-nixos;
 in
 {
-  options.preset.non-nixos = lib.mkEnableOption "Enable non-nixos preset";
+  options.presets.non-nixos = lib.mkEnableOption "Enable non-nixos preset";
 
   config = (lib.mkIf enable {
     targets.genericLinux.enable = true;

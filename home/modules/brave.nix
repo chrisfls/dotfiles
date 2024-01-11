@@ -5,7 +5,7 @@ let
   inherit (lib.trivial) pippe;
 
   pkg =
-    if config.preset.non-nixos then
+    if config.presets.non-nixos then
       pkgs.brave.overrideAttrs
         (old: {
           postFixup =

@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
-let inherit (config.preset) desktop; in {
-  options.preset.desktop = lib.mkEnableOption "Enable desktop preset";
+let inherit (config.presets) desktop; in {
+  options.presets.desktop = lib.mkEnableOption "Enable desktop preset";
 
   config = lib.mkIf desktop {
     modules = {

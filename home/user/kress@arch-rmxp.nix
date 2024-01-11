@@ -25,7 +25,7 @@ let
     '';
 in
 {
-  preset = {
+  presets = {
     non-nixos = true;
     development = true;
     desktop = true;

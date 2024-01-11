@@ -91,7 +91,7 @@ in
       Install.WantedBy = lib.mkIf (config.modules.i3wm.enable) (lib.mkForce [ "graphical-session-i3.target" ]);
 
       # home manager fix
-      Service.Environment = lib.mkIf (config.preset.non-nixos) (lib.mkForce [ ]);
+      Service.Environment = lib.mkIf (config.presets.non-nixos) (lib.mkForce [ ]);
     };
 
     # i3wm launch

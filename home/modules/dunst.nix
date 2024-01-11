@@ -9,7 +9,7 @@ in
 
   config = lib.mkIf enable {
     # home manager fix
-    systemd.user.services.dunst.Service.Environment = lib.mkIf (config.preset.non-nixos) (lib.mkForce [ ]);
+    systemd.user.services.dunst.Service.Environment = lib.mkIf (config.presets.non-nixos) (lib.mkForce [ ]);
 
     services.dunst = {
       enable = true;
