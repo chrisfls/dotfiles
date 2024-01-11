@@ -8,6 +8,7 @@ let inherit (config.modules.xdg-desktop-portal) enable; in {
       pkgs.xdg-desktop-portal-gtk # see "font rendering in GTK apps on KDE"
       pkgs.libsForQt5.xdg-desktop-portal-kde
       pkgs.libsForQt5.kde-cli-tools
+      pkgs.libsForQt5.konqueror
     ];
 
     home.sessionVariables = {
