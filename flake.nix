@@ -50,7 +50,7 @@
           extraSpecialArgs = mkExtraSpecialArgs pkgs;
 
           modules = [
-            ./home/module
+            ./home/modules
             ./home/preset
             ./home/user/${ssot.users.arch-rmxp.kress.id}.nix
           ];

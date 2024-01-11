@@ -6,7 +6,7 @@ in
   options.preset.development = lib.mkEnableOption "Enable development preset";
 
   config = (lib.mkIf enable {
-    module = {
+    modules = {
       agenix.enable = true;
       podman.enable = true;
       shell.enable = true;

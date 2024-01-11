@@ -2,10 +2,10 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
-  cfg = config.module.wsl;
+  cfg = config.modules.wsl;
 in
 {
-  options.module.wsl = {
+  options.modules.wsl = {
     enable = mkEnableOption "wsl module";
     vscode.enable = mkEnableOption "wsl vscode module";
   };

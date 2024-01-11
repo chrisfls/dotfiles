@@ -4,7 +4,7 @@ let
   enable = desktop && development;
 in
 lib.mkIf enable {
-  module = {
+  modules = {
     code.enable = true;
     sublime.enable = true;
     # helix.enable = true;

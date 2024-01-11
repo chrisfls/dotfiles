@@ -14,7 +14,7 @@
     ../../../../home/wsl
   ];
 
-  module = {
+  modules = {
     default-browser = {
       enable = true;
       name = "chromium-browser.desktop";

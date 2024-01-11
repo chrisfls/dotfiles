@@ -3,7 +3,7 @@ let inherit (config.preset) desktop; in {
   options.preset.desktop = lib.mkEnableOption "Enable desktop preset";
 
   config = lib.mkIf desktop {
-    module = {
+    modules = {
       autorandr.enable = true;
       brave.enable = true;
       dunst.enable = true;

@@ -8,12 +8,12 @@
 { config, lib, pkgs, ... }:
 with lib;
 let
-  cfg = config.module.emacs;
+  cfg = config.modules.emacs;
   emacs = "${config.home.homeDirectory}/.config/emacs";
   # doom = "${emacs}/bin/doom";
 in
 {
-  options.module.emacs = {
+  options.modules.emacs = {
     enable = mkEnableOption "emacs module";
     # doomRev = mkOption {
     #   type = types.str;

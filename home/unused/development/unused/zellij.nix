@@ -1,10 +1,10 @@
 { config, pkgs, lib, ... }:
 with lib;
 let
-  cfg = config.module.zellij;
+  cfg = config.modules.zellij;
 in
 {
-  options.module.zellij = {
+  options.modules.zellij = {
     enable = mkEnableOption "zellij module";
     shell = mkOption {
       type = types.str;
