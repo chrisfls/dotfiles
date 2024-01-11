@@ -19,6 +19,7 @@ let inherit (config.modules.xorg) enable; in {
       pkgs.xdotool
       pkgs.xorg.xev
       pkgs.xorg.xkill
+      pkgs.xorg.xset
     ];
 
     home.file.".xinitrc" = {
@@ -43,6 +44,11 @@ let inherit (config.modules.xorg) enable; in {
     xsession = {
       enable = true;
       numlock.enable = true;
+      initExtra =
+        ''
+          xset s off -dpms
+        '';
+
       windowManager.i3.config = {
         keybindings."Control+Mod1+Delete" = "exec --no-startup-id gtk-launch qps";
 
