@@ -63,8 +63,11 @@ in
       select-split = # select split direction
         # not available in tabbed containers
         ''
-          id=$(recurse(.nodes[];.nodes!=null)|select(.nodes[].focused and .layout != "tabbed").id)
-          if [ "$id" ]; then
+          tree=$(i3-msg -t get_tree)
+          layout="$(echo $tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused)|"\(.layout)"')"
+          id="$(echo $tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes == [] and .focused)|"\(.id)"')"
+
+          if [ "$id" ] && [ $layout != "tabbed" ]; then
             i3-msg "[con_id=\"$id\"] split toggle"
           fi
         '';
@@ -142,7 +145,6 @@ in
 
             tree=$(i3-msg -t get_tree)
             layout="$(echo $tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused)|"\(.layout)"')"
-
             eval "$(echo $tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes == [] and .focused)|"id=\(.id) width=\(.rect.width) height=\(.rect.height)"')"
 
             if [ $width -gt $height ] && [ $layout = "splitv" ]; then
@@ -282,7 +284,7 @@ in
               command = "move position center";
               criteria.class = "qps";
             }
-            { 
+            {
               command = "resize set 1280 px 720 px, move position center";
               criteria.class = "WebCord";
             }
@@ -318,11 +320,11 @@ in
           "Control+Mod1+Escape" = "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
 
           # open main menu
-          "${mod}+Return" = "exec ${menu}";
+          "${mod}+Return" = menu;
 
           # open terminal
-          "${mod}+BackSpace" = "exec --no-startup-id ${terminal}";
-          "${mod}+semicolon" = "exec --no-startup-id ${terminal}";
+          "${mod}+BackSpace" = terminal;
+          "${mod}+semicolon" = terminal;
 
           ######## #### ## #
           # WINDOW CONTROLS

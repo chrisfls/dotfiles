@@ -18,9 +18,9 @@ in
       ''
         dir=$(${pkgs.xcwd}/bin/xcwd);
         if [ "$dir" = "${config.home.homeDirectory}" ]; then
-          exec= kitty} start;
+          exec ${kitty} -1
         else
-          exec ${kitty} start --cwd "$dir";
+          exec ${kitty} -1 -d "$dir"
         fi;
       '';
 

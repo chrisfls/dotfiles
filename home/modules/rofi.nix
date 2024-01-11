@@ -29,7 +29,7 @@ let
 
   mod = config.xsession.windowManager.i3.config.modifier;
 
-  script = name: "exec \"$SCRIPT/${name}\"";
+  script = name: "exec --no-startup-id \"$SCRIPT/${name}\"";
 
   # rofi notifications menu, not dash because arrays
   rofi-dunst = pkgs.writeShellScriptBin "rofi-dunst"

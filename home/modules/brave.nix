@@ -49,6 +49,6 @@ in
 
     xsession.windowManager.i3.config.modes.apps."b" =
       lib.mkIf config.modules.i3wm.enable
-        "exec gtk-launch brave-browser; mode default";
+        "exec --no-startup-id gtk-launch brave-browser; mode default";
   };
 }
