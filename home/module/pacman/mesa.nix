@@ -29,5 +29,3 @@ let inherit (config.pacman) enable; in lib.mkIf enable {
   ];
 
 }
-
-#export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/podman/podman.sock"

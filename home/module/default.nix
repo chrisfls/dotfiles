@@ -12,19 +12,19 @@
     ./fonts.nix
     ./i3wm.nix
     ./jamesdsp.nix
+    ./kitty.nix
     ./loopback-toggle.nix
     ./micro.nix
     ./pacman.nix
     ./picom.nix
+    ./podman.nix
     ./polybar.nix
     ./qview.nix
     ./rofi.nix
     ./scaling.nix
     ./screenshot.nix
-    ./kitty.nix
     ./script.nix
     ./shell.nix
-    ./steam.nix
     ./sublime.nix
     ./telegram.nix
     ./themes.nix
