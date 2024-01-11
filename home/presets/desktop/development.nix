@@ -8,6 +8,6 @@ lib.mkIf enable {
     code.enable = true;
     sublime.enable = true;
     # helix.enable = true;
-    # emacs.enable = true;
+    emacs.enable = true;
   };
 }

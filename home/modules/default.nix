@@ -8,6 +8,7 @@
     ./code.nix
     ./copy-file.nix
     ./dunst.nix
+    ./emacs.nix
     ./fontconfig.nix
     ./fonts.nix
     ./i3wm.nix
