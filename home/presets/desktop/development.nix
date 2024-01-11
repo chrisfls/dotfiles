@@ -7,7 +7,7 @@ lib.mkIf enable {
   modules = {
     code.enable = true;
     sublime.enable = true;
-    # helix.enable = true;
+    helix.enable = true;
     emacs.enable = true;
   };
 

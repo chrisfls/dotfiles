@@ -11,6 +11,7 @@
     ./emacs.nix
     ./fontconfig.nix
     ./fonts.nix
+    ./helix.nix
     ./i3wm.nix
     ./jamesdsp.nix
     ./kitty.nix
