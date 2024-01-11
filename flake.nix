@@ -52,7 +52,7 @@
           modules = [
             ./home/modules
             ./home/presets
-            ./home/user/${ssot.users.arch-rmxp.kress.id}.nix
+            ./home/users/${ssot.users.arch-rmxp.kress.id}.nix
           ];
         };
       };
