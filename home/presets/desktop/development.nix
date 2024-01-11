@@ -10,4 +10,6 @@ lib.mkIf enable {
     # helix.enable = true;
     emacs.enable = true;
   };
+
+  home.packages = [ pkgs.dbeaver ];
 }
