@@ -210,7 +210,7 @@ in
           };
         };
         gaps = {
-          inner = 16;
+          inner = 18;
           outer = 0;
           smartBorders = "on";
           smartGaps = true;
