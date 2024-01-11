@@ -38,14 +38,14 @@ let
       ids=($(echo $history | jq -r .id.data))
       summaries=("$(echo $history | jq -r .summary.data)" "󰃢 Clear All")
       selected=$(
-        printf "%s\n" "$\{summaries[@]}" | grep -v '^$' \
+        printf "%s\n" "''${summaries[@]}" | grep -v '^$' \
           | ${rofi} -dmenu -theme \"${theme'}\" -format i -p " "
       )
       if [[ -n $selected ]]; then
-        if [[ $selected -lt $\{#summaries[@]} ]]; then
-          dunstctl history-pop "$\{ids[$selected]}"
+        if [[ $selected -lt ''${#summaries[@]} ]]; then
+          dunstctl history-pop "''${ids[$selected]}"
         else
-          for id in "$\{ids[@]}"; do
+          for id in "''${ids[@]}"; do
             dunstctl history-rm "$id"
           done
         fi
