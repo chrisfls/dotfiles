@@ -6,10 +6,20 @@ in
 lib.mkIf enable {
   modules = {
     code.enable = true;
-    sublime.enable = true;
     helix.enable = true;
     emacs.enable = true;
   };
 
-  home.packages = [ pkgs.dbeaver ];
+  home.packages = [
+    pkgs.dbeaver
+    pkgs.gittyup
+
+    # trying because I'm curious
+    pkgs.github-desktop
+    pkgs.tig
+
+    # eval which I'll use
+    pkgs.gitui
+    pkgs.lazygit
+  ];
 }
