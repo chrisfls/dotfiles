@@ -66,6 +66,7 @@ let inherit (config.modules.xorg) enable; in {
           { notification = false; command = "nm-tray"; }
           { notification = false; command = "webcord --start-minimized"; }
           { notification = false; command = "whatsapp-for-linux"; }
+          { notification = false; command = "ferdium"; }
         ];
       };
     };
