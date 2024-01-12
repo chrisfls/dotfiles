@@ -21,7 +21,7 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "Cascadia Mono" :size 12.0) ; :weight 'semi-light
+(setq doom-font (font-spec :family "Cascadia Code" :size 12.0) ; :weight 'semi-light
       doom-variable-pitch-font (font-spec :family "Noto Sans" :size 13.0))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -77,4 +77,46 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(setq-default cursor-type 'bar) 
+(setq doom-modeline-modal t)
+(setq doom-modeline-modal-icon t)
+
+(setq-default cursor-type 'bar)
+
+(defun god-mode-enabled-update-cursor ()
+  "Change cursor shape when god mode is enabled"
+  (setq cursor-type 'box))
+
+(defun god-mode-disabled-update-cursor ()
+  "Change cursor shape when god mode is disabled"
+  (setq cursor-type (if buffer-read-only 'box nil)))
+
+(use-package god-mode
+  :hook
+  (god-mode-enabled . god-mode-enabled-update-cursor)
+  (god-mode-disabled . god-mode-disabled-update-cursor)
+  :bind (:map god-local-mode-map
+         ("z" . repeat)
+         ("C-x C-1" . delete-other-windows)
+         ("C-x C-2" . split-window-below)
+         ("C-x C-3" . split-window-right)
+         ("C-x C-0" . delete-window))
+  :config
+  (setq god-exempt-major-modes nil)
+  (setq god-exempt-predicates nil)
+  (setq god-mode-enable-function-key-translation nil)
+  (setq god-mode-alist '((nil . "C-"))))
+
+;;(defun god-mode-all-enable ()
+;;  "Enable god mode."
+;;  (interactive)
+;;  (god-mode-all 1))
+;;(defun god-mode-all-disable ()
+;;  "Disable god mode."
+;;  (interactive)
+;;  (god-mode-all -1))
+
+(use-package key-chord :defer 1
+  :config
+  (key-chord-mode 1)
+  (key-chord-define-global "fd" 'god-mode-all)
+  (key-chord-define-global "jk" 'god-mode-all))
