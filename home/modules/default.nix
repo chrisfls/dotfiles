@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   imports = [
     ./agenix.nix
     ./autorandr.nix
@@ -15,6 +14,7 @@
     ./i3wm.nix
     ./jamesdsp.nix
     ./kitty.nix
+    ./lite-xl.nix
     ./loopback-toggle.nix
     ./micro.nix
     ./pacman.nix

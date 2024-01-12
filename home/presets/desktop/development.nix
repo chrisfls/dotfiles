@@ -8,6 +8,7 @@ lib.mkIf enable {
     code.enable = true;
     helix.enable = true;
     emacs.enable = true;
+    lite-xl.enable = true;
   };
 
   home.packages = [
