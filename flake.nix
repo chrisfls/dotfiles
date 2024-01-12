@@ -35,7 +35,7 @@
 
   outputs = { nixpkgs, home-manager, ... }@inputs:
     let
-      inherit (import ./special inputs) specialArgs mkExtraSpecialArgs;
+      specialArgs = import ./special inputs;
       inherit (specialArgs) ssot;
       forEachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
     in
@@ -47,7 +47,7 @@
             overlays = [ (import ./pkgs) ];
           };
 
-          extraSpecialArgs = mkExtraSpecialArgs pkgs;
+          extraSpecialArgs = specialArgs;
 
           modules = [
             ./home/modules
