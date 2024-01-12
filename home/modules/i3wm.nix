@@ -342,9 +342,8 @@ in
           "${mod}+f" = "floating toggle";
           "${mod}+shift+f" = "floating enable; sticky toggle";
 
-          # [m] - toggle maximize / minimize
+          # [m] - toggle maximize
           "${mod}+m" = "fullscreen toggle";
-          "${mod}+shift+m" = "move scratchpad";
 
           # [r] - resize mode
           "${mod}+r" = "mode resize";
@@ -383,6 +382,7 @@ in
 
           # [v] - scratchpad show
           "${mod}+v" = "scratchpad show";
+          "${mod}+shift+v" = "move scratchpad";
 
           # tabbed windows super tab
           "${mod}+Tab" = "focus prev sibling";
