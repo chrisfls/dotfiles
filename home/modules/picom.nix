@@ -65,7 +65,7 @@ let inherit (config.modules.picom) enable; in
         blur-background-frame = false;
         blur-strength = 4;
         # only blur rofi, dunst and alacritty
-        blur-background-exclude = "!(class_g = 'Rofi' || class_g = 'Alacritty' || class_g = 'org.wezfurlong.wezterm' || class_g = 'Dunst')";
+        blur-background-exclude = "!(class_g = 'Rofi' || class_g = 'Alacritty' || class_g = 'org.wezfurlong.wezterm' || class_g = 'kitty' || class_g = 'Dunst')";
       };
     };
   };
