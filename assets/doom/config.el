@@ -92,6 +92,9 @@
   (god-mode-enabled . god-mode-enabled-update-cursor)
   (god-mode-disabled . god-mode-disabled-update-cursor)
   :bind (:map god-local-mode-map
+         ("C-." . repeat)
+         ("M-g C-c" . avy-goto-char)
+         ("M-g C-g" . avy-goto-line)
          ("C-x C-1" . delete-other-windows)
          ("C-x C-2" . split-window-below)
          ("C-x C-3" . split-window-right)
@@ -112,6 +115,6 @@
   :init
   (key-chord-mode 1)
   :config
-  (key-chord-define-global "fd" 'god-mode-all)
-  (key-chord-define-global "fj" 'repeat)
+  (define-key-chord-alias "df" "ESC")
+  (key-chord-define-global "fj" 'god-mode-all)
   (define-key-chord-alias "jk" "ESC"))
