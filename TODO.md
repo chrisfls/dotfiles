@@ -1,6 +1,5 @@
 ### systemd
 
-- Migrate rclone service to home-manager (and ensure it is working)
 - Fix udiskie service
 - Fix xsettingsd service
 
