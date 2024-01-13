@@ -266,7 +266,7 @@ in
         */
         "module/title" = {
           type = "\"internal/xwindow\"";
-          label = "\"%title:0:256:...%\"";
+          label = "\"%title:0:100:...%\"";
           label-background = "\"${background}\"";
           label-empty = "\"Desktop\"";
           label-empty-background = "\"${background}\"";
