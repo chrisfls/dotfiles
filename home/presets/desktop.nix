@@ -15,6 +15,7 @@ let inherit (config.presets) desktop; in {
       loopback-toggle.enable = true;
       micro = { enable = true; desktop = true; };
       picom.enable = true;
+      rclone.enable = true;
       polybar.enable = true;
       qview.enable = true;
       rofi.enable = true;
@@ -62,7 +63,7 @@ let inherit (config.presets) desktop; in {
       # ######## #### ## #
 
       # personal cli pkgs
-      pkgs.rclone
+      pkgs.wootility
 
       # personal apps
       pkgs.qbittorrent

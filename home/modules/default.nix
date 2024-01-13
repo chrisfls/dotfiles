@@ -22,6 +22,7 @@
     ./podman.nix
     ./polybar.nix
     ./qview.nix
+    ./rclone.nix
     ./rofi.nix
     ./scaling.nix
     ./screenshot.nix
