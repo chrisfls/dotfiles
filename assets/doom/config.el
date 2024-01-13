@@ -93,8 +93,8 @@
   (god-mode-disabled . god-mode-disabled-update-cursor)
   :bind (:map god-local-mode-map
          ("C-." . repeat)
-         ("M-g C-c" . avy-goto-char)
-         ("M-g C-g" . avy-goto-line)
+         ("M-g c" . avy-goto-char)
+         ("M-g g" . avy-goto-line)
          ("C-x C-1" . delete-other-windows)
          ("C-x C-2" . split-window-below)
          ("C-x C-3" . split-window-right)
