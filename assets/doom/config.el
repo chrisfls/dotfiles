@@ -115,6 +115,5 @@
   :init
   (key-chord-mode 1)
   :config
-  (define-key-chord-alias "df" "ESC")
-  (key-chord-define-global "fj" 'god-mode-all)
-  (define-key-chord-alias "jk" "ESC"))
+  (setq key-chord-two-keys-delay 0.05)
+  (define-key-chord-alias "fd" 'god-mode-all))
