@@ -1,3 +1,4 @@
+# TODO: https://github.com/polybar/polybar-scripts/blob/master/polybar-scripts/system-usb-udev/system-usb-udev.sh
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.modules.polybar) enable;
@@ -387,7 +388,6 @@ in
           label-disconnected = "\"off\"";
         };
         "module/bluetooth" = {
-          # TODO: install bluez on user level https://bbs.archlinux.org/viewtopic.php?id=215080
           type = "\"custom/ipc\"";
           click-left = "\"${bluetooth} --toggle &\"";
           click-right = "\"${pkgs.libsForQt5.bluedevil}/bin/bluedevil-wizard &\"";
@@ -405,8 +405,6 @@ in
           format-2 = "\"%{T2}%{T-} \"";
           format-2-foreground = "\"${foreground}\"";
           format-2-background = "\"${black}\"";
-
-          # TODO: https://github.com/polybar/polybar-scripts/blob/master/polybar-scripts/system-usb-udev/system-usb-udev.sh
         };
         "module/audio" = {
           type = "\"custom/ipc\"";
