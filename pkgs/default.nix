@@ -10,4 +10,6 @@ in
     qt = import ./qt.nix prev;
     string = import ./string.nix;
   };
+
+  mopidy-youtube = callPackage ./mopidy-youtube.nix;
 }
