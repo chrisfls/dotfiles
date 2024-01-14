@@ -12,6 +12,7 @@ in
     home.packages = [
       pkgs.aseprite
       pkgs.krita
+      pkgs.gimp
       pkgs.tiled
       pkgs.lmms
     ];

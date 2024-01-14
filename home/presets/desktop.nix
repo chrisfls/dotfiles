@@ -69,7 +69,6 @@ let inherit (config.presets) desktop; in {
       # personal apps
       pkgs.qbittorrent
       pkgs.anydesk
-      pkgs.gimp
       pkgs.moonlight-qt
       pkgs.parsec-bin
       pkgs.webcord-vencord
