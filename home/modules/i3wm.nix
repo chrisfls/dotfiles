@@ -356,8 +356,8 @@ in
           # ## #
 
           # [s] - toggle split layout
-          "${mod}+s" = script "toggle-split";
-          "${mod}+shift+s" = script "select-split";
+          "${mod}+s" = script "select-split";
+          "${mod}+shift+s" = script "toggle-split";
 
           # [t] - toggle split / tabbed layouts  
           "${mod}+t" = script "toggle-tabs";
