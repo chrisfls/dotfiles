@@ -77,13 +77,6 @@ let inherit (config.presets) desktop; in {
       pkgs.logseq
       pkgs.ferdium
       # pkgs.soulseekqt
-
-      # needed until these are done:
-      #  - https://github.com/NixOS/nixpkgs/issues/228179
-      #  - https://github.com/NixOS/nixpkgs/pull/273263 
-      (pkgs.libsForQt5.audiotube.overrideAttrs (old: {
-        buildInputs = old.buildInputs ++ [ pkgs.libsForQt5.kpurpose ];
-      }))
     ];
 
 
