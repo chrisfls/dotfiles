@@ -4,6 +4,7 @@ let inherit (config.presets) desktop; in {
 
   config = lib.mkIf desktop {
     modules = {
+      agenix.enable = true;
       autorandr.enable = true;
       brave.enable = true;
       dunst.enable = true;
@@ -15,9 +16,9 @@ let inherit (config.presets) desktop; in {
       loopback-toggle.enable = true;
       micro = { enable = true; desktop = true; };
       picom.enable = true;
-      rclone.enable = true;
       polybar.enable = true;
       qview.enable = true;
+      rclone.enable = true;
       rofi.enable = true;
       screenshot.enable = true;
       telegram.enable = true;

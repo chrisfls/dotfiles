@@ -48,6 +48,11 @@ in
     "openssl-1.1.1w"
   ];
 
+  homeage = {
+    identityPaths = [ ".ssh/id_ed25519" ];
+    installationType = "systemd";
+  };
+
   programs.autorandr.profiles = {
     undocked = {
       fingerprint = { inherit eDP-1; };

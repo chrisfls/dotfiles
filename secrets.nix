@@ -1,5 +1,2 @@
-let
-  ssot = import ./special/ssot.nix;
-in
-{
-}
+let inherit (import ./special/ssot.nix) keys; in
+{}
