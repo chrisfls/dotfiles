@@ -6,8 +6,6 @@ let
 
   mod = config.xsession.windowManager.i3.config.modifier;
   alt = "Mod1";
-  outer = toString config.xsession.windowManager.i3.config.gaps.outer;
-  inner = toString config.xsession.windowManager.i3.config.gaps.inner;
   colors = config.modules.themes.color-scheme;
 
   script = name: "exec --no-startup-id \"$SCRIPT/${name}\"";
@@ -20,29 +18,14 @@ let
 
   workspace = num:
     "workspace number ${toString num}; ${script "cursor-warp"}";
-
-  get-empty-space =
-    ''
-      i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|
-        select(
-        .window == null and
-        .type == "con" and
-        .current_border_width == -1 and
-        .rect.width != 0 and
-        .rect.height != 0 and
-        .geometry.x == 0 and
-        .geometry.y == 0 and
-        .geometry.width == 0 and
-        .geometry.height == 0 and
-        .nodes == []
-        ).id'
-    '';
 in
 {
   options.modules.i3wm.enable = lib.mkEnableOption "Enable i3wm module";
 
   config = lib.mkIf enable {
     modules.script.enable = true;
+
+    home.packages = [ pkgs.cozette ];
 
     modules.script.install = {
       cursor-warp = # move mouse to center of the window
@@ -81,24 +64,6 @@ in
           fi
         '';
 
-      make-space = # create empty space for a container
-        ''
-          id=$(${get-empty-space})
-          if [ "$id" ]; then
-            i3-msg "[con_id=\"$id\"] kill"
-          fi
-
-          i3-msg "mark focus; exec i3 open; [con_mark=\"focus\"] focus; unmark focus"
-        '';
-
-      fill-space = # fill existing empty space with focused container
-        ''
-          id=$(${get-empty-space})
-          if [ "$id" ]; then
-            i3-msg "swap container with con_id $id; [con_id=\"$id\"] kill"
-          fi
-        '';
-
       daemon = # makes i3 more like bspwm
         # auto splits to the best direction
         # and move new windows to empty spaces
@@ -119,7 +84,7 @@ in
 
             case "$event" in
               "new")
-                $SCRIPT/fill-space
+                i3-msg "move container to mark insert; unmark insert"
                 ;;
               "close")
                 ;;
@@ -170,8 +135,8 @@ in
         # THEMING
         # #### ## #
         fonts = {
-          names = [ "Cascadia Mono" ];
-          size = 10.0;
+          names = [ "cozette" ];
+          size = 5.33333333333;
         };
         colors = {
           background = colors.blackDim;
@@ -212,9 +177,9 @@ in
           };
         };
         gaps = {
-          inner = 18;
+          inner = 0;
           outer = 0;
-          smartBorders = "on";
+          smartBorders = "on"; # no_gaps
           smartGaps = true;
         };
         # #### ## #
@@ -229,7 +194,7 @@ in
           wrapping = "workspace";
         };
         floating = {
-          border = 3; # theming
+          border = 1; # theming
           criteria = [
             { class = "Yad"; }
             { class = "copyq"; }
@@ -289,8 +254,7 @@ in
               criteria.class = "WebCord";
             }
           ];
-          hideEdgeBorders = "smart";
-          titlebar = false;
+          hideEdgeBorders = "smart"; # smart_no_gaps
         };
         # #### ## #
         # SESSION
@@ -374,11 +338,11 @@ in
           # ## #
 
           # [g] - toggle gaps
-          "${mod}+g" = "gaps inner all toggle ${inner}; gaps outer all toggle ${outer}";
+          "${mod}+g" = "gaps inner all toggle 18; gaps outer all toggle 0";
 
           # [i] - insert space / fill space
-          "${mod}+i" = script "make-space";
-          "${mod}+shift+i" = script "fill-space";
+          "${mod}+i" = "[tiling con_id=\"__focused__\"] mark --toggle insert";
+          "${mod}+shift+i" = "move container to mark insert; unmark insert";
 
           # [v] - scratchpad show
           "${mod}+v" = "scratchpad show";
@@ -455,15 +419,15 @@ in
             "a" = "mode default";
           };
           resize = {
-            "h" = "resize shrink width 100 px or 10 ppt";
-            "j" = "resize grow height 100 px or 10 ppt";
-            "k" = "resize shrink height 100 px or 10 ppt";
-            "l" = "resize grow width 100 px or 10 ppt";
+            "h" = "resize shrink width 50 px or 5 ppt";
+            "j" = "resize grow height 50 px or 5 ppt";
+            "k" = "resize shrink height 50 px or 5 ppt";
+            "l" = "resize grow width 50 px or 5 ppt";
 
-            "Left" = "resize shrink width 100 px or 10 ppt";
-            "Down" = "resize grow height 100 px or 10 ppt";
-            "Up" = "resize shrink height 100 px or 10 ppt";
-            "Right" = "resize grow width 100 px or 10 ppt";
+            "Left" = "resize shrink width 50 px or 5 ppt";
+            "Down" = "resize grow height 50 px or 5 ppt";
+            "Up" = "resize shrink height 50 px or 5 ppt";
+            "Right" = "resize grow width 50 px or 5 ppt";
 
             "Escape" = "mode default";
             "Return" = "mode default";
@@ -477,7 +441,7 @@ in
       };
       extraConfig =
         ''
-          title_align center
+          title_align left
         '';
     };
 
