@@ -6,24 +6,13 @@ let
 
   kitty = "${config.programs.kitty.package}/bin/kitty";
 
-  launch = "exec --no-startup-id \"$SCRIPT/kitty\"";
+  launch = "exec --no-startup-id \"kitty -1\"";
 in
 {
   options.modules.kitty.enable = lib.mkEnableOption "Enable kitty module";
 
   config = lib.mkIf enable {
     xsession.windowManager.i3.config.terminal = launch;
-
-    # TODO: deprecate
-    modules.script.install.kitty =
-      ''
-        dir=$(${pkgs.xcwd}/bin/xcwd);
-        if [ "$dir" = "${config.home.homeDirectory}" ]; then
-          exec ${kitty} -1
-        else
-          exec ${kitty} -1 -d "$dir"
-        fi;
-      '';
 
     programs.kitty = {
       enable = true;
