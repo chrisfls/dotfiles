@@ -277,7 +277,7 @@ in
             }
           ];
           # hideEdgeBorders = "smart"; # smart_no_gaps
-          titlebar = false;
+          titlebar = true;
         };
         # #### ## #
         # SESSION
@@ -470,6 +470,7 @@ in
           title_align left
           default_orientation horizontal
           hide_edge_borders smart_no_gaps
+          tiling_drag modifier titlebar
         '';
     };
 
