@@ -1,4 +1,4 @@
-# put dash scripts in the tmp and call them with $SCRIPT/name
+# TODO: deprecate
 { config, lib, pkgs, ... }:
 let inherit (config.modules.script) enable install; in {
   options.modules.script = {

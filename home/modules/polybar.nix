@@ -23,6 +23,7 @@ in
   config = lib.mkIf enable {
     pacman.pkgs.bluez = [ "extra/bluez" "extra/bluez-utils" ];
 
+    # TODO: move away from modules.script
     modules.script.install = {
       toggle =
         ''

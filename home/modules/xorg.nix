@@ -49,6 +49,7 @@ let inherit (config.modules.xorg) enable; in {
           xset s off -dpms
         '';
 
+      # TODO: move to desktop
       windowManager.i3.config = {
         keybindings."Control+Mod1+Delete" = "exec --no-startup-id gtk-launch qps";
 

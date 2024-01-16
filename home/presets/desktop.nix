@@ -75,6 +75,7 @@ let inherit (config.presets) desktop; in {
       pkgs.whatsapp-for-linux
       pkgs.logseq
       pkgs.ferdium
+      pkgs.obsidian
       # pkgs.soulseekqt
     ];
 

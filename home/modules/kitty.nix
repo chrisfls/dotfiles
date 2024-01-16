@@ -14,6 +14,7 @@ in
   config = lib.mkIf enable {
     xsession.windowManager.i3.config.terminal = launch;
 
+    # TODO: deprecate
     modules.script.install.kitty =
       ''
         dir=$(${pkgs.xcwd}/bin/xcwd);

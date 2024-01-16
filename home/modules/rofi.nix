@@ -56,6 +56,7 @@ in
   options.modules.rofi.enable = lib.mkEnableOption "Enable rofi module";
 
   config = lib.mkIf enable {
+    # TODO: move away from modules.script
     modules.script.install = {
       # rofi calculator
       rofi-calc =

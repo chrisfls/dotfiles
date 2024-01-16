@@ -8,16 +8,158 @@ let
   alt = "Mod1";
   colors = config.modules.themes.color-scheme;
 
-  script = name: "exec --no-startup-id \"$SCRIPT/${name}\"";
-
   focus = dir:
-    "focus ${dir}; ${script "cursor-warp"}";
+    "focus ${dir}; exec --no-startup-id ${cursor-wrap}";
 
   move = dir:
-    "mark swap; focus ${dir}; swap container with mark swap; [con_mark=\"swap\"] focus; unmark swap; ${script "cursor-warp"}";
+    "mark swap; focus ${dir}; swap container with mark swap; [con_mark=\"swap\"] focus; unmark swap; exec --no-startup-id ${cursor-wrap}";
 
   workspace = num:
-    "workspace number ${toString num}; ${script "cursor-warp"}";
+    "workspace number ${toString num}; exec --no-startup-id ${cursor-wrap}";
+
+  cursor-wrap = pkgs.writeScript "i3-cursor-wrap"
+    # move mouse to center of the window
+    ''
+      eval $(xdotool getwindowfocus getwindowgeometry --shell)
+      xdotool mousemove $((X + (WIDTH / 2))) $((Y + (HEIGHT / 2)))
+    '';
+
+  insert = pkgs.writeScript "i3-insert"
+    # select insertion spot
+    ''
+      while i3-msg "focus child"; do
+        :
+      done
+
+      i3-msg "[tiling con_id=\"__focused__\"] mark --toggle insert"
+    '';
+
+  pop = pkgs.writeScript "i3-pop"
+    # remove window from tab container
+    ''
+      while i3-msg "focus child"; do
+        :
+      done
+
+      eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].nodes[].focused)|"layout=\(.layout) tabbed=\((.nodes[].nodes[]|select(.nodes[].focused)|.layout))"')"
+
+      if [ "$tabbed" = "tabbed" ]; then
+        if [ "$layout" = "splitv" ]; then
+          i3-msg "focus parent; split vertical; focus parent; mark swap; focus child; focus child; move container to mark swap; unmark swap"
+        elif [ "$layout" = "splith" ]; then
+          i3-msg "focus parent; split horizontal; focus parent; mark swap; focus child; focus child; move container to mark swap; unmark swap"
+        fi
+      fi
+    '';
+
+  pop-shift = pkgs.writeScript "i3-pop-shift"
+    # remove window from tab container in opposite orientation
+    ''
+      while i3-msg "focus child"; do
+        :
+      done
+
+      eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].nodes[].focused)|"layout=\(.layout) tabbed=\((.nodes[].nodes[]|select(.nodes[].focused)|.layout))"')"
+
+      if [ "$tabbed" = "tabbed" ]; then
+        if [ "$layout" = "splitv" ]; then
+          i3-msg "focus parent; split horizontal; focus parent; mark swap; focus child; focus child; move container to mark swap; unmark swap"
+        elif [ "$layout" = "splith" ]; then
+          i3-msg "focus parent; split vertical; focus parent; mark swap; focus child; focus child; move container to mark swap; unmark swap"
+        fi
+      fi
+    '';
+
+  presel-split = pkgs.writeScript "i3-presel-split"
+    # preselect next split orientation
+    ''
+      while i3-msg "focus child"; do
+        :
+      done
+
+      eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.layout!="tabbed" and .nodes[].nodes[].focused)|"id=\((.nodes[].nodes[]|select(.focused)|.id)) tabbed=\((.nodes[]|select(.nodes[].focused)|.layout))"')"
+
+      if [ "$tabbed" != "tabbed" ]; then
+        i3-msg "[con_id=\"$id\"] split toggle"
+      fi
+    '';
+
+  toggle-split = pkgs.writeScript "i3-toggle-split"
+    # toggle split orientation
+    ''
+      id=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused or .focused).id')
+
+      if [ "$id" ]; then
+        i3-msg "[con_id=\"$id\"] layout toggle splitv splith"
+      fi
+    '';
+
+  toggle-tabs = pkgs.writeScript "i3-toggle-tabs"
+    # toggle tabbed layout at the selected leaf
+    ''
+      id=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes == [] and .focused).id')
+
+      if [ "$id" ]; then
+        i3-msg "[con_id=\"$id\"] layout toggle tabbed split"
+      fi
+    '';
+
+  daemon = pkgs.writeScript "i3-daemon"
+    # auto alternate splits and move new windows to insert spaces
+    ''
+      mouse=$(xinput --list | grep -i -m 1 'Logitech USB Optical Mouse' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
+
+      i3-msg -t subscribe -m '[ "window", "mode" ]' | while IFS= read -r line; do
+        event=$(echo $line | jaq -r '.change')
+
+        case "$event" in
+          "new")
+            i3-msg "move container to mark insert; unmark insert"
+            ;;
+          "close")
+            continue
+            ;;
+          "resize")
+            polybar-msg action menu hook 1
+            continue
+            ;;
+          "apps")
+            polybar-msg action menu hook 2
+            continue
+            ;;
+          "default")
+            polybar-msg action menu hook 0
+            continue
+            ;;
+          *)
+            continue
+            ;;
+        esac
+
+        sleep 0.25
+
+        # avoid https://github.com/i3/i3/issues/5447
+        if [ -z "$(xinput --query-state $mouse | grep 'button\[3\]=up')" ]; then
+          continue
+        fi
+
+        eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.layout!="tabbed" and .nodes[].nodes[].focused)|"id=\((.nodes[].nodes[]|select(.focused)|.id)) layout=\((.nodes[]|select(.nodes[].focused)|.layout))"')"
+
+        if [ "$layout" = "tabbed" ]; then
+          msg=""
+        elif [ "$layout" = "splitv" ]; then
+          msg="split horizontal"
+        elif [ "$layout" = "splith" ]; then
+          msg="split vertical"
+        else
+          msg="split vertical"
+        fi
+
+        if [ "$msg" ]; then
+          i3-msg "[con_id=\"$id\"] $msg" > /dev/null
+        fi
+      done
+    '';
 in
 {
   options.modules.i3wm.enable = lib.mkEnableOption "Enable i3wm module";
@@ -27,107 +169,6 @@ in
 
     home.packages = [ pkgs.cozette ];
 
-    modules.script.install = {
-      cursor-warp = # move mouse to center of the window
-        ''
-          eval $(xdotool getwindowfocus getwindowgeometry --shell)
-          xdotool mousemove $((X + (WIDTH / 2))) $((Y + (HEIGHT / 2)))
-        '';
-
-      toggle-split = # toggle split layout
-        # tries to toggle an actual node
-        ''
-          id=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused or .focused).id')
-          if [ "$id" ]; then
-            i3-msg "[con_id=\"$id\"] layout toggle splitv splith"
-          fi
-        '';
-
-      select-split = # select split direction
-        # not available in tabbed containers
-        ''
-          tree=$(i3-msg -t get_tree)
-          layout="$(echo $tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused)|"\(.layout)"')"
-          id="$(echo $tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes == [] and .focused)|"\(.id)"')"
-
-          if [ "$id" ] && [ $layout != "tabbed" ]; then
-            i3-msg "[con_id=\"$id\"] split toggle"
-          fi
-        '';
-
-      toggle-tabs = # toggle node layout
-        # toggle tabbed layout at the selected leaf
-        ''
-          id=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes == [] and .focused).id')
-          if [ "$id" ]; then
-            i3-msg "[con_id=\"$id\"] layout toggle tabbed split"
-          fi
-        '';
-
-      daemon = # makes i3 more like bspwm
-        # auto splits to the best direction
-        # and move new windows to empty spaces
-        let
-          # avoid https://github.com/i3/i3/issues/5447
-          mouse-check =
-            ''
-              if [ -z "$(xinput --query-state $mouse | grep 'button\[3\]=up')" ]; then
-                continue
-              fi
-            '';
-        in
-        ''
-          mouse=$(xinput --list | grep -i -m 1 'Logitech USB Optical Mouse' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
-
-          i3-msg -t subscribe -m '[ "window", "binding", "mode" ]' | while IFS= read -r line; do
-            event=$(echo $line | jaq -r '.change')
-
-            case "$event" in
-              "new")
-                i3-msg "move container to mark insert; unmark insert"
-                ;;
-              "close")
-                ;;
-              "focus")
-                ;;
-              "resize")
-                polybar-msg action menu hook 1
-                ;;
-              "apps")
-                polybar-msg action menu hook 2
-                ;;
-              "default")
-                polybar-msg action menu hook 0
-                ;;
-              *)
-                continue
-                ;;
-            esac
-
-            ${mouse-check}
-
-            sleep ${toString (1.0 / 30.0)}
-
-            tree=$(i3-msg -t get_tree)
-            layout="$(echo $tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused)|"\(.layout)"')"
-            eval "$(echo $tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes == [] and .focused)|"id=\(.id) width=\(.rect.width) height=\(.rect.height)"')"
-
-            if [ $width -gt $height ] && [ $layout = "splitv" ]; then
-              msg="split horizontal"
-            elif [ $height -gt $width ] && [ $layout = "splith" ]; then
-              msg="split vertical"
-            else
-              msg=""
-            fi
-
-            if [ "$msg" ]; then
-              ${mouse-check}
-
-              i3-msg "[con_id=\"$id\"] $msg" > /dev/null
-            fi
-          done
-        '';
-    };
     xsession.windowManager.i3 = {
       enable = true;
       config = {
@@ -261,7 +302,7 @@ in
         # #### ## #
         startup = [
           {
-            command = "$SCRIPT/daemon";
+            command = "${daemon}";
             always = true;
             notification = false;
           }
@@ -320,14 +361,14 @@ in
           # ## #
 
           # [s] - toggle split layout
-          "${mod}+s" = script "select-split";
-          "${mod}+shift+s" = script "toggle-split";
+          "${mod}+s" = "exec --no-startup-id ${presel-split}";
+          "${mod}+shift+s" = "exec --no-startup-id ${toggle-split}";
 
           # [t] - toggle split / tabbed layouts  
-          "${mod}+t" = script "toggle-tabs";
+          "${mod}+t" = "exec --no-startup-id ${toggle-tabs}";
 
           # toggle floating focus
-          "${mod}+space" = "focus mode_toggle; ${script "cursor-warp"}";
+          "${mod}+space" = "focus mode_toggle; exec --no-startup-id ${cursor-wrap}";
 
           # floating windows alt tab
           "${alt}+Tab" = "focus prev";
@@ -341,8 +382,11 @@ in
           "${mod}+g" = "gaps inner all toggle 18; gaps outer all toggle 0";
 
           # [i] - insert space / fill space
-          "${mod}+i" = "[tiling con_id=\"__focused__\"] mark --toggle insert";
+          "${mod}+i" = "[tiling con_id=\"__focused__\"] exec --no-startup-id ${insert}";
           "${mod}+shift+i" = "move container to mark insert; unmark insert";
+
+          "${mod}+o" = "[tiling con_id=\"__focused__\"] exec --no-startup-id ${pop}";
+          "${mod}+shift+o" = "[tiling con_id=\"__focused__\"] exec --no-startup-id ${pop-shift}";
 
           # [v] - scratchpad show
           "${mod}+v" = "scratchpad show";
