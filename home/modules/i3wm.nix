@@ -165,9 +165,7 @@ in
   options.modules.i3wm.enable = lib.mkEnableOption "Enable i3wm module";
 
   config = lib.mkIf enable {
-    modules.script.enable = true;
-
-    home.packages = [ pkgs.cozette ];
+    # home.packages = [ pkgs.cozette ];
 
     xsession.windowManager.i3 = {
       enable = true;
@@ -176,8 +174,10 @@ in
         # THEMING
         # #### ## #
         fonts = {
-          names = [ "cozette" ];
-          size = 5.33333333333;
+          # names = [ "cozette" ];
+          # size = 5.33333333333;
+          names = [ "Cascadia Mono" ];
+          size = 10.0;
         };
         colors = {
           background = colors.blackDim;
@@ -296,6 +296,7 @@ in
             }
           ];
           hideEdgeBorders = "smart"; # smart_no_gaps
+          titlebar = false;
         };
         # #### ## #
         # SESSION
