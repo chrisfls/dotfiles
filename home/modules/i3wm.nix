@@ -230,7 +230,7 @@ in
             { class = "qps"; }
           ];
           modifier = mod;
-          titlebar = false;
+          titlebar = true;
         };
         window = {
           border = 1;
