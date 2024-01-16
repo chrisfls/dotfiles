@@ -295,7 +295,7 @@ in
               criteria.class = "WebCord";
             }
           ];
-          hideEdgeBorders = "smart"; # smart_no_gaps
+          # hideEdgeBorders = "smart"; # smart_no_gaps
           titlebar = false;
         };
         # #### ## #
@@ -487,6 +487,8 @@ in
       extraConfig =
         ''
           title_align left
+          default_orientation vertical
+          hide_edge_borders smart_no_gaps
         '';
     };
 
