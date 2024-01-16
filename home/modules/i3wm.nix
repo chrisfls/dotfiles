@@ -53,7 +53,7 @@ let
         :
       done
 
-      eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].focused)|"id=\(.nodes[].nodes[]|select(.focused).id) self=\(.nodes[]|select(.nodes[].focused).layout) parent=\(select(.nodes[].nodes[].focused).layout)"')"
+      eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].nodes[].focused)|"id=\(.nodes[].nodes[].nodes[]|select(.focused).id) self=\(.nodes[].nodes[]|select(.nodes[].focused).layout) parent=\(select(.nodes[].nodes[].nodes[].focused).layout)"')"
 
       if [ "$self" = "tabbed" ]; then
         if [ "$parent" = "splitv" ]; then
@@ -71,7 +71,7 @@ let
         :
       done
 
-      eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].focused)|"id=\(.nodes[].nodes[]|select(.focused).id) self=\(.nodes[]|select(.nodes[].focused).layout) parent=\(select(.nodes[].nodes[].focused).layout)"')"
+      eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].nodes[].focused)|"id=\(.nodes[].nodes[].nodes[]|select(.focused).id) self=\(.nodes[].nodes[]|select(.nodes[].focused).layout) parent=\(select(.nodes[].nodes[].nodes[].focused).layout)"')"
 
       if [ "$self" = "tabbed" ]; then
         if [ "$parent" = "splitv" ]; then
@@ -120,74 +120,25 @@ let
     # auto alternate splits and move new windows to insert spaces
     ''
       mouse=$(xinput --list | grep -i -m 1 'Logitech USB Optical Mouse' | grep -o 'id=[0-9]\+' | grep -o '[0-9]\+')
-      toggle=false
 
       i3-msg -t subscribe -m '[ "window", "mode" ]' | while IFS= read -r line; do
         event=$(echo $line | jaq -r '.change')
 
         case "$event" in
           "new")
-            i3-msg "move container to mark insert; unmark insert" && continue
-            toggle=true
-            continue
+            con_id=$(echo $line | jaq -r '.container.id')
+            i3-msg "[con_id=\"$con_id\"]move container to mark insert; unmark insert" && continue
             ;;
-          "close")
-            toggle=true
-            continue
-            ;;
-          "focus")
-            # avoid https://github.com/i3/i3/issues/5447
-            if [ "$toggle" = false ] || [ -z "$(xinput --query-state $mouse | grep 'button\[3\]=up')" ]; then
-              continue
-            fi
-            ;;
-          # modes
           "resize")
             polybar-msg action menu hook 1
-            continue
             ;;
           "apps")
             polybar-msg action menu hook 2
-            continue
             ;;
           "default")
             polybar-msg action menu hook 0
-            continue
-            ;;
-          *)
-            continue
             ;;
         esac
-
-        toggle=false
-
-        sleep 0.1
-
-        eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].nodes[].focused)|"id=\(.nodes[].nodes[].nodes[]|select(.focused).id) self=\(.nodes[].nodes[]|select(.nodes[].focused).layout) father=\(.nodes[]|select(.nodes[].nodes[].focused).layout) output=\(select(.nodes[].nodes[].nodes[].focused).layout)"')"
-        
-        if [ "$output" = "output" ]; then
-          i3-msg "[con_id=\"$id\"] split horizontal"
-
-          eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].nodes[].focused)|"id=\(.nodes[].nodes[].nodes[]|select(.focused).id) self=\(.nodes[].nodes[]|select(.nodes[].focused).layout) father=\(.nodes[]|select(.nodes[].nodes[].focused).layout) output=\(select(.nodes[].nodes[].nodes[].focused).layout)"')"
-        fi
-
-        echo "id=$id self=$self father=$father output=$output"
-
-        if [ "$self" = "tabbed" ]; then
-          msg=""
-        elif [ "$output" = "output" ]; then
-          msg="split horizontal"
-        elif [ "$father" = "splitv" ]; then
-          msg="split horizontal"
-        elif [ "$father" = "splith" ]; then
-          msg="split vertical"
-        else
-          msg="split horizontal"
-        fi
-
-        if [ "$msg" ] && [ "$id" ]; then
-          i3-msg "[con_id=\"$id\"] $msg"
-        fi
       done
     '';
 in
