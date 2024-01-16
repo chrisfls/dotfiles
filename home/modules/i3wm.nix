@@ -35,7 +35,7 @@ let
     '';
 
   pop = pkgs.writeScript "i3-pop"
-    # remove window from tab container
+    # remove window from tab container (REVIEW: still not quite working on vertical setups)
     ''
       while i3-msg "focus child"; do
         :
@@ -177,7 +177,7 @@ in
           # names = [ "cozette" ];
           # size = 5.33333333333;
           names = [ "Cascadia Mono" ];
-          size = 10.0;
+          size = 7.666666666665;
         };
         colors = {
           background = colors.blackDim;
