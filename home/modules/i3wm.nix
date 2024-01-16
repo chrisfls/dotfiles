@@ -155,47 +155,47 @@ in
         # THEMING
         # #### ## #
         fonts = {
-          # names = [ "cozette" ];
-          # size = 5.33333333333;
-          names = [ "Cascadia Mono" ];
-          size = 7.666666666665;
+          names = [ "cozette" ];
+          size = 5.33333333333;
+          # names = [ "Cascadia Mono" ];
+          # size = 7.666666666665;
         };
         colors = {
-          background = colors.blackDim;
+          background = "#000000";
           focused = {
             border = colors.foreground; # titlebar border
             background = colors.black; # titlebar background
             text = colors.foreground; # titlebar text
-            childBorder = colors.blackBright; # window border
-            indicator = colors.foreground; # window target border
+            childBorder = "#808080"; # window border
+            indicator = "#C0C0C0"; # window target border
           };
           focusedInactive = {
             border = colors.black; # titlebar border
-            background = colors.blackDim; # titlebar background
-            text = colors.blackBright; # titlebar text
-            childBorder = colors.blackDim; # window border
-            indicator = colors.blackDim; # window target border
+            background = colors.background; # titlebar background
+            text = colors.foreground; # titlebar text
+            childBorder = "#404040"; # window border
+            indicator = "#404040"; # window target border
           };
           unfocused = {
-            border = colors.blackDim; # titlebar border
-            background = colors.blackDim; # titlebar background
+            border = "#000000"; # titlebar border
+            background = colors.background; # titlebar background
             text = colors.black; # titlebar text
-            childBorder = colors.blackDim; # window border
-            indicator = colors.blackDim; # window target border
-          };
-          placeholder = {
-            border = colors.blackDim; # titlebar border
-            background = colors.blackDim; # titlebar background
-            text = colors.blackDim; # titlebar text
-            childBorder = colors.blackDim; # window border
-            indicator = colors.blackDim; # window target border
+            childBorder = "#000000"; # window border
+            indicator = "#000000"; # window target border
           };
           urgent = {
-            border = colors.yellowDim; # titlebar border
-            background = colors.black; # titlebar background
+            border = "#000000"; # titlebar border
+            background = colors.background; # titlebar background
             text = colors.yellow; # titlebar text
-            childBorder = colors.blackBright; # window border
-            indicator = colors.blackBright; # window target border
+            childBorder = "#000000"; # window border
+            indicator = "#000000"; # window target border
+          };
+          placeholder = {
+            border = "#000000"; # titlebar border
+            background = "#000000"; # titlebar background
+            text = "#000000"; # titlebar text
+            childBorder = "#000000"; # window border
+            indicator = "#000000"; # window target border
           };
         };
         gaps = {
@@ -216,7 +216,7 @@ in
           wrapping = "workspace";
         };
         floating = {
-          border = 1; # theming
+          border = 1;
           criteria = [
             { class = "Yad"; }
             { class = "copyq"; }
@@ -233,7 +233,7 @@ in
           titlebar = false;
         };
         window = {
-          border = 1; # theming
+          border = 1;
           commands = [
             {
               command = "resize set 1280 px 960 px, move position center";
