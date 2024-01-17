@@ -1,3 +1,4 @@
+# TODO: https://danth.github.io/stylix/installation.html
 { ... }: {
   imports = [
     ./agenix.nix
@@ -26,7 +27,6 @@
     ./rofi.nix
     ./scaling.nix
     ./screenshot.nix
-    ./script.nix
     ./shell.nix
     ./sublime.nix
     ./telegram.nix

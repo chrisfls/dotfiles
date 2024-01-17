@@ -10,82 +10,73 @@ let
   dunstctl = "${pkgs.dunst}/bin/dunstctl";
 
   script = name: "\"$SCRIPT/${name}\"";
-  rofi-menu = script "rofi-menu";
   # rofi-power-menu = script "rofi-power-menu";
-  toggle = script "toggle";
-  bluetooth = script "bluetooth";
-  pipewire = script "pipewire";
-  dunst-toggle = script "dunst-toggle";
+  toggle = pkgs.writeScript "toggle"
+    ''
+      fst=$1
+      shift
+
+      for arg in "$@"; do
+        ${polybar-msg} action "#$arg.module_toggle"
+      done
+
+      ${polybar-msg} action $fst next
+    '';
+  bluetooth = pkgs.writeScript "bluetooth"
+    ''
+      if bluetoothctl show | grep -q "Powered: yes"; then
+          hook=2
+      else
+          hook=1
+      fi
+
+      if [ "$1" = "--toggle" ]; then
+          if [ "$hook" = "2" ]; then
+              bluetoothctl power off
+              hook=1
+          else
+              bluetoothctl power on
+              hook=2
+          fi
+      fi
+
+      ${polybar-msg} action bluetooth hook $hook
+    '';
+
+  pipewire = pkgs.writeScript "pipewire"
+    ''
+      case $1 in
+        "--up")
+          ${pamixer} --increase 5
+          ;;
+        "--down")
+          ${pamixer} --decrease 5  
+          ;;
+        "--mute")
+          ${pamixer} --toggle-mute
+          ;;
+      esac
+
+      if [ "$(${pamixer} --get-volume-human)" = "muted" ]; then
+        hook=1
+      else
+        hook=2
+      fi
+
+      ${polybar-msg} action audio hook $hook
+    '';
+
+  dunst-toggle = pkgs.writeScript "dunst-toggle"
+    ''
+      ${dunstctl} set-paused toggle
+      ${polybar-msg} action notifications next
+    '';
 in
 {
   options.modules.polybar.enable = lib.mkEnableOption "Enable polybar module";
 
   config = lib.mkIf enable {
     pacman.pkgs.bluez = [ "extra/bluez" "extra/bluez-utils" ];
-
-    # TODO: move away from modules.script
-    modules.script.install = {
-      toggle =
-        ''
-          fst=$1
-          shift
-
-          for arg in "$@"; do
-            ${polybar-msg} action "#$arg.module_toggle"
-          done
-
-          ${polybar-msg} action $fst next
-        '';
-      bluetooth =
-        ''
-          if bluetoothctl show | grep -q "Powered: yes"; then
-              hook=2
-          else
-              hook=1
-          fi
-
-          if [ "$1" = "--toggle" ]; then
-              if [ "$hook" = "2" ]; then
-                  bluetoothctl power off
-                  hook=1
-              else
-                  bluetoothctl power on
-                  hook=2
-              fi
-          fi
-
-          ${polybar-msg} action bluetooth hook $hook
-        '';
-
-      pipewire =
-        ''
-          case $1 in
-            "--up")
-              ${pamixer} --increase 5
-              ;;
-            "--down")
-              ${pamixer} --decrease 5  
-              ;;
-            "--mute")
-              ${pamixer} --toggle-mute
-              ;;
-          esac
-
-          if [ "$(${pamixer} --get-volume-human)" = "muted" ]; then
-            hook=1
-          else
-            hook=2
-          fi
-
-          ${polybar-msg} action audio hook $hook
-        '';
-
-      dunst-toggle =
-        ''
-          ${dunstctl} set-paused toggle
-          ${polybar-msg} action notifications next
-        '';
-    };
 
     systemd.user.services.polybar = {
       # i3wm fix
@@ -175,7 +166,7 @@ in
         "module/menu" = {
           type = "\"custom/ipc\"";
 
-          click-left = "\"${rofi-menu}\"";
+          click-left = "\"rofi-menu\"";
 
           # startup
           initial = "\"1\"";

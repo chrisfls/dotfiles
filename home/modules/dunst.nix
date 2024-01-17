@@ -1,8 +1,10 @@
 { config, lib, pkgs, ... }:
 let
   inherit (config.modules.dunst) enable;
-  inherit (config.modules.scaling) scale;
+  inherit (config.modules.scaling) scale xft;
   inherit (config.modules.themes) icon color-scheme;
+
+  withScale = num: toString (if xft then num else num * scale);
 in
 {
   options.modules.dunst.enable = lib.mkEnableOption "Enable dunst module";
@@ -17,9 +19,7 @@ in
       iconTheme = {
         name = icon.name;
         package = icon.package;
-        size =
-          let size = toString (builtins.floor (32 * scale));
-          in "${size}x${size}";
+        size = "64x64";
       };
 
       # forked from https://github.com/dracula/dunst/blob/master/dunstrc
@@ -33,7 +33,7 @@ in
           height = "300";
           origin = "top-right";
           offset = "10x35"; # perfect align: 21x45
-          scale = "0";
+          scale = toString (if xft then 0 else scale);
           notification_limit = "0";
           progress_bar = "true";
           progress_bar_height = "10";
@@ -51,7 +51,7 @@ in
           separator_color = "frame";
           sort = "yes";
           idle_threshold = "120";
-          font = "Noto Sans 10";
+          font = "Noto Sans ${withScale 10}";
           line_height = "0";
           markup = "full";
           format = "%s %p\\n%b ";

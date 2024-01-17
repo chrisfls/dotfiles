@@ -3,12 +3,14 @@ let
   inherit (config.modules.scaling)
     dpi
     enable
-    scale;
+    gtk
+    qt
+    scale
+    xft;
 
   dpi-scaled = builtins.floor (dpi * scale);
-  # not using this anymore, better having more space
-  # gdk-scale = builtins.ceil scale;
-  # gdk-dpi-scale = 1.0 / gdk-scale;
+  gdk-scale = builtins.ceil scale;
+  gdk-dpi-scale = 1.0 / gdk-scale;
 in
 {
   options.modules.scaling = {
@@ -24,6 +26,10 @@ in
       default = 96;
     };
 
+    gtk = lib.mkEnableOption "Enable qt scaling";
+    qt = lib.mkEnableOption "Enable gtk scaling";
+    xft = lib.mkEnableOption "Enable xft scaling";
+
     dpi-scaled = lib.mkOption {
       type = lib.types.int;
     };
@@ -33,18 +39,27 @@ in
   config = lib.mkIf enable {
     modules.scaling.dpi-scaled = lib.mkForce dpi-scaled;
 
-    xresources.properties."Xft.dpi" = toString dpi-scaled;
+    xresources.properties."Xft.dpi" = toString (if xft then dpi-scaled else dpi);
 
-    home.sessionVariables = {
-      QT_AUTO_SCREEN_SCALE_FACTOR = toString 0;
-      QT_ENABLE_HIGHDPI_SCALING = toString 1;
-      QT_SCALE_FACTOR = toString scale;
+    home.sessionVariables = lib.mkMerge [
+      (lib.mkIf qt {
+        QT_AUTO_SCREEN_SCALE_FACTOR = toString 0;
+        QT_ENABLE_HIGHDPI_SCALING = toString 1;
+        QT_SCALE_FACTOR = toString scale;
 
-      QT_FONT_DPI = toString dpi;
+        QT_FONT_DPI = toString dpi;
+      })
+
+      (lib.mkIf (gtk && !xft) {
+        GDK_DPI_SCALE = toString scale;
+      })
 
       # double size of icons (slows down gtk3 rendering a bit)
-      # GDK_SCALE = toString gdk-scale;
-      # GDK_DPI_SCALE = toString gdk-dpi-scale;
-    };
+      (lib.mkIf (gtk && xft) {
+        GDK_SCALE = toString gdk-scale;
+        GDK_DPI_SCALE = toString gdk-dpi-scale;
+      })
+    ];
+
   };
 }

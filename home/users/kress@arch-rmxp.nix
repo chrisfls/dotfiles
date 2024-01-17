@@ -35,7 +35,7 @@ in
 
   modules = {
     cloudflare-warp.enable = true;
-    scaling = { enable = true; scale = 1.5; };
+    scaling = { enable = true; scale = 1.5; gtk = true; qt = true; };
   };
 
   pacman = {

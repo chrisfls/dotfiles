@@ -15,7 +15,7 @@ let
               substituteInPlace $out/bin/brave \
                 --replace libva dummy-libva
               substituteInPlace $out/bin/brave \
-                --replace "--enable-features=" "--enable-features=VaapiVideoDecodeLinuxGL,"
+                --replace "--enable-features=" "--force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL,"
             '';
         })
 

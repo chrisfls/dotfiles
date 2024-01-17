@@ -146,7 +146,7 @@ in
   options.modules.i3wm.enable = lib.mkEnableOption "Enable i3wm module";
 
   config = lib.mkIf enable {
-    # home.packages = [ pkgs.cozette ];
+    home.packages = [ pkgs.cozette ];
 
     xsession.windowManager.i3 = {
       enable = true;
@@ -156,7 +156,7 @@ in
         # #### ## #
         fonts = {
           names = [ "cozette" ];
-          size = 5.33333333333;
+          size = 8.0; # 5.33333333333;
           # names = [ "Cascadia Mono" ];
           # size = 7.666666666665;
         };
@@ -228,6 +228,7 @@ in
             { class = "WebCord"; }
             { class = "Whatsapp-for-linux"; }
             { class = "qps"; }
+            { class = "Logseq"; }
           ];
           modifier = mod;
           titlebar = true;
