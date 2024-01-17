@@ -59,7 +59,7 @@ let inherit (config.modules.xorg) enable; in {
           "d" = "exec --no-startup-id gtk-launch webcord; mode default";
           "e" = "exec --no-startup-id gtk-launch pcmanfm-qt; mode default";
           "w" = "exec --no-startup-id gtk-launch com.github.eneshecan.WhatsAppForLinux; mode default";
-          "f" = "exec --no-startup-id gtk-launch ferdium; mode default";
+          # "f" = "exec --no-startup-id gtk-launch ferdium; mode default";
         };
 
         startup = [
@@ -67,7 +67,7 @@ let inherit (config.modules.xorg) enable; in {
           { notification = false; command = "nm-tray"; }
           { notification = false; command = "webcord --start-minimized"; }
           { notification = false; command = "whatsapp-for-linux"; }
-          { notification = false; command = "ferdium"; }
+          # { notification = false; command = "ferdium"; }
         ];
       };
     };

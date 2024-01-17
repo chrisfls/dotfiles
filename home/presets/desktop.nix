@@ -74,7 +74,7 @@ let inherit (config.presets) desktop; in {
       pkgs.webcord-vencord
       pkgs.whatsapp-for-linux
       pkgs.logseq
-      pkgs.ferdium
+      # pkgs.ferdium # TODO: replace with librewolf or edge
       pkgs.obsidian
       # pkgs.soulseekqt
     ];

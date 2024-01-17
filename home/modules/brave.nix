@@ -1,8 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.modules.brave) enable;
-  inherit (specialArgs) mesa mkIfElse;
-  inherit (lib.trivial) pippe;
 
   pkg =
     if config.presets.non-nixos then
