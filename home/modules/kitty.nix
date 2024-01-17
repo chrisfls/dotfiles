@@ -18,7 +18,7 @@ in
       enable = true;
       settings = with config.modules.themes.color-scheme; {
         font_family = "CaskaydiaCove NFM";
-        font_size = "18"; # 12.000000
+        font_size = "12.0";
 
         remember_window_size = "no";
         initial_window_width = "80c";
