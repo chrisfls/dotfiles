@@ -77,9 +77,6 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(setq doom-modeline-modal t)
-(setq doom-modeline-modal-icon t)
-
 (setq-default cursor-type 'bar)
 
 (defun god-mode-enabled-update-cursor ()
@@ -95,7 +92,9 @@
   (god-mode-enabled . god-mode-enabled-update-cursor)
   (god-mode-disabled . god-mode-disabled-update-cursor)
   :bind (:map god-local-mode-map
-         ("z" . repeat)
+         ("C-." . repeat)
+         ("M-g c" . avy-goto-char)
+         ("M-g g" . avy-goto-line)
          ("C-x C-1" . delete-other-windows)
          ("C-x C-2" . split-window-below)
          ("C-x C-3" . split-window-right)
@@ -106,17 +105,15 @@
   (setq god-mode-enable-function-key-translation nil)
   (setq god-mode-alist '((nil . "C-"))))
 
-;;(defun god-mode-all-enable ()
-;;  "Enable god mode."
-;;  (interactive)
-;;  (god-mode-all 1))
-;;(defun god-mode-all-disable ()
-;;  "Disable god mode."
-;;  (interactive)
-;;  (god-mode-all -1))
+(defun define-key-chord-alias (key-chord command)
+  "Define a global key-chord and its translation to a command."
+  (key-chord-define-global key-chord 'null)
+  (define-key key-translation-map (kbd (concat "<key-chord> " key-chord)) (kbd command))
+  (define-key key-translation-map (kbd (concat "<key-chord> " (reverse key-chord))) (kbd command)))
 
-(use-package key-chord :defer 1
-  :config
+(use-package key-chord  :defer 1
+  :init
   (key-chord-mode 1)
-  (key-chord-define-global "fd" 'god-mode-all)
-  (key-chord-define-global "jk" 'god-mode-all))
+  :config
+  (setq key-chord-two-keys-delay 0.05)
+  (define-key-chord-alias "fd" 'god-mode-all))
