@@ -48,5 +48,3 @@
 ;; (unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
-
-(package! key-chord :pin "dbf91fefdad58b1c2f07c92e658ce81490837c60")

@@ -7,6 +7,7 @@ lib.mkIf enable {
   modules = {
     code.enable = true;
     helix.enable = true;
+    emacs.enable = true;
   };
 
   home.packages = [

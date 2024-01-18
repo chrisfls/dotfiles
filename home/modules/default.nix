@@ -29,7 +29,6 @@
     ./scaling.nix
     ./screenshot.nix
     ./shell.nix
-    ./sublime.nix
     ./telegram.nix
     ./themes.nix
     ./xdg.nix

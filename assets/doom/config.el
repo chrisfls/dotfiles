@@ -31,19 +31,24 @@
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-gruvbox)
-;; (setq doom-gruvbox-padded-modeline t)
-(setq doom-gruvbox-dark-variant "hard")
+;; `load-theme' function.
+
+;;(setq doom-theme 'doom-gruvbox) 
+;;(setq doom-gruvbox-dark-variant "hard")
+
+;;(setq doom-theme 'doom-dracula)
+
+;;(setq doom-theme 'doom-monokai-classic)
+
+(setq doom-tokyo-night 'doom-monokai-classic)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
+(setq org-directory "~/Desktop/org/")
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -77,43 +82,4 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(setq-default cursor-type 'bar)
-
-(defun god-mode-enabled-update-cursor ()
-  "Change cursor shape when god mode is enabled"
-  (setq cursor-type 'box))
-
-(defun god-mode-disabled-update-cursor ()
-  "Change cursor shape when god mode is disabled"
-  (setq cursor-type (if buffer-read-only 'box nil)))
-
-(use-package god-mode
-  :hook
-  (god-mode-enabled . god-mode-enabled-update-cursor)
-  (god-mode-disabled . god-mode-disabled-update-cursor)
-  :bind (:map god-local-mode-map
-         ("C-." . repeat)
-         ("M-g c" . avy-goto-char)
-         ("M-g g" . avy-goto-line)
-         ("C-x C-1" . delete-other-windows)
-         ("C-x C-2" . split-window-below)
-         ("C-x C-3" . split-window-right)
-         ("C-x C-0" . delete-window))
-  :config
-  (setq god-exempt-major-modes nil)
-  (setq god-exempt-predicates nil)
-  (setq god-mode-enable-function-key-translation nil)
-  (setq god-mode-alist '((nil . "C-"))))
-
-(defun define-key-chord-alias (key-chord command)
-  "Define a global key-chord and its translation to a command."
-  (key-chord-define-global key-chord 'null)
-  (define-key key-translation-map (kbd (concat "<key-chord> " key-chord)) (kbd command))
-  (define-key key-translation-map (kbd (concat "<key-chord> " (reverse key-chord))) (kbd command)))
-
-(use-package key-chord  :defer 1
-  :init
-  (key-chord-mode 1)
-  :config
-  (setq key-chord-two-keys-delay 0.05)
-  (define-key-chord-alias "fd" 'god-mode-all))
+;; (setq-default cursor-type 'bar)
