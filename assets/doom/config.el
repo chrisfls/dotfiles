@@ -1,87 +1,137 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
+(setq user-full-name "Christian Ferraz"
+      user-mail-address "")
 
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
-;; (setq user-full-name "John Doe"
-;;       user-mail-address "john@doe.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-symbol-font' -- for symbols
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept. For example:
-;;
-(setq doom-font (font-spec :family "Cascadia Code" :size (* 12.0 1.5)) ; :weight 'semi-light
-      doom-variable-pitch-font (font-spec :family "Noto Sans" :size (* 13.0 1.5)))
-;;
-;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function.
-
-;;(setq doom-theme 'doom-gruvbox) 
-;;(setq doom-gruvbox-dark-variant "hard")
-
-;;(setq doom-theme 'doom-dracula)
-
-;;(setq doom-theme 'doom-monokai-classic)
-
-(setq doom-tokyo-night 'doom-monokai-classic)
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Desktop/org/")
 
-;; Whenever you reconfigure a package, make sure to wrap your config in an
-;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
-;;
-;;   (after! PACKAGE
-;;     (setq x y))
-;;
-;; The exceptions to this rule:
-;;
-;;   - Setting file/directory variables (like `org-directory')
-;;   - Setting variables which explicitly tell you to set them before their
-;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
-;;   - Setting doom variables (which start with 'doom-' or '+').
-;;
-;; Here are some additional functions/macros that will help you configure Doom.
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
-;; etc).
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
+(setq doom-font (font-spec :family "Jetbrains Mono NFM" :size (* 12.0 1.5)) ; :weight 'semi-light
+      doom-variable-pitch-font (font-spec :family "Noto Sans" :size (* 13.0 1.5))
+      ;;doom-big-font
+      ;;doom-symbol-font
+      ;;doom-serif-font
+      )
 
-;; (setq-default cursor-type 'bar)
+(setq doom-theme 'doom-tokyo-night ; 'doom-gruvbox 'doom-dracula 'doom-monokai-classic
+      ;;doom-gruvbox-dark-variant "hard"
+      +doom-dashboard-ascii-banner-fn nil)
 
-(defcustom which-key-side-window-location 'top)
+(setq doom-leader-alt-key "C-l"
+      doom-localleader-alt-key "C-S-l")
+
+(setq display-line-numbers-type 'relative
+      scroll-margin 3
+      scroll-step 3)
+
+(setq-default cursor-type '(bar . 4))
+
+(use-package! key-chord
+  :init
+  (key-chord-mode 1)
+  :config
+  (setq key-chord-two-keys-delay 0.05)
+  (key-chord-define-global "fd" "\C-g"))
+
+(use-package! meow
+  :init
+  (meow-global-mode 1)
+  :config
+  (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
+        meow-cursor-type-default '(hbar . 4)
+        meow-cursor-type-normal '(hbar . 4)
+        meow-cursor-type-motion '(hbar . 4)
+        meow-cursor-type-beacon '(hbar . 4)
+        meow-cursor-type-insert '(bar . 4)
+        meow-cursor-type-keypad 'hollow
+        meow-use-clipboard t)
+  (meow-motion-overwrite-define-key
+   '("j" . meow-next)
+   '("k" . meow-prev)
+   '("<escape>" . ignore))
+  (meow-leader-define-key
+   ;; SPC j/k will run the original command in MOTION state.
+   '("j" . "H-j") ; "j
+   '("k" . "H-k") ; "k
+   ;; Use SPC (0-9) for digit arguments.
+   '("1" . meow-digit-argument) ; "1
+   '("2" . meow-digit-argument) ; "2
+   '("3" . meow-digit-argument) ; "3
+   '("4" . meow-digit-argument) ; "4
+   '("5" . meow-digit-argument) ; "5
+   '("6" . meow-digit-argument) ; "6
+   '("7" . meow-digit-argument) ; "7
+   '("8" . meow-digit-argument) ; "8
+   '("9" . meow-digit-argument) ; "9
+   '("0" . meow-digit-argument) ; "0
+   '("/" . meow-keypad-describe-key) ; "/
+   '("?" . meow-cheatsheet) ; "?
+   ;; doom integration
+   '("l" . meow-keypad-start) ; "l
+   '("L" . meow-keypad-start) ; "L
+   )
+  (meow-normal-define-key
+   '("0" . meow-expand-0) ; "0
+   '("9" . meow-expand-9) ; "9
+   '("8" . meow-expand-8) ; "8
+   '("7" . meow-expand-7) ; "7
+   '("6" . meow-expand-6) ; "6
+   '("5" . meow-expand-5) ; "5
+   '("4" . meow-expand-4) ; "4
+   '("3" . meow-expand-3) ; "3
+   '("2" . meow-expand-2) ; "2
+   '("1" . meow-expand-1) ; "1
+   '("-" . negative-argument) ; "-
+   '(";" . meow-reverse) ; ";
+   '("," . meow-inner-of-thing) ; ",
+   '("." . meow-bounds-of-thing) ; ".
+   '("[" . meow-beginning-of-thing) ; "[
+   '("]" . meow-end-of-thing) ; "]
+   '("a" . meow-append) ; "a
+   '("A" . meow-open-below) ; "A
+   '("b" . meow-back-word) ; "b
+   '("B" . meow-back-symbol) ; "B
+   '("c" . meow-change) ; "c
+   '("d" . meow-delete) ; "d
+   '("D" . meow-backward-delete) ; "D
+   '("e" . meow-next-word) ; "e
+   '("E" . meow-next-symbol) ; "E
+   '("f" . meow-find) ; "f
+   '("g" . meow-cancel-selection) ; "g
+   '("G" . meow-grab) ; "G
+   '("h" . meow-left) ; "h
+   '("H" . meow-left-expand) ; "H
+   '("i" . meow-insert) ; "i
+   '("I" . meow-open-above) ; "I
+   '("j" . meow-next) ; "j
+   '("J" . meow-next-expand) ; "J
+   '("k" . meow-prev) ; "k
+   '("K" . meow-prev-expand) ; "K
+   '("l" . meow-right) ; "l
+   '("L" . meow-right-expand) ; "L
+   '("m" . meow-join) ; "m
+   '("n" . meow-search) ; "n
+   '("o" . meow-block) ; "o
+   '("O" . meow-to-block) ; "O
+   '("p" . meow-yank) ; "p
+   '("q" . meow-quit) ; "q
+   '("Q" . meow-goto-line) ; "Q
+   '("r" . meow-replace) ; "r
+   '("R" . meow-swap-grab) ; "R
+   '("s" . meow-kill) ; "s
+   '("t" . meow-till) ; "t
+   '("u" . meow-undo) ; "u
+   '("U" . meow-undo-in-selection) ; "U
+   '("v" . meow-visit) ; "v
+   '("w" . meow-mark-word) ; "w
+   '("W" . meow-mark-symbol) ; "W
+   '("x" . meow-line) ; "x
+   '("X" . meow-goto-line) ; "X
+   '("y" . meow-save) ; "y
+   '("Y" . meow-sync-grab) ; "Y
+   '("z" . meow-pop-selection) ; "z
+   '("'" . repeat) ; "'
+   '("<escape>" . ignore))) ; "<escape>
+
+(after! which-key
+  (setq which-key-popup-type 'side-window
+        which-key-side-window-location 'top))
