@@ -29,9 +29,7 @@ in
     home.sessionPath = [ "${dir}/bin" ];
 
     xdg.configFile = {
-      "doom/config.el".source = ../../assets/doom/config.el;
-      "doom/init.el".source = ../../assets/doom/init.el;
-      "doom/packages.el".source = ../../assets/doom/packages.el;
+      "doom".source = ../../assets/doom;
     };
   };
 }

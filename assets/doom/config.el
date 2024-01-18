@@ -21,8 +21,8 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "Cascadia Code" :size 12.0) ; :weight 'semi-light
-      doom-variable-pitch-font (font-spec :family "Noto Sans" :size 13.0))
+(setq doom-font (font-spec :family "Cascadia Code" :size (* 12.0 1.5)) ; :weight 'semi-light
+      doom-variable-pitch-font (font-spec :family "Noto Sans" :size (* 13.0 1.5)))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -83,3 +83,5 @@
 ;; they are implemented.
 
 ;; (setq-default cursor-type 'bar)
+
+(defcustom which-key-side-window-location 'top)
