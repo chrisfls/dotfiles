@@ -13,10 +13,6 @@
       
 (setq doom-theme 'doom-gruvbox ; 'doom-gruvbox 'doom-dracula 'doom-monokai-classic 'doom-tokyo-night
       doom-gruvbox-dark-variant "hard"
-      doom-leader-key "SPC"
-      doom-leader-alt-key "C-SPC"
-      doom-localleader-key "SPC l"
-      doom-localleader-alt-key "C-SPC l"
       +doom-dashboard-ascii-banner-fn nil
       +word-wrap-extra-indent 'single)
 

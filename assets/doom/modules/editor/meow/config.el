@@ -1,5 +1,14 @@
 ;;; editor/meow/config.el -*- lexical-binding: t; -*-
 
+(setq doom-leader-key "SPC"
+      doom-leader-alt-key "C-SPC"
+      doom-localleader-key "SPC l"
+      doom-localleader-alt-key "C-SPC l")
+
+(map! 
+  "M-;" 'comment-or-uncomment-region
+  "C-M-\\" 'indent-for-tab-command)
+
 (use-package! meow
   :hook (doom-after-modules-config . meow-global-mode)
   :demand t
@@ -9,13 +18,14 @@
          ("SPC" . 'doom/leader))
   :config
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
-        meow-cursor-type-default '(hbar . 4)
-        meow-cursor-type-normal '(hbar . 4)
-        meow-cursor-type-motion '(hbar . 4)
-        meow-cursor-type-beacon '(hbar . 4)
-        meow-cursor-type-insert '(bar . 4)
+        meow-cursor-type-default '(bar . 12)
+        meow-cursor-type-normal '(bar . 12)
+        meow-cursor-type-motion '(bar . 12)
+        meow-cursor-type-beacon '(bar . 12)
+        meow-cursor-type-insert '(bar . 3)
         meow-cursor-type-keypad 'hollow
-        meow-use-clipboard t)
+        meow-use-clipboard t
+        meow-keypad-leader-dispatch ctl-x-map)
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
    '("k" . meow-prev)
@@ -100,7 +110,7 @@
    '("." . repeat) ; '
    '("<escape>" . ignore) ; <escape>
    ;; new keys
-   '("<backtab>" . meow-indent)
+   '("" . meow-indent)
    '("<prior>" . meow-page-up)
    '("<next>" . meow-page-down)
    '("\\" . meow-keypad)
