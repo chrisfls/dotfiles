@@ -4,9 +4,9 @@
   :hook (doom-after-modules-config . meow-global-mode)
   :demand t
   :bind (:map meow-normal-state-keymap
-         ("\\" . 'doom/leader) 
+         ("SPC" . 'doom/leader)
          :map meow-motion-state-keymap
-         ("\\" . 'doom/leader))
+         ("SPC" . 'doom/leader))
   :config
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
         meow-cursor-type-default '(hbar . 4)
@@ -19,7 +19,8 @@
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
    '("k" . meow-prev)
-   '("<escape>" . ignore))
+   '("<escape>" . ignore)
+   '("\\" . meow-keypad))
   (meow-leader-define-key
    ;; SPC j/k will run the original command in MOTION state.
    '("j" . "H-j") ; j
@@ -102,6 +103,7 @@
    '("<backtab>" . meow-indent)
    '("<prior>" . meow-page-up)
    '("<next>" . meow-page-down)
+   '("\\" . meow-keypad)
    ;'("C-y" . scroll-down-line)
    ;'("C-e" . scroll-up-line)
    '("<" . indent-rigidly-left-to-tab-stop)

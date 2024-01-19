@@ -5,19 +5,18 @@
 
 (setq org-directory "~/Desktop/org/")
 
+;;doom-big-font
+;;doom-symbol-font
+;;doom-serif-font
 (setq doom-font (font-spec :family "Jetbrains Mono NFM" :size (* 12.0 1.5)) ; :weight 'semi-light
-      doom-variable-pitch-font (font-spec :family "Noto Sans" :size (* 13.0 1.5))
-      ;;doom-big-font
-      ;;doom-symbol-font
-      ;;doom-serif-font
-      )
-
+      doom-variable-pitch-font (font-spec :family "Noto Sans" :size (* 13.0 1.5)))
+      
 (setq doom-theme 'doom-gruvbox ; 'doom-gruvbox 'doom-dracula 'doom-monokai-classic 'doom-tokyo-night
       doom-gruvbox-dark-variant "hard"
-      doom-leader-key "\\"
-      doom-leader-alt-key "C-\\"
-      doom-localleader-key "|"
-      doom-localleader-alt-key "C-|"
+      doom-leader-key "SPC"
+      doom-leader-alt-key "C-SPC"
+      doom-localleader-key "SPC l"
+      doom-localleader-alt-key "C-SPC l"
       +doom-dashboard-ascii-banner-fn nil
       +word-wrap-extra-indent 'single)
 
@@ -28,13 +27,15 @@
       ring-bell-function 'ignore
       scroll-margin 3
       scroll-step 1
-      scroll-step 3)
+      scroll-step 3
+      blink-cursor-blinks 0)
 
 (setq-default cursor-type '(bar . 4)
               display-fill-column-indicator-column 79
               display-fill-column-indicator-character ?╎
               fill-column 80)
 
+(blink-cursor-mode 1)
 (global-display-fill-column-indicator-mode 1)
 (pixel-scroll-precision-mode 1)
 (+global-word-wrap-mode 1)
