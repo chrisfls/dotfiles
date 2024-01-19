@@ -28,13 +28,14 @@
               display-fill-column-indicator-character ?╎)
 
 (global-display-fill-column-indicator-mode 1)
+(+global-word-wrap-mode 1)
 
-(use-package! key-chord
-  :init
-  (key-chord-mode 1)
-  :config
-  (setq key-chord-two-keys-delay 0.05)
-  (key-chord-define-global "fd" 'ignore))
+;;(use-package! key-chord
+;;  :init
+;;  (key-chord-mode 1)
+;;  :config
+;;  (setq key-chord-two-keys-delay 0.05)
+;;  (key-chord-define-global "fd" 'ignore))
 
 (use-package! meow
   :init
