@@ -12,8 +12,8 @@
       ;;doom-serif-font
       )
 
-(setq doom-theme 'doom-tokyo-night ; 'doom-gruvbox 'doom-dracula 'doom-monokai-classic
-      ;;doom-gruvbox-dark-variant "hard"
+(setq doom-theme 'doom-gruvbox ; 'doom-gruvbox 'doom-dracula 'doom-monokai-classic 'doom-tokyo-night
+      doom-gruvbox-dark-variant "hard"
       +doom-dashboard-ascii-banner-fn nil)
 
 (setq doom-leader-alt-key "C-l"
@@ -25,7 +25,7 @@
 
 (setq-default cursor-type '(bar . 4)
               display-fill-column-indicator-column 79
-              display-fill-column-indicator-character ?\u2506)
+              display-fill-column-indicator-character ?╎)
 
 (global-display-fill-column-indicator-mode 1)
 
@@ -34,7 +34,7 @@
   (key-chord-mode 1)
   :config
   (setq key-chord-two-keys-delay 0.05)
-  (key-chord-define-global "fd" "\C-g"))
+  (key-chord-define-global "fd" 'ignore))
 
 (use-package! meow
   :init
@@ -67,12 +67,11 @@
    '("8" . meow-digit-argument) ; 8
    '("9" . meow-digit-argument) ; 9
    '("0" . meow-digit-argument) ; 0
-   '("/" . meow-keypad-describe-key) ; /
-   '("?" . meow-cheatsheet) ; ?
-   ;; doom integration
+   '("?" . meow-keypad-describe-key) ; /
+   '("/" . meow-cheatsheet) ; ?
+   ;; new keys
    '("l" . meow-keypad-start) ; l
-   '("L" . meow-keypad-start) ; L
-   )
+   '("L" . meow-keypad-start)) ; L
   (meow-normal-define-key
    '("0" . meow-expand-0) ; 0
    '("9" . meow-expand-9) ; 9
@@ -85,18 +84,18 @@
    '("2" . meow-expand-2) ; 2
    '("1" . meow-expand-1) ; 1
    '("-" . negative-argument) ; -
-   '(";" . meow-reverse) ; ;
-   '("," . meow-inner-of-thing) ; ,
-   '("." . meow-bounds-of-thing) ; .
+   '("," . meow-reverse) ; ;
+   '("{" . meow-inner-of-thing) ; ,
+   '("}" . meow-bounds-of-thing) ; .
    '("[" . meow-beginning-of-thing) ; [
    '("]" . meow-end-of-thing) ; ]
    '("a" . meow-append) ; a
-   '("A" . meow-open-below) ; A
-   '("b" . meow-back-word) ; b
-   '("B" . meow-back-symbol) ; B
+   '("o" . meow-open-below) ; A
+   '("w" . meow-back-word) ; b
+   '("W" . meow-back-symbol) ; B
    '("c" . meow-change) ; c
-   '("d" . meow-delete) ; d
-   '("D" . meow-backward-delete) ; D
+   '("x" . meow-delete) ; d
+   '("X" . meow-backward-delete) ; D
    '("e" . meow-next-word) ; e
    '("E" . meow-next-symbol) ; E
    '("f" . meow-find) ; f
@@ -105,36 +104,42 @@
    '("h" . meow-left) ; h
    '("H" . meow-left-expand) ; H
    '("i" . meow-insert) ; i
-   '("I" . meow-open-above) ; I
+   '("O" . meow-open-above) ; I
    '("j" . meow-next) ; j
    '("J" . meow-next-expand) ; J
    '("k" . meow-prev) ; k
    '("K" . meow-prev-expand) ; K
    '("l" . meow-right) ; l
    '("L" . meow-right-expand) ; L
-   '("m" . meow-join) ; m
+   '("S" . meow-join) ; m
    '("n" . meow-search) ; n
-   '("o" . meow-block) ; o
-   '("O" . meow-to-block) ; O
+   '("b" . meow-block) ; o
+   '("B" . meow-to-block) ; O
    '("p" . meow-yank) ; p
    '("q" . meow-quit) ; q
-   '("Q" . meow-goto-line) ; Q
-   '("r" . meow-replace) ; r
-   '("R" . meow-swap-grab) ; R
-   '("s" . meow-kill) ; s
+   '("P" . meow-replace) ; r
+   '("r" . meow-swap-grab) ; R
+   '("d" . meow-kill) ; s
    '("t" . meow-till) ; t
    '("u" . meow-undo) ; u
    '("U" . meow-undo-in-selection) ; U
    '("v" . meow-visit) ; v
-   '("w" . meow-mark-word) ; w
-   '("W" . meow-mark-symbol) ; W
-   '("x" . meow-line) ; x
-   '("X" . meow-goto-line) ; X
+   '("m" . meow-mark-word) ; w
+   '("M" . meow-mark-symbol) ; W
+   '("s" . meow-line) ; x
+   '(":" . meow-goto-line) ; X
    '("y" . meow-save) ; y
    '("Y" . meow-sync-grab) ; Y
    '("z" . meow-pop-selection) ; z
-   '("'" . repeat) ; '
-   '("<escape>" . ignore))) ; <escape>
+   '("." . repeat) ; '
+   '("<escape>" . ignore) ; <escape>
+   ;; new keys
+   '("<backtab>" . meow-indent)
+   '("<prior>" . meow-page-up)
+   '("<next>" . meow-page-down)
+   '("<" . indent-rigidly-left-to-tab-stop)
+   '(">" . indent-rigidly-right-to-tab-stop)
+   '(";" . meow-comment)))
 
 (after! which-key
   (setq which-key-popup-type 'side-window
