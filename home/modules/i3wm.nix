@@ -202,7 +202,7 @@ in
           inner = 0;
           outer = 0;
           smartBorders = "on"; # no_gaps
-          smartGaps = true;
+          smartGaps = false;
         };
         # #### ## #
         # BEHAVIOR
@@ -362,7 +362,8 @@ in
           # ## #
 
           # [g] - toggle gaps
-          "${mod}+g" = "gaps inner all toggle 18; gaps outer all toggle 0";
+          "${mod}+g" = "gaps inner current toggle 18; gaps outer current toggle 0";
+          "${mod}+shift+g" = "gaps inner current toggle 64; gaps outer current toggle 64";
 
           # [i] - insert space / fill space
           "${mod}+i" = "[tiling con_id=\"__focused__\"] exec --no-startup-id ${insert}";
