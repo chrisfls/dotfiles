@@ -10,7 +10,7 @@ in
   options.modules.emacs.enable = lib.mkEnableOption "Enable emacs module";
 
   config = lib.mkIf enable {
-    home.packages = [ pkgs.emacs29 ];
+    home.packages = [ pkgs.emacs29 pkgs.semgrep ];
 
     home.activation.doomemacs = lib.hm.dag.entryAfter [ "writeBoundary" ]
       ''
@@ -28,8 +28,8 @@ in
 
     home.sessionPath = [ "${dir}/bin" ];
 
-    xdg.configFile = {
-      "doom".source = ../../assets/doom;
+    modules.copyFile = {
+      "${configHome}/doom" = "${toString ../../assets/doom}";
     };
   };
 }
