@@ -28,7 +28,7 @@
               display-fill-column-indicator-character ?╎)
 
 (global-display-fill-column-indicator-mode 1)
-(+global-word-wrap-mode 1)
+;;(+global-word-wrap-mode 1) ; TODO: set word wrap to 120
 
 ;;(use-package! key-chord
 ;;  :init
