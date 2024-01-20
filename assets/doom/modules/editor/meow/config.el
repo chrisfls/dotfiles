@@ -1,30 +1,24 @@
 ;;; editor/meow/config.el -*- lexical-binding: t; -*-
 
-(setq doom-leader-key "\\"
-      doom-leader-alt-key "C-\\"
-      doom-localleader-key "\\ l"
-      doom-localleader-alt-key "C-\\ l")
+(setq doom-leader-alt-key "C-c"
+      doom-localleader-alt-key "C-c l")
 
 (map! 
   "M-;" 'comment-or-uncomment-region
   "C-M-\\" 'indent-for-tab-command
-   "M-<up>" 'scroll-down-line
-   "M-<down>" 'scroll-up-line)
+  "M-<up>" 'scroll-down-line
+  "M-<down>" 'scroll-up-line)
 
 (use-package! meow
   :hook (doom-after-modules-config . meow-global-mode)
   :demand t
-  :bind (:map meow-normal-state-keymap
-         ("\\" . 'doom/leader)
-         :map meow-motion-state-keymap
-         ("\\" . 'doom/leader))
   :config
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
         meow-cursor-type-insert '(bar . 4)
         meow-cursor-type-region-cursor '(bar . 4)
         meow-cursor-type-keypad 'hollow
         meow-use-clipboard t
-        meow-keypad-leader-dispatch "C-x"
+        meow-keypad-leader-dispatch 'doom/leader
         meow-use-enhanced-selection-effect t)
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
