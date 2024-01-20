@@ -7,7 +7,9 @@
 
 (map! 
   "M-;" 'comment-or-uncomment-region
-  "C-M-\\" 'indent-for-tab-command)
+  "C-M-\\" 'indent-for-tab-command
+   "M-<up>" 'scroll-down-line
+   "M-<down>" 'scroll-up-line)
 
 (use-package! meow
   :hook (doom-after-modules-config . meow-global-mode)
@@ -110,6 +112,4 @@
    '("" . meow-indent)
    '("<prior>" . meow-page-up)
    '("<next>" . meow-page-down)
-   '(";" . meow-comment)
-   '("<up>" . scroll-down-line)
-   '("<down>" . scroll-up-line)))
+   '(";" . meow-comment)))
