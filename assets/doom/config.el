@@ -28,7 +28,7 @@
 
 (setq-default cursor-type '(bar . 4)
               display-fill-column-indicator-column 79
-              display-fill-column-indicator-character ?╎
+              display-fill-column-indicator-character ?·
               fill-column 80)
 
 (blink-cursor-mode 1)
