@@ -109,4 +109,6 @@
    '("" . meow-indent)
    '("<prior>" . meow-page-up)
    '("<next>" . meow-page-down)
-   '(";" . meow-comment)))
+   '(";" . meow-comment)
+   '(">" . indent-rigidly-right)
+   '("<" . indent-rigidly-left)))

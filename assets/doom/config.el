@@ -31,16 +31,13 @@
         highlight-indent-guides-auto-odd-face-perc 25
         highlight-indent-guides-auto-even-face-perc 25
         highlight-indent-guides-auto-character-face-perc 50)
-
+  (highlight-indent-guides-auto-set-faces)
   ;; TODO: support light themes
   (set-face-attribute 'fill-column-indicator nil
-    :background (face-attribute 'highlight-indent-guides-even-face
-                                :background nil
-                                'default)
-    :foreground nil))
-
-(after! meow
-  (add-to-list '+modeline-format-left '(:eval (meow-indicator))))
+      :background (face-attribute 'highlight-indent-guides-even-face
+                                  :background nil
+                                  'default)
+      :foreground nil))
 
 (+global-word-wrap-mode 1)
 (blink-cursor-mode 1)
