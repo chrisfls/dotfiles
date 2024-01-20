@@ -1,9 +1,9 @@
 ;;; editor/meow/config.el -*- lexical-binding: t; -*-
 
-(setq doom-leader-key "SPC"
-      doom-leader-alt-key "C-SPC"
-      doom-localleader-key "SPC l"
-      doom-localleader-alt-key "C-SPC l")
+(setq doom-leader-key "\\"
+      doom-leader-alt-key "C-\\"
+      doom-localleader-key "\\ l"
+      doom-localleader-alt-key "C-\\ l")
 
 (map! 
   "M-;" 'comment-or-uncomment-region
@@ -13,22 +13,21 @@
   :hook (doom-after-modules-config . meow-global-mode)
   :demand t
   :bind (:map meow-normal-state-keymap
-         ("SPC" . 'doom/leader)
+         ("\\" . 'doom/leader)
          :map meow-motion-state-keymap
-         ("SPC" . 'doom/leader))
+         ("\\" . 'doom/leader))
   :config
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
         meow-cursor-type-insert '(bar . 4)
         meow-cursor-type-region-cursor '(bar . 4)
         meow-cursor-type-keypad 'hollow
         meow-use-clipboard t
-        meow-keypad-leader-dispatch ctl-x-map
+        meow-keypad-leader-dispatch "C-x"
         meow-use-enhanced-selection-effect t)
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
    '("k" . meow-prev)
-   '("<escape>" . ignore)
-   '("\\" . meow-keypad))
+   '("<escape>" . ignore))
   (meow-leader-define-key
    ;; SPC j/k will run the original command in MOTION state.
    '("j" . "H-j") ; j
@@ -111,7 +110,6 @@
    '("" . meow-indent)
    '("<prior>" . meow-page-up)
    '("<next>" . meow-page-down)
-   '("\\" . meow-keypad)
    '(";" . meow-comment)
    '("<up>" . scroll-down-line)
    '("<down>" . scroll-up-line)))
