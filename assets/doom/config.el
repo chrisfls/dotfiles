@@ -11,7 +11,7 @@
 (setq doom-font (font-spec :family "Jetbrains Mono NFM" :size (* 12.0 1.5)) ; :weight 'semi-light
       doom-variable-pitch-font (font-spec :family "Noto Sans" :size (* 13.0 1.5)))
       
-(setq doom-theme 'doom-gruvbox ; 'doom-gruvbox 'doom-dracula 'doom-monokai-classic 'doom-tokyo-night
+(setq doom-theme 'doom-outrun-electric ; 'doom-gruvbox 'doom-dracula 'doom-monokai-classic 'doom-tokyo-night
       doom-gruvbox-dark-variant "hard"
       +doom-dashboard-ascii-banner-fn nil
       +word-wrap-extra-indent 'single)
