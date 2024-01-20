@@ -16,7 +16,7 @@
       +doom-dashboard-ascii-banner-fn nil
       +word-wrap-extra-indent 'single)
 
-(setq display-line-numbers-type 'relative
+(setq ;display-line-numbers-type 'relative
       mouse-wheel-follow-mouse 't
       mouse-wheel-progressive-speed nil
       mouse-wheel-scroll-amount '(1 ((shift) . 1))

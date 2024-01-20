@@ -18,14 +18,16 @@
          ("SPC" . 'doom/leader))
   :config
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
-        meow-cursor-type-default '(bar . 12)
-        meow-cursor-type-normal '(bar . 12)
-        meow-cursor-type-motion '(bar . 12)
-        meow-cursor-type-beacon '(bar . 12)
-        meow-cursor-type-insert '(bar . 3)
+        ;;meow-cursor-type-default 'box
+        ;;meow-cursor-type-normal 'box
+        ;;meow-cursor-type-motion 'box
+        ;;meow-cursor-type-beacon 'box
+        meow-cursor-type-insert '(bar . 4)
+        meow-cursor-type-region-cursor '(bar . 4)
         meow-cursor-type-keypad 'hollow
         meow-use-clipboard t
-        meow-keypad-leader-dispatch ctl-x-map)
+        meow-keypad-leader-dispatch ctl-x-map
+        meow-use-enhanced-selection-effect t)
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
    '("k" . meow-prev)
