@@ -18,10 +18,6 @@
          ("SPC" . 'doom/leader))
   :config
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
-        ;;meow-cursor-type-default 'box
-        ;;meow-cursor-type-normal 'box
-        ;;meow-cursor-type-motion 'box
-        ;;meow-cursor-type-beacon 'box
         meow-cursor-type-insert '(bar . 4)
         meow-cursor-type-region-cursor '(bar . 4)
         meow-cursor-type-keypad 'hollow
