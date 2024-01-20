@@ -14,7 +14,8 @@
 (setq doom-theme 'doom-gruvbox ; 'doom-gruvbox 'doom-dracula 'doom-monokai-classic 'doom-tokyo-night
       doom-gruvbox-dark-variant "hard"
       +doom-dashboard-ascii-banner-fn nil
-      +word-wrap-extra-indent 'single)
+      +word-wrap-extra-indent 'single
+      +word-wrap-fill-style 'soft)
 
 (setq ;display-line-numbers-type 'relative
       mouse-wheel-follow-mouse 't
