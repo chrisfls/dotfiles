@@ -5,9 +5,9 @@
       doom-localleader-key "C-c l"
       doom-localleader-alt-key "C-c l")
 
-(map! 
+(map!
   "M-;" 'comment-or-uncomment-region
-  "C-M-\\" 'indent-for-tab-command)
+  "C-M-\\" 'custom/indent-rigidly-right-to-tab-stop)
 
 (use-package! meow
   :hook (doom-after-modules-config . meow-global-mode)
@@ -106,9 +106,30 @@
    '("." . repeat) ; '
    '("<escape>" . ignore) ; <escape>
    ;; new keys
-   '("" . meow-indent)
+   '("TAB" . meow-indent)
+   '("<backtab>" . custom/indent-rigidly-left-to-tab-stop)
    '("<prior>" . meow-page-up)
    '("<next>" . meow-page-down)
    '(";" . meow-comment)
-   '(">" . indent-rigidly-right)
-   '("<" . indent-rigidly-left)))
+   '(">" . custom/indent-rigidly-right)
+   '("<" . custom/indent-rigidly-left)))
+
+(defun custom/indent-rigidly-right-to-tab-stop ()
+  "Indent region to the right, or current line if no region is active."
+  (interactive)
+  (indent-rigidly-right-to-tab-stop (line-beginning-position) (line-end-position)))
+
+(defun custom/indent-rigidly-left-to-tab-stop ()
+  "Indent region to the left, or current line if no region is active."
+  (interactive)
+  (indent-rigidly-left-to-tab-stop (line-beginning-position) (line-end-position)))
+
+(defun custom/indent-rigidly-right ()
+  "Indent region to the right, or current line if no region is active."
+  (interactive)
+  (indent-rigidly-right (line-beginning-position) (line-end-position)))
+
+(defun custom/indent-rigidly-left ()
+  "Indent region to the left, or current line if no region is active."
+  (interactive)
+  (indent-rigidly-left (line-beginning-position) (line-end-position)))
