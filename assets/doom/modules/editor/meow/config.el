@@ -6,13 +6,20 @@
       doom-localleader-alt-key "C-c l")
 
 (map!
-  "M-;" 'comment-or-uncomment-region
+  "M-;" 'custom/comment-or-uncomment-region
   "C-M-\\" 'custom/indent-rigidly-right-to-tab-stop)
+
+;; TODO: bind 
+;;  avy-goto-line
+;;  avy-goto-char
 
 (use-package! meow
   :hook (doom-after-modules-config . meow-global-mode)
   :demand t
   :config
+  (meow-thing-register 'whitespace
+                     '(syntax . " ")
+                     '(syntax . " "))
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
         meow-cursor-type-insert '(bar . 4)
         meow-cursor-type-region-cursor '(bar . 4)
@@ -22,6 +29,18 @@
         meow-keypad-start-keys '((?k . ?c)
                                  (?h . ?h)
                                  (?x . ?x))
+        meow-char-thing-table '((?r . round)
+                                (?s . square)
+                                (?c . curly)
+                                (?g . string)
+                                (?e . symbol)
+                                (?w . window)
+                                (?b . buffer)
+                                (?p . paragraph)
+                                (?l . line)
+                                (?d . defun)
+                                (?. . sentence)
+                                (?\s . whitespace))
         meow-use-enhanced-selection-effect t)
   (meow-motion-overwrite-define-key
    '("j" . meow-next)
@@ -110,26 +129,42 @@
    '("<backtab>" . custom/indent-rigidly-left-to-tab-stop)
    '("<prior>" . meow-page-up)
    '("<next>" . meow-page-down)
-   '(";" . meow-comment)
+   '(";" . meow-comment))
    '(">" . custom/indent-rigidly-right)
-   '("<" . custom/indent-rigidly-left)))
+   '("<" . custom/indent-rigidly-left))
+
+(defun custom/comment-or-uncomment-region ()
+  "Indent region to the right, or current line if no region is active."
+  (interactive)
+  (if (use-region-p)
+      (comment-or-uncomment-region (region-beginning) (region-end))
+    (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
 
 (defun custom/indent-rigidly-right-to-tab-stop ()
   "Indent region to the right, or current line if no region is active."
   (interactive)
-  (indent-rigidly-right-to-tab-stop (line-beginning-position) (line-end-position)))
+  (if (use-region-p)
+      (indent-rigidly-right-to-tab-stop (region-beginning) (region-end))
+    (indent-rigidly-right-to-tab-stop (line-beginning-position) (line-end-position))))
 
 (defun custom/indent-rigidly-left-to-tab-stop ()
   "Indent region to the left, or current line if no region is active."
   (interactive)
-  (indent-rigidly-left-to-tab-stop (line-beginning-position) (line-end-position)))
+  (if (use-region-p)
+      (indent-rigidly-left-to-tab-stop (region-beginning) (region-end))
+    (indent-rigidly-left-to-tab-stop (line-beginning-position) (line-end-position))))
 
 (defun custom/indent-rigidly-right ()
   "Indent region to the right, or current line if no region is active."
   (interactive)
-  (indent-rigidly-right (line-beginning-position) (line-end-position)))
+  (if (use-region-p)
+      (indent-rigidly-right (region-beginning) (region-end))
+    (indent-rigidly-right (line-beginning-position) (line-end-position))))
 
 (defun custom/indent-rigidly-left ()
   "Indent region to the left, or current line if no region is active."
   (interactive)
-  (indent-rigidly-left (line-beginning-position) (line-end-position)))
+  (if (use-region-p)
+      (indent-rigidly-right (region-beginning) (region-end))
+    (indent-rigidly-left (line-beginning-position) (line-end-position))))
+(setq prefix-help-command #'embark-prefix-help-command)
