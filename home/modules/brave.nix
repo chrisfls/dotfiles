@@ -1,32 +1,31 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
+  inherit (config.presets) non-nixos;
   inherit (config.modules.brave) enable;
 
   pkg =
     if config.presets.non-nixos then
+      pkgs.writeShellScriptBin "brave"
+        ''
+          exec /usr/bin/brave --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL
+        ''
+
+    else
       pkgs.brave.overrideAttrs
         (old: {
           postFixup =
             ''
               substituteInPlace $out/bin/brave \
-                --replace mesa dummy-mesa
-              substituteInPlace $out/bin/brave \
-                --replace libva dummy-libva
-              substituteInPlace $out/bin/brave \
                 --replace "--enable-features=" "--force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL,"
             '';
-        })
-
-    else
-      pkgs.brave;
+        });
 in
 {
   options.modules.brave.enable = lib.mkEnableOption "Enable brave module";
 
   config = lib.mkIf enable {
     home.packages = [ pkg ];
-
-    # TODO: pacman
+    pacman.packages = [ "chaotic-aur/brave-bin" ];
 
     xdg.mimeApps.defaultApplications =
       let desktop = "brave-browser.desktop";

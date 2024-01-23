@@ -1,19 +1,13 @@
 ### hardocode
 
-- [ ] xsession/xprofile
 - [ ] apps
-  - [ ] brave
   - [ ] vscode
   - [ ] emacs
-  - [ ] autorandr
   - [ ] bash
-  - [ ] direnv
   - [ ] direnv
   - [ ] fish
   - [ ] git
   - [ ] helix
-  - [ ] keychain
-  - [ ] kitty
   - [ ] micro
   - [ ] zoxide
 

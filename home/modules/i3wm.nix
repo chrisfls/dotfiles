@@ -171,7 +171,7 @@ in
   options.modules.i3wm = {
     enable = lib.mkEnableOption "Enable i3wm module";
 
-    terminal = lib.mkOption { type = lib.types.str; default = "kitty -1"; };
+    terminal = lib.mkOption { type = lib.types.str; };
     menu = lib.mkOption { type = lib.types.str; default = "rofi-menu"; };
     run = lib.mkOption { type = lib.types.str; default = "rofi-run"; };
     power-menu = lib.mkOption { type = lib.types.str; default = "rofi-power-menu"; };
