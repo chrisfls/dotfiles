@@ -5,6 +5,8 @@ let
   exe = "telegram-desktop";
 in
 {
+  # TODO: pacman
+
   options.modules.telegram.enable = lib.mkEnableOption "Enable telegram module";
 
   config = lib.mkIf enable {

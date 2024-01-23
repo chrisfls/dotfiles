@@ -7,6 +7,8 @@ in {
   options.modules.rclone.enable = lib.mkEnableOption "Enable rclone module";
 
   config = lib.mkIf enable {
+    # TODO: pacman
+
     home.packages = [ pkgs.rclone ];
 
     xdg.configFile."systemd/user/rclone@.service".text =

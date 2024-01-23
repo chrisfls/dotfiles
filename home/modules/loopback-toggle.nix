@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
 let
+  # TODO: pacman
+
   inherit (config.modules.loopback-toggle) device enable volume;
 
   loopback-toggle = pkgs.writeScript "loopback-toggle"

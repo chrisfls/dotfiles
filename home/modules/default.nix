@@ -15,7 +15,6 @@
     ./i3wm.nix
     ./jamesdsp.nix
     ./kitty.nix
-    ./lite-xl.nix
     ./loopback-toggle.nix
     ./micro.nix
     ./microsoft-edge.nix

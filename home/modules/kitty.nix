@@ -9,6 +9,8 @@ let
   launch = "exec --no-startup-id \"kitty -1\"";
 in
 {
+  # TODO: pacman
+
   options.modules.kitty.enable = lib.mkEnableOption "Enable kitty module";
 
   config = lib.mkIf enable {

@@ -10,6 +10,8 @@ in
   options.modules.dunst.enable = lib.mkEnableOption "Enable dunst module";
 
   config = lib.mkIf enable {
+    # TODO: pacman
+
     # home manager fix
     systemd.user.services.dunst.Service.Environment = lib.mkIf (config.presets.non-nixos) (lib.mkForce [ ]);
 

@@ -1,5 +1,7 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
+  # TODO: pacman
+
   inherit (config.modules.microsoft-edge) enable;
 
   pkg =

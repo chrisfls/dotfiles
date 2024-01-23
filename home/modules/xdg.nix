@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
 let inherit (config.modules.xdg) enable; in {
+  # TODO: pacman
+  
   options.modules.xdg.enable = lib.mkEnableOption "Enable xdg module";
 
   config = lib.mkIf enable {

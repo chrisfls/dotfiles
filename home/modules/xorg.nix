@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
 let inherit (config.modules.xorg) enable; in {
+  # TODO: pacman
+
   options.modules.xorg.enable = lib.mkEnableOption "Enable xorg module";
 
   config = lib.mkIf enable {

@@ -70,6 +70,8 @@ in
 
   config = lib.mkIf enable {
     home.packages = [ pkgs.jamesdsp ];
+
+    # TODO: pacman
     
     xsession.windowManager.i3.config.startup = lib.mkIf config.modules.i3wm.enable [
       { notification = false; command = "jamesdsp --tray"; }

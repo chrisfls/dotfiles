@@ -5,6 +5,7 @@ let
   desktop = "com.interversehq.qView.desktop";
 in
 {
+  # TODO: pacman
   options.modules.qview.enable = lib.mkEnableOption "Enable qview module";
 
   config = lib.mkIf enable {

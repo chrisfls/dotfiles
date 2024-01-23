@@ -10,6 +10,8 @@ in
   options.modules.emacs.enable = lib.mkEnableOption "Enable emacs module";
 
   config = lib.mkIf enable {
+    # TODO: pacman
+
     home.packages = [ pkgs.emacs29 pkgs.semgrep ];
 
     home.activation.doomemacs = lib.hm.dag.entryAfter [ "writeBoundary" ]

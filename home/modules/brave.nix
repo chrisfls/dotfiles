@@ -26,6 +26,8 @@ in
   config = lib.mkIf enable {
     home.packages = [ pkg ];
 
+    # TODO: pacman
+
     xdg.mimeApps.defaultApplications =
       let desktop = "brave-browser.desktop";
       in {

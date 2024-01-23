@@ -1,3 +1,32 @@
+### hardocode
+
+- [x] polybar
+- [x] rofi
+- [ ] dunst
+- [ ] picom
+- [ ] i3wm
+- [ ] xsession/xprofile
+- [ ] apps
+  - [ ] brave
+  - [ ] vscode
+  - [ ] emacs
+  - [ ] 
+  
+  - [ ] autorandr
+  - [ ] bash
+  - [ ] direnv
+  - [ ] direnv
+  - [ ] fish
+  - [ ] git
+  - [ ] helix
+  - [ ] keychain
+  - [ ] kitty
+  - [ ] micro
+  - [ ] zoxide
+
+- writeHostScript
+- writeHostShellScriptBin
+
 ### systemd
 
 - Fix udiskie service

@@ -3,6 +3,8 @@ let inherit (config.modules.fonts) enable; in {
   options.modules.fonts.enable = lib.mkEnableOption "Enable fonts module";
 
   config = lib.mkIf enable {
+    # TODO: pacman
+
     home.packages = [
       # good generic font
       pkgs.noto-fonts

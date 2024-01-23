@@ -1,6 +1,7 @@
 # do not migrate to breeze, all qt5 apps will use gpu accel if you do
 { config, lib, pkgs, specialArgs, ... }:
 let
+  # TODO: pacman
   inherit (config.modules.themes)
     cursor
     enable

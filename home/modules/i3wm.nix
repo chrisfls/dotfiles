@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
 let
+  # TODO: pacman
+
   inherit (config.modules.i3wm) enable;
   inherit (builtins) concatStringsSep;
   inherit (config.xsession.windowManager.i3.config) terminal menu;

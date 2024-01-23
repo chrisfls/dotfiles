@@ -5,5 +5,6 @@ let inherit (config.modules.code) enable; in
 
   config = lib.mkIf enable {
     home.packages = [ pkgs.vscode ];
+    # TODO: pacman
   };
 }

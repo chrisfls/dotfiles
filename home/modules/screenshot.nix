@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
 let
+  # TODO: pacman
+
   inherit (config.modules.screenshot) enable;
 
   shotgun = "${pkgs.shotgun}/bin/shotgun"; # or pkgs.maim

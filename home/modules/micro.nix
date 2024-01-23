@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
 let inherit (config.modules.micro) enable desktop; in {
+  # TODO: pacman
+
   options.modules.micro.enable = lib.mkEnableOption "Enable micro module";
   options.modules.micro.desktop = lib.mkEnableOption "Enable micro desktop entry";
 
