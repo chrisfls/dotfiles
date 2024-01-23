@@ -26,11 +26,11 @@ let
     else
       "${pkgs.xplugd}/bin/xplugd";
 
-  keychain =
-    if non-nixos then
-      "/usr/bin/keychain"
-    else
-      "${pkgs.keychain}/bin/keychain";
+  # keychain =
+  #   if non-nixos then
+  #     "/usr/bin/keychain"
+  #   else
+  #     "${pkgs.keychain}/bin/keychain";
 
   xsetroot =
     if non-nixos then
@@ -63,7 +63,7 @@ in
   config = lib.mkIf enable {
     pacman = {
       packages = [
-        "extra/keychain"
+        # "extra/keychain"
         "extra/xorg-xinit"
         "extra/xorg-xinput"
         "extra/xorg-xsetroot"
@@ -77,7 +77,7 @@ in
     };
 
     home.packages = lib.mkIf (!non-nixos) [
-      pkgs.keychain
+      # pkgs.keychain
       pkgs.numlockx
       pkgs.xclip
       pkgs.xdotool
@@ -148,7 +148,7 @@ in
           ${xsession}
           ${xrdb} -merge ${config.home.homeDirectory}/.Xresources
         
-          eval "$(SHELL=bash ${keychain} --eval --quiet id_ed25519)"
+          ${"" /* eval "$(SHELL=bash ${keychain} --eval --quiet id_ed25519)" */}
           ${xsetroot} -xcf ${cursorPath} ${toString config.modules.themes.cursor.size}
 
           ${window-manager}
