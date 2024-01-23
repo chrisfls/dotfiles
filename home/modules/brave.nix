@@ -7,7 +7,7 @@ let
     if config.presets.non-nixos then
       pkgs.writeShellScriptBin "brave"
         ''
-          exec /usr/bin/brave --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL
+          exec /usr/bin/brave --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
         ''
 
     else
