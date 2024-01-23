@@ -164,10 +164,10 @@ in
 
     home.packages = [
       (pkgs.extra.mkIfElse non-nixos
-        (wrap "rofi")
+        (wrap "/usr/bin/rofi")
         (pkgs.symlinkJoin {
           name = "rofi";
-          paths = [ rofi-pkg (wrap "${rofi-pkg}/bin/rofi") ];
+          paths = [ (wrap "${rofi-pkg}/bin/rofi") rofi-pkg ];
         }))
       rofi-menu-pkg
       rofi-dunst-pkg
