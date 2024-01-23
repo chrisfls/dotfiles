@@ -1,17 +1,33 @@
 { config, lib, pkgs, ... }:
-let inherit (config.modules.xdg) enable; in {
+let
+  inherit (config.presets) non-nixos;
+  inherit (config.modules.xdg) enable;
+in
+{
   # TODO: pacman
-  
+
   options.modules.xdg.enable = lib.mkEnableOption "Enable xdg module";
 
   config = lib.mkIf enable {
-    home.packages = [
-      pkgs.libsForQt5.kde-cli-tools
-      pkgs.libsForQt5.konqueror
-      pkgs.libsForQt5.xdg-desktop-portal-kde
-      pkgs.xdg-desktop-portal
-      pkgs.xdg-desktop-portal-gtk # see "font rendering in GTK apps on KDE"
-      pkgs.xdg-utils
+    home.packages =
+      if non-nixos then
+        [ ]
+      else [
+        pkgs.libsForQt5.kde-cli-tools
+        pkgs.libsForQt5.konqueror
+        pkgs.libsForQt5.xdg-desktop-portal-kde
+        pkgs.xdg-desktop-portal
+        pkgs.xdg-desktop-portal-gtk # see "font rendering in GTK apps on KDE"
+        pkgs.xdg-utils
+      ];
+
+    pacman.packages = [
+      "extra/kde-cli-tools"
+      "extra/konqueror"
+      "extra/xdg-desktop-portal-kde"
+      "extra/xdg-desktop-portal"
+      "extra/xdg-desktop-portal-gtk"
+      "extra/xdg-utils"
     ];
 
     home.sessionVariables = {
@@ -32,7 +48,7 @@ let inherit (config.modules.xdg) enable; in {
           "application/7z" = "lxqt-archiver.desktop";
           "application/*tar" = "lxqt-archiver.desktop";
           "video/*" = "io.github.mpc_qt.Mpc-Qt.desktop";
-          "audio/*" = "org.kde.vvave.desktop";
+          "audio/*" = "org.kde.juk.desktop";
           "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
         };
       };
