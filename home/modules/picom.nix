@@ -58,7 +58,7 @@ in
         shadow-opacity = 0.500000;
         shadow-exclude = [
           "!(class_g = 'Rofi' || class_g = 'Polybar' || class_g = 'Dunst')"
-        ];E
+        ];
 
         # border opacity
         frame-opacity = 0.850000;
