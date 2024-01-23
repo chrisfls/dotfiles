@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   inherit (config.modules.rofi) enable;
+  inherit (config.presets) non-nixos;
 
   settings = pkgs.fetchFromGitHub {
     owner = "kress95";
@@ -9,20 +10,13 @@ let
     sha256 = "sha256-R0cr7io8m2z9r0T/4xbVtm5sGVaPDj80GEfXyBTWJI0=";
   };
 
-  pkg =
-    let
-      pkg' =
-        pkgs.rofi.override { plugins = [ pkgs.rofi-calc ]; };
+  rofi-pkg = pkgs.rofi.override {
+    plugins = [ pkgs.rofi-calc ];
+  };
 
-      wrapped = pkgs.writeShellScriptBin "rofi"
-        "exec ${pkg'}/bin/rofi -dpi ${toString config.modules.scaling.dpi-scaled} \"$@\"";
-    in
-    pkgs.symlinkJoin {
-      name = "rofi";
-      paths = [ wrapped pkg' ];
-    };
-
-  rofi = "${pkg}/bin/rofi";
+  wrap = rofi:
+    pkgs.writeShellScriptBin "rofi"
+      "exec ${rofi} -dpi ${toString config.modules.scaling.dpi-scaled} \"$@\"";
 
   theme = "${config.xdg.configHome}/rofi/launchers/type-3/style-5.rasi";
   theme' = "${config.xdg.configHome}/rofi/launchers/type-3/style-5-alt.rasi";
@@ -37,7 +31,7 @@ let
       summaries=("$(echo $history | jq -r .summary.data)" "󰃢 Clear All")
       selected=$(
         printf "%s\n" "''${summaries[@]}" | grep -v '^$' \
-          | ${rofi} -dmenu -theme \"${theme'}\" -format i -p " "
+          | rofi -dmenu -theme \"${theme'}\" -format i -p " "
       )
       if [[ -n $selected ]]; then
         if [[ $selected -lt ''${#summaries[@]} ]]; then
@@ -55,7 +49,7 @@ let
   rofi-calc = pkgs.writeScript "rofi-calc"
     ''
       out=$(
-      ${rofi} -theme "${theme'}" \
+      rofi -theme "${theme'}" \
         -show calc -modi calc -no-show-match -no-sort \
         -calc-command "echo -n '{result}'"
       )
@@ -65,7 +59,7 @@ let
     '';
 
   # polybar main menu
-  rofi-menu-pkg = pkgs.writeShellScriptBin "rofi-menu" "exec ${rofi} -show drun -theme \"${theme}\"";
+  rofi-menu-pkg = pkgs.writeShellScriptBin "rofi-menu" "exec rofi -show drun -theme \"${theme}\"";
 
   # polybar session menu
   rofi-power-menu = pkgs.writeScript "rofi-power-menu"
@@ -85,7 +79,7 @@ let
           
       # run rofi
       rofi_cmd() {
-      	${rofi} -dmenu \
+      	rofi -dmenu \
       		-p "$host" \
       		-mesg "Uptime: $uptime" \
       		-theme "$theme"
@@ -93,7 +87,7 @@ let
 
       # confirm yes/no
       confirm_cmd() {
-      	${rofi} -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 250px;}' \
+      	rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 250px;}' \
       		-theme-str 'mainbox {children: [ "message", "listview" ];}' \
       		-theme-str 'listview {columns: 2; lines: 1;}' \
       		-theme-str 'element-text {horizontal-align: 0.5;}' \
@@ -141,10 +135,10 @@ let
     '';
 
   # run menu
-  rofi-run = pkgs.writeScript "rofi-run" "exec ${rofi} -show run -theme \"${theme}\"";
+  rofi-run = pkgs.writeScript "rofi-run" "exec rofi -show run -theme \"${theme}\"";
 
   # global windows
-  rofi-windows = pkgs.writeScript "rofi-windows" "exec ${rofi} -modi window -show window -theme \"${theme}\"";
+  rofi-windows = pkgs.writeScript "rofi-windows" "exec rofi -modi window -show window -theme \"${theme}\"";
 in
 {
   options.modules.rofi.enable = lib.mkEnableOption "Enable rofi module";
@@ -168,7 +162,18 @@ in
       };
     };
 
-    home.packages = [ pkg rofi-menu-pkg rofi-dunst-pkg ];
+    home.packages = [
+      (pkgs.extra.mkIfElse non-nixos
+        (wrap "rofi")
+        (pkgs.symlinkJoin {
+          name = "rofi";
+          paths = [ rofi-pkg (wrap "${rofi-pkg}/bin/rofi") ];
+        }))
+      rofi-menu-pkg
+      rofi-dunst-pkg
+    ];
+
+    pacman.packages = lib.mkIf non-nixos [ "extra/rofi" "extra/rofi-calc" ];
 
     xdg.dataFile = {
       "fonts/GrapeNuts-Regular.ttf".source = "${settings}/fonts/GrapeNuts-Regular.ttf";

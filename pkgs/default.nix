@@ -6,7 +6,7 @@ in
   extra = {
     attrsets = import ./attrsets.nix;
     lpm = callPackage ./lpm.nix;
-    mkIfElse = callPackage import ./mk-if-else.nix;
+    mkIfElse =  import ./mk-if-else.nix final;
     qt = import ./qt.nix prev;
     string = import ./string.nix;
   };
