@@ -1,6 +1,5 @@
 ### hardocode
 
-- [ ] i3wm
 - [ ] xsession/xprofile
 - [ ] apps
   - [ ] brave
