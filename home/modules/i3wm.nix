@@ -190,12 +190,9 @@ in
   };
 
   config = lib.mkIf enable {
-    home.packages = [
-      pkgs.cozette
-      (lib.mkIf (!non-nixos) pkgs.i3)
-    ];
+    home.packages = lib.mkIf (!non-nixos) [ pkgs.i3 pkgs.cozette ];
 
-    pacman.packages = [ "extra/i3-wm" ];
+    pacman.packages = [ "extra/i3-wm" "chaotic-aur/cozette-otb" ];
 
     modules.xorg.window-manager = i3;
 
