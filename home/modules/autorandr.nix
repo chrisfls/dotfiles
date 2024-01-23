@@ -15,7 +15,7 @@ in
   config = lib.mkIf enable {
     pacman.packages = [ "extra/autorandr" ];
 
-    xsession.initExtra = "${autorandr} -c";
+    modules.xorg.xsession = "${autorandr} -c";
 
     systemd.user.services.autorandr = {
       Unit = {

@@ -8,7 +8,7 @@ in
   config = (lib.mkIf enable {
     targets.genericLinux.enable = true;
     
-    xsession.importedVariables = [ "PATH" ];
+    modules.xorg.imported-variables  = [ "PATH" ];
 
     programs.fish.shellInit =
       ''

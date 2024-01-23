@@ -20,7 +20,7 @@ let inherit (config.pacman) enable; in lib.mkIf enable {
     __EGL_VENDOR_LIBRARY_FILENAMES = "${config.xdg.configHome}/drivers/share/glvnd/egl_vendor.d/50_mesa.json";
   };
 
-  xsession.importedVariables = [
+  modules.xorg.imported-variables = [
     "LD_LIBRARY_PATH"
     "LIBGL_DRIVERS_PATH"
     "LIBVA_DRIVERS_PATH"

@@ -197,7 +197,7 @@ in
 
     pacman.packages = [ "extra/i3-wm" ];
 
-    xsession.windowManager.command = i3;
+    modules.xorg.window-manager = i3;
 
     xdg.configFile."i3/config" = {
       text =
