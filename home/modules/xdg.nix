@@ -4,8 +4,6 @@ let
   inherit (config.modules.xdg) enable;
 in
 {
-  # TODO: pacman
-
   options.modules.xdg.enable = lib.mkEnableOption "Enable xdg module";
 
   config = lib.mkIf enable {
@@ -14,25 +12,22 @@ in
         [ ]
       else [
         pkgs.libsForQt5.kde-cli-tools
-        pkgs.libsForQt5.konqueror
-        pkgs.libsForQt5.xdg-desktop-portal-kde
+        pkgs.libsForQt5.xdg-desktop-portal-lxqt
         pkgs.xdg-desktop-portal
         pkgs.xdg-desktop-portal-gtk # see "font rendering in GTK apps on KDE"
         pkgs.xdg-utils
       ];
 
     pacman.packages = [
-      "extra/kde-cli-tools"
-      "extra/konqueror"
-      "extra/xdg-desktop-portal-kde"
+      "extra/xdg-desktop-portal-lxqt"
       "extra/xdg-desktop-portal"
       "extra/xdg-desktop-portal-gtk"
       "extra/xdg-utils"
     ];
 
     home.sessionVariables = {
-      XDG_CURRENT_DESKTOP = "KDE";
-      DE = "kde";
+      XDG_CURRENT_DESKTOP = "LXQt";
+      DE = "lxqt";
       # GTK_USE_PORTAL = 1; # breaks vscode
     };
 
@@ -63,13 +58,13 @@ in
         "xdg-desktop-portal/portals.conf".text =
           ''
             [preferred]
-            default=kde
+            default=lxqt
           '';
 
         "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
           ''
             [Service]
-            Environment="XDG_CURRENT_DESKTOP=KDE"
+            Environment="XDG_CURRENT_DESKTOP=LXQt"
           '';
       };
       desktopEntries = {
