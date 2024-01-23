@@ -1,18 +1,9 @@
 ### hardocode
 
-- [ ] apps
-  - [ ] vscode
-  - [ ] emacs
-  - [ ] bash
-  - [ ] direnv
-  - [ ] fish
-  - [ ] git
-  - [ ] helix
-  - [ ] micro
-  - [ ] zoxide
-
-- writeHostScript
-- writeHostShellScriptBin
+- [ ] vscode
+- [ ] edge
+- writeHostScript?
+- writeHostShellScriptBin?
 
 ### systemd
 

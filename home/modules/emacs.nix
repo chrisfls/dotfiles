@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
 let
+  inherit (config.presets) non-nixos;
   inherit (config.modules.emacs) enable;
 
   rev = "03d692f129633e3bf0bd100d91b3ebf3f77db6d1";
@@ -10,9 +11,11 @@ in
   options.modules.emacs.enable = lib.mkEnableOption "Enable emacs module";
 
   config = lib.mkIf enable {
-    # TODO: pacman
+    home.packages =
+      if non-nixos then [ ]
+      else [ pkgs.emacs29 pkgs.semgrep ];
 
-    home.packages = [ pkgs.emacs29 pkgs.semgrep ];
+    pacman.packages = [ "extra/emacs-nativecomp" ];
 
     home.activation.doomemacs = lib.hm.dag.entryAfter [ "writeBoundary" ]
       ''

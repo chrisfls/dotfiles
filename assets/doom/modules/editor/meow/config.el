@@ -135,7 +135,7 @@
    '(">" . custom/indent-rigidly-right)
    ;; indent by tab 
    '("TAB" . meow-indent)
-   '("<backtab>" . custom/indent-rigidly-left-to-tab-stop))
+   '("<backtab>" . custom/indent-rigidly-left-to-tab-stop)))
 
 (defun custom/comment-or-uncomment-region ()
   "Indent region to the right, or current line if no region is active."
