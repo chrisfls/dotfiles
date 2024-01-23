@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  # TODO: pacman
-
+  inherit (config.presets) non-nixos;
   inherit (config.modules.loopback-toggle) device enable volume;
 
   loopback-toggle = pkgs.writeScript "loopback-toggle"
@@ -40,7 +39,9 @@ in
   };
 
   config = lib.mkIf enable {
-    xsession.windowManager.i3.config.keycodebindings."202" = "exec --no-startup-id ${loopback-toggle}";
+    pacman.packages = ["extra/pipewire-pulse" "extra/pamixer"];
+
+    modules.i3wm.extraConfig = "bindcode 202 exec --no-startup-id ${loopback-toggle}";
 
     systemd.user.services.loopback-offd = {
       Unit.Description = "Disables audio loopback by default";

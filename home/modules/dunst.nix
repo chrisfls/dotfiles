@@ -11,19 +11,9 @@ in
   options.modules.dunst.enable = lib.mkEnableOption "Enable dunst module";
 
   config = lib.mkIf enable {
-    home.packages =
-      if non-nixos then
-        [ ]
+    home.packages = lib.mkIf (!non-nixos) [ pkgs.dunst ];
 
-      else
-        [ pkgs.dunst ];
-
-    pacman.packages =
-      if non-nixos then
-        [ "extra/dunst" ]
-
-      else
-        [ ];
+    pacman.packages = [ "extra/dunst" ];
 
     systemd.user.services.dunst = {
       Unit = {

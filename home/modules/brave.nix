@@ -47,8 +47,6 @@ in
         "x-scheme-handler/unknown" = desktop;
       };
 
-    xsession.windowManager.i3.config.modes.apps."b" =
-      lib.mkIf config.modules.i3wm.enable
-        "exec --no-startup-id gtk-launch brave-browser; mode default";
+    modules.i3wm.apps."b" = "brave-browser";
   };
 }

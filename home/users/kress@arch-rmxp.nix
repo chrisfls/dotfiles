@@ -103,28 +103,24 @@ in
     };
   };
 
-  xsession.windowManager.i3.config = {
-    workspaceOutputAssign = let output = "HDMI-1"; in [
-      { workspace = "0"; output = "eDP-1"; }
-    ] ++ [
-      { workspace = "1"; inherit output; }
-      { workspace = "2"; inherit output; }
-      { workspace = "3"; inherit output; }
-      { workspace = "4"; inherit output; }
-      { workspace = "5"; inherit output; }
-      { workspace = "6"; inherit output; }
-      { workspace = "7"; inherit output; }
-      { workspace = "8"; inherit output; }
-      { workspace = "9"; inherit output; }
-      { workspace = "10"; inherit output; }
-    ];
+  modules.i3wm = {
     startup = [
-      # TODO: move to home/modules/feh.nix
-      {
-        command = "${pkgs.feh}/bin/feh --bg-center \"${../../assets/wallpaper/23-12-29_2160p.png}\"  \"${../../assets/wallpaper/23-12-30_800p.png}\"";
-        notification = false;
-      }
+      "${pkgs.feh}/bin/feh --bg-center \"${../../assets/wallpaper/23-12-29_2160p.png}\"  \"${../../assets/wallpaper/23-12-30_800p.png}\""
     ];
+    extraConfig =
+      ''
+        workspace "0" output "eDP-1"
+        workspace "1" output "HDMI-1"
+        workspace "2" output "HDMI-1"
+        workspace "3" output "HDMI-1"
+        workspace "4" output "HDMI-1"
+        workspace "5" output "HDMI-1"
+        workspace "6" output "HDMI-1"
+        workspace "7" output "HDMI-1"
+        workspace "8" output "HDMI-1"
+        workspace "9" output "HDMI-1"
+        workspace "10" output "HDMI-1"
+      '';
   };
 
   home.keyboard.layout = "br";

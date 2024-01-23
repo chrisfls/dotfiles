@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.modules.rofi) enable;
   inherit (config.presets) non-nixos;
+  inherit (config.modules.rofi) enable;
 
   settings = pkgs.fetchFromGitHub {
     owner = "kress95";
@@ -173,7 +173,7 @@ in
       rofi-dunst-pkg
     ];
 
-    pacman.packages = lib.mkIf non-nixos [ "extra/rofi" "extra/rofi-calc" ];
+    pacman.packages = [ "extra/rofi" "extra/rofi-calc" ];
 
     xdg.dataFile = {
       "fonts/GrapeNuts-Regular.ttf".source = "${settings}/fonts/GrapeNuts-Regular.ttf";

@@ -43,6 +43,28 @@ let inherit (config.modules.xorg) enable; in {
         '';
     };
 
+    # TODO: move to desktop
+    modules.i3wm = {
+      startup = [
+        "copyq"
+        "nm-tray"
+        "webcord --start-minimized"
+        "whatsapp-for-linux"
+        # ferdium
+      ];
+
+      apps = {
+        "c" = "io.github.Qalculate.qalculate-qt";
+        "d" = "webcord";
+        "e" = "pcmanfm-qt";
+        "shift+c" = "com.github.hluk.copyq";
+        "w" = "com.github.eneshecan.WhatsAppForLinux";
+        # "f" = "ferdium";
+      };
+      
+      extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
+    };
+
     xsession = {
       enable = true;
       numlock.enable = true;
@@ -50,28 +72,6 @@ let inherit (config.modules.xorg) enable; in {
         ''
           xset s off -dpms
         '';
-
-      # TODO: move to desktop
-      windowManager.i3.config = {
-        keybindings."Control+Mod1+Delete" = "exec --no-startup-id gtk-launch qps";
-
-        modes.apps = {
-          "c" = "exec --no-startup-id gtk-launch io.github.Qalculate.qalculate-qt; mode default";
-          "shift+c" = "exec --no-startup-id gtk-launch com.github.hluk.copyq; mode default";
-          "d" = "exec --no-startup-id gtk-launch webcord; mode default";
-          "e" = "exec --no-startup-id gtk-launch pcmanfm-qt; mode default";
-          "w" = "exec --no-startup-id gtk-launch com.github.eneshecan.WhatsAppForLinux; mode default";
-          # "f" = "exec --no-startup-id gtk-launch ferdium; mode default";
-        };
-
-        startup = [
-          { notification = false; command = "copyq"; }
-          { notification = false; command = "nm-tray"; }
-          { notification = false; command = "webcord --start-minimized"; }
-          { notification = false; command = "whatsapp-for-linux"; }
-          # { notification = false; command = "ferdium"; }
-        ];
-      };
     };
 
     services.xsettingsd.enable = true;

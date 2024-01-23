@@ -27,9 +27,6 @@ in
 
   config = lib.mkIf enable {
     home.packages = [ pkg ];
-
-    xsession.windowManager.i3.config.modes.apps."shift+b" =
-      lib.mkIf config.modules.i3wm.enable
-        "exec --no-startup-id gtk-launch microsoft-edge; mode default";
+    modules.i3wm.apps."shift+b" = "microsoft-edge";
   };
 }

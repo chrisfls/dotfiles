@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
 let
+  inherit (config.presets) non-nixos;
   inherit (config.modules.jamesdsp) enable presets;
 
   buildBase = path:
@@ -69,14 +70,12 @@ in
   };
 
   config = lib.mkIf enable {
-    home.packages = [ pkgs.jamesdsp ];
+    home.packages = lib.mkIf (!non-nixos) [ pkgs.jamesdsp ];
 
-    # TODO: pacman
+    pacman.packages = ["chaotic-aur/jamesdsp-git"];
+
+    modules.i3wm.startup = ["jamesdsp --tray"];
     
-    xsession.windowManager.i3.config.startup = lib.mkIf config.modules.i3wm.enable [
-      { notification = false; command = "jamesdsp --tray"; }
-    ];
-
     xdg.configFile = lib.attrsets.foldlAttrs
       (acc: name: path: acc // {
         "jamesdsp/presets/${name} (EQ).conf".text = buildEQ path;

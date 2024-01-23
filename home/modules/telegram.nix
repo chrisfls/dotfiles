@@ -12,11 +12,9 @@ in
   config = lib.mkIf enable {
     home.packages = [ (qt.fixScaling pkgs.telegram-desktop) ];
 
-    xsession.windowManager.i3.config = lib.mkIf config.modules.i3wm.enable {
-      modes.apps."t" = "exec --no-startup-id gtk-launch org.telegram; mode default";
-      startup = [
-        { notification = false; command = "telegram-desktop -startintray"; }
-      ];
+    modules.i3wm = {
+      apps."t" = "org.telegram";
+      startup = ["telegram-desktop -startintray"];
     };
   };
 }

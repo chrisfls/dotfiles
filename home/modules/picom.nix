@@ -1,25 +1,15 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.modules.picom) enable;
   inherit (config.presets) non-nixos;
+  inherit (config.modules.picom) enable;
 in
 {
   options.modules.picom.enable = lib.mkEnableOption "Enable picom module";
 
   config = lib.mkIf enable {
-    home.packages =
-      if non-nixos then
-        [ ]
+    home.packages = lib.mkIf (!non-nixos) [ pkgs.picom-next ];
 
-      else
-        [ pkgs.picom-next ];
-
-    pacman.packages =
-      if non-nixos then
-        [ "chaotic-aur/picom-git" ]
-
-      else
-        [ ];
+    pacman.packages = [ "chaotic-aur/picom-git" ];
 
     systemd.user.services.picom = {
       Unit = {

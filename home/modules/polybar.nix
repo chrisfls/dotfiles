@@ -1,7 +1,7 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.modules.polybar) enable;
   inherit (config.presets) non-nixos;
+  inherit (config.modules.polybar) enable;
   inherit (config.modules.themes.color-scheme) background foreground black redBright blueBright yellowBright;
 
   toggle = pkgs.writeScript "toggle"
@@ -69,37 +69,28 @@ in
   options.modules.polybar.enable = lib.mkEnableOption "Enable polybar module";
 
   config = lib.mkIf enable {
-    home.packages =
-      if non-nixos then
-        [ ]
+    home.packages = lib.mkIf (!non-nixos) [
+      pkgs.polybarFull
+      pkgs.bluez
+      pkgs.dunst
+      pkgs.libsForQt5.bluedevil
+      pkgs.lxqt.pavucontrol-qt
+      pkgs.pamixer
+      # pkgs.yad
+      # pkgs.toybox
+    ];
 
-      else
-        [
-          pkgs.polybarFull
-          pkgs.bluez
-          pkgs.dunst
-          pkgs.libsForQt5.bluedevil
-          pkgs.lxqt.pavucontrol-qt
-          pkgs.pamixer
-          # pkgs.yad
-          # pkgs.toybox
-        ];
+    pacman.packages = [
+      "extra/polybar"
+      "extra/bluez"
+      "extra/bluez-utils"
+      "extra/bluedevil"
+      "extra/pavucontrol-qt"
+      "extra/pamixer"
+      "extra/dunst"
+      # "extra/yad"
+    ];
 
-    pacman.packages =
-      if non-nixos then
-        [
-          "extra/polybar"
-          "extra/bluez"
-          "extra/bluez-utils"
-          "extra/bluedevil"
-          "extra/pavucontrol-qt"
-          "extra/pamixer"
-          "extra/dunst"
-          # "extra/yad"
-        ]
-
-      else
-        [ ];
 
     systemd.user.services.polybar = {
       Unit = {
