@@ -2,16 +2,14 @@
 
 - [x] polybar
 - [x] rofi
-- [ ] dunst
-- [ ] picom
+- [x] dunst
+- [x] picom
 - [ ] i3wm
 - [ ] xsession/xprofile
 - [ ] apps
   - [ ] brave
   - [ ] vscode
   - [ ] emacs
-  - [ ] 
-  
   - [ ] autorandr
   - [ ] bash
   - [ ] direnv
