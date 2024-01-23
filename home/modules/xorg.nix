@@ -115,18 +115,19 @@ in
       startup = [
         "copyq"
         "nm-tray"
-        "webcord --start-minimized"
         "whatsapp-for-linux"
-        # ferdium
+        (if non-nixos then
+          "vesktop --start-minimized"
+        else
+          "webcord --start-minimized")
       ];
 
       apps = {
         "c" = "io.github.Qalculate.qalculate-qt";
-        "d" = "webcord";
+        "d" = if non-nixos then "vesktop" else "webcord";
         "e" = "pcmanfm-qt";
         "shift+c" = "com.github.hluk.copyq";
         "w" = "com.github.eneshecan.WhatsAppForLinux";
-        # "f" = "ferdium";
       };
 
       extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";

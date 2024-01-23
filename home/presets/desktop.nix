@@ -1,5 +1,8 @@
 { config, lib, pkgs, specialArgs, ... }:
-let inherit (config.presets) desktop; in {
+let
+  inherit (config.presets) desktop non-nixos;
+in
+{
   options.presets.desktop = lib.mkEnableOption "Enable desktop preset";
 
   config = lib.mkIf desktop {
@@ -27,59 +30,107 @@ let inherit (config.presets) desktop; in {
       xorg.enable = true;
     };
 
-    home.packages = [
+    home.packages =
+      if non-nixos then
+        [ ]
+      else
+        [
+          # ######## #### ## #
+          # DESK ENV
+          # ######## #### ## #
+
+          # cli
+          pkgs.alsa-utils
+          pkgs.pamixer
+
+          # dialogs
+          pkgs.libsForQt5.kdialog # dialogs and widgets
+          pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
+          pkgs.lxqt.lxqt-policykit # policykit prompter
+          pkgs.lxqt.lxqt-sudo # gui-sudo prompter
+
+          # misc
+          pkgs.nm-tray # network manager
+
+          # core apps
+          pkgs.lxqt.lxqt-archiver # archiver
+          pkgs.lxqt.pavucontrol-qt # sound mixer
+          pkgs.lxqt.pcmanfm-qt # file manager
+
+          # common apps
+          pkgs.copyq # clipboard manager
+          pkgs.featherpad # simple text editor
+          pkgs.libsForQt5.juk # music player [or elisa]
+          pkgs.libsForQt5.kolourpaint # simple image editor
+          pkgs.lxqt.qps # system monitor
+          pkgs.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
+          pkgs.qalculate-qt # calculator
+
+          # ######## #### ## #
+          # MY PKGS
+          # ######## #### ## #
+
+          pkgs.anydesk
+          pkgs.joplin-desktop
+          pkgs.logseq
+          pkgs.moonlight-qt
+          pkgs.obsidian
+          pkgs.parsec-bin
+          pkgs.qbittorrent
+          pkgs.webcord-vencord
+          pkgs.whatsapp-for-linux
+          pkgs.wootility
+          # pkgs.soulseekqt
+        ];
+
+    pacman.packages = [
       # ######## #### ## #
       # DESK ENV
       # ######## #### ## #
 
       # cli
-      pkgs.alsa-utils
-      pkgs.pamixer
+      "extra/alsa-utils"
+      "extra/pamixer"
 
       # dialogs
-      pkgs.libsForQt5.kdialog # dialogs and widgets
-      pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
-      pkgs.lxqt.lxqt-policykit # policykit prompter
-      pkgs.lxqt.lxqt-sudo # gui-sudo prompter
+      "extra/kdialog"
+      "extra/lxqt-openssh-askpass"
+      "extra/lxqt-policykit"
+      "extra/lxqt-sudo"
 
       # misc
-      pkgs.nm-tray # network manager
+      "chaotic-aur/nm-tray"
 
       # core apps
-      pkgs.lxqt.lxqt-archiver # archiver
-      pkgs.lxqt.pavucontrol-qt # sound mixer
-      pkgs.lxqt.pcmanfm-qt # file manager
+      "extra/lxqt-archiver"
+      "extra/pavucontrol-qt"
+      "extra/pcmanfm-qt"
 
       # common apps
-      pkgs.copyq # clipboard manager
-      pkgs.featherpad # simple text editor
-      pkgs.libsForQt5.juk # music player [or elisa]
-      pkgs.libsForQt5.kolourpaint # simple image editor
-      pkgs.lxqt.qps # system monitor
-      pkgs.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
-      pkgs.qalculate-qt # calculator
+      "extra/copyq"
+      "extra/featherpad"
+      "extra/juk"
+      "extra/kolourpaint"
+      "extra/qps"
+      "chaotic-aur/mpc-qt"
+      "extra/qalculate-qt"
 
       # ######## #### ## #
       # MY PKGS
       # ######## #### ## #
 
-      # personal cli pkgs
-      pkgs.wootility
-
-      # personal apps
-      pkgs.qbittorrent
-      pkgs.anydesk
-      pkgs.moonlight-qt
-      pkgs.parsec-bin
-      pkgs.webcord-vencord
-      pkgs.whatsapp-for-linux
-      pkgs.logseq
-      pkgs.joplin-desktop
-      pkgs.obsidian
-      # pkgs.soulseekqt
+      "chaotic-aur/anydesk-bin"
+      "chaotic-aur/joplin-beta-appimage"
+      "chaotic-aur/logseq-desktop-bin"
+      "chaotic-aur/moonlight-qt"
+      "extra/obsidian"
+      "chaotic-aur/parsec-bin"
+      "extra/qbittorrent"
+      "chaotic-aur/vesktop"
+      "chaotic-aur/whatsapp-for-linux"
     ];
 
-
+    # TODO: hardcode
     services.udiskie.enable = true;
   };
 }

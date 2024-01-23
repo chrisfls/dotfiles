@@ -1,7 +1,7 @@
 # do not migrate to breeze, all qt5 apps will use gpu accel if you do
 { config, lib, pkgs, specialArgs, ... }:
 let
-  # TODO: pacman
+  inherit (config.presets) non-nixos;
   inherit (config.modules.themes)
     cursor
     enable
@@ -208,13 +208,54 @@ in
       gtk.package
       cursor.package
       icon.package
+    ] ++ (if non-nixos then
+      [ ]
+    else [
+      pkgs.libsForQt5.qt5ct
+      pkgs.qt6Packages.qt6ct
+      pkgs.libsForQt5.qtstyleplugin-kvantum
+      pkgs.qt6Packages.qtstyleplugin-kvantum
+    ]);
+
+    pacman.packages = [
+      "extra/kvantum"
+      "extra/qt5ct"
+      "extra/qt6ct"
     ];
 
-    qt = {
-      enable = true;
-      platformTheme = "qtct";
-      style.name = "kvantum";
-    };
+    home.sessionVariables =
+      let
+        inherit (config.home) profileDirectory;
+        qtVersions = with pkgs; [ qt5 qt6 ];
+        makeQtPath = prefix:
+          lib.concatStringsSep ":"
+            (map (qt: "${profileDirectory}/${qt.qtbase.${prefix}}") qtVersions);
+      in
+      {
+        QT_QPA_PLATFORMTHEME = "qt5ct";
+        QT_STYLE_OVERRIDE = "qt5ct-style";
+        QT_PLUGIN_PATH =
+          if non-nixos then
+            "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins"
+
+          else
+            "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}"
+            + (makeQtPath "qtPluginPrefix");
+        QML2_IMPORT_PATH =
+          if non-nixos then
+            "/usr/lib/qt/qml/:/usr/lib/qt6/qml"
+
+          else
+            "$QML2_IMPORT_PATH\${QML2_IMPORT_PATH:+:}"
+            + (makeQtPath "qtQmlPrefix");
+      };
+
+    modules.xorg.imported-variables = [
+      "QT_QPA_PLATFORMTHEME"
+      "QT_STYLE_OVERRIDE"
+      "QT_PLUGIN_PATH"
+      "QML2_IMPORT_PATH"
+    ];
 
     gtk = {
       enable = true;
@@ -230,12 +271,17 @@ in
       x11.enable = true;
     };
 
-    xdg.configFile = {
-      "Kvantum/kvantum.kvconfig".text = toINI {
-        General.theme = qt.kvantum-theme;
-      };
-      "qt5ct/qt5ct.conf".text = toQtct pkgs.qt5ct;
-      "qt6ct/qt6ct.conf".text = toQtct pkgs.qt6ct;
-    };
+    xdg.configFile = lib.mkMerge [
+      {
+        "Kvantum/kvantum.kvconfig".text = toINI {
+          General.theme = qt.kvantum-theme;
+        };
+        "qt5ct/qt5ct.conf".text = toQtct pkgs.qt5ct;
+        "qt6ct/qt6ct.conf".text = toQtct pkgs.qt6ct;
+      }
+      (lib.mkIf (non-nixos) {
+        "Kvantum/${qt.kvantum-theme}".source = "${qt.package}/share/Kvantum/${qt.kvantum-theme}";
+      })
+    ];
   };
 }
