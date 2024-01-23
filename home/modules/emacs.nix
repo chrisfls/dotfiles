@@ -15,7 +15,7 @@ in
       if non-nixos then [ ]
       else [ pkgs.emacs29 pkgs.semgrep ];
 
-    pacman.packages = [ "extra/emacs-nativecomp" ];
+    pacman.packages = [ "extra/emacs" ];
 
     home.activation.doomemacs = lib.hm.dag.entryAfter [ "writeBoundary" ]
       ''
