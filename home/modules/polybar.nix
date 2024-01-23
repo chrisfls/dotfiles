@@ -157,6 +157,7 @@ in
 
 
         [module/workspaces]
+        type="internal/i3"
         enable-click="true"
         enable-scroll="true"
         format="%{O-1}%{O2}%{T2}<label-state>%{T-}%{O-1}"
@@ -186,7 +187,6 @@ in
         reverse-scroll="false"
         show-urgent="true"
         strip-wsnumbers="true"
-        type="internal/i3"
         wrapping-scroll="true"
         ws-icon-0="0;󰪥"
         ws-icon-1="1;󰲠"
@@ -203,6 +203,7 @@ in
 
 
         [module/menu]
+        type="custom/ipc"
         click-left="rofi-menu"
         format-0="%{T2}%{T-}%{O1}"
         format-0-background="${black}"
@@ -220,10 +221,10 @@ in
         hook-1=""
         hook-2=""
         initial="1"
-        type="custom/ipc"
 
 
         [module/toggle]
+        type="custom/ipc"
         click-left="${toggle} toggle tray &"
         format-0="%{T2}%{T-}"
         format-0-background="${black}"
@@ -238,10 +239,10 @@ in
         initial="1"
         scroll-down="${toggle} toggle tray &"
         scroll-up="${toggle} toggle tray &"
-        type="custom/ipc"
 
 
         [module/notifications]
+        type="custom/ipc"
         click-left="${dunst-toggle} &"
         click-right="rofi-dunst &"
         format-0="%{T2}%{T-}"
@@ -258,10 +259,10 @@ in
         initial="1"
         scroll-down="dunstctl history-pop &"
         scroll-up="dunstctl close &"
-        type="custom/ipc"
 
 
         [module/tray]
+        type="internal/tray"
         format="%{O-4}<tray>"
         format-background="${black}"
         hidden="false"
@@ -270,7 +271,6 @@ in
         tray-padding="1pt"
         tray-size="75%"
         tray-spacing="1pt"
-        type="internal/tray"
 
 
         [module/title]
@@ -283,6 +283,7 @@ in
 
 
         [module/filesystem]
+        type="internal/fs"
         format-mounted="<label-mounted> %{T2}󰋊%{T-} "
         format-mounted-background="${black}"
         format-mounted-foreground="${foreground}"
@@ -296,11 +297,11 @@ in
         label-unmounted="?"
         label-warn="%free%"
         mount-0="/"
-        type="internal/fs"
         warn-percentage="50"
 
 
         [module/temperature]
+        type="internal/temperature"
         base-temperature="20"
         format="<label> %{T2}<ramp>%{T-} "
         format-background="${foreground}"
@@ -317,12 +318,12 @@ in
         ramp-3=""
         ramp-4=""
         thermal-zone="0"
-        type="internal/temperature"
         warn-temperature="80"
         zone-type="x86_pkg_temp"
 
 
         [module/memory]
+        type="internal/memory"
         format="<label> %{T2}%{T-} "
         format-background="${black}"
         format-foreground="${foreground}"
@@ -331,10 +332,10 @@ in
         format-warn-foreground="${foreground}"
         label="%percentage_used%%"
         label-warn="%percentage_used%%"
-        type="internal/memory"
 
 
         [module/cpu]
+        type="internal/cpu"
         format="<ramp-load> %{T2}%{T-} "
         format-background="${foreground}"
         format-foreground="${black}"
@@ -350,11 +351,11 @@ in
         ramp-load-5="▆"
         ramp-load-6="▇"
         ramp-load-7="█"
-        type="internal/cpu"
         warn-percentage="50"
 
 
         [module/wired]
+        type="internal/network"
         format-connected="<label-connected>"
         format-connected-background="${black}"
         format-connected-foreground="${foreground}"
@@ -365,10 +366,10 @@ in
         interval="10"
         label-connected="%netspeed% %{T2}󰈁%{T-} "
         label-disconnected="off  %{T2}󰈂{T-} "
-        type="internal/network"
 
 
         [module/wireless]
+        type="internal/network"
         format-connected="<label-connected> %{T2}<ramp-signal>%{T-} "
         format-connected-background="${foreground}"
         format-connected-foreground="${black}"
@@ -384,10 +385,10 @@ in
         ramp-signal-2="󰤢"
         ramp-signal-3="󰤥"
         ramp-signal-4="󰤨"
-        type="internal/network"
 
 
         [module/bluetooth]
+        type="custom/ipc"
         click-left="${bluetooth} --toggle &"
         click-right="bluedevil-wizard &"
         format-1="%{T2}󰂲%{T-} "
@@ -401,10 +402,10 @@ in
         hook-2=""
         initial="1"
         label="%output% "
-        type="custom/ipc"
 
 
         [module/audio]
+        type="custom/ipc"
         click-left="${pipewire} --mute &"
         click-right="pavucontrol-qt &"
         format-1="<label> %{T2}󰝟%{T-} "
@@ -420,70 +421,69 @@ in
         label="%output%%"
         scroll-down="${pipewire} --down &"
         scroll-up="${pipewire} --up &"
-        type="custom/ipc"
 
 
         [module/date]
+        type="internal/date"
         format-background="${black}"
         format-foreground="${foreground}"
         interval="1.0"
         label="%time% "
         time="%a, %d %b %Y %{T2}󰃭%{T-}"
-        type="internal/date"
 
 
         [module/time]
+        type="internal/date"
         format-background="${foreground}"
         format-foreground="${black}"
         interval="1.0"
         label="%time% "
         time="%H:%M:%S %{T2}󰥔%{T-}"
-        type="internal/date"
 
 
         [module/menu-r]
+        type="custom/text"
         label="%{T3}%{T-}%{O-1}"
         label-background="${foreground}"
         label-foreground="${background}"
-        type="custom/text"
 
 
         [module/menu-l]
+        type="custom/text"
         label="%{O-1}%{O1}%{B${foreground}}%{T3} %{T-}%{B-}%{O-25}%{T3}%{T-}"
         label-foreground="${background}"
-        type="custom/text"
 
 
         [module/left]
+        type="custom/text"
         format="<label>%{O-2}"
         label="%{F${black}}%{T3}%{T-}%{F-}%{O-12}%{F${background}}%{T3}%{T-}%{F-}%{O-12}%{F${black}}%{T3}%{T-}%{F-}"
-        type="custom/text"
 
 
         [module/right]
+        type="custom/text"
         format="<label>%{O-2}"
         label="%{O23}%{F${black}}%{T3}%{T-}%{F-}%{F-}%{O-36}%{F${background}}%{T3}%{T-}%{F-}%{O-36}%{F${black}}%{T3}%{T-}"
-        type="custom/text"
 
 
         [module/even-l]
+        type="custom/text"
         label="%{O-1}%{O1}%{B${black}}%{T3} %{T-}%{B-}%{O-25}%{T3}%{T-}"
         label-foreground="${foreground}"
-        type="custom/text"
 
 
         [module/even-r]
+        type="custom/text"
         label="%{T3}%{T-}%{O-1}"
         label-background="${black}"
         label-foreground="${foreground}"
-        type="custom/text"
 
 
         [module/odd-r]
+        type="custom/text"
         label="%{T3}%{T-}%{O-1}"
         label-background="${foreground}"
         label-foreground="${black}"
-        type="custom/text"
       '';
   };
 }

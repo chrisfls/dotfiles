@@ -182,6 +182,7 @@ in
         '';
     };
 
+    # TODO: hardcode
     services.xsettingsd.enable = true;
 
     systemd.user = {
