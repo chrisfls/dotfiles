@@ -2,19 +2,31 @@
 let
   inherit (config.modules.telegram) enable;
   inherit (pkgs.extra) qt mkIfElse;
-  exe = "telegram-desktop";
+
+  pkg =
+    if config.presets.non-nixos then
+      pkgs.writeShellScriptBin "telegram-desktop"
+        ''
+          unset QT_SCREEN_SCALE_FACTORS
+          export QT_AUTO_SCREEN_SCALE_FACTOR="0"
+          export QT_SCALE_FACTOR="1"
+          exec /usr/bin/telegram-desktop "$@"
+        ''
+
+    else
+      qt.fixScaling pkgs.telegram-desktop;
 in
 {
-  # TODO: pacman
-
   options.modules.telegram.enable = lib.mkEnableOption "Enable telegram module";
 
   config = lib.mkIf enable {
-    home.packages = [ (qt.fixScaling pkgs.telegram-desktop) ];
+    home.packages = [ pkg ];
+
+    pacman.packages = [ "extra/telegram-desktop" ];
 
     modules.i3wm = {
       apps."t" = "org.telegram";
-      startup = ["telegram-desktop -startintray"];
+      startup = [ "telegram-desktop -startintray" ];
     };
   };
 }
