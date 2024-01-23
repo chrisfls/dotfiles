@@ -9,40 +9,24 @@ let
   ];
 
   xrdb =
-    if non-nixos then
-      "/usr/bin/xrdb"
-    else
-      "${pkgs.xorg.xrdb}/bin/xrdb";
+    if non-nixos then "/usr/bin/xrdb"
+    else "${pkgs.xorg.xrdb}/bin/xrdb";
 
   setxkbmap =
-    if non-nixos then
-      "/usr/bin/setxkbmap"
-    else
-      "${pkgs.xorg.setxkbmap}/bin/setxkbmap";
+    if non-nixos then "/usr/bin/setxkbmap"
+    else "${pkgs.xorg.setxkbmap}/bin/setxkbmap";
 
   xplugd =
-    if non-nixos then
-      "/usr/bin/xplugd"
-    else
-      "${pkgs.xplugd}/bin/xplugd";
-
-  # keychain =
-  #   if non-nixos then
-  #     "/usr/bin/keychain"
-  #   else
-  #     "${pkgs.keychain}/bin/keychain";
+    if non-nixos then "/usr/bin/xplugd"
+    else "${pkgs.xplugd}/bin/xplugd";
 
   xsetroot =
-    if non-nixos then
-      "/usr/bin/xsetroot"
-    else
-      "${pkgs.xorg.xsetroot}/bin/xsetroot";
+    if non-nixos then "/usr/bin/xsetroot"
+    else "${pkgs.xorg.xsetroot}/bin/xsetroot";
 
   numlockx =
-    if non-nixos then
-      "/usr/bin/numlockx"
-    else
-      "${pkgs.numlockx}/bin/numlockx";
+    if non-nixos then "/usr/bin/numlockx"
+    else "${pkgs.numlockx}/bin/numlockx";
 
   cursorPath = "${config.modules.themes.cursor.package}/share/icons/${lib.strings.escapeShellArg config.home.pointerCursor.name}/cursors/${
     lib.strings.escapeShellArg config.home.pointerCursor.x11.defaultCursor
@@ -63,7 +47,6 @@ in
   config = lib.mkIf enable {
     pacman = {
       packages = [
-        # "extra/keychain"
         "extra/xorg-xinit"
         "extra/xorg-xinput"
         "extra/xorg-xsetroot"
@@ -77,7 +60,6 @@ in
     };
 
     home.packages = lib.mkIf (!non-nixos) [
-      # pkgs.keychain
       pkgs.numlockx
       pkgs.xclip
       pkgs.xdotool
@@ -116,10 +98,7 @@ in
         "copyq"
         "nm-tray"
         "whatsapp-for-linux"
-        (if non-nixos then
-          "vesktop --start-minimized"
-        else
-          "webcord --start-minimized")
+        (if non-nixos then "vesktop --start-minimized" else "webcord --start-minimized")
       ];
 
       apps = {
@@ -148,7 +127,6 @@ in
           ${xsession}
           ${xrdb} -merge ${config.home.homeDirectory}/.Xresources
         
-          ${"" /* eval "$(SHELL=bash ${keychain} --eval --quiet id_ed25519)" */}
           ${xsetroot} -xcf ${cursorPath} ${toString config.modules.themes.cursor.size}
 
           ${window-manager}

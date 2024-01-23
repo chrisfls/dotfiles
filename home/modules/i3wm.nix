@@ -156,16 +156,12 @@ let
   dark-gray = "#404040";
 
   i3 =
-    if non-nixos then
-      "/usr/bin/i3"
-    else
-      "${pkgs.i3}/bin/i3";
+    if non-nixos then "/usr/bin/i3"
+    else "${pkgs.i3}/bin/i3";
 
   i3-msg =
-    if non-nixos then
-      "/usr/bin/i3-msg"
-    else
-      "${pkgs.i3}/bin/i3-msg";
+    if non-nixos then "/usr/bin/i3-msg"
+    else "${pkgs.i3}/bin/i3-msg";
 in
 {
   options.modules.i3wm = {

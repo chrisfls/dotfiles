@@ -8,8 +8,7 @@ in
 
   config = lib.mkIf enable {
     home.packages =
-      if non-nixos then
-        [ ]
+      if non-nixos then [ ]
       else [
         pkgs.libsForQt5.kde-cli-tools
         pkgs.libsForQt5.xdg-desktop-portal-lxqt

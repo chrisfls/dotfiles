@@ -8,8 +8,7 @@ in
 
   config = lib.mkIf enable {
     home.packages =
-      if non-nixos then
-        [ ]
+      if non-nixos then [ ]
       else [
         # good generic font
         pkgs.noto-fonts

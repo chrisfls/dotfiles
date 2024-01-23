@@ -208,8 +208,7 @@ in
       gtk.package
       cursor.package
       icon.package
-    ] ++ (if non-nixos then
-      [ ]
+    ] ++ (if non-nixos then [ ]
     else [
       pkgs.libsForQt5.qt5ct
       pkgs.qt6Packages.qt6ct
@@ -235,19 +234,11 @@ in
         QT_QPA_PLATFORMTHEME = "qt5ct";
         QT_STYLE_OVERRIDE = "qt5ct-style";
         QT_PLUGIN_PATH =
-          if non-nixos then
-            "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins"
-
-          else
-            "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}"
-            + (makeQtPath "qtPluginPrefix");
+          if non-nixos then "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins"
+          else "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}" + (makeQtPath "qtPluginPrefix");
         QML2_IMPORT_PATH =
-          if non-nixos then
-            "/usr/lib/qt/qml/:/usr/lib/qt6/qml"
-
-          else
-            "$QML2_IMPORT_PATH\${QML2_IMPORT_PATH:+:}"
-            + (makeQtPath "qtQmlPrefix");
+          if non-nixos then "/usr/lib/qt/qml/:/usr/lib/qt6/qml"
+          else "$QML2_IMPORT_PATH\${QML2_IMPORT_PATH:+:}" + (makeQtPath "qtQmlPrefix");
       };
 
     modules.xorg.imported-variables = [

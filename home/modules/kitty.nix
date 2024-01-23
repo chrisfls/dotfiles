@@ -9,10 +9,8 @@ in
 
   config = lib.mkIf enable {
     home.packages =
-      if non-nixos then
-        [ ]
-      else
-        [ pkgs.kitty ];
+      if non-nixos then [ ]
+      else [ pkgs.kitty ];
 
     pacman.packages = [ "extra/kitty" ];
 

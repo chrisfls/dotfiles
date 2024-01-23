@@ -31,57 +31,55 @@ in
     };
 
     home.packages =
-      if non-nixos then
-        [ ]
-      else
-        [
-          # ######## #### ## #
-          # DESK ENV
-          # ######## #### ## #
+      if non-nixos then [ ]
+      else [
+        # ######## #### ## #
+        # DESK ENV
+        # ######## #### ## #
 
-          # cli
-          pkgs.alsa-utils
-          pkgs.pamixer
+        # cli
+        pkgs.alsa-utils
+        pkgs.pamixer
 
-          # dialogs
-          pkgs.libsForQt5.kdialog # dialogs and widgets
-          pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
-          pkgs.lxqt.lxqt-policykit # policykit prompter
-          pkgs.lxqt.lxqt-sudo # gui-sudo prompter
+        # dialogs
+        pkgs.libsForQt5.kdialog # dialogs and widgets
+        pkgs.lxqt.lxqt-openssh-askpass # ssh prompter
+        pkgs.lxqt.lxqt-policykit # policykit prompter
+        pkgs.lxqt.lxqt-sudo # gui-sudo prompter
 
-          # misc
-          pkgs.nm-tray # network manager
+        # misc
+        pkgs.nm-tray # network manager
 
-          # core apps
-          pkgs.lxqt.lxqt-archiver # archiver
-          pkgs.lxqt.pavucontrol-qt # sound mixer
-          pkgs.lxqt.pcmanfm-qt # file manager
+        # core apps
+        pkgs.lxqt.lxqt-archiver # archiver
+        pkgs.lxqt.pavucontrol-qt # sound mixer
+        pkgs.lxqt.pcmanfm-qt # file manager
 
-          # common apps
-          pkgs.copyq # clipboard manager
-          pkgs.featherpad # simple text editor
-          pkgs.libsForQt5.juk # music player [or elisa]
-          pkgs.libsForQt5.kolourpaint # simple image editor
-          pkgs.lxqt.qps # system monitor
-          pkgs.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
-          pkgs.qalculate-qt # calculator
+        # common apps
+        pkgs.copyq # clipboard manager
+        pkgs.featherpad # simple text editor
+        pkgs.libsForQt5.juk # music player [or elisa]
+        pkgs.libsForQt5.kolourpaint # simple image editor
+        pkgs.lxqt.qps # system monitor
+        pkgs.mpc-qt # video player [or haruna/QMPlay2/kmplayer/dragonplayer/mpv]
+        pkgs.qalculate-qt # calculator
 
-          # ######## #### ## #
-          # MY PKGS
-          # ######## #### ## #
+        # ######## #### ## #
+        # MY PKGS
+        # ######## #### ## #
 
-          pkgs.anydesk
-          pkgs.joplin-desktop
-          pkgs.logseq
-          pkgs.moonlight-qt
-          pkgs.obsidian
-          pkgs.parsec-bin
-          pkgs.qbittorrent
-          pkgs.webcord-vencord
-          pkgs.whatsapp-for-linux
-          pkgs.wootility
-          # pkgs.soulseekqt
-        ];
+        pkgs.anydesk
+        pkgs.joplin-desktop
+        pkgs.logseq
+        pkgs.moonlight-qt
+        pkgs.obsidian
+        pkgs.parsec-bin
+        pkgs.qbittorrent
+        pkgs.webcord-vencord
+        pkgs.whatsapp-for-linux
+        pkgs.wootility
+        # pkgs.soulseekqt
+      ];
 
     pacman.packages = [
       # ######## #### ## #
