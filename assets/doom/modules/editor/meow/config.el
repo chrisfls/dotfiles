@@ -85,8 +85,8 @@
    '("w" . meow-back-word) ; b
    '("W" . meow-back-symbol) ; B
    '("c" . meow-change) ; c
-   '("x" . meow-delete) ; d
-   '("X" . meow-backward-delete) ; D
+   '("DEL" . meow-delete) ; d
+   '("<backspace>" . meow-backward-delete) ; D
    '("e" . meow-next-word) ; e
    '("E" . meow-next-symbol) ; E
    '("f" . meow-find) ; f
@@ -114,24 +114,28 @@
    '("t" . meow-till) ; t
    '("u" . meow-undo) ; u
    '("U" . meow-undo-in-selection) ; U
-   '("v" . meow-visit) ; v
+   '("s" . meow-visit) ; v
    '("m" . meow-mark-word) ; w
    '("M" . meow-mark-symbol) ; W
-   '("s" . meow-line) ; x
+   '("x" . meow-line) ; x
    '(":" . meow-goto-line) ; X
    '("y" . meow-save) ; y
    '("Y" . meow-sync-grab) ; Y
    '("z" . meow-pop-selection) ; z
    '("." . repeat) ; '
    '("<escape>" . ignore) ; <escape>
-   ;; new keys
-   '("TAB" . meow-indent)
-   '("<backtab>" . custom/indent-rigidly-left-to-tab-stop)
-   '("<prior>" . meow-page-up)
+   ;;; new keys
+   '(";" . meow-comment)
+   '("S-<delete>" . meow-backward-delete)
+   ;; page movement
    '("<next>" . meow-page-down)
-   '(";" . meow-comment))
+   '("<prior>" . meow-page-up)
+   ;; indent by char
+   '("<" . custom/indent-rigidly-left)
    '(">" . custom/indent-rigidly-right)
-   '("<" . custom/indent-rigidly-left))
+   ;; indent by tab 
+   '("TAB" . meow-indent)
+   '("<backtab>" . custom/indent-rigidly-left-to-tab-stop))
 
 (defun custom/comment-or-uncomment-region ()
   "Indent region to the right, or current line if no region is active."
