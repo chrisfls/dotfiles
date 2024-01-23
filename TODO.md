@@ -1,9 +1,5 @@
 ### hardocode
 
-- [x] polybar
-- [x] rofi
-- [x] dunst
-- [x] picom
 - [ ] i3wm
 - [ ] xsession/xprofile
 - [ ] apps
