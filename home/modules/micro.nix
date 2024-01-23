@@ -1,7 +1,5 @@
 { config, lib, pkgs, ... }:
 let inherit (config.modules.micro) enable desktop; in {
-  # TODO: pacman
-
   options.modules.micro.enable = lib.mkEnableOption "Enable micro module";
   options.modules.micro.desktop = lib.mkEnableOption "Enable micro desktop entry";
 
@@ -10,7 +8,7 @@ let inherit (config.modules.micro) enable desktop; in {
 
     programs.micro = {
       enable = true;
-      settings.colorscheme = "gruvbox-tc";
+      settings.colorscheme = "simple";
     };
 
     xdg.desktopEntries."micro" = lib.mkIf desktop {
