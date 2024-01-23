@@ -101,7 +101,6 @@ in
       else
         [ ];
 
-
     systemd.user.services.polybar = {
       Unit = {
         Description = "Polybar status bar";
