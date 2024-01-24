@@ -29,10 +29,8 @@ in
   };
 
   imports = [
-    ./pacman/drivers-switch.nix
     ./pacman/overlay.nix
     ./pacman/pacman-switch.nix
-    ./pacman/mesa.nix
   ];
 
   config.pacman.packages = flatten pkgs;

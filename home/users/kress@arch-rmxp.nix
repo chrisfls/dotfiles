@@ -40,7 +40,7 @@ in
 
   pacman = {
     enable = true;
-    packages = [ "chaotic-aur/xorg-server-git" ];
+    packages = [ "chaotic-aur/xorg-server-git" "extra/feh" ];
   };
 
   nixpkgs.config.permittedInsecurePackages = [
@@ -112,7 +112,7 @@ in
 
   modules.i3wm = {
     startup = [
-      "${pkgs.feh}/bin/feh --bg-center \"${../../assets/wallpaper/23-12-29_2160p.png}\"  \"${../../assets/wallpaper/23-12-30_800p.png}\""
+      "feh --bg-center \"${../../assets/wallpaper/23-12-29_2160p.png}\"  \"${../../assets/wallpaper/23-12-30_800p.png}\""
     ];
     extraConfig =
       ''
@@ -137,7 +137,7 @@ in
     upgrade-system
     upgrade-home
     cleanup
-  ];
+  ] ++ (if non-nixos then [ ] else [ pkgs.feh ]);
 
   home.username = ssot.users.arch-rmxp.kress.username;
   home.homeDirectory = ssot.users.arch-rmxp.kress.home;
