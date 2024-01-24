@@ -115,8 +115,8 @@
    '("u" . meow-undo) ; u
    '("U" . meow-undo-in-selection) ; U
    '("s" . meow-visit) ; v
-   '("m" . meow-mark-word) ; w
-   '("M" . meow-mark-symbol) ; W
+   '("v" . meow-mark-word) ; v
+   '("V" . meow-mark-symbol) ; V
    '("x" . meow-line) ; x
    '(":" . meow-goto-line) ; X
    '("y" . meow-save) ; y
@@ -135,7 +135,12 @@
    '(">" . custom/indent-rigidly-right)
    ;; indent by tab 
    '("TAB" . meow-indent)
-   '("<backtab>" . custom/indent-rigidly-left-to-tab-stop)))
+   '("<backtab>" . custom/indent-rigidly-left-to-tab-stop)
+   ;; easier macros
+   '("(" . meow-start-kmacro)
+   '(")" . meow-end-kmacro)
+   '("ms" . meow-start-kmacro-or-insert-counter)
+   '("me" . meow-end-or-call-kmacro)))
 
 (defun custom/comment-or-uncomment-region ()
   "Indent region to the right, or current line if no region is active."
@@ -171,4 +176,3 @@
   (if (use-region-p)
       (indent-rigidly-right (region-beginning) (region-end))
     (indent-rigidly-left (line-beginning-position) (line-end-position))))
-(setq prefix-help-command #'embark-prefix-help-command)
