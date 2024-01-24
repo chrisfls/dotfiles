@@ -19,6 +19,7 @@ in
       "extra/xdg-desktop-portal-lxqt"
       "extra/xdg-desktop-portal"
       "extra/xdg-desktop-portal-gtk"
+      "extra/xdg-user-dirs"
       "extra/xdg-utils"
     ];
 
