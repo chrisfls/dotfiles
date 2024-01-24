@@ -85,8 +85,8 @@
    '("w" . meow-back-word) ; b
    '("W" . meow-back-symbol) ; B
    '("c" . meow-change) ; c
-   '("DEL" . meow-delete) ; d
-   '("<backspace>" . meow-backward-delete) ; D
+   '("DEL" . custom/meow-delete) ; d
+   '("<backspace>" . custom/meow-backward-delete) ; D
    '("e" . meow-next-word) ; e
    '("E" . meow-next-symbol) ; E
    '("f" . meow-find) ; f
@@ -126,7 +126,7 @@
    '("<escape>" . ignore) ; <escape>
    ;;; new keys
    '(";" . meow-comment)
-   '("S-<delete>" . meow-backward-delete)
+   '("S-<delete>" . custom/meow-backward-delete)
    ;; page movement
    '("<next>" . meow-page-down)
    '("<prior>" . meow-page-up)
@@ -176,3 +176,19 @@
   (if (use-region-p)
       (indent-rigidly-right (region-beginning) (region-end))
     (indent-rigidly-left (line-beginning-position) (line-end-position))))
+
+(defun custom/meow-delete ()
+  "Backward delete one char."
+  (interactive)
+  (when (meow--allow-modify-p)
+    (if (use-region-p)
+        (call-interactively #'delete-active-region)
+      (call-interactively #'delete-backward-char))))
+
+(defun custom/meow-backward-delete ()
+  "Backward delete one char."
+  (interactive)
+  (when (meow--allow-modify-p)
+    (if (use-region-p)
+        (call-interactively #'delete-active-region)
+      (meow--execute-kbd-macro meow--kbd-delete-char))))
