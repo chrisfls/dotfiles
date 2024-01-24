@@ -128,6 +128,8 @@ in
       "chaotic-aur/whatsapp-for-linux"
     ];
 
+    xdg.mimeApps.enable = true;
+
     xdg.configFile."udiskie/config.yml".text =
       ''
         program_options:

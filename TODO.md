@@ -1,14 +1,7 @@
 ### hardocode
 
-- [ ] vscode
-- [ ] edge
 - writeHostScript?
 - writeHostShellScriptBin?
-
-### systemd
-
-- Fix udiskie service
-- Fix xsettingsd service
 
 ### system
 
