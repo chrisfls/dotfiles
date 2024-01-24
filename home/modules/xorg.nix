@@ -47,11 +47,12 @@ in
   config = lib.mkIf enable {
     pacman = {
       packages = [
+        "aur/xplugd"
+        "extra/numlockx"
         "extra/xorg-xinit"
         "extra/xorg-xinput"
         "extra/xorg-xsetroot"
-        "extra/numlockx"
-        "aur/xplugd"
+        "extra/xsettingsd"
       ];
       pkgs.xorg = {
         xmodmap = [ "extra/xorg-xmodmap" ];
@@ -161,9 +162,6 @@ in
         '';
     };
 
-    # TODO: pacman
-    services.xsettingsd.enable = true;
-
     systemd.user = {
       services = lib.mkIf (config.home.keyboard != null) {
         setxkbmap = {
@@ -229,6 +227,24 @@ in
           };
 
           Install = { WantedBy = [ "graphical-session.target" ]; };
+        };
+
+        xsettingsd = {
+          Unit = {
+            Description = "xsettingsd";
+            After = [ "graphical-session-pre.target" ];
+            PartOf = [ "graphical-session.target" ];
+          };
+
+          Install.WantedBy = [ "graphical-session.target" ];
+
+          Service = {
+            Environment = "PATH=${config.home.profileDirectory}/bin";
+            ExecStart =
+              if non-nixos then "/usr/bin/xsettingsd"
+              else "${pkgs.xsettingsd}/bin/xsettingsd";
+            Restart = "on-abort";
+          };
         };
       };
 

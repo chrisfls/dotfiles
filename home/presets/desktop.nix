@@ -87,6 +87,8 @@ in
       # cli
       "extra/alsa-utils"
       "extra/pamixer"
+      "extra/udisks2"
+      "extra/udiskie"
 
       # dialogs
       "extra/kdialog"
@@ -126,7 +128,27 @@ in
       "chaotic-aur/whatsapp-for-linux"
     ];
 
-    # TODO: pacman
-    services.udiskie.enable = true;
+    xdg.configFile."udiskie/config.yml".text =
+      ''
+        program_options:
+          automount: true
+          notify: true
+          tray: auto
+      '';
+
+    systemd.user.services.udiskie = {
+      Unit = {
+        Description = "udiskie mount daemon";
+        Requires = "tray.target";
+        After = [ "graphical-session-pre.target" "tray.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+
+      Service.ExecStart =
+        if non-nixos then "/usr/bin/udiskie"
+        else "${pkgs.udiskie}/bin/udiskie";
+
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
   };
 }
