@@ -117,6 +117,8 @@ in
           [ "tray.target" ];
     };
 
+    modules.i3wm.startup = [ "systemctl --user restart polybar.service" ];
+
     xdg.configFile."polybar/config.ini".text =
       ''
         [settings]
