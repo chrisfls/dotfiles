@@ -130,6 +130,7 @@ in
 
     xdg.mimeApps.enable = true;
 
+    # TODO: move udiskie to own module
     xdg.configFile."udiskie/config.yml".text =
       ''
         program_options:

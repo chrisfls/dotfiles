@@ -40,6 +40,7 @@ in
     scaling = { enable = true; scale = 1.5; gtk = true; qt = true; };
   };
 
+  # TODO: move feh to own package
   pacman = {
     enable = true;
     packages = [ "chaotic-aur/xorg-server-git" "extra/feh" ];
@@ -55,6 +56,7 @@ in
     installationType = "systemd";
   };
 
+  # TODO: autorandr is probably better handled by home-manager
   xdg.configFile = {
     "autorandr/docked/setup".text =
       ''

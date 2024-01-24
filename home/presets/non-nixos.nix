@@ -1,4 +1,4 @@
-# REVIEW: rename non-nixos to archlinux?
+# REVIEW: rename archlinux
 { config, lib, pkgs, ... }:
 let
   enable = config.presets.non-nixos;
