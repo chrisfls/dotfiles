@@ -32,5 +32,20 @@ in
   config = lib.mkIf enable {
     home.packages = [ pkg ];
     modules.i3wm.apps."shift+b" = exe;
+
+    xdg.desktopEntries = lib.mkIf non-nixos {
+      "microsoft-edge" = {
+        name = "Microsoft Edge";
+        type = "Application";
+        genericName = "Web Browser";
+        comment = "Access the Internet";
+        categories = [ "Network" "WebBrowser" ];
+        icon = "microsoft-edge";
+        exec = "microsoft-edge-stable %U";
+        noDisplay = false;
+        startupNotify = true;
+        terminal = false;
+      };
+    };
   };
 }
