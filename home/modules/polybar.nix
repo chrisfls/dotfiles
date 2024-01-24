@@ -117,7 +117,6 @@ in
           [ "tray.target" ];
     };
 
-    # TODO: https://github.com/polybar/polybar-scripts/blob/master/polybar-scripts/system-usb-udev/system-usb-udev.sh
     xdg.configFile."polybar/config.ini".text =
       ''
         [settings]

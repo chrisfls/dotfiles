@@ -20,7 +20,7 @@ let
       font = lib.strings.concatStringsSep "," [
         name
         (builtins.toString size)
-        # TODO: parameterize the rest
+        # REVIEW: parameterize the rest
         "-1"
         "5"
         "50"

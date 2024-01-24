@@ -92,7 +92,7 @@ in
         '';
     };
 
-    # TODO: move to desktop
+    # TODO: move to desktop preset
     modules.i3wm = {
       startup = [
         "copyq"
@@ -161,7 +161,7 @@ in
         '';
     };
 
-    # TODO: hardcode
+    # TODO: pacman
     services.xsettingsd.enable = true;
 
     systemd.user = {

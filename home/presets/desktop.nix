@@ -128,7 +128,7 @@ in
       "chaotic-aur/whatsapp-for-linux"
     ];
 
-    # TODO: hardcode
+    # TODO: pacman
     services.udiskie.enable = true;
   };
 }

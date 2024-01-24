@@ -1,4 +1,4 @@
-# TODO: https://danth.github.io/stylix/installation.html
+# REVIEW: https://danth.github.io/stylix/installation.html
 { ... }: {
   imports = [
     ./agenix.nix
