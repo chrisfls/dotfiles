@@ -75,23 +75,23 @@
    '("2" . meow-expand-2) ; 2
    '("1" . meow-expand-1) ; 1
    '("-" . negative-argument) ; -
-   '(";" . meow-reverse) ; ;
+   '("," . meow-reverse) ; ;
    '("{" . meow-inner-of-thing) ; ,
    '("}" . meow-bounds-of-thing) ; .
    '("[" . meow-beginning-of-thing) ; [
    '("]" . meow-end-of-thing) ; ]
    '("a" . meow-append) ; a
    '("o" . meow-open-below) ; A
-   '("b" . meow-back-word) ; b
-   '("B" . meow-back-symbol) ; B
+   '("w" . meow-back-word) ; b
+   '("W" . meow-back-symbol) ; B
    '("c" . meow-change) ; c
    '("x" . meow-delete) ; d
    '("X" . meow-backward-delete) ; D
    '("e" . meow-next-word) ; e
    '("E" . meow-next-symbol) ; E
    '("f" . meow-find) ; f
-   '("Z" . meow-cancel-selection) ; g
-   '("g" . meow-grab) ; G
+   '("g" . meow-cancel-selection) ; g
+   '("m" . meow-grab) ; G
    '("h" . meow-left) ; h
    '("H" . meow-left-expand) ; H
    '("i" . meow-insert) ; i
@@ -104,18 +104,18 @@
    '("L" . meow-right-expand) ; L
    '("S" . meow-join) ; m
    '("n" . meow-search) ; n
-   '("m" . meow-block) ; o
-   '("M" . meow-to-block) ; O
+   '("b" . meow-block) ; o
+   '("B" . meow-to-block) ; O
    '("p" . meow-yank) ; p
-   '("\\q" . meow-quit) ; q
-   '("G" . meow-goto-line) ; Q
+   '("q" . meow-quit) ; q
+   '(":" . meow-goto-line) ; Q
    '("P" . meow-replace) ; r
    '("r" . meow-swap-grab) ; R
    '("d" . meow-kill) ; s
    '("t" . meow-till) ; t
    '("u" . meow-undo) ; u
    '("U" . meow-undo-in-selection) ; U
-   '("/" . meow-visit) ; v
+   '("N" . meow-visit) ; v
    '("v" . meow-mark-word) ; w
    '("V" . meow-mark-symbol) ; W
    '("s" . meow-line) ; x
@@ -126,7 +126,7 @@
    '("." . repeat) ; '
    '("<escape>" . ignore) ; <escape>
    ;;; new keys
-   '("\\;" . meow-comment)
+   '(";" . meow-comment)
    '("D" . custom/delete-region)
    ;; page movement
    '("<next>" . meow-page-down)
@@ -140,7 +140,7 @@
    ;; easier macros
    '("(" . meow-start-kmacro)
    '(")" . meow-end-kmacro)
-   '("q" . meow-start-kmacro-or-insert-counter)
+   '("+" . meow-start-kmacro-or-insert-counter)
    '("@" . meow-end-or-call-kmacro)))
 
 (defun custom/comment-or-uncomment-region ()
