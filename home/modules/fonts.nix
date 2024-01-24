@@ -37,6 +37,7 @@ in
       "extra/ttf-cascadia-code-nerd"
       "extra/ttf-jetbrains-mono"
       "extra/ttf-jetbrains-mono-nerd"
+      "extra/ttf-liberation"
     ];
   };
 }
