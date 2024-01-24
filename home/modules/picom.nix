@@ -91,6 +91,7 @@ in
           class_g = 'Alacritty' ||
           class_g = 'org.wezfurlong.wezterm' ||
           class_g = 'kitty' ||
+          class_g = 'Emacs' ||
           class_g = 'Dunst'
         )";
 
