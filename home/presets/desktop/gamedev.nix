@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) desktop gamedev;
+  inherit (config.presets) desktop gamedev non-nixos;
   enable = desktop && gamedev;
 in
 {
@@ -9,12 +9,20 @@ in
   config = lib.mkIf enable {
     presets.development = true;
 
-    home.packages = [
+    home.packages = lib.mkIf (!non-nixos) [
       pkgs.aseprite
-      pkgs.krita
       pkgs.gimp
-      pkgs.tiled
+      pkgs.krita
       pkgs.lmms
+      pkgs.tiled
+    ];
+
+    pacman.packages = [
+      "aur/aseprite"
+      "extra/gimp"
+      "extra/krita"
+      "chaotic-aur/lmms-git"
+      "extra/tiled"
     ];
 
     nixpkgs.config.allowUnfree = true;
