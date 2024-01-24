@@ -1,15 +1,15 @@
 { config, lib, pkgs, ... }:
 let
+  inherit (config.presets) non-nixos;
   inherit (config.modules.qview) enable;
 
   desktop = "com.interversehq.qView.desktop";
 in
 {
-  # TODO: pacman
   options.modules.qview.enable = lib.mkEnableOption "Enable qview module";
-
   config = lib.mkIf enable {
-    home.packages = [ pkgs.qview ];
+    home.packages = lib.mkIf (!non-nixos) [ pkgs.qview ];
+    pacman.packages = [ "chaotic-aur/qview" ];
 
     xdg.mimeApps.defaultApplications = {
       "image/*" = desktop;
