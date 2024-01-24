@@ -22,7 +22,7 @@ in
   options.modules.emacs.enable = lib.mkEnableOption "Enable emacs module";
 
   config = lib.mkIf enable {
-    home.packages = [ doom-install ] ++ (if non-nixos then [ ] else [ pkgs.emacs29 pkgs.semgrep ]);
+    home.packages = [ doom-install pkgs.semgrep ] ++ (if non-nixos then [ ] else [ pkgs.emacs29 ]);
     pacman.packages = [ "extra/emacs" ];
     home.sessionPath = [ "${dir}/bin" ];
     modules.copyFile."${configHome}/doom" = "${toString ../../assets/doom}";
