@@ -45,21 +45,6 @@ in
   };
 
   config = lib.mkIf enable {
-    pacman = {
-      packages = [
-        "aur/xplugd"
-        "extra/numlockx"
-        "extra/xorg-xinit"
-        "extra/xorg-xinput"
-        "extra/xorg-xsetroot"
-        "extra/xsettingsd"
-      ];
-      pkgs.xorg = {
-        xmodmap = [ "extra/xorg-xmodmap" ];
-        xrdb = [ "extra/xorg-xrdb" ];
-      };
-    };
-
     home.packages = lib.mkIf (!non-nixos) [
       pkgs.numlockx
       pkgs.xclip
@@ -72,6 +57,23 @@ in
       pkgs.xorg.xset
       pkgs.xorg.xsetroot
       pkgs.xplugd
+    ];
+
+    pacman.packages = [
+      "extra/xclip"
+      "extra/xdotool"
+      "extra/numlockx"
+      "extra/xorg-setxkbmap"
+      "extra/xorg-xev"
+      "extra/xorg-xkill"
+      "extra/xorg-xrdb"
+      "extra/xorg-xset"
+      "extra/xorg-xsetroot"
+      "aur/xplugd"
+      "extra/xorg-xinit"
+      "extra/xorg-xinput"
+      "extra/xorg-xmodmap"
+      "extra/xsettingsd"
     ];
 
     home.file.".xinitrc" = {
@@ -113,6 +115,7 @@ in
       extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
     };
 
+    # TODO: move xinitrc/xsession/xprofile to own module
     home.file = {
       ".xsession".text =
         ''
