@@ -42,3 +42,9 @@
 (+global-word-wrap-mode 1)
 (blink-cursor-mode 1)
 (global-display-fill-column-indicator-mode 1)
+
+(set-frame-parameter nil 'alpha-background 90)
+(add-to-list 'default-frame-alist '(alpha-background . 90))
+
+(after! recentf
+ (add-to-list 'recentf-exclude "~/.config/emacs/.local"))
