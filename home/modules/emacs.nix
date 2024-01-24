@@ -11,9 +11,7 @@ in
   options.modules.emacs.enable = lib.mkEnableOption "Enable emacs module";
 
   config = lib.mkIf enable {
-    home.packages =
-      if non-nixos then [ ]
-      else [ pkgs.emacs29 pkgs.semgrep ];
+    home.packages = lib.mkIf (!non-nixos) [ pkgs.emacs29 pkgs.semgrep ];
 
     pacman.packages = [ "extra/emacs" ];
 

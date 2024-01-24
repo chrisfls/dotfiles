@@ -208,8 +208,7 @@ in
       gtk.package
       cursor.package
       icon.package
-    ] ++ (if non-nixos then [ ]
-    else [
+    ] ++ (if non-nixos then [ ] else [
       pkgs.libsForQt5.qt5ct
       pkgs.qt6Packages.qt6ct
       pkgs.libsForQt5.qtstyleplugin-kvantum

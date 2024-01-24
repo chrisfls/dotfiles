@@ -7,9 +7,7 @@ in
   options.modules.fonts.enable = lib.mkEnableOption "Enable fonts module";
 
   config = lib.mkIf enable {
-    home.packages =
-      if non-nixos then [ ]
-      else [
+    home.packages = lib.mkIf (!non-nixos) [
         # good generic font
         pkgs.noto-fonts
 

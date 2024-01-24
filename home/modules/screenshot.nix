@@ -1,28 +1,23 @@
 { config, lib, pkgs, ... }:
 let
-  # TODO: pacman
-
+  inherit (config.presets) non-nixos;
   inherit (config.modules.screenshot) enable;
-
-  shotgun = "${pkgs.shotgun}/bin/shotgun"; # or pkgs.maim
-  slop = "${pkgs.slop}/bin/slop"; # or pkgs.hacksaw
-  xclip = "${pkgs.xclip}/bin/xclip";
 
   screenshot-copy = pkgs.writeShellScriptBin "screenshot-copy"
     ''
-      ${shotgun} - | ${xclip} -t 'image/png' -selection clipboard
+      shotgun - | xclip -t 'image/png' -selection clipboard
     '';
 
   screenshot-copy-area = pkgs.writeShellScriptBin "screenshot-copy-area"
     ''
-      ${shotgun} -g "$(${slop} -r guides)" - | ${xclip} -t 'image/png' -selection clipboard
+      shotgun -g "$(slop -r guides)" - | xclip -t 'image/png' -selection clipboard
     '';
 
   screenshot-save = pkgs.writeShellScriptBin "screenshot-save"
     ''
       d="$XDG_PICTURES_DIR/Screenshots/$(date +"%Y-%m-%d")"
       mkdir -p "$d"
-      ${shotgun} "$d/$(date +"%H_%M_%S.png")"
+      shotgun "$d/$(date +"%H_%M_%S.png")"
     '';
 in
 {
@@ -33,7 +28,13 @@ in
       screenshot-copy
       screenshot-copy-area
       screenshot-save
-    ];
+    ] ++ (if non-nixos then [ ] else [
+      pkgs.shotgun
+      pkgs.slop
+      pkgs.xclip
+    ]);
+
+    pacman.packages = [ "extra/shotgun" "extra/slop" "extra/xclip" ];
 
     xdg.configFile = {
       "slop/guides.vert".text =

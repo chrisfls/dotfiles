@@ -7,15 +7,13 @@ in
   options.modules.xdg.enable = lib.mkEnableOption "Enable xdg module";
 
   config = lib.mkIf enable {
-    home.packages =
-      if non-nixos then [ ]
-      else [
-        pkgs.libsForQt5.kde-cli-tools
-        pkgs.libsForQt5.xdg-desktop-portal-lxqt
-        pkgs.xdg-desktop-portal
-        pkgs.xdg-desktop-portal-gtk # see "font rendering in GTK apps on KDE"
-        pkgs.xdg-utils
-      ];
+    home.packages = lib.mkIf (!non-nixos) [
+      pkgs.libsForQt5.kde-cli-tools
+      pkgs.libsForQt5.xdg-desktop-portal-lxqt
+      pkgs.xdg-desktop-portal
+      pkgs.xdg-desktop-portal-gtk # see "font rendering in GTK apps on KDE"
+      pkgs.xdg-utils
+    ];
 
     pacman.packages = [
       "extra/xdg-desktop-portal-lxqt"

@@ -8,9 +8,7 @@ in
   options.modules.kitty.enable = lib.mkEnableOption "Enable kitty module";
 
   config = lib.mkIf enable {
-    home.packages =
-      if non-nixos then [ ]
-      else [ pkgs.kitty ];
+    home.packages = lib.mkIf (!non-nixos) [ pkgs.kitty ];
 
     pacman.packages = [ "extra/kitty" ];
 
