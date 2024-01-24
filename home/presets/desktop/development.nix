@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) desktop development;
+  inherit (config.presets) desktop development non-nixos;
   enable = desktop && development;
 in
 lib.mkIf enable {
@@ -10,15 +10,21 @@ lib.mkIf enable {
   };
 
   home.packages = [
-    pkgs.dbeaver
-    pkgs.gittyup
-
     # trying because I'm curious
-    pkgs.github-desktop
     pkgs.tig
 
     # eval which I'll use
     pkgs.gitui
     pkgs.lazygit
+  ] ++ (if non-nixos then [ ] else [
+    pkgs.dbeaver
+    pkgs.gittyup
+    pkgs.github-desktop
+  ]);
+
+  pacman.packages = [
+    "extra/dbeaver"
+    "chaotic-aur/gittyup"
+    "chaotic-aur/github-desktop"
   ];
 }
