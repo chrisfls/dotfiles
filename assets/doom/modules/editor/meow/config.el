@@ -75,23 +75,23 @@
    '("2" . meow-expand-2) ; 2
    '("1" . meow-expand-1) ; 1
    '("-" . negative-argument) ; -
-   '("," . meow-reverse) ; ;
+   '(";" . meow-reverse) ; ;
    '("{" . meow-inner-of-thing) ; ,
    '("}" . meow-bounds-of-thing) ; .
    '("[" . meow-beginning-of-thing) ; [
    '("]" . meow-end-of-thing) ; ]
    '("a" . meow-append) ; a
    '("o" . meow-open-below) ; A
-   '("w" . meow-back-word) ; b
-   '("W" . meow-back-symbol) ; B
+   '("b" . meow-back-word) ; b
+   '("B" . meow-back-symbol) ; B
    '("c" . meow-change) ; c
    '("x" . meow-delete) ; d
    '("X" . meow-backward-delete) ; D
    '("e" . meow-next-word) ; e
    '("E" . meow-next-symbol) ; E
    '("f" . meow-find) ; f
-   '("m" . meow-cancel-selection) ; g
-   '("M" . meow-grab) ; G
+   '("Z" . meow-cancel-selection) ; g
+   '("g" . meow-grab) ; G
    '("h" . meow-left) ; h
    '("H" . meow-left-expand) ; H
    '("i" . meow-insert) ; i
@@ -104,29 +104,30 @@
    '("L" . meow-right-expand) ; L
    '("S" . meow-join) ; m
    '("n" . meow-search) ; n
-   '("b" . meow-block) ; o
-   '("B" . meow-to-block) ; O
+   '("m" . meow-block) ; o
+   '("M" . meow-to-block) ; O
    '("p" . meow-yank) ; p
-   '("q" . meow-quit) ; q
+   '("\\q" . meow-quit) ; q
+   '("G" . meow-goto-line) ; Q
    '("P" . meow-replace) ; r
    '("r" . meow-swap-grab) ; R
    '("d" . meow-kill) ; s
    '("t" . meow-till) ; t
    '("u" . meow-undo) ; u
    '("U" . meow-undo-in-selection) ; U
-   '("F" . meow-visit) ; v
-   '("v" . meow-mark-word) ; v
-   '("V" . meow-mark-symbol) ; V
+   '("/" . meow-visit) ; v
+   '("v" . meow-mark-word) ; w
+   '("V" . meow-mark-symbol) ; W
    '("s" . meow-line) ; x
-   '(":" . meow-goto-line) ; X
+   ;;'("G" . meow-goto-line) ; X (disabled)
    '("y" . meow-save) ; y
    '("Y" . meow-sync-grab) ; Y
    '("z" . meow-pop-selection) ; z
    '("." . repeat) ; '
    '("<escape>" . ignore) ; <escape>
    ;;; new keys
-   '(";" . meow-comment)
-   '("D" . custom/delete-active-region)
+   '("\\;" . meow-comment)
+   '("D" . custom/delete-region)
    ;; page movement
    '("<next>" . meow-page-down)
    '("<prior>" . meow-page-up)
@@ -137,68 +138,55 @@
    '("TAB" . meow-indent)
    '("<backtab>" . custom/indent-rigidly-left-to-tab-stop)
    ;; easier macros
-   ;'("(" . meow-start-kmacro)
-   ;'(")" . meow-end-kmacro)
-   '("(" . meow-start-kmacro-or-insert-counter)
-   '(")" . meow-end-or-call-kmacro)))
-
-;; TODO: readd x/X for dealing with chars, but in another binding
+   '("(" . meow-start-kmacro)
+   '(")" . meow-end-kmacro)
+   '("q" . meow-start-kmacro-or-insert-counter)
+   '("@" . meow-end-or-call-kmacro)))
 
 (defun custom/comment-or-uncomment-region ()
   "Indent region to the right, or current line if no region is active."
   (interactive)
-  (if (use-region-p)
-      (comment-or-uncomment-region (region-beginning) (region-end))
-    (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
+  (when (meow--allow-modify-p)
+    (if (use-region-p)
+        (comment-or-uncomment-region (region-beginning) (region-end))
+      (comment-or-uncomment-region (line-beginning-position) (line-end-position)))))
 
 (defun custom/indent-rigidly-right-to-tab-stop ()
   "Indent region to the right, or current line if no region is active."
   (interactive)
-  (if (use-region-p)
-      (indent-rigidly-right-to-tab-stop (region-beginning) (region-end))
-    (indent-rigidly-right-to-tab-stop (line-beginning-position) (line-end-position))))
+  (when (meow--allow-modify-p)
+    (if (use-region-p)
+        (indent-rigidly-right-to-tab-stop (region-beginning) (region-end))
+      (indent-rigidly-right-to-tab-stop (line-beginning-position) (line-end-position)))))
 
 (defun custom/indent-rigidly-left-to-tab-stop ()
   "Indent region to the left, or current line if no region is active."
   (interactive)
-  (if (use-region-p)
-      (indent-rigidly-left-to-tab-stop (region-beginning) (region-end))
-    (indent-rigidly-left-to-tab-stop (line-beginning-position) (line-end-position))))
+  (when (meow--allow-modify-p)
+    (if (use-region-p)
+        (indent-rigidly-left-to-tab-stop (region-beginning) (region-end))
+      (indent-rigidly-left-to-tab-stop (line-beginning-position) (line-end-position)))))
 
 (defun custom/indent-rigidly-right ()
   "Indent region to the right, or current line if no region is active."
   (interactive)
-  (if (use-region-p)
-      (indent-rigidly-right (region-beginning) (region-end))
-    (indent-rigidly-right (line-beginning-position) (line-end-position))))
+  (when (meow--allow-modify-p)
+    (if (use-region-p)
+        (indent-rigidly-right (region-beginning) (region-end))
+      (indent-rigidly-right (line-beginning-position) (line-end-position)))))
 
 (defun custom/indent-rigidly-left ()
   "Indent region to the left, or current line if no region is active."
   (interactive)
-  (if (use-region-p)
-      (indent-rigidly-right (region-beginning) (region-end))
-    (indent-rigidly-left (line-beginning-position) (line-end-position))))
+  (when (meow--allow-modify-p)
+    (if (use-region-p)
+        (indent-rigidly-right (region-beginning) (region-end))
+      (indent-rigidly-left (line-beginning-position) (line-end-position)))))
 
-(defun custom/delete-active-region ()
+(defun custom/delete-region ()
   "Deletes active region."
   (interactive)
   (when (meow--allow-modify-p)
     (if (use-region-p)
         (call-interactively #'delete-active-region)
       (call-interactively #'delete-backward-char))))
-
-;;(defun custom/meow-delete ()
-;;  "Backward delete one char."
-;;  (interactive)
-;;  (when (meow--allow-modify-p)
-;;    (if (use-region-p)
-;;        (call-interactively #'delete-active-region)
-;;      (call-interactively #'delete-backward-char))))
-
-;;(defun custom/meow-backward-delete ()
-;;  "Backward delete one char."
-;;  (interactive)
-;;  (when (meow--allow-modify-p)
-;;    (if (use-region-p)
-;;        (call-interactively #'delete-active-region)
-;;      (meow--execute-kbd-macro meow--kbd-delete-char))))
