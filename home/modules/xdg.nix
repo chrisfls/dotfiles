@@ -47,6 +47,7 @@ in
       };
       userDirs.enable = true;
       configFile = {
+        # TODO: move to desktop
         "kwalletrc".text =
           ''
             [Wallet]
@@ -56,7 +57,8 @@ in
         "xdg-desktop-portal/portals.conf".text =
           ''
             [preferred]
-            default=lxqt
+            default=gtk
+            org.freedesktop.impl.portal.FileChooser=lxqt
           '';
 
         "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
