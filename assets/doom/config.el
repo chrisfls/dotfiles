@@ -48,3 +48,16 @@
 
 (after! recentf
  (add-to-list 'recentf-exclude "~/.config/emacs/.local"))
+
+(after! vertico
+  (setq vertico-count 10
+        vertico-scroll-margin 0))
+
+(use-package! vertico-buffer :demand t
+  :init
+  (vertico-buffer-mode 1)
+  :config
+  (setq vertico-buffer-display-action
+      '(display-buffer-in-side-window
+        (window-height . 12)
+        (side . top))))

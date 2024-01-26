@@ -5,9 +5,6 @@
       doom-localleader-key "C-c l"
       doom-localleader-alt-key "C-c l")
 
-(map!
-  "M-;" 'custom/comment-or-uncomment-region)
-
 (use-package! meow
   :hook (doom-after-modules-config . meow-global-mode)
   :demand t
@@ -120,35 +117,28 @@
    '("'" . repeat)
    '("<escape>" . ignore)
    ;;; new keys
-   '("<left>" . meow-left)
-   '("S-<left>" . meow-left-expand)
-   '("<down>" . meow-next)
-   '("S-<down>" . meow-next-expand)
-   '("<up>" . meow-prev)
-   '("S-<up>" . meow-prev-expand)
-   '("<right>" . meow-right)
-   '("S-<right>" . meow-right-expand)
-   '("/" . meow-comment)
-   '("X" . custom/delete-region)
-   '("\\l" . avy-goto-line)
-   '("\\c" . avy-goto-char)
-   '("U" . custom/meow-redo)
+   '("/" . my/meow-comment)
+   '("X" . my/meow-delete-region)
+   '("\\s" . avy-goto-line)
+   '("\\f" . avy-goto-char)
+   '("\\w" . ace-window)
+   '("U" . my/meow-redo)
    ;; page movement
    '("<next>" . meow-page-down)
    '("<prior>" . meow-page-up)
    ;; indent by char
-   '("<" . custom/indent-rigidly-left)
-   '(">" . custom/indent-rigidly-right)
+   '("<" . my/meow-indent-left)
+   '(">" . my/meow-indent-right)
    ;; indent by tab 
    '("TAB" . meow-indent)
-   '("<backtab>" . custom/indent-rigidly-left-to-tab-stop)
+   '("<backtab>" . my/meow-indent-left)
    ;; easier macros
    '("(" . meow-start-kmacro)
    '(")" . meow-end-kmacro)
    '("+" . meow-start-kmacro-or-insert-counter)
    '("=" . meow-end-or-call-kmacro)))
 
-(defun custom/comment-or-uncomment-region ()
+(defun my/meow-comment ()
   "Indent region to the right, or current line if no region is active."
   (interactive)
   (when (meow--allow-modify-p)
@@ -157,25 +147,7 @@
       (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
   (setq deactivate-mark nil))
 
-;; (defun custom/indent-rigidly-right-to-tab-stop ()
-;;   "Indent region to the right, or current line if no region is active."
-;;   (interactive)
-;;   (when (meow--allow-modify-p)
-;;     (if (use-region-p)
-;;         (indent-rigidly-right-to-tab-stop (region-beginning) (region-end))
-;;       (indent-rigidly-right-to-tab-stop (line-beginning-position) (line-end-position)))))
-;;                (exchange-point-and-mark)
-
-(defun custom/indent-rigidly-left-to-tab-stop ()
-  "Indent region to the left, or current line if no region is active."
-  (interactive)
-  (when (meow--allow-modify-p)
-    (if (use-region-p)
-        (indent-rigidly-left-to-tab-stop (region-beginning) (region-end))
-      (indent-rigidly-left-to-tab-stop (line-beginning-position) (line-end-position))))
-  (setq deactivate-mark nil))
-
-(defun custom/indent-rigidly-right ()
+(defun my/meow-indent-right ()
   "Indent region to the right, or current line if no region is active."
   (interactive)
   (when (meow--allow-modify-p)
@@ -184,7 +156,7 @@
       (indent-rigidly-right (line-beginning-position) (line-end-position))))
   (setq deactivate-mark nil))
 
-(defun custom/indent-rigidly-left ()
+(defun my/meow-indent-left ()
   "Indent region to the left, or current line if no region is active."
   (interactive)
   (when (meow--allow-modify-p)
@@ -193,7 +165,7 @@
       (indent-rigidly-left (line-beginning-position) (line-end-position))))
   (setq deactivate-mark nil))
 
-(defun custom/delete-region ()
+(defun my/meow-delete-region ()
   "Deletes active region."
   (interactive)
   (when (meow--allow-modify-p)
@@ -201,8 +173,7 @@
         (call-interactively #'delete-active-region)
       (call-interactively #'delete-backward-char))))
 
-
-(defun custom/meow-redo ()
+(defun my/meow-redo ()
   "Cancel current selection then redo."
   (interactive)
   (when (region-active-p)
