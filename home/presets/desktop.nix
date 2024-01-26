@@ -67,7 +67,6 @@ in
       # ######## #### ## #
 
       pkgs.anydesk
-      pkgs.joplin-desktop
       pkgs.logseq
       pkgs.moonlight-qt
       pkgs.obsidian
@@ -118,7 +117,6 @@ in
       # ######## #### ## #
 
       "chaotic-aur/anydesk-bin"
-      "chaotic-aur/joplin-beta-appimage"
       "chaotic-aur/logseq-desktop-bin"
       "chaotic-aur/moonlight-qt"
       "extra/obsidian"
