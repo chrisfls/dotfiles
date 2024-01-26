@@ -186,17 +186,11 @@ in
   };
 
   config = lib.mkIf enable {
-    home.packages =
-      if non-nixos then [ pkgs.cozette ]
-      else [ pkgs.i3 pkgs.cozette ];
+    home.packages = lib.mkIf (!non-nixos) [ pkgs.i3 ];
 
     pacman.packages = [ "extra/i3-wm" ];
 
     modules.xorg.window-manager = i3;
-
-    xdg.dataFile = lib.mkIf (non-nixos) {
-      "fonts/cozette".source = "${pkgs.cozette}/share/fonts";
-    };
 
     xdg.configFile."i3/config" = {
       text =
@@ -205,7 +199,7 @@ in
           # THEMING
           # ######## #### ## #
 
-          font pango:cozette 8 # Cascadia Mono: 7.666666666665;
+          font pango:Noto Sans Mono Bold 10
 
           client.background ${black}
           client.focused ${colors.foreground} ${colors.black} ${colors.foreground} ${silver} ${gray}
