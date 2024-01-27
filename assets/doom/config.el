@@ -3,7 +3,8 @@
 (setq-default cursor-type '(bar . 4)
               display-fill-column-indicator-column 79
               display-fill-column-indicator-character ?\s
-              fill-column 80)
+              fill-column 80
+              mode-line-format nil)
 
 ;; TODO: doom-big-font doom-symbol-font doom-serif-font
 (setq user-full-name "Christian Ferraz"
@@ -23,7 +24,8 @@
       scroll-conservatively 10000
       scroll-margin 3
       scroll-preserve-screen-position 1
-      scroll-step 3)
+      scroll-step 3
+      mode-line-format nil)
 
 (after! highlight-indent-guides
   (setq highlight-indent-guides-method 'column
@@ -53,11 +55,11 @@
   (setq vertico-count 10
         vertico-scroll-margin 0))
 
-(use-package! vertico-buffer :demand t
-  :init
-  (vertico-buffer-mode 1)
-  :config
-  (setq vertico-buffer-display-action
-      '(display-buffer-in-side-window
-        (window-height . 12)
-        (side . top))))
+;; (use-package! vertico-buffer :demand t
+;;   :init
+;;   (vertico-buffer-mode 1)
+;;   :config
+;;   (setq vertico-buffer-display-action
+;;       '(display-buffer-in-side-window
+;;         (window-height . 12)
+;;         (side . top))) )
