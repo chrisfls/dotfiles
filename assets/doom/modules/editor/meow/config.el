@@ -5,20 +5,23 @@
       doom-localleader-key "C-c l"
       doom-localleader-alt-key "C-c l")
 
-(use-package! meow
+(use-package! meow :demand t
   :hook (doom-after-modules-config . meow-global-mode)
-  :demand t
   :config
   (meow-thing-register 'whitespace
-                    '(syntax . " ")
-                    '(syntax . " "))
+    '(syntax . " ")
+    '(syntax . " "))
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty
+        meow-cursor-type-default '(hbar . 4)
+        meow-cursor-type-normal '(hbar . 4)
+        meow-cursor-type-motion '(hbar . 4)
+        meow-cursor-type-beacon '(hbar . 4)
         meow-cursor-type-insert '(bar . 4)
         meow-cursor-type-region-cursor '(bar . 4)
         meow-cursor-type-keypad 'hollow
         meow-use-clipboard t
-        meow-keypad-leader-dispatch doom-leader-map
-        meow-keypad-start-keys '((?k . ?c)
+        meow-keypad-leader-dispatch ctl-x-map
+        meow-keypad-start-keys '((?c . ?c)
                                  (?h . ?h)
                                  (?x . ?x))
         meow-char-thing-table '((?r . round)
@@ -99,7 +102,7 @@
    '("o" . meow-block)
    '("O" . meow-to-block)
    '("p" . meow-yank)
-   '("q" . meow-quit)
+   ;;'("q" . meow-quit)
    '("S" . meow-goto-line) ; Q/X
    '("P" . meow-replace) ; r
    '("r" . meow-swap-grab) ; R
@@ -116,27 +119,37 @@
    '("z" . meow-pop-selection)
    '("'" . repeat)
    '("<escape>" . ignore)
-   ;;; new keys
+   ;; new actions
+   '("q" . kill-current-buffer)
+   ;; new mutations
    '("/" . my/meow-comment)
-   '("X" . my/meow-delete-region)
-   '("\\s" . avy-goto-line)
-   '("\\f" . avy-goto-char)
-   '("\\w" . ace-window)
    '("U" . my/meow-redo)
-   ;; page movement
-   '("<next>" . meow-page-down)
-   '("<prior>" . meow-page-up)
-   ;; indent by char
+   '("X" . my/meow-delete-region)
    '("<" . my/meow-indent-left)
    '(">" . my/meow-indent-right)
-   ;; indent by tab 
    '("TAB" . meow-indent)
    '("<backtab>" . my/meow-indent-left)
-   ;; easier macros
+   ;; new misc
    '("(" . meow-start-kmacro)
    '(")" . meow-end-kmacro)
    '("+" . meow-start-kmacro-or-insert-counter)
-   '("=" . meow-end-or-call-kmacro)))
+   '("=" . meow-end-or-call-kmacro))
+  (my/meow-define-key
+   ;; new motions
+   '("<next>" . meow-page-down)
+   '("<prior>" . meow-page-up)
+   '("çl" . avy-goto-line)
+   '("çc" . avy-goto-char)
+   '("çw" . ace-window)))
+
+(defun my/meow-define-key (&rest keybinds)
+  (apply #'meow-define-keys 'motion keybinds)
+  (apply #'meow-define-keys 'normal keybinds))
+
+(defun my/leader ()
+  "Invokes C-c."
+  (interactive)
+  (setq unread-command-events (listify-key-sequence "\C-c")))
 
 (defun my/meow-comment ()
   "Indent region to the right, or current line if no region is active."
@@ -151,18 +164,18 @@
   "Indent region to the right, or current line if no region is active."
   (interactive)
   (when (meow--allow-modify-p)
-    (if (use-region-p)
-        (indent-rigidly-right (region-beginning) (region-end))
-      (indent-rigidly-right (line-beginning-position) (line-end-position))))
+    ;;(if (use-region-p)
+    ;;    (indent-rigidly-right (region-beginning) (region-end))
+    (indent-rigidly-right (line-beginning-position) (line-end-position)))
   (setq deactivate-mark nil))
 
 (defun my/meow-indent-left ()
   "Indent region to the left, or current line if no region is active."
   (interactive)
   (when (meow--allow-modify-p)
-    (if (use-region-p)
-        (indent-rigidly-left (region-beginning) (region-end))
-      (indent-rigidly-left (line-beginning-position) (line-end-position))))
+    ;;(if (use-region-p)
+    ;;    (indent-rigidly-left (region-beginning) (region-end))
+    (indent-rigidly-left (line-beginning-position) (line-end-position)))
   (setq deactivate-mark nil))
 
 (defun my/meow-delete-region ()
@@ -179,3 +192,8 @@
   (when (region-active-p)
     (meow--cancel-selection))
   (meow--execute-kbd-macro "M-_"))
+
+(map! :map meow-normal-state-keymap
+  "\\" 'my/leader)
+(map! :map meow-motion-state-keymap
+  "\\" 'my/leader)
