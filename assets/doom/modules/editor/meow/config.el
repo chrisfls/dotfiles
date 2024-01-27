@@ -5,7 +5,7 @@
       doom-localleader-key "C-c l"
       doom-localleader-alt-key "C-c l")
 
-(defun my/meow-define-key (&rest keybinds)
+(defun my/define-key (&rest keybinds)
   (apply #'meow-define-keys 'motion keybinds)
   (apply #'meow-define-keys 'normal keybinds))
 
@@ -14,7 +14,7 @@
   (interactive)
   (setq unread-command-events (listify-key-sequence "\C-c")))
 
-(defun my/meow-comment ()
+(defun my/comment ()
   "Indent region to the right, or current line if no region is active."
   (interactive)
   (when (meow--allow-modify-p)
@@ -23,7 +23,7 @@
       (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
   (setq deactivate-mark nil))
 
-(defun my/meow-indent-right ()
+(defun my/indent-right ()
   "Indent region to the right, or current line if no region is active."
   (interactive)
   (when (meow--allow-modify-p)
@@ -32,7 +32,7 @@
     (indent-rigidly-right (line-beginning-position) (line-end-position)))
   (setq deactivate-mark nil))
 
-(defun my/meow-indent-left ()
+(defun my/indent-left ()
   "Indent region to the left, or current line if no region is active."
   (interactive)
   (when (meow--allow-modify-p)
@@ -41,7 +41,7 @@
     (indent-rigidly-left (line-beginning-position) (line-end-position)))
   (setq deactivate-mark nil))
 
-(defun my/meow-delete-region ()
+(defun my/delete-region ()
   "Deletes active region."
   (interactive)
   (when (meow--allow-modify-p)
@@ -49,12 +49,19 @@
         (call-interactively #'delete-active-region)
       (call-interactively #'delete-backward-char))))
 
-(defun my/meow-redo ()
+(defun my/undo ()
+  "Cancel current selection then undo."
+  (interactive)
+  (when (region-active-p)
+    (meow--cancel-selection))
+  (undo-tree-undo))
+
+(defun my/redo ()
   "Cancel current selection then redo."
   (interactive)
   (when (region-active-p)
     (meow--cancel-selection))
-  (meow--execute-kbd-macro "M-_"))
+  (undo-tree-redo))
 
 (map! :map meow-normal-state-keymap
   "\\" 'my/leader)
@@ -164,7 +171,7 @@
    '("r" . meow-swap-grab) ; R
    '("d" . meow-kill) ; s
    '("t" . meow-till)
-   '("u" . meow-undo)
+   ; '("u" . meow-undo)
    '("Z" . meow-undo-in-selection) ; U
    '("v" . meow-visit)
    '("w" . meow-mark-word)
@@ -178,19 +185,20 @@
    ;; new actions
    '("q" . kill-current-buffer)
    ;; new mutations
-   '("/" . my/meow-comment)
-   '("U" . my/meow-redo)
-   '("X" . my/meow-delete-region)
-   '("<" . my/meow-indent-left)
-   '(">" . my/meow-indent-right)
+   '("/" . my/comment)
+   '("u" . my/undo)
+   '("U" . my/redo)
+   '("X" . my/delete-region)
+   '("<" . my/indent-left)
+   '(">" . my/indent-right)
    '("TAB" . meow-indent)
-   '("<backtab>" . my/meow-indent-left)
+   '("<backtab>" . my/indent-left)
    ;; new misc
    '("(" . meow-start-kmacro)
    '(")" . meow-end-kmacro)
    '("+" . meow-start-kmacro-or-insert-counter)
    '("=" . meow-end-or-call-kmacro))
-  (my/meow-define-key
+  (my/define-key
    ;; new motions
    '("<next>" . meow-page-down)
    '("<prior>" . meow-page-up)
