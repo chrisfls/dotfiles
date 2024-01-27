@@ -5,6 +5,62 @@
       doom-localleader-key "C-c l"
       doom-localleader-alt-key "C-c l")
 
+(defun my/meow-define-key (&rest keybinds)
+  (apply #'meow-define-keys 'motion keybinds)
+  (apply #'meow-define-keys 'normal keybinds))
+
+(defun my/leader ()
+  "Invokes C-c."
+  (interactive)
+  (setq unread-command-events (listify-key-sequence "\C-c")))
+
+(defun my/meow-comment ()
+  "Indent region to the right, or current line if no region is active."
+  (interactive)
+  (when (meow--allow-modify-p)
+    (if (use-region-p)
+        (comment-or-uncomment-region (region-beginning) (region-end))
+      (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
+  (setq deactivate-mark nil))
+
+(defun my/meow-indent-right ()
+  "Indent region to the right, or current line if no region is active."
+  (interactive)
+  (when (meow--allow-modify-p)
+    ;;(if (use-region-p)
+    ;;    (indent-rigidly-right (region-beginning) (region-end))
+    (indent-rigidly-right (line-beginning-position) (line-end-position)))
+  (setq deactivate-mark nil))
+
+(defun my/meow-indent-left ()
+  "Indent region to the left, or current line if no region is active."
+  (interactive)
+  (when (meow--allow-modify-p)
+    ;;(if (use-region-p)
+    ;;    (indent-rigidly-left (region-beginning) (region-end))
+    (indent-rigidly-left (line-beginning-position) (line-end-position)))
+  (setq deactivate-mark nil))
+
+(defun my/meow-delete-region ()
+  "Deletes active region."
+  (interactive)
+  (when (meow--allow-modify-p)
+    (if (use-region-p)
+        (call-interactively #'delete-active-region)
+      (call-interactively #'delete-backward-char))))
+
+(defun my/meow-redo ()
+  "Cancel current selection then redo."
+  (interactive)
+  (when (region-active-p)
+    (meow--cancel-selection))
+  (meow--execute-kbd-macro "M-_"))
+
+(map! :map meow-normal-state-keymap
+  "\\" 'my/leader)
+(map! :map meow-motion-state-keymap
+  "\\" 'my/leader)
+
 (use-package! meow :demand t
   :hook (doom-after-modules-config . meow-global-mode)
   :config
@@ -141,59 +197,3 @@
    '("çl" . avy-goto-line)
    '("çc" . avy-goto-char)
    '("çw" . ace-window)))
-
-(defun my/meow-define-key (&rest keybinds)
-  (apply #'meow-define-keys 'motion keybinds)
-  (apply #'meow-define-keys 'normal keybinds))
-
-(defun my/leader ()
-  "Invokes C-c."
-  (interactive)
-  (setq unread-command-events (listify-key-sequence "\C-c")))
-
-(defun my/meow-comment ()
-  "Indent region to the right, or current line if no region is active."
-  (interactive)
-  (when (meow--allow-modify-p)
-    (if (use-region-p)
-        (comment-or-uncomment-region (region-beginning) (region-end))
-      (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
-  (setq deactivate-mark nil))
-
-(defun my/meow-indent-right ()
-  "Indent region to the right, or current line if no region is active."
-  (interactive)
-  (when (meow--allow-modify-p)
-    ;;(if (use-region-p)
-    ;;    (indent-rigidly-right (region-beginning) (region-end))
-    (indent-rigidly-right (line-beginning-position) (line-end-position)))
-  (setq deactivate-mark nil))
-
-(defun my/meow-indent-left ()
-  "Indent region to the left, or current line if no region is active."
-  (interactive)
-  (when (meow--allow-modify-p)
-    ;;(if (use-region-p)
-    ;;    (indent-rigidly-left (region-beginning) (region-end))
-    (indent-rigidly-left (line-beginning-position) (line-end-position)))
-  (setq deactivate-mark nil))
-
-(defun my/meow-delete-region ()
-  "Deletes active region."
-  (interactive)
-  (when (meow--allow-modify-p)
-    (if (use-region-p)
-        (call-interactively #'delete-active-region)
-      (call-interactively #'delete-backward-char))))
-
-(defun my/meow-redo ()
-  "Cancel current selection then redo."
-  (interactive)
-  (when (region-active-p)
-    (meow--cancel-selection))
-  (meow--execute-kbd-macro "M-_"))
-
-(map! :map meow-normal-state-keymap
-  "\\" 'my/leader)
-(map! :map meow-motion-state-keymap
-  "\\" 'my/leader)
