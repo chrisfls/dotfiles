@@ -63,3 +63,6 @@
 ;;       '(display-buffer-in-side-window
 ;;         (window-height . 12)
 ;;         (side . top))) )
+
+(add-hook 'typescript-mode-hook 'deno-fmt-mode)
+(add-hook 'js2-mode-hook 'deno-fmt-mode)
