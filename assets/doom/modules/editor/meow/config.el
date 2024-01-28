@@ -27,18 +27,18 @@
   "Indent region to the right, or current line if no region is active."
   (interactive)
   (when (meow--allow-modify-p)
-    ;;(if (use-region-p)
-    ;;    (indent-rigidly-right (region-beginning) (region-end))
-    (indent-rigidly-right (line-beginning-position) (line-end-position)))
+    (if (use-region-p)
+        (indent-rigidly-right (region-beginning) (region-end))
+      (indent-rigidly-right (line-beginning-position) (line-end-position))))
   (setq deactivate-mark nil))
 
 (defun my/indent-left ()
   "Indent region to the left, or current line if no region is active."
   (interactive)
   (when (meow--allow-modify-p)
-    ;;(if (use-region-p)
-    ;;    (indent-rigidly-left (region-beginning) (region-end))
-    (indent-rigidly-left (line-beginning-position) (line-end-position)))
+    (if (use-region-p)
+        (indent-rigidly-left (region-beginning) (region-end))
+    (indent-rigidly-left (line-beginning-position) (line-end-position))))
   (setq deactivate-mark nil))
 
 (defun my/delete-region ()
@@ -54,14 +54,14 @@
   (interactive)
   (when (region-active-p)
     (meow--cancel-selection))
-  (undo-tree-undo))
+  (undo-fu-only-undo))
 
 (defun my/redo ()
   "Cancel current selection then redo."
   (interactive)
   (when (region-active-p)
     (meow--cancel-selection))
-  (undo-tree-redo))
+  (undo-fu-only-redo))
 
 (map! :map meow-normal-state-keymap
   "\\" 'my/leader)
