@@ -49,4 +49,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 
+(package! macrursors
+  :recipe (:host github :repo "corytertel/macrursors"))
+
 (package! deno-fmt)
