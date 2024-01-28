@@ -64,9 +64,9 @@
   (undo-fu-only-redo))
 
 (map! :map meow-normal-state-keymap
-  "\\" 'my/leader)
+  "ç" 'my/leader)
 (map! :map meow-motion-state-keymap
-  "\\" 'my/leader)
+  "ç" 'my/leader)
 
 (use-package! meow :demand t
   :hook (doom-after-modules-config . meow-global-mode)
@@ -202,6 +202,6 @@
    ;; new motions
    '("<next>" . meow-page-down)
    '("<prior>" . meow-page-up)
-   '("çl" . avy-goto-line)
-   '("çc" . avy-goto-char)
-   '("çw" . ace-window)))
+   '("\\l" . avy-goto-line)
+   '("\\c" . avy-goto-char)
+   '("\\w" . ace-window)))
