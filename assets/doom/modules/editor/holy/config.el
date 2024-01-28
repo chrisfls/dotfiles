@@ -11,3 +11,7 @@
 ;;       (comment-or-uncomment-region (region-beginning) (region-end))
 ;;     (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
 ;;   (setq deactivate-mark nil))
+
+(map!
+  "M-n" "C-n"
+  "M-p" "C-p")
