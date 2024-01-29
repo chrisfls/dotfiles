@@ -162,7 +162,6 @@
 ;;; BINDINGS ;;;
 ;;;;;;;;;;;;;;;;
 
-
 (map!
   "C-("   #'macrursors-start
   "M-n"   #'macrursors-mark-next-instance-of
@@ -177,7 +176,7 @@
       (:prefix-map ("m" . "multiple-cursors")
        :desc "Select"                      "m"     #'my/macrursors-select
        :desc "Clear selection"             "c"     #'macrursors-select-clear
-       ;;; Mark-all 
+       ;;; Mark-all
        :desc "Mark all sentences"          "."     #'macrursors-mark-all-sentences
        :desc "Mark all sexps"              "e"     #'macrursors-mark-all-sexps
        :desc "Mark all defuns"             "f"     #'macrursors-mark-all-defuns

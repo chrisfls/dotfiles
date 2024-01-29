@@ -52,7 +52,4 @@
 (package! macrursors
   :recipe (:host github :repo "corytertel/macrursors"))
 
-;;(package! kmacro-x
-;;  :recipe (:host github :repo "vifon/kmacro-x.el"))
-
 (package! deno-fmt)
