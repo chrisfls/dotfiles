@@ -116,40 +116,11 @@
 
 (define-prefix-command 'macrursors-mark-map)
 (use-package! macrursors
-  ;; cmd  - macrursors-apply-command
-  ;; cmd  - macrursors-early-quit
-  ;; cmd  - macrursors-end
-  ;; cmd  - macrursors-mark-all-defuns
-  ;; cmd  - macrursors-mark-all-instances-of
-  ;; cmd  - macrursors-mark-all-lines
-  ;; cmd  - macrursors-mark-all-lines-or-instances
-  ;; cmd  - macrursors-mark-all-lists
-  ;; cmd  - macrursors-mark-all-numbers
-  ;; cmd  - macrursors-mark-all-sentences
-  ;; cmd  - macrursors-mark-all-sexp
-  ;; cmd  - macrursors-mark-all-sexps
-  ;; cmd  - macrursors-mark-all-symbols
-  ;; cmd  - macrursors-mark-all-urls
-  ;; cmd  - macrursors-mark-all-words
-  ;; cmd  - macrursors-mark-from-isearch
-  ;; cmd  - macrursors-mark-next-from-isearch
-  ;; cmd  - macrursors-mark-next-instance-of
-  ;; cmd  - macrursors-mark-next-line
-  ;; cmd  - macrursors-mark-previous-from-isearch
-  ;; cmd  - macrursors-mark-previous-instance-of
-  ;; cmd  - macrursors-mark-previous-line
-  ;; cmd  - macrursors-start
-  ;; face - macrursors-cursor-bar-face
-  ;; face - macrursors-cursor-face
-  ;; face - macrursors-region-face
-  ;; hook - macrursors-post-finish-hook
-  ;; hook - macrursors-pre-finish-hook
-  ;; mode - macrursors-mode
-  ;; var  - macrursors-apply-keys
-  ;; var  - macrursors-match-cursor-style
-  ;; var  - macrursors-mode-line
+  ;; pending: macrursors-mark-next-line macrursors-mark-previous-line
   :hook (macrursors-pre-finish-hook . company-mode)
-        (macrursors-post-finish-hook . company-mode))
+        (macrursors-post-finish-hook . company-mode)
+  :config
+  (setq macrursors-match-cursor-style nil))
 
 ;; (use-package! vertico-buffer :demand t
 ;;   :init
@@ -181,26 +152,32 @@
 ;;     (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
 ;;   (setq deactivate-mark nil))
 
+(defun my/macrursors-select ()
+  (interactive)
+  (if (use-region-p)
+      (macrursors-select)
+    (macrursors-select-clear)))
+
 ;;;;;;;;;;;;;;;;
 ;;; BINDINGS ;;;
 ;;;;;;;;;;;;;;;;
 
+
 (map!
-  "M-n" #'macrursors-mark-next-instance-of
-  "M-p" #'macrursors-mark-previous-instance-of
-  ;; "n" #'macrursors-mark-next-line
-  ;; "p" #'macrursors-mark-previous-line
+  "C-("   #'macrursors-start
+  "M-n"   #'macrursors-mark-next-instance-of
+  "M-p"   #'macrursors-mark-previous-instance-of
   "M-s n" #'macrursors-mark-next-from-isearch
   "M-s p" #'macrursors-mark-previous-from-isearch
   "M-s m" #'macrursors-mark-from-isearch)
 
+(customize-set-variable 'macrursors-apply-keys "C-)")
+
 (map! :leader
       (:prefix-map ("m" . "multiple-cursors")
-       :desc "Apply"                       "RET"   #'macrursors-end
-       ;; Select / clear
-       :desc "Select"                      "SPC"   #'macrursors-select
-       :desc "Clear selection"             "g"     #'macrursors-select-clear
-       ;;; Mark-all
+       :desc "Select"                      "m"     #'my/macrursors-select
+       :desc "Clear selection"             "c"     #'macrursors-select-clear
+       ;;; Mark-all 
        :desc "Mark all sentences"          "."     #'macrursors-mark-all-sentences
        :desc "Mark all sexps"              "e"     #'macrursors-mark-all-sexps
        :desc "Mark all defuns"             "f"     #'macrursors-mark-all-defuns
