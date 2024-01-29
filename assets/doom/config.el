@@ -188,50 +188,24 @@
 (map!
   "M-n" #'macrursors-mark-next-instance-of
   "M-p" #'macrursors-mark-previous-instance-of
-  ;"C-;" 'macrursors-mark-map
-  )
+  ;; "n" #'macrursors-mark-next-line
+  ;; "p" #'macrursors-mark-previous-line
+  "M-s n" #'macrursors-mark-next-from-isearch
+  "M-s p" #'macrursors-mark-previous-from-isearch
+  "M-s m" #'macrursors-mark-from-isearch)
 
-(map! :map macrursors-mark-map
-  ;; apply/quit
-  "RET" #'macrursors-mark-all-lines-or-instances
-  "."   #'macrursors-mark-all-sentences
-  "f"   #'macrursors-mark-all-defuns
-  "h"   #'macrursors-mark-all-lines
-  "l"   #'macrursors-mark-all-lists
-  "n"   #'macrursors-mark-all-numbers
-  "w"   #'macrursors-mark-all-words
-  "s"   #'macrursors-mark-all-symbols
-  "e"   #'macrursors-mark-all-sexps
-  "a"   #'macrursors-early-quit)
-
-;; (map! :leader
-;;       (:prefix-map ("m" . "multiple-cursors")
-;;        ;;:desc "Add cursor w/mouse" "<mouse-1>" #'mc/add-cursor-on-click
-;;        :desc "Select"                 "SPC"       #'macrursors-select
-;;        ;;; mark all
-;;        :desc "Mark all lines"         "h"         #'macrursors-mark-all-lines
-;;        :desc "Mark all"               "d"         #'macrursors-mark-all-instances-of
-;;        :desc "Mark all DWIM"          "D"         #'macrursors-mark-all-lines-or-instances
-;;        ;;; by instance
-;;        :desc "Mark next instance"     "f"         #'macrursors-mark-next-instance-of
-;;        :desc "Mark previous instance" "b"         #'macrursors-mark-previous-instance-of
-;;        ;;; by isearch
-;;        :desc "Mark all isearch"       "s"         #'macrursors-mark-from-isearch
-;;        :desc "Mark next isearch"      "s"         #'macrursors-mark-next-from-isearch
-;;        :desc "Mark previous isearch"  "r"         #'macrursors-mark-previous-from-isearch
-;;        ;;; by line
-;;        :desc "Mark next line"         "n"         #'macrursors-mark-next-line
-;;        :desc "Mark previous line"     "p"         #'macrursors-mark-previous-line
-;;        ;;; apply/quit
-;;        :desc "Apply changes"          "a"         #'macrursors-end
-;;        :desc "Unmark all"             "q"         #'macrursors-early-quit))
-
-;; (define-key macrursors-mark-map (kbd "C-;") #'macrursors-mark-all-lines-or-instances)
-;; (define-key macrursors-mark-map (kbd ";") #'macrursors-mark-all-lines-or-instances)
-;; (define-key macrursors-mark-map (kbd "l") #'macrursors-mark-all-lists)
-;; (define-key macrursors-mark-map (kbd "s") #'macrursors-mark-all-symbols)
-;; (define-key macrursors-mark-map (kbd "e") #'macrursors-mark-all-sexps)
-;; (define-key macrursors-mark-map (kbd "f") #'macrursors-mark-all-defuns)
-;; (define-key macrursors-mark-map (kbd "n") #'macrursors-mark-all-numbers)
-;; (define-key macrursors-mark-map (kbd ".") #'macrursors-mark-all-sentences)
-;; (define-key macrursors-mark-map (kbd "r") #'macrursors-mark-all-lines)
+(map! :leader
+      (:prefix-map ("m" . "multiple-cursors")
+       :desc "Apply"                       "RET"   #'macrursors-end
+       ;; Select / clear
+       :desc "Select"                      "SPC"   #'macrursors-select
+       :desc "Clear selection"             "g"     #'macrursors-select-clear
+       ;;; Mark-all
+       :desc "Mark all sentences"          "."     #'macrursors-mark-all-sentences
+       :desc "Mark all sexps"              "e"     #'macrursors-mark-all-sexps
+       :desc "Mark all defuns"             "f"     #'macrursors-mark-all-defuns
+       :desc "Mark all lines or instances" "l"     #'macrursors-mark-all-lines-or-instances
+       :desc "Mark all numbers"            "n"     #'macrursors-mark-all-numbers
+       :desc "Mark all symbols"            "s"     #'macrursors-mark-all-symbols
+       :desc "Mark all urls"               "u"     #'macrursors-mark-all-urls
+       :desc "Mark all words"              "w"     #'macrursors-mark-all-words))
