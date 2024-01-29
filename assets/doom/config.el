@@ -114,12 +114,12 @@
 ;;; EXTRA PACKAGES ;;;
 ;;;;;;;;;;;;;;;;;;;;;;
 
-(define-prefix-command 'macrursors-mark-map)
 (use-package! macrursors
   ;; pending: macrursors-mark-next-line macrursors-mark-previous-line
   :hook (macrursors-pre-finish-hook . company-mode)
         (macrursors-post-finish-hook . company-mode)
   :config
+  (define-prefix-command 'macrursors-mark-map)
   (setq macrursors-match-cursor-style nil))
 
 ;; (use-package! vertico-buffer :demand t
