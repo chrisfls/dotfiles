@@ -54,42 +54,6 @@ let
       i3-msg "[tiling con_id=\"__focused__\"] mark --toggle insert"
     '';
 
-  pop = pkgs.writeScript "i3-pop"
-    # remove window from tab container (REVIEW: still not quite working on vertical setups)
-    ''
-      while i3-msg "focus child"; do
-        :
-      done
-
-      eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].nodes[].focused)|"id=\(.nodes[].nodes[].nodes[]|select(.focused).id) self=\(.nodes[].nodes[]|select(.nodes[].focused).layout) parent=\(select(.nodes[].nodes[].nodes[].focused).layout)"')"
-
-      if [ "$self" = "tabbed" ]; then
-        if [ "$parent" = "splitv" ]; then
-          i3-msg "focus parent; split vertical; focus parent; mark swap; focus child; focus child; move container to mark swap; unmark swap"
-        elif [ "$parent" = "splith" ]; then
-          i3-msg "focus parent; split horizontal; focus parent; mark swap; focus child; focus child; move container to mark swap; unmark swap"
-        fi
-      fi
-    '';
-
-  pop-shift = pkgs.writeScript "i3-pop-shift"
-    # remove window from tab container in opposite orientation
-    ''
-      while i3-msg "focus child"; do
-        :
-      done
-
-      eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].nodes[].focused)|"id=\(.nodes[].nodes[].nodes[]|select(.focused).id) self=\(.nodes[].nodes[]|select(.nodes[].focused).layout) parent=\(select(.nodes[].nodes[].nodes[].focused).layout)"')"
-
-      if [ "$self" = "tabbed" ]; then
-        if [ "$parent" = "splitv" ]; then
-          i3-msg "focus parent; split horizontal; focus parent; mark swap; focus child; focus child; move container to mark swap; unmark swap"
-        elif [ "$parent" = "splith" ]; then
-          i3-msg "focus parent; split vertical; focus parent; mark swap; focus child; focus child; move container to mark swap; unmark swap"
-        fi
-      fi
-    '';
-
   presel-split = pkgs.writeScript "i3-presel-split"
     # preselect next split orientation
     ''
@@ -360,10 +324,6 @@ in
           bindsym $mod+i [tiling con_id="__focused__"] exec --no-startup-id ${insert}
           bindsym $mod+shift+i move container to mark insert; unmark insert
 
-          # [o] - pop / pop shift
-          bindsym $mod+o [tiling con_id="__focused__"] exec --no-startup-id ${pop}
-          bindsym $mod+shift+o [tiling con_id="__focused__"] exec --no-startup-id ${pop-shift}
-
           # [v] - scratchpad show
           bindsym $mod+v scratchpad show
           bindsym $mod+shift+v move scratchpad
@@ -388,17 +348,29 @@ in
           bindsym $mod+Up focus up; exec --no-startup-id ${cursor-wrap}
           bindsym $mod+Right focus right; exec --no-startup-id ${cursor-wrap}
 
-          # move with vim keys
+          # swap with vim keys
           bindsym $mod+shift+h mark swap; focus left; swap container with mark swap; [con_mark="swap"] focus; unmark swap; exec --no-startup-id ${cursor-wrap}
           bindsym $mod+shift+j mark swap; focus down; swap container with mark swap; [con_mark="swap"] focus; unmark swap; exec --no-startup-id ${cursor-wrap}
           bindsym $mod+shift+k mark swap; focus up; swap container with mark swap; [con_mark="swap"] focus; unmark swap; exec --no-startup-id ${cursor-wrap}
           bindsym $mod+shift+l mark swap; focus right; swap container with mark swap; [con_mark="swap"] focus; unmark swap; exec --no-startup-id ${cursor-wrap}
         
-          # move with arrow keys
+          # swap with arrow keys
           bindsym $mod+shift+Left mark swap; focus left; swap container with mark swap; [con_mark="swap"] focus; unmark swap; exec --no-startup-id ${cursor-wrap}
           bindsym $mod+shift+Down mark swap; focus down; swap container with mark swap; [con_mark="swap"] focus; unmark swap; exec --no-startup-id ${cursor-wrap}
           bindsym $mod+shift+Up mark swap; focus up; swap container with mark swap; [con_mark="swap"] focus; unmark swap; exec --no-startup-id ${cursor-wrap}
           bindsym $mod+shift+Right mark swap; focus right; swap container with mark swap; [con_mark="swap"] focus; unmark swap; exec --no-startup-id ${cursor-wrap}
+
+          # move with vim keys
+          bindsym $mod+$alt+h move left; exec --no-startup-id ${cursor-wrap}
+          bindsym $mod+$alt+j move down; exec --no-startup-id ${cursor-wrap}
+          bindsym $mod+$alt+k move up; exec --no-startup-id ${cursor-wrap}
+          bindsym $mod+$alt+l move right; exec --no-startup-id ${cursor-wrap}
+
+          # move with arrow keys keys; exec --no-startup-id ${cursor-wrap}
+          bindsym $mod+$alt+Left move left; exec --no-startup-id ${cursor-wrap}
+          bindsym $mod+$alt+Down move down; exec --no-startup-id ${cursor-wrap}
+          bindsym $mod+$alt+Up move up; exec --no-startup-id ${cursor-wrap}
+          bindsym $mod+$alt+Right move right; exec --no-startup-id ${cursor-wrap}
 
           # [p] - toggle focus parent / child container
           bindsym $mod+p focus parent
