@@ -55,5 +55,3 @@
 (package! deno-fmt)
 
 (package! guru-mode)
-
-(package! eglot :pin "db91d58374627a195b731a61bead9b4f84a7e4bc")
