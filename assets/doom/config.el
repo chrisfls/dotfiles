@@ -122,6 +122,9 @@
   (define-prefix-command 'macrursors-mark-map)
   (setq macrursors-match-cursor-style nil))
 
+(use-package! guru-mode
+  :hook (doom-after-modules-config . guru-global-mode))
+
 ;; (use-package! vertico-buffer :demand t
 ;;   :init
 ;;   (vertico-buffer-mode 1)
