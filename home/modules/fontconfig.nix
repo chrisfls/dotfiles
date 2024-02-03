@@ -29,13 +29,13 @@ in
     };
 
     hintstyle = lib.mkOption {
-      # REVIEW: enum
+      # TODO: enum
       type = lib.types.str;
       default = "hintslight";
     };
 
     rgba = lib.mkOption {
-      # REVIEW: enum
+      # TODO: enum
       type = lib.types.str;
       default = "rgb";
     };
@@ -46,13 +46,13 @@ in
     };
 
     lcdfilter = lib.mkOption {
-      # REVIEW: enum
+      # TODO: enum
       type = lib.types.str;
       default = "lcddefault";
     };
 
     weight = lib.mkOption {
-      # REVIEW: enum
+      # TODO: enum
       type = lib.types.str;
       default = "medium";
     };

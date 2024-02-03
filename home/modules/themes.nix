@@ -16,11 +16,10 @@ let
 
   fmtFont = { name, size, ... }:
     let
-      # REVIEW:
       font = lib.strings.concatStringsSep "," [
         name
         (builtins.toString size)
-        # REVIEW: parameterize the rest
+        # TODO: parameterize the rest
         "-1"
         "5"
         "50"
