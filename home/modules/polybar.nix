@@ -2,7 +2,7 @@
 let
   inherit (config.presets) archlinux;
   inherit (config.modules.polybar) enable;
-  inherit (specialArgs.color-schemes.material-dark-kde-alt) background foreground black redBright blueBright yellowBright;
+  inherit (specialArgs.color-schemes.material-dark-kde) background foreground black red blue yellow;
 
   toggle = pkgs.writeScript "toggle"
     ''
@@ -166,7 +166,7 @@ in
         index-sort="true"
         label-focused="%{O12}%icon%%{O2}"
         label-focused-background="${foreground}"
-        label-focused-foreground="${blueBright}"
+        label-focused-foreground="${blue}"
         label-focused-padding="0"
         label-mode=%{T2}%mode%%{T-}
         label-mode-background="${foreground}"
@@ -178,7 +178,7 @@ in
         label-unfocused-padding="0"
         label-urgent="%{O12}%icon%%{O2}"
         label-urgent-background="${foreground}"
-        label-urgent-foreground="${yellowBright}"
+        label-urgent-foreground="${yellow}"
         label-urgent-padding="0"
         label-visible="%{O12}%icon%%{O2}"
         label-visible-background="${foreground}"
@@ -212,11 +212,11 @@ in
         format-0-padding="0"
         format-1="%{T2}%{T-}%{O1}"
         format-1-background="${black}"
-        format-1-foreground="${redBright}"
+        format-1-foreground="${red}"
         format-1-padding="0"
         format-2="%{T2}%{T-}%{O1}"
         format-2-background="${black}"
-        format-2-foreground="${blueBright}"
+        format-2-foreground="${blue}"
         format-2-padding="0"
         hook-0=""
         hook-1=""
@@ -340,7 +340,7 @@ in
         format="<ramp-load> %{T2}%{T-} "
         format-background="${foreground}"
         format-foreground="${black}"
-        format-warn="%{F${redBright}}<ramp-load>%{F${redBright}} %{T2}%{T-} "
+        format-warn="%{F${red}}<ramp-load>%{F${red}} %{T2}%{T-} "
         format-warn-background="${foreground}"
         format-warn-foreground="${black}"
         interval="0.5"

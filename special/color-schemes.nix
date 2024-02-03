@@ -189,46 +189,9 @@ rec {
   # };
   # ported from
   # https://github.com/PapirusDevelopmentTeam/materia-kde/blob/master/konsole/MateriaDark.colorscheme
-  # material-dark-kde = {
-  #   background = "#121212";
-  #   foreground = "#DFDFDF";
-
-  #   black = "#474747";
-  #   red = "#F44336";
-  #   green = "#4CAF50";
-  #   yellow = "#FF9800";
-  #   blue = "#1A73E8";
-  #   magenta = "#9C27B0";
-  #   cyan = "#0097A7";
-  #   white = "#FFFFFF";
-
-  #   backgroundBright = "#1E1E1E";
-  #   foregroundBright = "#FFFFFF";
-
-  #   blackBright = "#474747";
-  #   redBright = "#F44336";
-  #   greenBright = "#4CAF50";
-  #   yellowBright = "#FF9800";
-  #   blueBright = "#1A73E8";
-  #   magentaBright = "#9C27B0";
-  #   cyanBright = "#0097A7";
-  #   whiteBright = "#FFFFFF";
-
-  #   backgroundDim = "#121212";
-  #   foregroundDim = "#DFDFDF";
-
-  #   blackDim = "#474747";
-  #   redDim = "#F44336";
-  #   greenDim = "#4CAF50";
-  #   yellowDim = "#FF9800";
-  #   blueDim = "#1A73E8";
-  #   magentaDim = "#9C27B0";
-  #   cyanDim = "#0097A7";
-  #   whiteDim = "#FFFFFF";
-  # };
-  material-dark-kde-alt = {
+  material-dark-kde = {
     background = "#121212";
-    foreground = "#E0E0E0";
+    foreground = "#DFDFDF";
 
     black = "#474747";
     red = "#F44336";
@@ -237,31 +200,31 @@ rec {
     blue = "#1A73E8";
     magenta = "#9C27B0";
     cyan = "#0097A7";
-    white = "#FAFAFA";
+    white = "#FFFFFF";
+
+    backgroundBright = "#1E1E1E";
+    foregroundBright = "#FFFFFF";
+
+    blackBright = "#474747";
+    redBright = "#F44336";
+    greenBright = "#4CAF50";
+    yellowBright = "#FF9800";
+    blueBright = "#1A73E8";
+    magentaBright = "#9C27B0";
+    cyanBright = "#0097A7";
+    whiteBright = "#FFFFFF";
 
     backgroundDim = "#121212";
-    foregroundDim = "#9E9E9E";
+    foregroundDim = "#DFDFDF";
 
-    blackDim = "#000000";
-    redDim = "#E53935";
-    greenDim = "#43A047";
-    yellowDim = "#FB8C00";
-    blueDim = "#1565C0";
-    magentaDim = "#8E24AA";
-    cyanDim = "#00838F";
-    whiteDim = "#F5F5F5";
-
-    backgroundBright = "#121212";
-    foregroundBright = "#F5F5F5";
-
-    blackBright = "#616161";
-    redBright = "#EF5350";
-    greenBright = "#66BB6A";
-    yellowBright = "#FFA726";
-    blueBright = "#2196F3";
-    magentaBright = "#AB47BC";
-    cyanBright = "#00ACC1";
-    whiteBright = "#FFFFFF";
+    blackDim = "#474747";
+    redDim = "#F44336";
+    greenDim = "#4CAF50";
+    yellowDim = "#FF9800";
+    blueDim = "#1A73E8";
+    magentaDim = "#9C27B0";
+    cyanDim = "#0097A7";
+    whiteDim = "#FFFFFF";
   };
   tomorrow-night-bright = {
     background = "#000000";
@@ -299,6 +262,40 @@ rec {
     magentaBright = "#b77ee0";
     cyanBright = "#54ced6";
     whiteBright = "#2a2a2a";
+  };
+  campbell = {
+    background = "#0C0C0C";
+    foreground = "#CCCCCC";
+    black = "#0C0C0C";
+    red = "#C50F1F";
+    green = "#13A10E";
+    yellow = "#C19C00";
+    blue = "#0037DA";
+    magenta = "#881798";
+    cyan = "#3A96DD";
+    white = "#CCCCCC";
+
+    backgroundDim = "#0C0C0C";
+    foregroundDim = "#CCCCCC";
+    blackDim = "#0C0C0C";
+    redDim = "#C50F1F";
+    greenDim = "#13A10E";
+    yellowDim = "#C19C00";
+    blueDim = "#0037DA";
+    magentaDim = "#881798";
+    cyanDim = "#3A96DD";
+    whiteDim = "#CCCCCC";
+
+    backgroundBright = "#0C0C0C";
+    foregroundBright = "#CCCCCC";
+    blackBright = "#767676";
+    redBright = "#E74856";
+    greenBright = "#16C60C";
+    yellowBright = "#F9F1A5";
+    blueBright = "#3B78FF";
+    magentaBright = "#B4009E";
+    cyanBright = "#61D6D6";
+    whiteBright = "#F2F2F2";
   };
 }
 /*
