@@ -196,7 +196,7 @@ in
 
     color-scheme = lib.mkOption {
       type = lib.types.attrs;
-      default = specialArgs.color-schemes.material-dark-kde;
+      default = specialArgs.color-schemes.hyper;
       description = "Color scheme for polybar and other apps.";
     };
   };
