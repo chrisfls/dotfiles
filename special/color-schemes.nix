@@ -76,7 +76,7 @@ rec {
     cyanBright = "#54ced6";
     whiteBright = "#2a2a2a";
   };
-  # reminds me too much of windows D:
+  # reminds me too much of windows, background not black
   campbell = {
     background = "#0C0C0C";
     foreground = "#CCCCCC";
@@ -111,7 +111,7 @@ rec {
     cyanBright = "#61D6D6";
     whiteBright = "#F2F2F2";
   };
-  # bad contrast with blues
+  # bad contrast with terrible blues
   xterm = {
     background = "#000000";
     foreground = "#ffffff";
@@ -146,7 +146,7 @@ rec {
     cyanBright = "#00ffff";
     whiteBright = "#ffffff";
   };
-  # solves issues with xterm, but is too bright
+  # solves issues with xterm, but is too bright, no contrast changes
   hyper = {
 
     # [colors.cursor]
@@ -220,6 +220,120 @@ rec {
     magentaBright = "#e500e5";
     cyanBright = "#00e5e5";
     whiteBright = "#e5e5e5";
+  };
+  # background not neutral, ok colors
+  github-dark-high-contrast = {
+    # Cursor colors
+    # text = '#0a0c10'
+    # cursor = '#f0f3f6'
+
+    background = "#0a0c10";
+    foreground = "#f0f3f6";
+    black = "#7a828e";
+    red = "#ff9492";
+    green = "#26cd4d";
+    yellow = "#f0b72f";
+    blue = "#71b7ff";
+    magenta = "#cb9eff";
+    cyan = "#39c5cf";
+    white = "#d9dee3";
+
+    backgroundDim = "#0a0c10";
+    foregroundDim = "#f0f3f6";
+    blackDim = "#7a828e";
+    redDim = "#ff9492";
+    greenDim = "#26cd4d";
+    yellowDim = "#f0b72f";
+    blueDim = "#71b7ff";
+    magentaDim = "#cb9eff";
+    cyanDim = "#39c5cf";
+    whiteDim = "#d9dee3";
+
+    backgroundBright = "#0a0c10";
+    foregroundBright = "#f0f3f6";
+    blackBright = "#9ea7b3";
+    redBright = "#ffb1af";
+    greenBright = "#4ae168";
+    yellowBright = "#f7c843";
+    blueBright = "#91cbff";
+    magentaBright = "#cb9eff";
+    cyanBright = "#39c5cf";
+    whiteBright = "#d9dee3";
+  };
+  popping-and-locking-black = {
+    background = "#000000";
+    foreground = "#F2E5BC";
+    black = "#1D2021";
+    red = "#CC241D";
+    green = "#98971A";
+    yellow = "#D79921";
+    blue = "#458588";
+    magenta = "#B16286";
+    cyan = "#689D6A";
+    white = "#A89984";
+
+    backgroundDim = "#000000";
+    foregroundDim = "#F2E5BC";
+    blackDim = "#1D2021";
+    redDim = "#CC241D";
+    greenDim = "#98971A";
+    yellowDim = "#D79921";
+    blueDim = "#458588";
+    magentaDim = "#B16286";
+    cyanDim = "#689D6A";
+    whiteDim = "#A89984";
+
+    backgroundBright = "#000000";
+    foregroundBright = "#F2E5BC";
+    blackBright = "#928374";
+    redBright = "#F42C3E";
+    greenBright = "#B8BB26";
+    yellowBright = "#FABD2F";
+    blueBright = "#99C6CA";
+    magentaBright = "#D3869B";
+    cyanBright = "#7EC16E";
+    whiteBright = "#EBDBB2";
+  };
+  vibrant-ink = {
+    # Colors (VibrantInk)
+    #   cursor:
+    #     cursor: "#ffffff"
+    #     text: "#000000"
+    #   selection:
+    #     background: "#b5d5ff"
+    #     text: "#000000"
+    background = "#000000";
+    foreground = "#ffffff";
+    black = "#878787";
+    blue = "#44b4cc";
+    cyan = "#44b4cc";
+    green = "#ccff04";
+    magenta = "#9933cc";
+    red = "#ff6600";
+    white = "#f5f5f5";
+    yellow = "#ffcc00";
+
+    backgroundDim = "#000000";
+    foregroundDim = "#ffffff";
+    blackDim = "#878787";
+    blueDim = "#44b4cc";
+    cyanDim = "#44b4cc";
+    greenDim = "#ccff04";
+    magentaDim = "#9933cc";
+    redDim = "#ff6600";
+    whiteDim = "#f5f5f5";
+    yellowDim = "#ffcc00";
+
+    backgroundBright = "#000000";
+    foregroundBright = "#ffffff";
+    blackBright = "#555555";
+    blueBright = "#0000ff";
+    cyanBright = "#00ffff";
+    greenBright = "#00ff00";
+    magentaBright = "#ff00ff";
+    redBright = "#ff0000";
+    whiteBright = "#e5e5e5";
+    yellowBright = "#ffff00";
   };
 }
 
