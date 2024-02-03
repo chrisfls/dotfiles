@@ -1,10 +1,10 @@
 # REVIEW: rename archlinux
 { config, lib, pkgs, ... }:
 let
-  enable = config.presets.non-nixos;
+  enable = config.presets.archlinux;
 in
 {
-  options.presets.non-nixos = lib.mkEnableOption "Enable non-nixos preset";
+  options.presets.archlinux = lib.mkEnableOption "Enable archlinux preset";
 
   config = (lib.mkIf enable {
     targets.genericLinux.enable = true;

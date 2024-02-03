@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.jamesdsp) enable presets;
 
   buildBase = path:
@@ -70,7 +70,7 @@ in
   };
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!non-nixos) [ pkgs.jamesdsp ];
+    home.packages = lib.mkIf (!archlinux) [ pkgs.jamesdsp ];
 
     pacman.packages = ["chaotic-aur/jamesdsp-git"];
 

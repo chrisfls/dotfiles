@@ -1,10 +1,10 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.brave) enable;
 
   pkg =
-    if config.presets.non-nixos then
+    if config.presets.archlinux then
       pkgs.writeShellScriptBin "brave"
         ''
           exec /usr/bin/brave --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"

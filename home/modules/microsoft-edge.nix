@@ -1,16 +1,16 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.microsoft-edge) enable;
 
   exe =
-    if non-nixos then
+    if archlinux then
       "microsoft-edge-stable"
     else
       "microsoft-edge";
 
   pkg =
-    if non-nixos then
+    if archlinux then
       pkgs.writeShellScriptBin exe
         ''
           exec /usr/bin/microsoft-edge-stable --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
@@ -33,7 +33,7 @@ in
     home.packages = [ pkg ];
     modules.i3wm.apps."shift+b" = exe;
 
-    xdg.desktopEntries = lib.mkIf non-nixos {
+    xdg.desktopEntries = lib.mkIf archlinux {
       "microsoft-edge" = {
         name = "Microsoft Edge";
         type = "Application";

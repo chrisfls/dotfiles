@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.dunst) enable;
   inherit (config.modules.scaling) scale xft;
   inherit (config.modules.themes) icon color-scheme;
@@ -11,7 +11,7 @@ in
   options.modules.dunst.enable = lib.mkEnableOption "Enable dunst module";
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!non-nixos) [ pkgs.dunst ];
+    home.packages = lib.mkIf (!archlinux) [ pkgs.dunst ];
 
     pacman.packages = [ "extra/dunst" ];
 

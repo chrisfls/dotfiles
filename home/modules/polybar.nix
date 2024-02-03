@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.polybar) enable;
   inherit (config.modules.themes.color-scheme) background foreground black redBright blueBright yellowBright;
 
@@ -69,7 +69,7 @@ in
   options.modules.polybar.enable = lib.mkEnableOption "Enable polybar module";
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!non-nixos) [
+    home.packages = lib.mkIf (!archlinux) [
       pkgs.polybarFull
       pkgs.bluez
       pkgs.dunst

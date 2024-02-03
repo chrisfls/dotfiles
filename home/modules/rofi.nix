@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.rofi) enable;
 
   settings = pkgs.fetchFromGitHub {
@@ -163,7 +163,7 @@ in
     };
 
     home.packages = [
-      (pkgs.extra.mkIfElse non-nixos
+      (pkgs.extra.mkIfElse archlinux
         (wrap "/usr/bin/rofi")
         (pkgs.symlinkJoin {
           name = "rofi";

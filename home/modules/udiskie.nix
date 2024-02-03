@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.udiskie) enable;
 in
 {
@@ -26,7 +26,7 @@ in
       };
 
       Service.ExecStart =
-        if non-nixos then "/usr/bin/udiskie"
+        if archlinux then "/usr/bin/udiskie"
         else "${pkgs.udiskie}/bin/udiskie";
 
       Install.WantedBy = [ "graphical-session.target" ];

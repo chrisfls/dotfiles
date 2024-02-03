@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
 
   ssot = specialArgs.ssot;
   eDP-1 = "00ffffffffffff0009e5030003000000011d0103800b11782f0000a057499b2610484f00000001010101010101010101010101010101c21a205030001050101032006cac00000018000000fc00545630383057554d2d4e4c300a000000fd003c3c101007000000000000000000000000000000000000000000000000000000c3";
@@ -28,7 +28,7 @@ let
 in
 {
   presets = {
-    non-nixos = true;
+    archlinux = true;
     development = true;
     desktop = true;
     work = true;
@@ -141,7 +141,7 @@ in
     upgrade-system
     upgrade-home
     cleanup
-  ] ++ (if non-nixos then [ ] else [ pkgs.feh ]);
+  ] ++ (if archlinux then [ ] else [ pkgs.feh ]);
 
   home.username = ssot.users.arch-rmxp.kress.username;
   home.homeDirectory = ssot.users.arch-rmxp.kress.home;

@@ -4,7 +4,7 @@ let
   inherit (pkgs.extra) qt mkIfElse;
 
   pkg =
-    if config.presets.non-nixos then
+    if config.presets.archlinux then
       pkgs.writeShellScriptBin "telegram-desktop"
         ''
           unset QT_SCREEN_SCALE_FACTORS

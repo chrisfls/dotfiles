@@ -8,7 +8,7 @@
     ../../../../home/fish
     ../../../../home/git.nix
     ../../../../home/homeage.nix
-    ../../../../home/non-nixos.nix
+    ../../../../home/archlinux.nix
     ../../../../home/paack
     ../../../../home/warp.nix
     ../../../../home/wsl
@@ -43,7 +43,7 @@
         ".npmrc" = "${config.home.username}/.npmrc.age";
       };
     };
-    non-nixos.enable = true;
+    archlinux.enable = true;
     paack.enable = true;
     warp.enable = true;
     wsl.enable = true;

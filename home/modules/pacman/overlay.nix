@@ -46,7 +46,7 @@ let
     };
 
   package =
-    if config.presets.non-nixos then
+    if config.presets.archlinux then
       usr-pkg
 
     else

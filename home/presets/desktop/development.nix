@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) desktop development non-nixos;
+  inherit (config.presets) desktop development archlinux;
   enable = desktop && development;
 in
 lib.mkIf enable {
@@ -16,7 +16,7 @@ lib.mkIf enable {
     # eval which I'll use
     pkgs.gitui
     pkgs.lazygit
-  ] ++ (if non-nixos then [ ] else [
+  ] ++ (if archlinux then [ ] else [
     pkgs.dbeaver
     pkgs.gittyup
     pkgs.github-desktop

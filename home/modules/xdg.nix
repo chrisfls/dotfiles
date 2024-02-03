@@ -1,13 +1,13 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.xdg) enable;
 in
 {
   options.modules.xdg.enable = lib.mkEnableOption "Enable xdg module";
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!non-nixos) [
+    home.packages = lib.mkIf (!archlinux) [
       pkgs.libsForQt5.kde-cli-tools
       pkgs.libsForQt5.xdg-desktop-portal-lxqt
       pkgs.xdg-desktop-portal

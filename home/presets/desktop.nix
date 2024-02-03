@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) desktop non-nixos;
+  inherit (config.presets) desktop archlinux;
 in
 {
   options.presets.desktop = lib.mkEnableOption "Enable desktop preset";
@@ -32,7 +32,7 @@ in
       xorg.enable = true;
     };
 
-    home.packages = lib.mkIf (!non-nixos) [
+    home.packages = lib.mkIf (!archlinux) [
       # ######## #### ## #
       # DESK ENV
       # ######## #### ## #

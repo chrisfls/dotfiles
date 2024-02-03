@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) desktop gamedev non-nixos;
+  inherit (config.presets) desktop gamedev archlinux;
   enable = desktop && gamedev;
 in
 {
@@ -9,7 +9,7 @@ in
   config = lib.mkIf enable {
     presets.development = true;
 
-    home.packages = lib.mkIf (!non-nixos) [
+    home.packages = lib.mkIf (!archlinux) [
       pkgs.aseprite
       pkgs.gimp
       pkgs.krita

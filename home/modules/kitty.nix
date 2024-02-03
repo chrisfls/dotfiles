@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.kitty) enable;
   inherit (config.modules.themes) color-scheme;
 in
@@ -8,7 +8,7 @@ in
   options.modules.kitty.enable = lib.mkEnableOption "Enable kitty module";
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!non-nixos) [ pkgs.kitty ];
+    home.packages = lib.mkIf (!archlinux) [ pkgs.kitty ];
 
     pacman.packages = [ "extra/kitty" ];
 

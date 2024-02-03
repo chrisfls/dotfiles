@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.xorg) enable xsession imported-variables window-manager;
 
   vars = lib.trivial.pipe imported-variables [
@@ -9,23 +9,23 @@ let
   ];
 
   xrdb =
-    if non-nixos then "/usr/bin/xrdb"
+    if archlinux then "/usr/bin/xrdb"
     else "${pkgs.xorg.xrdb}/bin/xrdb";
 
   setxkbmap =
-    if non-nixos then "/usr/bin/setxkbmap"
+    if archlinux then "/usr/bin/setxkbmap"
     else "${pkgs.xorg.setxkbmap}/bin/setxkbmap";
 
   xplugd =
-    if non-nixos then "/usr/bin/xplugd"
+    if archlinux then "/usr/bin/xplugd"
     else "${pkgs.xplugd}/bin/xplugd";
 
   xsetroot =
-    if non-nixos then "/usr/bin/xsetroot"
+    if archlinux then "/usr/bin/xsetroot"
     else "${pkgs.xorg.xsetroot}/bin/xsetroot";
 
   numlockx =
-    if non-nixos then "/usr/bin/numlockx"
+    if archlinux then "/usr/bin/numlockx"
     else "${pkgs.numlockx}/bin/numlockx";
 
   cursorPath = "${config.modules.themes.cursor.package}/share/icons/${lib.strings.escapeShellArg config.home.pointerCursor.name}/cursors/${
@@ -45,7 +45,7 @@ in
   };
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!non-nixos) [
+    home.packages = lib.mkIf (!archlinux) [
       pkgs.numlockx
       pkgs.xclip
       pkgs.xdotool
@@ -101,12 +101,12 @@ in
         "copyq"
         "nm-tray"
         "whatsapp-for-linux"
-        (if non-nixos then "vesktop --start-minimized" else "webcord --start-minimized")
+        (if archlinux then "vesktop --start-minimized" else "webcord --start-minimized")
       ];
 
       apps = {
         "c" = "io.github.Qalculate.qalculate-qt";
-        "d" = if non-nixos then "vesktop" else "webcord";
+        "d" = if archlinux then "vesktop" else "webcord";
         "e" = "pcmanfm-qt";
         "shift+c" = "com.github.hluk.copyq";
         "w" = "com.github.eneshecan.WhatsAppForLinux";
@@ -244,7 +244,7 @@ in
           Service = {
             Environment = "PATH=${config.home.profileDirectory}/bin";
             ExecStart =
-              if non-nixos then "/usr/bin/xsettingsd"
+              if archlinux then "/usr/bin/xsettingsd"
               else "${pkgs.xsettingsd}/bin/xsettingsd";
             Restart = "on-abort";
           };

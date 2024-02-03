@@ -6,7 +6,7 @@
     ./desktop/gamedev.nix
     ./desktop/work.nix
     ./development.nix
-    ./non-nixos.nix
+    ./archlinux.nix
     ./work.nix
   ];
 }

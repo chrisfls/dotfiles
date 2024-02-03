@@ -1,13 +1,13 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.fonts) enable;
 in
 {
   options.modules.fonts.enable = lib.mkEnableOption "Enable fonts module";
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!non-nixos) [
+    home.packages = lib.mkIf (!archlinux) [
         # good generic font
         pkgs.noto-fonts
 

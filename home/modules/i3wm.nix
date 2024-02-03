@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.i3wm)
     enable
     apps
@@ -120,11 +120,11 @@ let
   dark-gray = "#404040";
 
   i3 =
-    if non-nixos then "/usr/bin/i3"
+    if archlinux then "/usr/bin/i3"
     else "${pkgs.i3}/bin/i3";
 
   i3-msg =
-    if non-nixos then "/usr/bin/i3-msg"
+    if archlinux then "/usr/bin/i3-msg"
     else "${pkgs.i3}/bin/i3-msg";
 in
 {
@@ -150,7 +150,7 @@ in
   };
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!non-nixos) [ pkgs.i3 ];
+    home.packages = lib.mkIf (!archlinux) [ pkgs.i3 ];
 
     pacman.packages = [ "extra/i3-wm" ];
 

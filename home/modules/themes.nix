@@ -1,7 +1,7 @@
 # do not migrate to breeze, all qt5 apps will use gpu accel if you do
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) non-nixos;
+  inherit (config.presets) archlinux;
   inherit (config.modules.themes)
     cursor
     enable
@@ -208,7 +208,7 @@ in
       gtk.package
       cursor.package
       icon.package
-    ] ++ (if non-nixos then [ ] else [
+    ] ++ (if archlinux then [ ] else [
       pkgs.libsForQt5.qt5ct
       pkgs.qt6Packages.qt6ct
       pkgs.libsForQt5.qtstyleplugin-kvantum
@@ -233,10 +233,10 @@ in
         QT_QPA_PLATFORMTHEME = "qt5ct";
         QT_STYLE_OVERRIDE = "qt5ct-style";
         QT_PLUGIN_PATH =
-          if non-nixos then "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins"
+          if archlinux then "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins"
           else "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}" + (makeQtPath "qtPluginPrefix");
         QML2_IMPORT_PATH =
-          if non-nixos then "/usr/lib/qt/qml/:/usr/lib/qt6/qml"
+          if archlinux then "/usr/lib/qt/qml/:/usr/lib/qt6/qml"
           else "$QML2_IMPORT_PATH\${QML2_IMPORT_PATH:+:}" + (makeQtPath "qtQmlPrefix");
       };
 
@@ -269,7 +269,7 @@ in
         "qt5ct/qt5ct.conf".text = toQtct pkgs.qt5ct;
         "qt6ct/qt6ct.conf".text = toQtct pkgs.qt6ct;
       }
-      (lib.mkIf (non-nixos) {
+      (lib.mkIf (archlinux) {
         "Kvantum/${qt.kvantum-theme}".source = "${qt.package}/share/Kvantum/${qt.kvantum-theme}";
       })
     ];
