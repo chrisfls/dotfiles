@@ -29,7 +29,7 @@ in
         shell fish
 
         background ${background}
-        background_opacity 0.85
+        background_opacity 0.80
         foreground ${foreground}
 
         cursor ${foregroundBright}
