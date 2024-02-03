@@ -15,8 +15,6 @@ let
     calculator;
   inherit (builtins) concatStringsSep;
 
-  colors = config.modules.themes.color-scheme;
-
   focus = dir:
     "focus ${dir}; exec --no-startup-id ${cursor-wrap}";
 
@@ -119,6 +117,8 @@ let
   silver = "#C0C0C0";
   gray = "#808080";
   dark-gray = "#404040";
+  white = "#ffffff";
+  yellow = "#ffff00";
 
   i3 =
     if archlinux then "/usr/bin/i3"
@@ -167,12 +167,14 @@ in
 
           font pango:Noto Sans Mono Bold 10
 
-          client.background ${black}
-          client.focused ${colors.foreground} ${colors.black} ${colors.foreground} ${silver} ${gray}
-          client.focused_inactive ${colors.black} ${colors.background} ${colors.foreground} ${dark-gray} ${dark-gray}
-          client.placeholder ${black} ${black} ${black} ${black} ${black}
-          client.unfocused ${black} ${colors.background} ${colors.black} ${black} ${black}
-          client.urgent ${black} ${colors.background} ${colors.yellow} ${black} ${black}
+          #                       border       bg           txt          indicator    child_border
+          #                       ------------ ------------ ------------ ------------ ------------ 
+          client.background       ${black}
+          client.focused          ${white}     ${dark-gray} ${white}     ${silver}    ${gray}
+          client.focused_inactive ${gray}      ${black}     ${gray}      ${black}     ${black}
+          client.urgent           ${yellow}    ${black}     ${yellow}    ${black}     ${black}
+          client.unfocused        ${black}     ${black}     ${gray}      ${black}     ${black}
+          client.placeholder      ${black}     ${black}     ${black}     ${black}     ${black}
 
           default_border normal 1
           default_floating_border normal 1
