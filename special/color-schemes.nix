@@ -264,3 +264,124 @@ rec {
     whiteBright = "#FFFFFF";
   };
 }
+/*
+# Colors (Hyper)
+
+# Default colors
+[colors.primary]
+background = '#000000'
+foreground = '#ffffff'
+
+[colors.cursor]
+text = '#F81CE5'
+cursor = '#ffffff'
+
+# Normal colors
+[colors.normal]
+black   = '#000000'
+red     = '#fe0100'
+green   = '#33ff00'
+yellow  = '#feff00'
+blue    = '#0066ff'
+magenta = '#cc00ff'
+cyan    = '#00ffff'
+white   = '#d0d0d0'
+
+# Bright colors
+[colors.bright]
+black   = '#808080'
+red     = '#fe0100'
+green   = '#33ff00'
+yellow  = '#feff00'
+blue    = '#0066ff'
+magenta = '#cc00ff'
+cyan    = '#00ffff'
+white   = '#FFFFFF'
+
+# Colors (Tomorrow Night Bright)
+
+# Default colors
+[colors.primary]
+background = '#000000'
+foreground = '#eaeaea'
+
+# Normal colors
+[colors.normal]
+black   = '#000000'
+red     = '#d54e53'
+green   = '#b9ca4a'
+yellow  = '#e6c547'
+blue    = '#7aa6da'
+magenta = '#c397d8'
+cyan    = '#70c0ba'
+white   = '#424242'
+
+# Bright colors
+[colors.bright]
+black   = '#666666'
+red     = '#ff3334'
+green   = '#9ec400'
+yellow  = '#e7c547'
+blue    = '#7aa6da'
+magenta = '#b77ee0'
+cyan    = '#54ced6'
+white   = '#2a2a2a'
+
+# XTerm's default colors
+
+# Default colors
+[colors.primary]
+background = '#000000'
+foreground = '#ffffff'
+
+# Normal colors
+[colors.normal]
+black   = '#000000'
+red     = '#cd0000'
+green   = '#00cd00'
+yellow  = '#cdcd00'
+blue    = '#0000ee'
+magenta = '#cd00cd'
+cyan    = '#00cdcd'
+white   = '#e5e5e5'
+
+# Bright colors
+[colors.bright]
+black   = '#7f7f7f'
+red     = '#ff0000'
+green   = '#00ff00'
+yellow  = '#ffff00'
+blue    = '#5c5cff'
+magenta = '#ff00ff'
+cyan    = '#00ffff'
+white   = '#ffffff'
+
+# Colors (iTerm 2 default theme)
+
+# Default colors
+[colors.primary]
+background = '#101421'
+foreground = '#fffbf6'
+
+# Normal colors
+[colors.normal]
+black   = '#2e2e2e'
+red     = '#eb4129'
+green   = '#abe047'
+yellow  = '#f6c744'
+blue    = '#47a0f3'
+magenta = '#7b5cb0'
+cyan    = '#64dbed'
+white   = '#e5e9f0'
+
+# Bright colors
+[colors.bright]
+black   = '#565656'
+red     = '#ec5357'
+green   = '#c0e17d'
+yellow  = '#f9da6a'
+blue    = '#49a4f8'
+magenta = '#a47de9'
+cyan    = '#99faf2'
+white   = '#ffffff'
+*/
