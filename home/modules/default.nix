@@ -9,6 +9,7 @@
     ./copy-file.nix
     ./dunst.nix
     ./emacs.nix
+    ./feh.nix
     ./fontconfig.nix
     ./fonts.nix
     ./i3wm.nix

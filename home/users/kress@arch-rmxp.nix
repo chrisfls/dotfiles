@@ -40,10 +40,9 @@ in
     scaling = { enable = true; scale = 1.5; gtk = true; qt = true; };
   };
 
-  # TODO: move feh to own package
   pacman = {
     enable = true;
-    packages = [ "chaotic-aur/xorg-server-git" "extra/feh" ];
+    packages = [ "chaotic-aur/xorg-server-git" ];
   };
 
   nixpkgs.config.permittedInsecurePackages = [
@@ -114,25 +113,25 @@ in
       '';
   };
 
-  modules.i3wm = {
-    startup = [
-      "feh --bg-center \"${../../assets/wallpaper/23-12-29_2160p.png}\"  \"${../../assets/wallpaper/23-12-30_800p.png}\""
-    ];
-    extraConfig =
-      ''
-        workspace "0" output "eDP-1"
-        workspace "1" output "HDMI-1"
-        workspace "2" output "HDMI-1"
-        workspace "3" output "HDMI-1"
-        workspace "4" output "HDMI-1"
-        workspace "5" output "HDMI-1"
-        workspace "6" output "HDMI-1"
-        workspace "7" output "HDMI-1"
-        workspace "8" output "HDMI-1"
-        workspace "9" output "HDMI-1"
-        workspace "10" output "HDMI-1"
-      '';
-  };
+  modules.feh.wallpapers = [
+    ../../assets/wallpaper/23-12-29_2160p.png
+    ../../assets/wallpaper/23-12-30_800p.png
+  ];
+
+  modules.i3wm.extraConfig =
+    ''
+      workspace "0" output "eDP-1"
+      workspace "1" output "HDMI-1"
+      workspace "2" output "HDMI-1"
+      workspace "3" output "HDMI-1"
+      workspace "4" output "HDMI-1"
+      workspace "5" output "HDMI-1"
+      workspace "6" output "HDMI-1"
+      workspace "7" output "HDMI-1"
+      workspace "8" output "HDMI-1"
+      workspace "9" output "HDMI-1"
+      workspace "10" output "HDMI-1"
+    '';
 
   home.keyboard.layout = "br";
 

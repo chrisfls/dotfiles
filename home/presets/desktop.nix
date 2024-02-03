@@ -11,6 +11,7 @@ in
       autorandr.enable = true;
       brave.enable = true;
       dunst.enable = true;
+      feh.enable = true;
       fontconfig.enable = true;
       fonts.enable = true;
       i3wm.enable = true;
