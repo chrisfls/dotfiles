@@ -27,8 +27,10 @@
     ./scaling.nix
     ./screenshot.nix
     ./shell.nix
+    ./steam.nix
     ./telegram.nix
     ./themes.nix
+    ./udiskie.nix
     ./xdg.nix
     ./xorg.nix
   ];

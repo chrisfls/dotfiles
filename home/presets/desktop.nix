@@ -24,8 +24,10 @@ in
       rclone.enable = true;
       rofi.enable = true;
       screenshot.enable = true;
+      steam.enable = true;
       telegram.enable = true;
       themes.enable = true;
+      udiskie.enable = true;
       xdg.enable = true;
       xorg.enable = true;
     };
@@ -86,8 +88,6 @@ in
       # cli
       "extra/alsa-utils"
       "extra/pamixer"
-      "extra/udisks2"
-      "extra/udiskie"
 
       # dialogs
       "extra/kdialog"
@@ -127,29 +127,5 @@ in
     ];
 
     xdg.mimeApps.enable = true;
-
-    # TODO: move udiskie to own module
-    xdg.configFile."udiskie/config.yml".text =
-      ''
-        program_options:
-          automount: true
-          notify: true
-          tray: auto
-      '';
-
-    systemd.user.services.udiskie = {
-      Unit = {
-        Description = "udiskie mount daemon";
-        Requires = "tray.target";
-        After = [ "graphical-session-pre.target" "tray.target" ];
-        PartOf = [ "graphical-session.target" ];
-      };
-
-      Service.ExecStart =
-        if non-nixos then "/usr/bin/udiskie"
-        else "${pkgs.udiskie}/bin/udiskie";
-
-      Install.WantedBy = [ "graphical-session.target" ];
-    };
   };
 }
