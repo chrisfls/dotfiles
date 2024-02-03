@@ -417,40 +417,93 @@ rec {
     whiteBright = "#ffffff";
     yellowBright = "#f3d64e";
   };
+  # overall ok, terrible blues
+  iterm = {
+    # cursor:
+    #   cursor: '#e5e5e5'
+    #   text: '#000000'
+    # selection:
+    #   background: '#c1deff'
+    #   text: '#000000'
+    background = "#000000";
+    foreground = "#ffffff";
+    black = "#000000";
+    blue = "#2225c4";
+    cyan = "#00c5c7";
+    green = "#00c200";
+    magenta = "#ca30c7";
+    red = "#c91b00";
+    white = "#ffffff";
+    yellow = "#c7c400";
+
+    backgroundDim = "#000000";
+    foregroundDim = "#ffffff";
+    blackDim = "#000000";
+    blueDim = "#2225c4";
+    cyanDim = "#00c5c7";
+    greenDim = "#00c200";
+    magentaDim = "#ca30c7";
+    redDim = "#c91b00";
+    whiteDim = "#ffffff";
+    yellowDim = "#c7c400";
+
+    backgroundBright = "#000000";
+    foregroundBright = "#ffffff";
+    blackBright = "#686868";
+    blueBright = "#6871ff";
+    cyanBright = "#60fdff";
+    greenBright = "#5ffa68";
+    magentaBright = "#ff77ff";
+    redBright = "#ff6e67";
+    whiteBright = "#ffffff";
+    yellowBright = "#fffc67";
+  };
+  dark-pastel = {
+    # selection:
+    #   background: '#b5d5ff'
+    #   text: '#000000'
+    # cursor:
+    #   cursor: '#bbbbbb'
+    #   text: '#ffffff'
+
+    background = "#000000";
+    foreground = "#ffffff";
+    black = "#000000";
+    blue = "#5555ff";
+    cyan = "#55ffff";
+    green = "#55ff55";
+    magenta = "#ff55ff";
+    red = "#ff5555";
+    white = "#bbbbbb";
+    yellow = "#ffff55";
+
+    backgroundDim = "#000000";
+    foregroundDim = "#ffffff";
+    blackDim = "#000000";
+    blueDim = "#5555ff";
+    cyanDim = "#55ffff";
+    greenDim = "#55ff55";
+    magentaDim = "#ff55ff";
+    redDim = "#ff5555";
+    whiteDim = "#bbbbbb";
+    yellowDim = "#ffff55";
+
+    backgroundBright = "#000000";
+    foregroundBright = "#ffffff";
+    blackBright = "#555555";
+    blueBright = "#5555ff";
+    cyanBright = "#55ffff";
+    greenBright = "#55ff55";
+    magentaBright = "#ff55ff";
+    redBright = "#ff5555";
+    whiteBright = "#ffffff";
+    yellowBright = "#ffff55";
+  };
 }
 
 # PENDING STUFF
 
 /*
-  # Colors (iTerm2 Default)
-  colors:
-  bright:
-  black: '#686868'
-  blue: '#6871ff'
-  cyan: '#60fdff'
-  green: '#5ffa68'
-  magenta: '#ff77ff'
-  red: '#ff6e67'
-  white: '#ffffff'
-  yellow: '#fffc67'
-  cursor:
-  cursor: '#e5e5e5'
-  text: '#000000'
-  normal:
-  black: '#000000'
-  blue: '#2225c4'
-  cyan: '#00c5c7'
-  green: '#00c200'
-  magenta: '#ca30c7'
-  red: '#c91b00'
-  white: '#ffffff'
-  yellow: '#c7c400'
-  primary:
-  background: '#000000'
-  foreground: '#ffffff'
-  selection:
-  background: '#c1deff'
-  text: '#000000'
   # Colors (3024 Night)
   colors:
   bright:
@@ -508,35 +561,6 @@ rec {
   foreground: '#aaaaaa'
   selection:
   background: '#c1deff'
-  text: '#000000'
-  # Colors (Dark Pastel)
-  colors:
-  bright:
-  black: '#555555'
-  blue: '#5555ff'
-  cyan: '#55ffff'
-  green: '#55ff55'
-  magenta: '#ff55ff'
-  red: '#ff5555'
-  white: '#ffffff'
-  yellow: '#ffff55'
-  cursor:
-  cursor: '#bbbbbb'
-  text: '#ffffff'
-  normal:
-  black: '#000000'
-  blue: '#5555ff'
-  cyan: '#55ffff'
-  green: '#55ff55'
-  magenta: '#ff55ff'
-  red: '#ff5555'
-  white: '#bbbbbb'
-  yellow: '#ffff55'
-  primary:
-  background: '#000000'
-  foreground: '#ffffff'
-  selection:
-  background: '#b5d5ff'
   text: '#000000'
   # Colors (deep)
   colors:
@@ -596,35 +620,6 @@ rec {
   selection:
   background: '#cfeac6'
   text: '#000000'
-  # Colors (Konsolas)
-  colors:
-  bright:
-  black: '#7b716e'
-  blue: '#4b4bff'
-  cyan: '#69ffff'
-  green: '#5fff5f'
-  magenta: '#ff54ff'
-  red: '#ff4141'
-  white: '#ffffff'
-  yellow: '#ffff55'
-  cursor:
-  cursor: '#c8c1c1'
-  text: '#060606'
-  normal:
-  black: '#000000'
-  blue: '#2323a5'
-  cyan: '#42b0c8'
-  green: '#18b218'
-  magenta: '#ad1edc'
-  red: '#aa1717'
-  white: '#c8c1c1'
-  yellow: '#ebae1f'
-  primary:
-  background: '#060606'
-  foreground: '#c8c1c1'
-  selection:
-  background: '#060606'
-  text: '#c8c1c1'
   # Colors (Mathias)
   colors:
   bright:
@@ -683,35 +678,6 @@ rec {
   selection:
   background: '#ffffff'
   text: '#000000'
-  # Colors (PaulMillr)
-  colors:
-  bright:
-  black: '#666666'
-  blue: '#709aed'
-  cyan: '#7adff2'
-  green: '#66ff66'
-  magenta: '#db67e6'
-  red: '#ff0080'
-  white: '#ffffff'
-  yellow: '#f3d64e'
-  cursor:
-  cursor: '#4d4d4d'
-  text: '#ffffff'
-  normal:
-  black: '#2a2a2a'
-  blue: '#396bd7'
-  cyan: '#66ccff'
-  green: '#79ff0f'
-  magenta: '#b449be'
-  red: '#ff0000'
-  white: '#bbbbbb'
-  yellow: '#e7bf00'
-  primary:
-  background: '#000000'
-  foreground: '#f2f2f2'
-  selection:
-  background: '#414141'
-  text: '#ffffff'
   # Colors (Pro)
   colors:
   bright:
@@ -800,8 +766,6 @@ rec {
   background: '#c1deff'
   text: '#000000'
 */
-
-
 
 # OLD STUFF, OUT OF STANDARD:
 /*
