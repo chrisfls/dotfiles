@@ -263,125 +263,191 @@ rec {
     cyanBright = "#00ACC1";
     whiteBright = "#FFFFFF";
   };
+  tomorrow-night-bright = {
+    background = "#000000";
+    foreground = "#eaeaea";
+
+    black = "#000000";
+    red = "#d54e53";
+    green = "#b9ca4a";
+    yellow = "#e6c547";
+    blue = "#7aa6da";
+    magenta = "#c397d8";
+    cyan = "#70c0ba";
+    white = "#424242";
+
+    backgroundDim = "#000000";
+    foregroundDim = "#eaeaea";
+
+    blackDim = "#000000";
+    redDim = "#d54e53";
+    greenDim = "#b9ca4a";
+    yellowDim = "#e6c547";
+    blueDim = "#7aa6da";
+    magentaDim = "#c397d8";
+    cyanDim = "#70c0ba";
+    whiteDim = "#424242";
+
+    backgroundBright = "#000000";
+    foregroundBright = "#eaeaea";
+
+    blackBright = "#666666";
+    redBright = "#ff3334";
+    greenBright = "#9ec400";
+    yellowBright = "#e7c547";
+    blueBright = "#7aa6da";
+    magentaBright = "#b77ee0";
+    cyanBright = "#54ced6";
+    whiteBright = "#2a2a2a";
+  };
 }
 /*
-# Colors (Hyper)
+  # Colors (Tomorrow Night Bright) ------- 1st solves all issues, but too basic
 
-# Default colors
-[colors.primary]
-background = '#000000'
-foreground = '#ffffff'
+  # Default colors
+  [colors.primary]
+  background = '#000000'
+  foreground = '#eaeaea'
 
-[colors.cursor]
-text = '#F81CE5'
-cursor = '#ffffff'
+  # Normal colors
+  [colors.normal]
+  black   = '#000000'
+  red     = '#d54e53'
+  green   = '#b9ca4a'
+  yellow  = '#e6c547'
+  blue    = '#7aa6da'
+  magenta = '#c397d8'
+  cyan    = '#70c0ba'
+  white   = '#424242'
 
-# Normal colors
-[colors.normal]
-black   = '#000000'
-red     = '#fe0100'
-green   = '#33ff00'
-yellow  = '#feff00'
-blue    = '#0066ff'
-magenta = '#cc00ff'
-cyan    = '#00ffff'
-white   = '#d0d0d0'
+  # Bright colors
+  [colors.bright]
+  black   = '#666666'
+  red     = '#ff3334'
+  green   = '#9ec400'
+  yellow  = '#e7c547'
+  blue    = '#7aa6da'
+  magenta = '#b77ee0'
+  cyan    = '#54ced6'
+  white   = '#2a2a2a'
 
-# Bright colors
-[colors.bright]
-black   = '#808080'
-red     = '#fe0100'
-green   = '#33ff00'
-yellow  = '#feff00'
-blue    = '#0066ff'
-magenta = '#cc00ff'
-cyan    = '#00ffff'
-white   = '#FFFFFF'
+  # XTerm's default colors ----------------------------- 2nd standard, but ugly 
 
-# Colors (Tomorrow Night Bright)
+  # Default colors
+  [colors.primary]
+  background = '#000000'
+  foreground = '#ffffff'
 
-# Default colors
-[colors.primary]
-background = '#000000'
-foreground = '#eaeaea'
+  # Normal colors
+  [colors.normal]
+  black   = '#000000'
+  red     = '#cd0000'
+  green   = '#00cd00'
+  yellow  = '#cdcd00'
+  blue    = '#0000ee'
+  magenta = '#cd00cd'
+  cyan    = '#00cdcd'
+  white   = '#e5e5e5'
 
-# Normal colors
-[colors.normal]
-black   = '#000000'
-red     = '#d54e53'
-green   = '#b9ca4a'
-yellow  = '#e6c547'
-blue    = '#7aa6da'
-magenta = '#c397d8'
-cyan    = '#70c0ba'
-white   = '#424242'
+  # Bright colors
+  [colors.bright]
+  black   = '#7f7f7f'
+  red     = '#ff0000'
+  green   = '#00ff00'
+  yellow  = '#ffff00'
+  blue    = '#5c5cff'
+  magenta = '#ff00ff'
+  cyan    = '#00ffff'
+  white   = '#ffffff'
 
-# Bright colors
-[colors.bright]
-black   = '#666666'
-red     = '#ff3334'
-green   = '#9ec400'
-yellow  = '#e7c547'
-blue    = '#7aa6da'
-magenta = '#b77ee0'
-cyan    = '#54ced6'
-white   = '#2a2a2a'
+  # Colors (Hyper) --------------- 3rd too bright, contrast issues of fg/colors
 
-# XTerm's default colors
+  # Default colors
+  [colors.primary]
+  background = '#000000'
+  foreground = '#ffffff'
 
-# Default colors
-[colors.primary]
-background = '#000000'
-foreground = '#ffffff'
+  [colors.cursor]
+  text = '#F81CE5'
+  cursor = '#ffffff'
 
-# Normal colors
-[colors.normal]
-black   = '#000000'
-red     = '#cd0000'
-green   = '#00cd00'
-yellow  = '#cdcd00'
-blue    = '#0000ee'
-magenta = '#cd00cd'
-cyan    = '#00cdcd'
-white   = '#e5e5e5'
+  # Normal colors
+  [colors.normal]
+  black   = '#000000'
+  red     = '#fe0100'
+  green   = '#33ff00'
+  yellow  = '#feff00'
+  blue    = '#0066ff'
+  magenta = '#cc00ff'
+  cyan    = '#00ffff'
+  white   = '#d0d0d0'
 
-# Bright colors
-[colors.bright]
-black   = '#7f7f7f'
-red     = '#ff0000'
-green   = '#00ff00'
-yellow  = '#ffff00'
-blue    = '#5c5cff'
-magenta = '#ff00ff'
-cyan    = '#00ffff'
-white   = '#ffffff'
+  # Bright colors
+  [colors.bright]
+  black   = '#808080'
+  red     = '#fe0100'
+  green   = '#33ff00'
+  yellow  = '#feff00'
+  blue    = '#0066ff'
+  magenta = '#cc00ff'
+  cyan    = '#00ffff'
+  white   = '#FFFFFF'
 
-# Colors (iTerm 2 default theme)
+  # Campbell (Windows 10 default) ----------------- 4th not black bg, colors ok
 
-# Default colors
-[colors.primary]
-background = '#101421'
-foreground = '#fffbf6'
+  # Default colors
+  [colors.primary]
+  background = '#0c0c0c'
+  foreground = '#cccccc'
 
-# Normal colors
-[colors.normal]
-black   = '#2e2e2e'
-red     = '#eb4129'
-green   = '#abe047'
-yellow  = '#f6c744'
-blue    = '#47a0f3'
-magenta = '#7b5cb0'
-cyan    = '#64dbed'
-white   = '#e5e9f0'
+  # Normal colors
+  [colors.normal]
+  black      = '#0c0c0c'
+  red        = '#c50f1f'
+  green      = '#13a10e'
+  yellow     = '#c19c00'
+  blue       = '#0037da'
+  magenta    = '#881798'
+  cyan       = '#3a96dd'
+  white      = '#cccccc'
 
-# Bright colors
-[colors.bright]
-black   = '#565656'
-red     = '#ec5357'
-green   = '#c0e17d'
-yellow  = '#f9da6a'
-blue    = '#49a4f8'
-magenta = '#a47de9'
-cyan    = '#99faf2'
-white   = '#ffffff'
+  # Bright colors
+  [colors.bright]
+  black      = '#767676'
+  red        = '#e74856'
+  green      = '#16c60c'
+  yellow     = '#f9f1a5'
+  blue       = '#3b78ff'
+  magenta    = '#b4009e'
+  cyan       = '#61d6d6'
+  white      = '#f2f2f2'
+
+  # Colors (Terminal.app) ----------------------------- 5th ok but contrast low
+
+  # Default colors
+  [colors.primary]
+  background = '#000000'
+  foreground = '#b6b6b6'
+
+  # Normal colors
+  [colors.normal]
+  black   = '#000000'
+  red     = '#990000'
+  green   = '#00a600'
+  yellow  = '#999900'
+  blue    = '#0000b2'
+  magenta = '#b200b2'
+  cyan    = '#00a6b2'
+  white   = '#bfbfbf'
+
+  # Bright colors
+  [colors.bright]
+  black   = '#666666'
+  red     = '#e50000'
+  green   = '#00d900'
+  yellow  = '#e5e500'
+  blue    = '#0000ff'
+  magenta = '#e500e5'
+  cyan    = '#00e5e5'
+  white   = '#e5e5e5'
 */
