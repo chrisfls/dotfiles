@@ -1,4 +1,3 @@
-# REVIEW: rename archlinux
 { config, lib, pkgs, ... }:
 let
   enable = config.presets.archlinux;
