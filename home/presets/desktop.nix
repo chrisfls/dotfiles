@@ -127,6 +127,29 @@ in
       "chaotic-aur/whatsapp-for-linux"
     ];
 
-    xdg.mimeApps.enable = true;
+    modules.i3wm = {
+      startup = [
+        "copyq"
+        "nm-tray"
+        "whatsapp-for-linux"
+        (if archlinux then "vesktop --start-minimized" else "webcord --start-minimized")
+      ];
+
+      apps = {
+        "c" = "io.github.Qalculate.qalculate-qt";
+        "d" = if archlinux then "vesktop" else "webcord";
+        "e" = "pcmanfm-qt";
+        "shift+c" = "com.github.hluk.copyq";
+        "w" = "com.github.eneshecan.WhatsAppForLinux";
+      };
+
+      extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
+    };
+
+    xdg.configFile."kwalletrc".text =
+      ''
+        [Wallet]
+        Enabled=false
+      '';
   };
 }

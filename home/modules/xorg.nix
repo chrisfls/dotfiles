@@ -95,25 +95,6 @@ in
         '';
     };
 
-    # TODO: move to desktop preset
-    modules.i3wm = {
-      startup = [
-        "copyq"
-        "nm-tray"
-        "whatsapp-for-linux"
-        (if archlinux then "vesktop --start-minimized" else "webcord --start-minimized")
-      ];
-
-      apps = {
-        "c" = "io.github.Qalculate.qalculate-qt";
-        "d" = if archlinux then "vesktop" else "webcord";
-        "e" = "pcmanfm-qt";
-        "shift+c" = "com.github.hluk.copyq";
-        "w" = "com.github.eneshecan.WhatsAppForLinux";
-      };
-
-      extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
-    };
 
     # TODO: move xinitrc/xsession/xprofile to own module
     home.file = {

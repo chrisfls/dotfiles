@@ -47,13 +47,6 @@ in
       };
       userDirs.enable = true;
       configFile = {
-        # TODO: move to desktop
-        "kwalletrc".text =
-          ''
-            [Wallet]
-            Enabled=false
-          '';
-
         "xdg-desktop-portal/portals.conf".text =
           ''
             [preferred]
