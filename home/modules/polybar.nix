@@ -291,7 +291,7 @@ in
         format-unmounted="<label-unmounted> %{T2}󰋊%{T-} "
         format-unmounted-background="${black}"
         format-unmounted-foreground="${foreground}"
-        format-warn="<label-warn>"
+        format-warn="<label-warn> %{T2}󰋊%{T-} "
         format-warn-background="${black}"
         format-warn-foreground="${foreground}"
         label-mounted="%free%"
