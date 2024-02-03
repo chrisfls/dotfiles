@@ -186,41 +186,44 @@ rec {
     cyanBright = "#00ffff";
     whiteBright = "#FFFFFF";
   };
+  # too dim, ugly blues
+  terminal-app = {
+    background = "#000000";
+    foreground = "#b6b6b6";
+    black = "#000000";
+    red = "#990000";
+    green = "#00a600";
+    yellow = "#999900";
+    blue = "#0000b2";
+    magenta = "#b200b2";
+    cyan = "#00a6b2";
+    white = "#bfbfbf";
+
+    backgroundDim = "#000000";
+    foregroundDim = "#b6b6b6";
+    blackDim = "#000000";
+    redDim = "#990000";
+    greenDim = "#00a600";
+    yellowDim = "#999900";
+    blueDim = "#0000b2";
+    magentaDim = "#b200b2";
+    cyanDim = "#00a6b2";
+    whiteDim = "#bfbfbf";
+
+    backgroundBright = "#000000";
+    foregroundBright = "#b6b6b6";
+    blackBright = "#666666";
+    redBright = "#e50000";
+    greenBright = "#00d900";
+    yellowBright = "#e5e500";
+    blueBright = "#0000ff";
+    magentaBright = "#e500e5";
+    cyanBright = "#00e5e5";
+    whiteBright = "#e5e5e5";
+  };
 }
 
-
-/*
-  # Colors (Terminal.app) ----------------------------- 5th ok but contrast low
-
-  # Default colors
-  [colors.primary]
-  background = "#000000";
-  foreground = "#b6b6b6";
-
-  # Normal colors
-  [colors.normal]
-  black   = "#000000";
-  red     = "#990000";
-  green   = "#00a600";
-  yellow  = "#999900";
-  blue    = "#0000b2";
-  magenta = "#b200b2";
-  cyan    = "#00a6b2";
-  white   = "#bfbfbf";
-
-  # Bright colors
-  [colors.bright]
-  black   = "#666666";
-  red     = "#e50000";
-  green   = "#00d900";
-  yellow  = "#e5e500";
-  blue    = "#0000ff";
-  magenta = "#e500e5";
-  cyan    = "#00e5e5";
-  white   = "#e5e5e5";
-*/
-
-
+# OLD STUFF, OUT OF STANDARD:
 /*
   # ported from 
   # https://github.com/atomcorp/themes/blob/master/themes.json
