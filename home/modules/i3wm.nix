@@ -11,7 +11,8 @@ let
     power-menu
     run
     screenshot
-    terminal;
+    terminal
+    calculator;
   inherit (builtins) concatStringsSep;
 
   colors = config.modules.themes.color-scheme;
@@ -136,6 +137,7 @@ in
     run = lib.mkOption { type = lib.types.str; default = "rofi-run"; };
     power-menu = lib.mkOption { type = lib.types.str; default = "rofi-power-menu"; };
     window-list = lib.mkOption { type = lib.types.str; default = "rofi-windows"; };
+    calculator = lib.mkOption { type = lib.types.str; default = "rofi-calc"; };
 
     screenshot = {
       copy = lib.mkOption { type = lib.types.str; default = "screenshot-copy"; };
@@ -255,8 +257,8 @@ in
           bindsym $mod+semicolon exec --no-startup-id "${terminal}"
 
           # open rofi calculator
-          bindsym $mod+shift+BackSpace exec --no-startup-id "rofi-calc"
-          bindsym $mod+shift+semicolon exec --no-startup-id "rofi-calc"
+          bindsym $mod+shift+BackSpace exec --no-startup-id "${calculator}"
+          bindsym $mod+shift+semicolon exec --no-startup-id "${calculator}"
 
           # power menu
           bindsym $mod+q exec --no-startup-id "${power-menu}"

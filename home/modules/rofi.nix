@@ -59,7 +59,8 @@ let
     '';
 
   # polybar main menu
-  rofi-menu-pkg = pkgs.writeShellScriptBin "rofi-menu" "exec rofi -show drun -theme \"${theme}\"";
+  rofi-menu-pkg = pkgs.writeShellScriptBin "rofi-menu"
+    "exec rofi -show drun -theme \"${theme}\"";
 
   # polybar session menu
   rofi-power-menu = pkgs.writeScript "rofi-power-menu"
@@ -100,7 +101,7 @@ let
 
       # perform
       run_cmd() {
-      	if [[ "$(echo "$yes\n$no" | confirm_cmd)" == "$yes" ]]; then
+      	if [[ "$(echo -e "$yes\n$no" | confirm_cmd)" == "$yes" ]]; then
       		if [[ $1 == '--shutdown' ]]; then
       			systemctl poweroff
       		elif [[ $1 == '--reboot' ]]; then
@@ -118,7 +119,7 @@ let
       }
 
       # actions
-      case "$(echo "$suspend\n$logout\n$reboot\n$shutdown" | rofi_cmd)" in
+      case "$(echo -e "$suspend\n$logout\n$reboot\n$shutdown" | rofi_cmd)" in
         $shutdown)
           run_cmd --shutdown
           ;;
@@ -135,31 +136,23 @@ let
     '';
 
   # run menu
-  rofi-run = pkgs.writeScript "rofi-run" "exec rofi -show run -theme \"${theme}\"";
+  rofi-run = pkgs.writeScript "rofi-run"
+    "exec rofi -show run -theme \"${theme}\"";
 
   # global windows
-  rofi-windows = pkgs.writeScript "rofi-windows" "exec rofi -modi window -show window -theme \"${theme}\"";
+  rofi-windows = pkgs.writeScript "rofi-windows"
+    "exec rofi -modi window -show window -theme \"${theme}\"";
 in
 {
   options.modules.rofi.enable = lib.mkEnableOption "Enable rofi module";
 
   config = lib.mkIf enable {
-    xsession.windowManager.i3.config = {
-      menu = "exec --no-startup-id \"${rofi-menu-pkg}/bin/rofi-menu\"";
-      keybindings = {
-        # shift for main menu
-        "${mod}+Shift+Return" = "exec --no-startup-id \"${rofi-run}\"";
-
-        # shift for terminal
-        "${mod}+Shift+BackSpace" = "exec --no-startup-id \"${rofi-calc}\"";
-        "${mod}+Shift+semicolon" = "exec --no-startup-id \"${rofi-calc}\"";
-
-        # power menu
-        "${mod}+q" = "exec --no-startup-id \"${rofi-power-menu}\"";
-
-        # jump to window
-        "${mod}+w" = "exec --no-startup-id \"${rofi-windows}\"";
-      };
+    modules.i3wm = {
+      run = toString rofi-run;
+      menu = "${rofi-menu-pkg}/bin/rofi-menu";
+      power-menu = toString rofi-power-menu;
+      window-list = toString rofi-windows;
+      calculator = toString rofi-calc;
     };
 
     home.packages = [
