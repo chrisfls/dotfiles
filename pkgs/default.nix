@@ -7,7 +7,7 @@ in
     attrsets = import ./attrsets.nix;
     lpm = callPackage ./lpm.nix;
     mkIfElse =  import ./mk-if-else.nix final;
-    qt = import ./qt.nix prev;
+    qt = import ./qt.nix final;
     string = import ./string.nix;
   };
 
