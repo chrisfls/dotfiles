@@ -335,7 +335,473 @@ rec {
     whiteBright = "#e5e5e5";
     yellowBright = "#ffff00";
   };
+  konsolas = {
+    # cursor:
+    #   cursor: '#c8c1c1'
+    #   text: '#060606'
+    # selection:
+    #   background: '#060606'
+    #   text: '#c8c1c1'
+
+    background = "#060606";
+    foreground = "#c8c1c1";
+    black = "#000000";
+    blue = "#2323a5";
+    cyan = "#42b0c8";
+    green = "#18b218";
+    magenta = "#ad1edc";
+    red = "#aa1717";
+    white = "#c8c1c1";
+    yellow = "#ebae1f";
+
+    backgroundDim = "#060606";
+    foregroundDim = "#c8c1c1";
+    blackDim = "#000000";
+    blueDim = "#2323a5";
+    cyanDim = "#42b0c8";
+    greenDim = "#18b218";
+    magentaDim = "#ad1edc";
+    redDim = "#aa1717";
+    whiteDim = "#c8c1c1";
+    yellowDim = "#ebae1f";
+
+    backgroundBright = "#060606";
+    foregroundBright = "#c8c1c1";
+    blackBright = "#7b716e";
+    blueBright = "#4b4bff";
+    cyanBright = "#69ffff";
+    greenBright = "#5fff5f";
+    magentaBright = "#ff54ff";
+    redBright = "#ff4141";
+    whiteBright = "#ffffff";
+    yellowBright = "#ffff55";
+  };
+  paul-millr = {
+    # cursor:
+    #   cursor = "#4d4d4d";
+    #   text = "#ffffff";
+    # selection:
+    #   background = "#414141";
+    #   text = "#ffffff";
+
+    background = "#000000";
+    foreground = "#f2f2f2";
+    black = "#2a2a2a";
+    blue = "#396bd7";
+    cyan = "#66ccff";
+    green = "#79ff0f";
+    magenta = "#b449be";
+    red = "#ff0000";
+    white = "#bbbbbb";
+    yellow = "#e7bf00";
+
+    backgroundDim = "#000000";
+    foregroundDim = "#f2f2f2";
+    blackDim = "#2a2a2a";
+    blueDim = "#396bd7";
+    cyanDim = "#66ccff";
+    greenDim = "#79ff0f";
+    magentaDim = "#b449be";
+    redDim = "#ff0000";
+    whiteDim = "#bbbbbb";
+    yellowDim = "#e7bf00";
+
+    backgroundBright = "#000000";
+    foregroundBright = "#f2f2f2";
+    blackBright = "#666666";
+    blueBright = "#709aed";
+    cyanBright = "#7adff2";
+    greenBright = "#66ff66";
+    magentaBright = "#db67e6";
+    redBright = "#ff0080";
+    whiteBright = "#ffffff";
+    yellowBright = "#f3d64e";
+  };
 }
+
+# PENDING STUFF
+
+/*
+  # Colors (iTerm2 Default)
+  colors:
+  bright:
+  black: '#686868'
+  blue: '#6871ff'
+  cyan: '#60fdff'
+  green: '#5ffa68'
+  magenta: '#ff77ff'
+  red: '#ff6e67'
+  white: '#ffffff'
+  yellow: '#fffc67'
+  cursor:
+  cursor: '#e5e5e5'
+  text: '#000000'
+  normal:
+  black: '#000000'
+  blue: '#2225c4'
+  cyan: '#00c5c7'
+  green: '#00c200'
+  magenta: '#ca30c7'
+  red: '#c91b00'
+  white: '#ffffff'
+  yellow: '#c7c400'
+  primary:
+  background: '#000000'
+  foreground: '#ffffff'
+  selection:
+  background: '#c1deff'
+  text: '#000000'
+  # Colors (3024 Night)
+  colors:
+  bright:
+  black: '#5c5855'
+  blue: '#807d7c'
+  cyan: '#cdab53'
+  green: '#3a3432'
+  magenta: '#d6d5d4'
+  red: '#e8bbd0'
+  white: '#f7f7f7'
+  yellow: '#4a4543'
+  cursor:
+  cursor: '#a5a2a2'
+  text: '#090300'
+  normal:
+  black: '#090300'
+  blue: '#01a0e4'
+  cyan: '#b5e4f4'
+  green: '#01a252'
+  magenta: '#a16a94'
+  red: '#db2d20'
+  white: '#a5a2a2'
+  yellow: '#fded02'
+  primary:
+  background: '#090300'
+  foreground: '#a5a2a2'
+  selection:
+  background: '#4a4543'
+  text: '#a5a2a2'
+  # Colors (CGA)
+  colors:
+  bright:
+  black: '#555555'
+  blue: '#5555ff'
+  cyan: '#55ffff'
+  green: '#55ff55'
+  magenta: '#ff55ff'
+  red: '#ff5555'
+  white: '#ffffff'
+  yellow: '#ffff55'
+  cursor:
+  cursor: '#b8b8b8'
+  text: '#ffffff'
+  normal:
+  black: '#000000'
+  blue: '#0000aa'
+  cyan: '#00aaaa'
+  green: '#00aa00'
+  magenta: '#aa00aa'
+  red: '#aa0000'
+  white: '#aaaaaa'
+  yellow: '#aa5500'
+  primary:
+  background: '#000000'
+  foreground: '#aaaaaa'
+  selection:
+  background: '#c1deff'
+  text: '#000000'
+  # Colors (Dark Pastel)
+  colors:
+  bright:
+  black: '#555555'
+  blue: '#5555ff'
+  cyan: '#55ffff'
+  green: '#55ff55'
+  magenta: '#ff55ff'
+  red: '#ff5555'
+  white: '#ffffff'
+  yellow: '#ffff55'
+  cursor:
+  cursor: '#bbbbbb'
+  text: '#ffffff'
+  normal:
+  black: '#000000'
+  blue: '#5555ff'
+  cyan: '#55ffff'
+  green: '#55ff55'
+  magenta: '#ff55ff'
+  red: '#ff5555'
+  white: '#bbbbbb'
+  yellow: '#ffff55'
+  primary:
+  background: '#000000'
+  foreground: '#ffffff'
+  selection:
+  background: '#b5d5ff'
+  text: '#000000'
+  # Colors (deep)
+  colors:
+  bright:
+  black: '#535353'
+  blue: '#9fa9ff'
+  cyan: '#8df9ff'
+  green: '#22ff18'
+  magenta: '#e09aff'
+  red: '#fb0007'
+  white: '#ffffff'
+  yellow: '#fedc2b'
+  cursor:
+  cursor: '#d0d0d0'
+  text: '#151515'
+  normal:
+  black: '#000000'
+  blue: '#5665ff'
+  cyan: '#50d2da'
+  green: '#1cd915'
+  magenta: '#b052da'
+  red: '#d70005'
+  white: '#e0e0e0'
+  yellow: '#d9bd26'
+  primary:
+  background: '#090909'
+  foreground: '#cdcdcd'
+  selection:
+  background: '#780002'
+  text: '#ececec'
+  # Colors (Firefly Traditional)
+  colors:
+  bright:
+  black: '#828282'
+  blue: '#838dff'
+  cyan: '#29f0f0'
+  green: '#2ee720'
+  magenta: '#ff5cfe'
+  red: '#ff3b1e'
+  white: '#ebebeb'
+  yellow: '#ecec16'
+  cursor:
+  cursor: '#00f900'
+  text: '#ffffff'
+  normal:
+  black: '#000000'
+  blue: '#5a63ff'
+  cyan: '#33bbc7'
+  green: '#33bc26'
+  magenta: '#d53ad2'
+  red: '#c23720'
+  white: '#cccccc'
+  yellow: '#afad24'
+  primary:
+  background: '#000000'
+  foreground: '#f5f5f5'
+  selection:
+  background: '#cfeac6'
+  text: '#000000'
+  # Colors (Konsolas)
+  colors:
+  bright:
+  black: '#7b716e'
+  blue: '#4b4bff'
+  cyan: '#69ffff'
+  green: '#5fff5f'
+  magenta: '#ff54ff'
+  red: '#ff4141'
+  white: '#ffffff'
+  yellow: '#ffff55'
+  cursor:
+  cursor: '#c8c1c1'
+  text: '#060606'
+  normal:
+  black: '#000000'
+  blue: '#2323a5'
+  cyan: '#42b0c8'
+  green: '#18b218'
+  magenta: '#ad1edc'
+  red: '#aa1717'
+  white: '#c8c1c1'
+  yellow: '#ebae1f'
+  primary:
+  background: '#060606'
+  foreground: '#c8c1c1'
+  selection:
+  background: '#060606'
+  text: '#c8c1c1'
+  # Colors (Mathias)
+  colors:
+  bright:
+  black: '#555555'
+  blue: '#5555ff'
+  cyan: '#55ffff'
+  green: '#55ff55'
+  magenta: '#ff55ff'
+  red: '#ff5555'
+  white: '#ffffff'
+  yellow: '#ffff55'
+  cursor:
+  cursor: '#bbbbbb'
+  text: '#ffffff'
+  normal:
+  black: '#000000'
+  blue: '#c48dff'
+  cyan: '#67d9f0'
+  green: '#a6e32d'
+  magenta: '#fa2573'
+  red: '#e52222'
+  white: '#f2f2f2'
+  yellow: '#fc951e'
+  primary:
+  background: '#000000'
+  foreground: '#bbbbbb'
+  selection:
+  background: '#555555'
+  text: '#f2f2f2'
+  # Colors (Monokai Vivid)
+  colors:
+  bright:
+  black: '#838383'
+  blue: '#0443ff'
+  cyan: '#51ceff'
+  green: '#b1e05f'
+  magenta: '#f200f6'
+  red: '#f6669d'
+  white: '#ffffff'
+  yellow: '#fff26d'
+  cursor:
+  cursor: '#fb0007'
+  text: '#ea0009'
+  normal:
+  black: '#121212'
+  blue: '#0443ff'
+  cyan: '#01b6ed'
+  green: '#98e123'
+  magenta: '#f800f8'
+  red: '#fa2934'
+  white: '#ffffff'
+  yellow: '#fff30a'
+  primary:
+  background: '#121212'
+  foreground: '#f9f9f9'
+  selection:
+  background: '#ffffff'
+  text: '#000000'
+  # Colors (PaulMillr)
+  colors:
+  bright:
+  black: '#666666'
+  blue: '#709aed'
+  cyan: '#7adff2'
+  green: '#66ff66'
+  magenta: '#db67e6'
+  red: '#ff0080'
+  white: '#ffffff'
+  yellow: '#f3d64e'
+  cursor:
+  cursor: '#4d4d4d'
+  text: '#ffffff'
+  normal:
+  black: '#2a2a2a'
+  blue: '#396bd7'
+  cyan: '#66ccff'
+  green: '#79ff0f'
+  magenta: '#b449be'
+  red: '#ff0000'
+  white: '#bbbbbb'
+  yellow: '#e7bf00'
+  primary:
+  background: '#000000'
+  foreground: '#f2f2f2'
+  selection:
+  background: '#414141'
+  text: '#ffffff'
+  # Colors (Pro)
+  colors:
+  bright:
+  black: '#666666'
+  blue: '#0000ff'
+  cyan: '#00e5e5'
+  green: '#00d900'
+  magenta: '#e500e5'
+  red: '#e50000'
+  white: '#e5e5e5'
+  yellow: '#e5e500'
+  cursor:
+  cursor: '#4d4d4d'
+  text: '#ffffff'
+  normal:
+  black: '#000000'
+  blue: '#2009db'
+  cyan: '#00a6b2'
+  green: '#00a600'
+  magenta: '#b200b2'
+  red: '#990000'
+  white: '#bfbfbf'
+  yellow: '#999900'
+  primary:
+  background: '#000000'
+  foreground: '#f2f2f2'
+  selection:
+  background: '#414141'
+  text: '#000000'
+  # Colors (Symfonic)
+  colors:
+  bright:
+  black: '#1b1d21'
+  blue: '#0084d4'
+  cyan: '#ccccff'
+  green: '#56db3a'
+  magenta: '#b729d9'
+  red: '#dc322f'
+  white: '#ffffff'
+  yellow: '#ff8400'
+  cursor:
+  cursor: '#dc322f'
+  text: '#ffffff'
+  normal:
+  black: '#000000'
+  blue: '#0084d4'
+  cyan: '#ccccff'
+  green: '#56db3a'
+  magenta: '#b729d9'
+  red: '#dc322f'
+  white: '#ffffff'
+  yellow: '#ff8400'
+  primary:
+  background: '#000000'
+  foreground: '#ffffff'
+  selection:
+  background: '#073642'
+  text: '#ffffff'
+  # Colors (iTerm2 Tango Dark)
+  colors:
+  bright:
+  black: '#686a66'
+  blue: '#84b0d8'
+  cyan: '#37e6e8'
+  green: '#99e343'
+  magenta: '#bc94b7'
+  red: '#f54235'
+  white: '#f1f1f0'
+  yellow: '#fdeb61'
+  cursor:
+  cursor: '#ffffff'
+  text: '#000000'
+  normal:
+  black: '#000000'
+  blue: '#427ab3'
+  cyan: '#00a7aa'
+  green: '#5ea702'
+  magenta: '#89658e'
+  red: '#d81e00'
+  white: '#dbded8'
+  yellow: '#cfae00'
+  primary:
+  background: '#000000'
+  foreground: '#ffffff'
+  selection:
+  background: '#c1deff'
+  text: '#000000'
+*/
+
+
 
 # OLD STUFF, OUT OF STANDARD:
 /*

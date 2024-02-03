@@ -196,7 +196,7 @@ in
 
     color-scheme = lib.mkOption {
       type = lib.types.attrs;
-      default = specialArgs.color-schemes.hyper;
+      default = specialArgs.color-schemes.paul-millr;
       description = "Color scheme for polybar and other apps.";
     };
   };
