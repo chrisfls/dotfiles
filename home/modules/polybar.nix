@@ -2,7 +2,7 @@
 let
   inherit (config.presets) archlinux;
   inherit (config.modules.polybar) enable;
-  inherit (config.modules.themes.color-scheme) background foreground black redBright blueBright yellowBright;
+  inherit (specialArgs.color-schemes.material-dark-kde-alt) background foreground black redBright blueBright yellowBright;
 
   toggle = pkgs.writeScript "toggle"
     ''
