@@ -77,6 +77,12 @@ let
   qt6ct =
     if archlinux then "/usr/share/qt6ct"
     else "${pkgs.qt6ct}/share/${qt6ct}";
+
+  qtVersions = with pkgs; [ qt5 qt6 ];
+
+  makeQtPath = prefix:
+    lib.concatStringsSep ":"
+      (map (qt: "${config.home.profileDirectory}/${qt.qtbase.${prefix}}") qtVersions);
 in
 {
   options.modules.themes = {
@@ -224,24 +230,13 @@ in
         "extra/qt6ct"
       ];
 
-      home.sessionVariables =
-        let
-          inherit (config.home) profileDirectory;
-          qtVersions = with pkgs; [ qt5 qt6 ];
-          makeQtPath = prefix:
-            lib.concatStringsSep ":"
-              (map (qt: "${profileDirectory}/${qt.qtbase.${prefix}}") qtVersions);
-        in
-        {
-          QT_QPA_PLATFORMTHEME = "qt5ct";
-          QT_STYLE_OVERRIDE = "qt5ct-style";
-          QT_PLUGIN_PATH =
-            if archlinux then "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins"
-            else "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}" + (makeQtPath "qtPluginPrefix");
-          QML2_IMPORT_PATH =
-            if archlinux then "/usr/lib/qt/qml/:/usr/lib/qt6/qml"
-            else "$QML2_IMPORT_PATH\${QML2_IMPORT_PATH:+:}" + (makeQtPath "qtQmlPrefix");
-        };
+      home.sessionVariables = {
+        QT_QPA_PLATFORMTHEME = "qt5ct";
+        QT_STYLE_OVERRIDE = "qt5ct-style";
+        QT_PLUGIN_PATH =
+          if archlinux then "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins"
+          else "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}" + (makeQtPath "qtPluginPrefix");
+      };
 
       modules.xorg.imported-variables = [
         "QT_QPA_PLATFORMTHEME"
@@ -278,6 +273,9 @@ in
       ];
     }
     (lib.mkIf (!archlinux) {
+      # moonlight fix
+      home.sessionVariables.QML2_IMPORT_PATH = "$QML2_IMPORT_PATH\${QML2_IMPORT_PATH:+:}" + (makeQtPath "qtQmlPrefix");
+
       gtk = {
         font.package = font.general.package;
         iconTheme.package = icon.package;
