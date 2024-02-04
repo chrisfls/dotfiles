@@ -51,7 +51,7 @@ in
           ''
             [preferred]
             default=gtk
-            org.freedesktop.impl.portal.FileChooser=lxqt
+            org.freedesktop.impl.portal.FileChooser=xapp
           '';
 
         "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
