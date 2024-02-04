@@ -17,7 +17,7 @@ in
 
     pacman.packages = [
       # "extra/xdg-desktop-portal-lxqt"
-      # "extra/xdg-desktop-portal"
+      # "extra/xdg-desktop-portal" # will be installed for flatpak anyway
       # "extra/xdg-desktop-portal-gtk"
       "extra/xdg-user-dirs"
       "extra/xdg-utils"
