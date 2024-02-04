@@ -13,7 +13,7 @@
 ;;;
 
 ;; setup color theme
-(setq doom-theme 'doom-outrun-electric)
+(setq doom-theme 'doom-ir-black) ; doom-outrun-electric
 
 ;; setup fonts (TODO: doom-big-font doom-symbol-font doom-serif-font)
 (setq doom-font (font-spec :family "Jetbrains Mono NFM" :size (* 12.0 1.5))
