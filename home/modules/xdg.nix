@@ -8,26 +8,26 @@ in
 
   config = lib.mkIf enable {
     home.packages = lib.mkIf (!archlinux) [
-      pkgs.libsForQt5.kde-cli-tools
-      pkgs.libsForQt5.xdg-desktop-portal-lxqt
-      pkgs.xdg-desktop-portal
-      pkgs.xdg-desktop-portal-gtk # see "font rendering in GTK apps on KDE"
+      # pkgs.libsForQt5.kde-cli-tools
+      # pkgs.libsForQt5.xdg-desktop-portal-lxqt
+      # pkgs.xdg-desktop-portal
+      # pkgs.xdg-desktop-portal-gtk # see "font rendering in GTK apps on KDE"
       pkgs.xdg-utils
     ];
 
     pacman.packages = [
-      "extra/xdg-desktop-portal-lxqt"
-      "extra/xdg-desktop-portal"
-      "extra/xdg-desktop-portal-gtk"
+      # "extra/xdg-desktop-portal-lxqt"
+      # "extra/xdg-desktop-portal"
+      # "extra/xdg-desktop-portal-gtk"
       "extra/xdg-user-dirs"
       "extra/xdg-utils"
     ];
 
-    home.sessionVariables = {
-      XDG_CURRENT_DESKTOP = "LXQt";
-      DE = "lxqt";
-      # GTK_USE_PORTAL = 1; # breaks vscode
-    };
+    # home.sessionVariables = {
+    #   XDG_CURRENT_DESKTOP = "LXQt";
+    #   DE = "lxqt";
+    #   # GTK_USE_PORTAL = 1; # breaks vscode
+    # };
 
     xdg = {
       enable = true;
@@ -46,20 +46,20 @@ in
         };
       };
       userDirs.enable = true;
-      configFile = {
-        "xdg-desktop-portal/portals.conf".text =
-          ''
-            [preferred]
-            default=gtk
-            org.freedesktop.impl.portal.FileChooser=xapp
-          '';
+      # configFile = {
+      #   "xdg-desktop-portal/portals.conf".text =
+      #     ''
+      #       [preferred]
+      #       default=gtk
+      #       org.freedesktop.impl.portal.FileChooser=xapp
+      #     '';
 
-        "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
-          ''
-            [Service]
-            Environment="XDG_CURRENT_DESKTOP=LXQt"
-          '';
-      };
+      #   "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
+      #     ''
+      #       [Service]
+      #       Environment="XDG_CURRENT_DESKTOP=LXQt"
+      #     '';
+      # };
       desktopEntries = {
         "avahi-discover" = { name = "Avahi Zeroconf Browser"; noDisplay = true; };
         "bssh" = { name = "Avahi SSH Server Browser"; noDisplay = true; };
