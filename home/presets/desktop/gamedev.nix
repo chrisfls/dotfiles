@@ -9,6 +9,8 @@ in
   config = lib.mkIf enable {
     presets.development = true;
 
+    modules.obs.enable = true;
+
     home.packages = lib.mkIf (!archlinux) [
       pkgs.aseprite
       pkgs.gimp

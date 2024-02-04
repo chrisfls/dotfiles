@@ -18,6 +18,7 @@
     ./loopback-toggle.nix
     ./micro.nix
     ./microsoft-edge.nix
+    ./obs.nix
     ./pacman.nix
     ./picom.nix
     ./podman.nix
