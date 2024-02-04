@@ -128,7 +128,7 @@ in
       "extra/obsidian"
       "chaotic-aur/parsec-bin"
       "extra/qbittorrent"
-      "chaotic-aur/vesktop"
+      "chaotic-aur/webcord"
       "chaotic-aur/whatsapp-for-linux"
     ];
 
@@ -137,12 +137,12 @@ in
         "copyq"
         "nm-tray"
         "whatsapp-for-linux"
-        (if archlinux then "vesktop --start-minimized" else "webcord --start-minimized")
+        (if archlinux then "webcord --start-minimized" else "webcord --start-minimized")
       ];
 
       apps = {
         "c" = "io.github.Qalculate.qalculate-qt";
-        "d" = if archlinux then "vesktop" else "webcord";
+        "d" = "webcord";
         "e" = "pcmanfm-qt";
         "shift+c" = "com.github.hluk.copyq";
         "w" = "com.github.eneshecan.WhatsAppForLinux";
