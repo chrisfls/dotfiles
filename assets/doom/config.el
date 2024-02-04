@@ -22,9 +22,9 @@
 ;; disable dashboard ascii art
 (setq +doom-dashboard-ascii-banner-fn nil)
 
-;; setup frame opacity
-(set-frame-parameter nil 'alpha-background 90)
-(add-to-list 'default-frame-alist '(alpha-background . 90))
+;; setup frame opacity (use 90 if theme is not black)
+(set-frame-parameter nil 'alpha-background 80)
+(add-to-list 'default-frame-alist '(alpha-background . 80))
 
 ;; setup cursor
 (setq blink-cursor-blinks 0)
