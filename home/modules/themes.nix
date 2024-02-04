@@ -33,13 +33,10 @@ let
     in
     "\"${font}\"";
 
-  toQtct = pkg:
-    let
-      name = baseNameOf (lib.getExe pkg);
-    in
+  toQtct = path:
     toINI {
       Appearance = {
-        color_scheme_path = "${pkg}/share/${name}/colors/airy.conf";
+        color_scheme_path = "${path}/colors/airy.conf";
         custom_palette = false;
         icon_theme = icon.name;
         standard_dialogs = "xdgdesktopportal";
@@ -61,7 +58,7 @@ let
         keyboard_scheme = 2;
         menus_have_icons = true;
         show_shortcuts_in_context_menus = true;
-        stylesheets = "${pkg}/share/${name}/qss/scrollbar-simple.qss, ${pkg}/share/${name}/qss/sliders-simple.qss, ${pkg}/share/${name}/qss/tooltip-simple.qss, ${pkg}/share/${name}/qss/traynotification-simple.qss";
+        stylesheets = "${path}/qss/scrollbar-simple.qss, ${path}/qss/sliders-simple.qss, ${path}/qss/tooltip-simple.qss, ${path}/qss/traynotification-simple.qss";
         toolbutton_style = 2;
         underline_shortcut = 2;
         wheel_scroll_lines = 3;
@@ -72,6 +69,14 @@ let
         ignored_applications = "@Invalid()";
       };
     };
+
+  qt5ct =
+    if archlinux then "/usr/share/qt5ct"
+    else "${pkgs.qt5ct}/share/${qt5ct}";
+
+  qt6ct =
+    if archlinux then "/usr/share/qt6ct"
+    else "${pkgs.qt6ct}/share/${qt6ct}";
 in
 {
   options.modules.themes = {
@@ -201,76 +206,83 @@ in
     };
   };
 
-  config = lib.mkIf enable {
-    home.packages = [
-      qt.package
-      gtk.package
-      cursor.package
-      icon.package
-    ] ++ (if archlinux then [ ] else [
-      pkgs.libsForQt5.qt5ct
-      pkgs.qt6Packages.qt6ct
-      pkgs.libsForQt5.qtstyleplugin-kvantum
-      pkgs.qt6Packages.qtstyleplugin-kvantum
-    ]);
+  config = lib.mkIf enable (lib.mkMerge [
+    {
+      home.packages = if archlinux then [ cursor.package ] else [
+        qt.package
+        gtk.package
+        icon.package
+        pkgs.libsForQt5.qt5ct
+        pkgs.qt6Packages.qt6ct
+        pkgs.libsForQt5.qtstyleplugin-kvantum
+        pkgs.qt6Packages.qtstyleplugin-kvantum
+      ];
 
-    pacman.packages = [
-      "extra/kvantum"
-      "extra/qt5ct"
-      "extra/qt6ct"
-    ];
+      pacman.packages = [
+        "extra/kvantum"
+        "extra/qt5ct"
+        "extra/qt6ct"
+      ];
 
-    home.sessionVariables =
-      let
-        inherit (config.home) profileDirectory;
-        qtVersions = with pkgs; [ qt5 qt6 ];
-        makeQtPath = prefix:
-          lib.concatStringsSep ":"
-            (map (qt: "${profileDirectory}/${qt.qtbase.${prefix}}") qtVersions);
-      in
-      {
-        QT_QPA_PLATFORMTHEME = "qt5ct";
-        QT_STYLE_OVERRIDE = "qt5ct-style";
-        QT_PLUGIN_PATH =
-          if archlinux then "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins"
-          else "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}" + (makeQtPath "qtPluginPrefix");
-        QML2_IMPORT_PATH =
-          if archlinux then "/usr/lib/qt/qml/:/usr/lib/qt6/qml"
-          else "$QML2_IMPORT_PATH\${QML2_IMPORT_PATH:+:}" + (makeQtPath "qtQmlPrefix");
+      home.sessionVariables =
+        let
+          inherit (config.home) profileDirectory;
+          qtVersions = with pkgs; [ qt5 qt6 ];
+          makeQtPath = prefix:
+            lib.concatStringsSep ":"
+              (map (qt: "${profileDirectory}/${qt.qtbase.${prefix}}") qtVersions);
+        in
+        {
+          QT_QPA_PLATFORMTHEME = "qt5ct";
+          QT_STYLE_OVERRIDE = "qt5ct-style";
+          QT_PLUGIN_PATH =
+            if archlinux then "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins"
+            else "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}" + (makeQtPath "qtPluginPrefix");
+          QML2_IMPORT_PATH =
+            if archlinux then "/usr/lib/qt/qml/:/usr/lib/qt6/qml"
+            else "$QML2_IMPORT_PATH\${QML2_IMPORT_PATH:+:}" + (makeQtPath "qtQmlPrefix");
+        };
+
+      modules.xorg.imported-variables = [
+        "QT_QPA_PLATFORMTHEME"
+        "QT_STYLE_OVERRIDE"
+        "QT_PLUGIN_PATH"
+        "QML2_IMPORT_PATH"
+      ];
+
+      gtk = {
+        enable = true;
+        font = { inherit (font.general) name size; };
+        iconTheme = { inherit (icon) name; };
+        cursorTheme = { inherit (cursor) name package size; };
+        theme = { inherit (gtk) name; };
       };
 
-    modules.xorg.imported-variables = [
-      "QT_QPA_PLATFORMTHEME"
-      "QT_STYLE_OVERRIDE"
-      "QT_PLUGIN_PATH"
-      "QML2_IMPORT_PATH"
-    ];
+      home.pointerCursor = rec {
+        inherit (cursor) name package size;
+        gtk.enable = true;
+        x11.enable = true;
+      };
 
-    gtk = {
-      enable = true;
-      font = { inherit (font.general) name package size; };
-      iconTheme = { inherit (icon) name package; };
-      cursorTheme = { inherit (cursor) name package size; };
-      theme = { inherit (gtk) name package; };
-    };
-
-    home.pointerCursor = rec {
-      inherit (cursor) name package size;
-      gtk.enable = true;
-      x11.enable = true;
-    };
-
-    xdg.configFile = lib.mkMerge [
-      {
-        "Kvantum/kvantum.kvconfig".text = toINI {
-          General.theme = qt.kvantum-theme;
-        };
-        "qt5ct/qt5ct.conf".text = toQtct pkgs.qt5ct;
-        "qt6ct/qt6ct.conf".text = toQtct pkgs.qt6ct;
-      }
-      (lib.mkIf (archlinux) {
-        "Kvantum/${qt.kvantum-theme}".source = "${qt.package}/share/Kvantum/${qt.kvantum-theme}";
-      })
-    ];
-  };
+      xdg.configFile = lib.mkMerge [
+        {
+          "Kvantum/kvantum.kvconfig".text = toINI {
+            General.theme = qt.kvantum-theme;
+          };
+          "qt5ct/qt5ct.conf".text = toQtct qt5ct;
+          "qt6ct/qt6ct.conf".text = toQtct qt6ct;
+        }
+        (lib.mkIf (archlinux) {
+          "Kvantum/${qt.kvantum-theme}".source = "${qt.package}/share/Kvantum/${qt.kvantum-theme}";
+        })
+      ];
+    }
+    (lib.mkIf (!archlinux) {
+      gtk = {
+        font.package = font.general.package;
+        iconTheme.package = icon.package;
+        theme.package = gtk.package;
+      };
+    })
+  ]);
 }

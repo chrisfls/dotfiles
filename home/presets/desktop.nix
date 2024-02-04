@@ -113,6 +113,11 @@ in
       "chaotic-aur/mpc-qt"
       "extra/qalculate-qt"
 
+      # themes
+      "extra/papirus-icon-theme"
+      "extra/materia-kde"
+      "extra/materia-gtk-theme"
+
       # ######## #### ## #
       # MY PKGS
       # ######## #### ## #
