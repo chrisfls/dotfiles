@@ -13,7 +13,7 @@
 ;;;
 
 ;; setup color theme
-(setq doom-theme 'doom-ir-black) ; doom-outrun-electric
+(setq doom-theme 'sanityinc-tomorrow-bright) ; doom-outrun-electric doom-ir-black
 
 ;; setup fonts (TODO: doom-big-font doom-symbol-font doom-serif-font)
 (setq doom-font (font-spec :family "Jetbrains Mono NFM" :size (* 12.0 1.5))
@@ -49,8 +49,15 @@
 ;;; deferred
 ;;;
 
-(add-hook! doom-after-modules-config
-
+;; indent guides and rulers
+(after! highlight-indent-guides
+  ;; setup indent guides colors
+  (setq highlight-indent-guides-method 'column
+        highlight-indent-guides-responsive 'top
+        highlight-indent-guides-auto-odd-face-perc 25
+        highlight-indent-guides-auto-even-face-perc 25
+        highlight-indent-guides-auto-character-face-perc 50)
+  (highlight-indent-guides-auto-set-faces)
   ;; setup ruler colors
   (set-face-attribute 'fill-column-indicator nil
     :background (face-attribute 'highlight-indent-guides-even-face
@@ -94,14 +101,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; PACKAGE SETTINGS ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-
-(after! highlight-indent-guides
-  (setq highlight-indent-guides-method 'column
-        highlight-indent-guides-responsive 'top
-        highlight-indent-guides-auto-odd-face-perc 25
-        highlight-indent-guides-auto-even-face-perc 25
-        highlight-indent-guides-auto-character-face-perc 50)
-  (highlight-indent-guides-auto-set-faces))
 
 (after! recentf
  (add-to-list 'recentf-exclude "~/.config/emacs/.local"))

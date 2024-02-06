@@ -53,3 +53,5 @@
   :recipe (:host github :repo "corytertel/macrursors"))
 
 (package! deno-fmt)
+
+(package! color-theme-sanityinc-tomorrow)
