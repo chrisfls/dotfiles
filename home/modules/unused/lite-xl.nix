@@ -1,3 +1,6 @@
+# albeit lite-xl is really cool, it is not a proper tool for development in 
+# any language but lua...
+
 # default plugins:
 #   autocomplete
 #   autorelaod
