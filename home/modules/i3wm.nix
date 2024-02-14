@@ -24,67 +24,11 @@ let
   workspace = num:
     "workspace number ${toString num}; exec --no-startup-id ${cursor-wrap}";
 
-  /*
-
-    # fetch win_id, self_con, parent_con
-
-    $ eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].focused)|"id=\(.nodes[].nodes[]|select(.focused).id) self=\(.nodes[]|select(.nodes[].focused).layout) parent=\(select(.nodes[].nodes[].focused).layout)"')"
-
-    # fetch win_id, self_con, parent_con, output_con
-
-    $ eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].nodes[].nodes[].focused)|"id=\(.nodes[].nodes[].nodes[]|select(.focused).id) self=\(.nodes[].nodes[]|select(.nodes[].focused).layout) parent=\(.nodes[]|select(.nodes[].nodes[].focused).layout) output=\(select(.nodes[].nodes[].nodes[].focused).layout)"')"
-
-  */
-
   cursor-wrap = pkgs.writeScript "i3-cursor-wrap"
     # move mouse to center of the window
     ''
       eval $(xdotool getwindowfocus getwindowgeometry --shell)
       xdotool mousemove $((X + (WIDTH / 2))) $((Y + (HEIGHT / 2)))
-    '';
-
-  insert = pkgs.writeScript "i3-insert"
-    # select insertion spot
-    ''
-      while i3-msg "focus child"; do
-        :
-      done
-
-      i3-msg "[tiling con_id=\"__focused__\"] mark --toggle insert"
-    '';
-
-  presel-split = pkgs.writeScript "i3-presel-split"
-    # preselect next split orientation
-    ''
-      while i3-msg "focus child"; do
-        :
-      done
-
-      eval "$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.layout!="tabbed" and .nodes[].nodes[].focused)|"id=\((.nodes[].nodes[]|select(.focused)|.id)) tabbed=\((.nodes[]|select(.nodes[].focused)|.layout))"')"
-
-      if [ "$tabbed" != "tabbed" ]; then
-        i3-msg "[con_id=\"$id\"] split toggle"
-      fi
-    '';
-
-  toggle-split = pkgs.writeScript "i3-toggle-split"
-    # toggle split orientation
-    ''
-      id=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes[].focused or .focused).id')
-
-      if [ "$id" ]; then
-        i3-msg "[con_id=\"$id\"] layout toggle splitv splith"
-      fi
-    '';
-
-  toggle-tabs = pkgs.writeScript "i3-toggle-tabs"
-    # toggle tabbed layout at the selected leaf
-    ''
-      id=$(i3-msg -t get_tree | jaq -r 'recurse(.nodes[];.nodes!=null)|select(.nodes == [] and .focused).id')
-
-      if [ "$id" ]; then
-        i3-msg "[con_id=\"$id\"] layout toggle tabbed split"
-      fi
     '';
 
   daemon = pkgs.writeScript "i3-daemon"
@@ -98,7 +42,7 @@ let
         case "$event" in
           "new")
             con_id=$(echo $line | jaq -r '.container.id')
-            i3-msg "[con_id=\"$con_id\"]move container to mark insert; unmark insert" && continue
+            i3-msg "[con_id=\"$con_id\"] move container to mark insert; unmark insert" && continue
             ;;
           "resize")
             polybar-msg action menu hook 1
@@ -165,7 +109,7 @@ in
           # THEMING
           # ######## #### ## #
 
-          font pango:Noto Sans Mono Bold 10
+          font pango:Noto Sans Mono Bold 11
 
           #                       border       bg           txt          indicator    child_border
           #                       ------------ ------------ ------------ ------------ ------------ 
@@ -303,11 +247,11 @@ in
           # ## #
         
           # [s] - toggle split layout
-          bindsym $mod+s exec --no-startup-id ${presel-split}
-          bindsym $mod+shift+s exec --no-startup-id ${toggle-split}
+          bindsym $mod+s split toggle
+          bindsym $mod+shift+s layout toggle splitv splith
 
           # [t] - toggle split / tabbed layouts  
-          bindsym $mod+t exec --no-startup-id ${toggle-tabs}
+          bindsym $mod+t layout toggle tabbed split
 
           # toggle floating focus
           bindsym $mod+space focus mode_toggle; exec --no-startup-id ${cursor-wrap}
@@ -325,7 +269,7 @@ in
           bindsym $mod+shift+g gaps inner current toggle 64; gaps outer current toggle 64
 
           # [i] - insert space / fill space
-          bindsym $mod+i [tiling con_id="__focused__"] exec --no-startup-id ${insert}
+          bindsym $mod+i [tiling con_id="__focused__"] mark --toggle insert
           bindsym $mod+shift+i move container to mark insert; unmark insert
 
           # [v] - scratchpad show
