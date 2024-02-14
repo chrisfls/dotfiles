@@ -1,5 +1,13 @@
 ## system
 
 - Configure 10 bit at `/etc/X11/xorg.conf.d/30-screen.conf`
-- Maybe just drop the nix side of the config?
-- Maybe stop using nix even for cli packages?
+- Maybe start only using nix for configs and devenvs?
+  - [ ] Drop programs.bash
+  - [ ] Drop programs.fish
+  - [ ] Drop programs.keychain
+  - [ ] Drop programs.direnv
+  - [ ] Drop programs.zoxide
+  - [ ] Drop programs.autorandr
+  - [ ] Drop services.autorandr
+  - [ ] Drop programs.micro
+  - [ ] Stop using home.packages and pkgs.*
