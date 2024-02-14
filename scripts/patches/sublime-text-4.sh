@@ -1,20 +1,11 @@
-{ sublime4, xxd, ... }:
-sublime4.overrideAttrs
-  (old: {
-    sublime_text = old.sublime_text.overrideAttrs
-      (_: {
-        prePatch =
-          # SOURCE: gist [DOT] github [DOT] com [SLASH] skoqaq [SLASH] 3f3e8f28e23c881143cef9cf49d821ff?permalink_comment_id=4786328#gistcomment-4786328
-          ''
-            sed -i 's;\x80\x78\x05\x00\x0f\x94\xc1;\xc6\x40\x05\x01\x48\x85\xc9;g' "sublime_text"
+# SOURCE: gist [DOT] github [DOT] com [SLASH] skoqaq [SLASH] 3f3e8f28e23c881143cef9cf49d821ff?permalink_comment_id=4786328#gistcomment-4786328
+sed -i 's;\x80\x78\x05\x00\x0f\x94\xc1;\xc6\x40\x05\x01\x48\x85\xc9;g' "sublime_text"
 
-            if [ $? -ne 0 ]; then
-              echo "Failed to apply activation patch" >&2
-              exit 1
-            fi
-          '';
-      });
-  })
+if [ $? -ne 0 ]; then
+  echo "Failed to apply activation patch" >&2
+  exit 1
+fi
+
 # OTHER METHODS:
 #
 #   NOT REALLY WORKING WITH LATEST VERSION
