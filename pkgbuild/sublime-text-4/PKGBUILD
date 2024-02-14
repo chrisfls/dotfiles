@@ -18,6 +18,13 @@ sha512sums_aarch64=('e9964f55a5bff89fc0ad13266cc7695c8e0cc41d86caed212836fd737c3
 package() {
 	cd "${srcdir}"
 
+	sed -i 's;\x80\x78\x05\x00\x0f\x94\xc1;\xc6\x40\x05\x01\x48\x85\xc9;g' "sublime_text/sublime_text"
+
+	if [ $? -ne 0 ]; then
+		echo "Failed to apply activation patch" >&2
+		exit 1
+	fi
+
 	install -dm755 "${pkgdir}/opt"
 	cp --preserve=mode -r 'sublime_text' "${pkgdir}/opt/sublime_text"
 	rm -f "${pkgdir}/opt/sublime_text/sublime_text.desktop"
