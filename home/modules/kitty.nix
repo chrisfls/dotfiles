@@ -1,3 +1,4 @@
+# evaluate migrating to Zutty
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.presets) archlinux;
@@ -17,6 +18,9 @@ in
     xdg.configFile."kitty/kitty.conf".text =
       with config.modules.themes.color-scheme;
       ''
+        repaint_delay 16
+        input_delay 1
+
         font_family CaskaydiaCove NFM
         font_size 16.0
 
