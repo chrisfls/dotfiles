@@ -1,5 +1,6 @@
 */.SRCINFO
-*/*.tar.xz
 */*.pkg.tar.zst
-*/src
+*/*.tar.xz
+*/*.tar.xz.asc
 */pkg
+*/src
