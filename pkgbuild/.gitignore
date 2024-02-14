@@ -1,0 +1,5 @@
+*/.SRCINFO
+*/*.tar.xz
+*/*.pkg.tar.zst
+*/src
+*/pkg
