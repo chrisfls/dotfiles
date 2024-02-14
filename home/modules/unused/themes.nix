@@ -1,3 +1,4 @@
+# NOTE: keep this around, I might start using breeze again after it gets qt6 support
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.modules.themes)
