@@ -18,49 +18,9 @@ in
       pkgs.which
     ];
 
-    home.sessionVariables = {
-      EDITOR = "micro";
-      TERM = "xterm-256color";
-      COLORTERM = "truecolor";
-      MICRO_TRUECOLOR = "1";
-      VTE_VERSION = "6003";
-      DIRENV_LOG_FORMAT = "";
-    };
-
-    programs.fish = {
-      enable = true;
-      shellAliases."g" = "git";
-      plugins = [
-        { name = "autopair-fish"; src = pkgs.fishPlugins.autopair-fish.src; }
-        { name = "colored-man-pages"; src = pkgs.fishPlugins.colored-man-pages.src; }
-        { name = "foreign-env"; src = pkgs.fishPlugins.foreign-env.src; }
-        { name = "sponge"; src = pkgs.fishPlugins.sponge.src; }
-        { name = "tide"; src = pkgs.fishPlugins.tide.src; }
-      ];
-      shellInit =
-        ''
-          set -g SHELL "${bin}"
-
-          set fish_greeting ""
-
-          if not set -q tide_setup
-            echo "tide setup init"
-            echo 1 2 1 2 3 2 1 1 y | tide configure >/dev/null
-            set --universal tide_character_icon "λ"
-            set --universal tide_setup true
-            echo "tide setup done"
-          end
-        '';
-    };
-
-    pacman.packages = [
-      "extra/keychain"
-    ];
-    /*programs.keychain = {
-      enable = true;
-      keys = [ "id_ed25519" ];
-    };*/
-
+    # extra/jq
+    # extra/jaq
+    # core/which
 
     programs.git = {
       enable = true;
@@ -84,18 +44,6 @@ in
           contents.user.email = ssot.contact.gitlab.email;
         }
       ];
-    };
-
-    programs.direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-      enableBashIntegration = true;
-    };
-
-    programs.zoxide = {
-      enable = true;
-      enableBashIntegration = true;
-      enableFishIntegration = true;
     };
   };
 }

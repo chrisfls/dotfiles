@@ -4,7 +4,7 @@ let inherit (config.modules.bash) enable extraConfig; in {
   options.modules.bash.extraConfig = lib.mkOption { type = lib.types.lines; default = ""; };
 
   config = lib.mkIf enable {
-    pacman.packages = [ "extra/bash" ];
+    pacman.packages = [ "core/bash" ];
 
     home.file = {
       ".bashrc".text =

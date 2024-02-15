@@ -4,10 +4,10 @@
 - Maybe start only using nix for configs and devenvs?
   - [x] Drop programs.micro
   - [ ] Drop programs.autorandr and services.autorandr
-  - [ ] Drop programs.keychain
-  - [ ] Drop programs.zoxide
-  - [ ] Drop programs.direnv
-  - [ ] Drop programs.fish
-  - [ ] Drop programs.bash
+  - [x] Drop programs.keychain
+  - [x] Drop programs.zoxide
+  - [x] Drop programs.direnv
+  - [x] Drop programs.fish
+  - [x] Drop programs.bash
   - [ ] Drop pacman.pkgs
   - [ ] Stop using home.packages and pkgs.*

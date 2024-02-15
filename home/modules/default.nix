@@ -2,6 +2,7 @@
 { ... }: {
   imports = [
     ./agenix.nix
+    ./any-nix-shell.nix
     ./autorandr.nix
     ./bash.nix
     ./brave.nix
@@ -12,6 +13,7 @@
     ./dunst.nix
     ./emacs.nix
     ./feh.nix
+    ./fish.nix
     ./fontconfig.nix
     ./fonts.nix
     ./i3wm.nix

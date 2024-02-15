@@ -13,9 +13,6 @@ in
     };
 
     home.packages = [
-      # nix-shell / nix flake develop
-      pkgs.any-nix-shell
-
       # devenv
       pkgs.cachix
 
@@ -24,10 +21,6 @@ in
     ];
 
     programs = {
-      fish.shellInit = "any-nix-shell fish --info-right | source";
-
-      direnv.config.whitelist.prefix = [ "${config.xdg.userDirs.desktop}" ];
-
       # nix-index = {
       #   enable = true;
       #   enableFishIntegration = true;
