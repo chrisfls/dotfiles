@@ -21,7 +21,7 @@ let inherit (config.modules.bash) enable extraConfig; in {
           shopt -s globstar
           shopt -s checkjobs
 
-          . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+          . "${config.home.homeDirectory}/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
           ${extraConfig}
         '';
@@ -35,7 +35,7 @@ let inherit (config.modules.bash) enable extraConfig; in {
         '';
       ".profile".text =
         ''
-          . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+          . "${config.home.homeDirectory}/.nix-profile/etc/profile.d/hm-session-vars.sh"
           unset HISTFILE
         '';
     };

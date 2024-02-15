@@ -129,8 +129,8 @@ in
         ''
           . "${config.home.homeDirectory}/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
-          if [ -e "$HOME/.profile" ]; then
-            . "$HOME/.profile"
+          if [ -e "${config.home.homeDirectory}/.profile" ]; then
+            . "${config.home.homeDirectory}/.profile"
           fi
 
           # If there are any running services from a previous session.
