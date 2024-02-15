@@ -3,10 +3,12 @@
   imports = [
     ./agenix.nix
     ./autorandr.nix
+    ./bash.nix
     ./brave.nix
     ./cloudflare-warp.nix
     ./code.nix
     ./copy-file.nix
+    ./direnv.nix
     ./dunst.nix
     ./emacs.nix
     ./feh.nix
@@ -14,6 +16,7 @@
     ./fonts.nix
     ./i3wm.nix
     ./jamesdsp.nix
+    ./keychain.nix
     ./kitty.nix
     ./loopback-toggle.nix
     ./micro.nix
@@ -35,5 +38,6 @@
     ./udiskie.nix
     ./xdg.nix
     ./xorg.nix
+    ./zoxide.nix
   ];
 }

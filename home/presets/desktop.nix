@@ -7,7 +7,6 @@ in
 
   config = lib.mkIf desktop {
     modules = {
-      agenix.enable = true;
       autorandr.enable = true;
       brave.enable = true;
       dunst.enable = true;

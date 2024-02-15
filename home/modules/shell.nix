@@ -27,14 +27,6 @@ in
       DIRENV_LOG_FORMAT = "";
     };
 
-    programs.bash = {
-      enable = true;
-      enableVteIntegration = true;
-      profileExtra = "unset HISTFILE";
-      historyFileSize = 0;
-      historySize = 0;
-    };
-
     programs.fish = {
       enable = true;
       shellAliases."g" = "git";
@@ -61,10 +53,14 @@ in
         '';
     };
 
-    programs.keychain = {
+    pacman.packages = [
+      "extra/keychain"
+    ];
+    /*programs.keychain = {
       enable = true;
       keys = [ "id_ed25519" ];
-    };
+    };*/
+
 
     programs.git = {
       enable = true;

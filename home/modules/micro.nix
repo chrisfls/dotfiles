@@ -4,7 +4,7 @@ let inherit (config.modules.micro) enable desktop; in {
   options.modules.micro.desktop = lib.mkEnableOption "Enable micro desktop entry";
 
   config = lib.mkIf enable {
-    pacman.packages.micro = [ "extra/micro" ];
+    pacman.packages = [ "extra/micro" ];
 
     xdg.configFile = {
       "micro/settings.json".text =
