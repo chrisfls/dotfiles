@@ -4,9 +4,9 @@ let
 in
 {
   extra = {
+    # lpm = callPackage ./lpm.nix;
     attrsets = import ./attrsets.nix;
-    lpm = callPackage ./lpm.nix;
-    mkIfElse =  import ./mk-if-else.nix final;
+    mkIfElse = import ./mk-if-else.nix final;
     qt = import ./qt.nix final;
     string = import ./string.nix;
   };
