@@ -16,6 +16,7 @@
     ./fish.nix
     ./fontconfig.nix
     ./fonts.nix
+    ./git.nix
     ./i3wm.nix
     ./jamesdsp.nix
     ./keychain.nix
@@ -33,7 +34,6 @@
     ./rofi.nix
     ./scaling.nix
     ./screenshot.nix
-    ./shell.nix
     ./steam.nix
     ./telegram.nix
     ./themes.nix

@@ -9,7 +9,6 @@ in
     modules = {
       agenix.enable = true;
       podman.enable = true;
-      shell.enable = true;
     };
 
     home.packages = [

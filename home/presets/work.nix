@@ -7,14 +7,17 @@ in
   options.presets.work = lib.mkEnableOption "Enable work preset";
 
   config = (lib.mkIf enable {
-    programs.git.includes = [
-      {
-        condition = "gitdir:${config.xdg.userDirs.desktop}/work/";
-        contents = {
-          user.name = ssot.contact.work.name;
-          user.email = ssot.contact.work.email;
-        };
-      }
-    ];
+    modules.git.extraConfig =
+      ''
+        [includeIf "$gitdir:${config.xdg.userDirs.desktop}/work/"]
+        	path = "${config.xdg.configHome}/git/config_work"
+      '';
+
+    xdg.configFile."git/config_work".text =
+      ''
+        [user]
+        	email = "${ssot.contact.work.email}"
+        	name = "${ssot.contact.work.name}"
+      '';
   });
 }
