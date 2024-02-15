@@ -10,6 +10,12 @@
     zoxide.enable = true;
   };
 
+  pacman.packages = [
+    "extra/jq"
+    "extra/jaq"
+    "core/which"
+  ];
+
   home.sessionVariables = {
     EDITOR = "micro";
     TERM = "xterm-256color";

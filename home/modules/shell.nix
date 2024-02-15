@@ -10,18 +10,6 @@ in
   options.modules.shell.enable = lib.mkEnableOption "Enable shell module";
 
   config = lib.mkIf enable {
-    modules.micro.enable = true;
-
-    home.packages = [
-      pkgs.jq
-      pkgs.jaq
-      pkgs.which
-    ];
-
-    # extra/jq
-    # extra/jaq
-    # core/which
-
     programs.git = {
       enable = true;
       userName = ssot.contact.name;

@@ -15,7 +15,7 @@ let inherit (config.modules.direnv) enable extraConfig; in {
       '';
   };
 }
-
+# direnv.config.whitelist.prefix = [ "${config.xdg.userDirs.desktop}" ];
 /*
   λ cat ~/.config/direnv/direnv.toml 
   [whitelist]
