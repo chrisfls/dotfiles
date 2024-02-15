@@ -4,11 +4,22 @@ let inherit (config.modules.micro) enable desktop; in {
   options.modules.micro.desktop = lib.mkEnableOption "Enable micro desktop entry";
 
   config = lib.mkIf enable {
-    pacman.pkgs.micro = [ "extra/micro" ];
+    pacman.packages.micro = [ "extra/micro" ];
 
-    programs.micro = {
-      enable = true;
-      settings.colorscheme = "simple";
+    xdg.configFile = {
+      "micro/settings.json".text =
+        ''
+          {
+            "colorscheme": "simple"
+          }
+        '';
+      "micro/bindings.json".text =
+        ''
+          {
+            "Alt-/": "lua:comment.comment",
+            "CtrlUnderscore": "lua:comment.comment"
+          }
+        '';
     };
 
     xdg.desktopEntries."micro" = lib.mkIf desktop {
