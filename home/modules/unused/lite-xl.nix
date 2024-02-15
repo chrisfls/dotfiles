@@ -1,4 +1,4 @@
-# albeit lite-xl is really cool, it is not a proper tool for development in 
+# NOTE: albeit lite-xl is really cool, it is not a proper tool for development in 
 # any language but lua...
 
 # default plugins:
@@ -21,6 +21,36 @@
 # installed plugins:
 #   Plugin Manager
 #   settings
+# eval plugins:
+# plugin_manager --assume-yes
+# settings
+# search_ui
+# gui_filepicker
+# scm
+# lsp
+# lsp_snippets
+# lspkind
+# lintplus
+# editorconfig
+# gitblame
+# gitopen
+# smoothcaret
+# fontconfig
+# nerdicons
+# indentguide
+# evergreen
+# rainbowparen	
+# selectionhighlight	
+# tab_switcher	
+# endwise
+# lfautoinsert	
+# ephemeral_tabs	
+# restoretabs
+# navigate	
+# open_ext	
+# openfilelocation	
+# sort	
+# force_syntax	
 { config, lib, pkgs, ... }:
 let inherit (config.modules.lite-xl) enable;
   colors = pkgs.fetchFromGitHub {
@@ -49,50 +79,3 @@ in
     # xdg.configFile."lite-xl/fonts".source = fonts;
   };
 }
-
-# plugin_manager --assume-yes
-
-# settings
-# search_ui
-# gui_filepicker
-
-
-
-# scm
-
-# lsp
-# lsp_snippets
-# lspkind
-
-# lintplus
-
-# editorconfig
-# gitblame
-# gitopen
-
-
-
-
-# smoothcaret
-# fontconfig
-# nerdicons
-# indentguide
-# evergreen
-# rainbowparen	
-# selectionhighlight	
-
-# tab_switcher	
-
-# endwise # lfautoinsert	
-
-
-
-
-# ephemeral_tabs	
-# restoretabs
-# navigate	
-
-# open_ext	
-# openfilelocation	
-# sort	
-# force_syntax	
