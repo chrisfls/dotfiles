@@ -11,14 +11,6 @@ in
 
     modules.obs.enable = true;
 
-    home.packages = lib.mkIf (!archlinux) [
-      pkgs.aseprite
-      pkgs.gimp
-      pkgs.krita
-      pkgs.lmms
-      pkgs.tiled
-    ];
-
     pacman.packages = [
       "aur/aseprite"
       "extra/gimp"

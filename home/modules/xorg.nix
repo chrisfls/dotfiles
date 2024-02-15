@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.xorg) enable xsession imported-variables window-manager;
 
   vars = lib.trivial.pipe imported-variables [
@@ -8,25 +7,11 @@ let
     (builtins.concatStringsSep " ")
   ];
 
-  xrdb =
-    if archlinux then "/usr/bin/xrdb"
-    else "${pkgs.xorg.xrdb}/bin/xrdb";
-
-  setxkbmap =
-    if archlinux then "/usr/bin/setxkbmap"
-    else "${pkgs.xorg.setxkbmap}/bin/setxkbmap";
-
-  xplugd =
-    if archlinux then "/usr/bin/xplugd"
-    else "${pkgs.xplugd}/bin/xplugd";
-
-  xsetroot =
-    if archlinux then "/usr/bin/xsetroot"
-    else "${pkgs.xorg.xsetroot}/bin/xsetroot";
-
-  numlockx =
-    if archlinux then "/usr/bin/numlockx"
-    else "${pkgs.numlockx}/bin/numlockx";
+  xrdb = "/usr/bin/xrdb";
+  setxkbmap = "/usr/bin/setxkbmap";
+  xplugd = "/usr/bin/xplugd";
+  xsetroot = "/usr/bin/xsetroot";
+  numlockx = "/usr/bin/numlockx";
 
   cursorPath = "${config.modules.themes.cursor.package}/share/icons/${lib.strings.escapeShellArg config.home.pointerCursor.name}/cursors/${
     lib.strings.escapeShellArg config.home.pointerCursor.x11.defaultCursor
@@ -45,20 +30,6 @@ in
   };
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!archlinux) [
-      pkgs.numlockx
-      pkgs.xclip
-      pkgs.xdotool
-      pkgs.xorg.numlockx
-      pkgs.xorg.setxkbmap
-      pkgs.xorg.xev
-      pkgs.xorg.xkill
-      pkgs.xorg.xrdb
-      pkgs.xorg.xset
-      pkgs.xorg.xsetroot
-      pkgs.xplugd
-    ];
-
     pacman.packages = [
       "extra/xclip"
       "extra/xdotool"
@@ -222,9 +193,7 @@ in
 
           Service = {
             Environment = "PATH=${config.home.profileDirectory}/bin";
-            ExecStart =
-              if archlinux then "/usr/bin/xsettingsd"
-              else "${pkgs.xsettingsd}/bin/xsettingsd";
+            ExecStart = "/usr/bin/xsettingsd";
             Restart = "on-abort";
           };
         };

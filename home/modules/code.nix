@@ -7,7 +7,6 @@ in
   options.modules.code.enable = lib.mkEnableOption "Enable code module";
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!archlinux) [ pkgs.vscode ];
     pacman.packages = [ "chaotic-aur/visual-studio-code-bin" ];
   };
 }

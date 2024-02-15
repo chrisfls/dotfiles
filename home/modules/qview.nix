@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.qview) enable;
 
   desktop = "com.interversehq.qView.desktop";
@@ -8,7 +7,6 @@ in
 {
   options.modules.qview.enable = lib.mkEnableOption "Enable qview module";
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!archlinux) [ pkgs.qview ];
     pacman.packages = [ "chaotic-aur/qview" ];
 
     xdg.mimeApps.defaultApplications = {

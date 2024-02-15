@@ -1,20 +1,8 @@
 { config, lib, pkgs, ... }:
-let
-  inherit (config.presets) archlinux;
-  inherit (config.modules.xdg) enable;
-in
-{
+let inherit (config.modules.xdg) enable; in {
   options.modules.xdg.enable = lib.mkEnableOption "Enable xdg module";
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!archlinux) [
-      # pkgs.libsForQt5.kde-cli-tools
-      # pkgs.libsForQt5.xdg-desktop-portal-lxqt
-      # pkgs.xdg-desktop-portal
-      # pkgs.xdg-desktop-portal-gtk # see "font rendering in GTK apps on KDE"
-      pkgs.xdg-utils
-    ];
-
     pacman.packages = [
       # "extra/xdg-desktop-portal-lxqt"
       # "extra/xdg-desktop-portal" # will be installed for flatpak anyway

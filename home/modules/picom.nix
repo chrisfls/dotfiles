@@ -1,14 +1,8 @@
 { config, lib, pkgs, specialArgs, ... }:
-let
-  inherit (config.presets) archlinux;
-  inherit (config.modules.picom) enable;
-in
-{
+let inherit (config.modules.picom) enable; in {
   options.modules.picom.enable = lib.mkEnableOption "Enable picom module";
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!archlinux) [ pkgs.picom-next ];
-
     pacman.packages = [ "chaotic-aur/picom-git" ];
 
     systemd.user.services.picom = {

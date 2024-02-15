@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.i3wm)
     enable
     apps
@@ -64,13 +63,9 @@ let
   white = "#ffffff";
   yellow = "#ffff00";
 
-  i3 =
-    if archlinux then "/usr/bin/i3"
-    else "${pkgs.i3}/bin/i3";
+  i3 = "/usr/bin/i3";
 
-  i3-msg =
-    if archlinux then "/usr/bin/i3-msg"
-    else "${pkgs.i3}/bin/i3-msg";
+  i3-msg = "/usr/bin/i3-msg";
 in
 {
   options.modules.i3wm = {
@@ -96,8 +91,6 @@ in
   };
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!archlinux) [ pkgs.i3 ];
-
     pacman.packages = [ "extra/i3-wm" ];
 
     modules.xorg.window-manager = i3;

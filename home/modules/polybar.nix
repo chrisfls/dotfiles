@@ -1,6 +1,5 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.polybar) enable;
   inherit (specialArgs.color-schemes.materia-dark-kde) background foreground black red blue yellow;
 
@@ -69,28 +68,14 @@ in
   options.modules.polybar.enable = lib.mkEnableOption "Enable polybar module";
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!archlinux) [
-      pkgs.polybarFull
-      pkgs.bluez
-      pkgs.dunst
-      pkgs.libsForQt5.bluedevil
-      pkgs.lxqt.pavucontrol-qt
-      pkgs.pamixer
-      # pkgs.yad
-      # pkgs.toybox
-    ];
-
     pacman.packages = [
       "extra/polybar"
+      # "extra/yad"
+      # TODO: move these packages to desktop preset
       "extra/bluez"
       "extra/bluez-utils"
       "extra/bluedevil"
-      "extra/pavucontrol-qt"
-      "extra/pamixer"
-      "extra/dunst"
-      # "extra/yad"
     ];
-
 
     systemd.user.services.polybar = {
       Unit = {

@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.feh) enable wallpapers;
 
   args = lib.trivial.pipe wallpapers [
@@ -18,8 +17,6 @@ in
   };
 
   config = lib.mkIf enable {
-    home.packages = lib.mkIf (!archlinux) [ pkgs.feh ];
-
     pacman.packages = [ "extra/feh" ];
 
     modules.i3wm.startup = [
