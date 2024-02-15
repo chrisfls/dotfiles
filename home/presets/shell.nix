@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
 {
+  targets.genericLinux.enable = true;
+
   modules = {
     agenix.enable = true;
     bash.enable = true;

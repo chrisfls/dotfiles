@@ -9,18 +9,14 @@ lib.mkIf enable {
     emacs.enable = true;
   };
 
+  # TODO: trying because I'm curious
   home.packages = [
-    # trying because I'm curious
     pkgs.tig
 
-    # eval which I'll use
+    # TODO: eval which I'll use
     pkgs.gitui
     pkgs.lazygit
-  ] ++ (if archlinux then [ ] else [
-    pkgs.dbeaver
-    pkgs.gittyup
-    pkgs.github-desktop
-  ]);
+  ];
 
   pacman.packages = [
     "extra/dbeaver"

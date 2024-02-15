@@ -1,30 +1,14 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.microsoft-edge) enable;
 
-  exe =
-    if archlinux then
-      "microsoft-edge-stable"
-    else
-      "microsoft-edge";
+  exe = "microsoft-edge-stable";
 
   pkg =
-    if archlinux then
-      pkgs.writeShellScriptBin exe
-        ''
-          exec /usr/bin/microsoft-edge-stable --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
-        ''
-
-    else
-      pkgs.microsoft-edge.overrideAttrs
-        (old: {
-          postFixup =
-            ''
-              substituteInPlace $out/bin/microsoft-edge \
-                --replace "--enable-features=" "--force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL,"
-            '';
-        });
+    pkgs.writeShellScriptBin exe
+      ''
+        exec /usr/bin/microsoft-edge-stable --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
+      '';
 in
 {
   options.modules.microsoft-edge.enable = lib.mkEnableOption "Enable microsoft-edge module";
@@ -33,7 +17,7 @@ in
     home.packages = [ pkg ];
     modules.i3wm.apps."shift+b" = exe;
 
-    xdg.desktopEntries = lib.mkIf archlinux {
+    xdg.desktopEntries = {
       "microsoft-edge" = {
         name = "Microsoft Edge";
         type = "Application";

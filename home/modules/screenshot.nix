@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.screenshot) enable;
 
   screenshot-copy = pkgs.writeShellScriptBin "screenshot-copy"
@@ -28,11 +27,7 @@ in
       screenshot-copy
       screenshot-copy-area
       screenshot-save
-    ] ++ (if archlinux then [ ] else [
-      pkgs.shotgun
-      pkgs.slop
-      pkgs.xclip
-    ]);
+    ];
 
     pacman.packages = [ "extra/shotgun" "extra/slop" "extra/xclip" ];
 

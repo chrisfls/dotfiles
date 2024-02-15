@@ -1,8 +1,5 @@
 { config, lib, pkgs, specialArgs, ... }:
-let
-  inherit (config.presets) archlinux;
-  inherit (config.modules.udiskie) enable;
-in
+let inherit (config.modules.udiskie) enable; in
 {
   options.modules.udiskie.enable = lib.mkEnableOption "Enable udiskie module";
 
@@ -25,9 +22,7 @@ in
         PartOf = [ "graphical-session.target" ];
       };
 
-      Service.ExecStart =
-        if archlinux then "/usr/bin/udiskie"
-        else "${pkgs.udiskie}/bin/udiskie";
+      Service.ExecStart = "/usr/bin/udiskie";
 
       Install.WantedBy = [ "graphical-session.target" ];
     };

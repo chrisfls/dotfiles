@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.loopback-toggle) device enable volume;
 
   loopback-toggle = pkgs.writeScript "loopback-toggle"

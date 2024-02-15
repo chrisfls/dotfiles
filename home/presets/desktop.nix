@@ -1,8 +1,5 @@
 { config, lib, pkgs, specialArgs, ... }:
-let
-  inherit (config.presets) desktop archlinux;
-in
-{
+let inherit (config.presets) desktop; in {
   options.presets.desktop = lib.mkEnableOption "Enable desktop preset";
 
   config = lib.mkIf desktop {
@@ -13,7 +10,6 @@ in
       feh.enable = true;
       fontconfig.enable = true;
       fonts.enable = true;
-      i3wm.enable = true;
       jamesdsp.enable = true;
       kitty.enable = true;
       loopback-toggle.enable = true;
@@ -29,7 +25,30 @@ in
       themes.enable = true;
       udiskie.enable = true;
       xdg.enable = true;
-      xorg.enable = true;
+      xorg = {
+        enable = true;
+        imported-variables = [ "PATH" ];
+      };
+      i3wm = {
+        enable = true;
+
+        startup = [
+          "copyq"
+          "nm-tray"
+          "whatsapp-for-linux"
+          "webcord --start-minimized"
+        ];
+
+        apps = {
+          "c" = "io.github.Qalculate.qalculate-qt";
+          "d" = "webcord";
+          "e" = "pcmanfm-qt";
+          "shift+c" = "com.github.hluk.copyq";
+          "w" = "com.github.eneshecan.WhatsAppForLinux";
+        };
+
+        extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
+      };
     };
 
     pacman.packages = [
@@ -82,25 +101,6 @@ in
       "chaotic-aur/webcord"
       "chaotic-aur/whatsapp-for-linux"
     ];
-
-    modules.i3wm = {
-      startup = [
-        "copyq"
-        "nm-tray"
-        "whatsapp-for-linux"
-        (if archlinux then "webcord --start-minimized" else "webcord --start-minimized")
-      ];
-
-      apps = {
-        "c" = "io.github.Qalculate.qalculate-qt";
-        "d" = "webcord";
-        "e" = "pcmanfm-qt";
-        "shift+c" = "com.github.hluk.copyq";
-        "w" = "com.github.eneshecan.WhatsAppForLinux";
-      };
-
-      extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
-    };
 
     xdg.configFile."kwalletrc".text =
       ''

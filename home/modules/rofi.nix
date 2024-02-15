@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.rofi) enable;
 
   settings = pkgs.fetchFromGitHub {
@@ -156,12 +155,7 @@ in
     };
 
     home.packages = [
-      (pkgs.extra.mkIfElse archlinux
-        (wrap "/usr/bin/rofi")
-        (pkgs.symlinkJoin {
-          name = "rofi";
-          paths = [ (wrap "${rofi-pkg}/bin/rofi") rofi-pkg ];
-        }))
+      (wrap "/usr/bin/rofi")
       rofi-menu-pkg
       rofi-dunst-pkg
     ];

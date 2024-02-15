@@ -1,11 +1,8 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.autorandr) enable;
 
-  autorandr =
-    if archlinux then "/usr/bin/autorandr"
-    else "${pkgs.autorandr}/bin/autorandr";
+  autorandr = "/usr/bin/autorandr";
 in
 {
   options.modules.autorandr.enable = lib.mkEnableOption "Enable autorandr module";

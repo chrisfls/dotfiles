@@ -1,24 +1,11 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.brave) enable;
 
-  pkg =
-    if config.presets.archlinux then
-      pkgs.writeShellScriptBin "brave"
-        ''
-          exec /usr/bin/brave --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
-        ''
-
-    else
-      pkgs.brave.overrideAttrs
-        (old: {
-          postFixup =
-            ''
-              substituteInPlace $out/bin/brave \
-                --replace "--enable-features=" "--force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL,"
-            '';
-        });
+  pkg = pkgs.writeShellScriptBin "brave"
+    ''
+      exec /usr/bin/brave --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
+    '';
 in
 {
   options.modules.brave.enable = lib.mkEnableOption "Enable brave module";

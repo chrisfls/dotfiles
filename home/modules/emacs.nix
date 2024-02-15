@@ -1,6 +1,5 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.emacs) enable;
 
   rev = "03d692f129633e3bf0bd100d91b3ebf3f77db6d1";
@@ -22,7 +21,8 @@ in
   options.modules.emacs.enable = lib.mkEnableOption "Enable emacs module";
 
   config = lib.mkIf enable {
-    home.packages = [ doom-install pkgs.semgrep ] ++ (if archlinux then [ ] else [ pkgs.emacs29 ]);
+    # TODO: archlinux semgrep
+    home.packages = [ doom-install pkgs.semgrep ];
     pacman.packages = [ "extra/emacs" ];
     home.sessionPath = [ "${dir}/bin" ];
     modules.copyFile."${configHome}/doom" = "${toString ../../assets/doom}";
