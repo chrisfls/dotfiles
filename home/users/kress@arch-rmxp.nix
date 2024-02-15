@@ -55,54 +55,61 @@ in
     installationType = "systemd";
   };
 
-  programs.autorandr.profiles = {
-    undocked = {
-      fingerprint = { inherit eDP-1; };
-      config = {
-        DP-1.enable = false;
-        DP-2.enable = false;
-        eDP-1 = {
-          enable = true;
-          crtc = 0;
-          primary = true;
-          position = "0x0";
-          mode = "800x1280";
-          rate = "60.06";
-          rotate = "right";
-          # x-prop-aspect_ratio Automaticmn
-          # x-prop-audio auto
-          # x-prop-broadcast_rgb Automatic
-          # x-prop-colorspace Default
-          # x-prop-max_bpc 8
-          # x-prop-non_desktop 0
-        };
-        HDMI-1.enable = false;
-      };
-    };
-    docked = {
-      fingerprint = { inherit eDP-1 HDMI-1; };
-      config = {
-        DP-1.enable = false;
-        DP-2.enable = false;
-        eDP-1 = {
-          enable = true;
-          crtc = 1;
-          primary = false;
-          position = "0x1360";
-          mode = "800x1280";
-          rate = "60.06";
-          rotate = "right";
-        };
-        HDMI-1 = {
-          enable = true;
-          crtc = 0;
-          primary = true;
-          position = "1280x0";
-          mode = "3840x2160";
-          rate = "60.00";
-        };
-      };
-    };
+  xdg.configFile = {
+    # undocked mode
+    "autorandr/undocked/setup".text = "eDP-1 ${eDP-1}";
+    "autorandr/undocked/config".text =
+      ''
+        output DP-1
+        off
+
+        output DP-2
+        off
+
+        output HDMI-1
+        off
+
+        output eDP-1
+        pos 0x0
+        crtc 0
+        primary
+        mode 800x1280
+        rate 60.06
+        rotate right
+      '';
+    # docked mode
+    "autorandr/docked/setup".text =
+      ''
+        HDMI-1 ${HDMI-1}
+        eDP-1 ${eDP-1}
+      '';
+    "autorandr/docked/config".text =
+      # x-prop-aspect_ratio Automaticmn
+      # x-prop-audio auto
+      # x-prop-broadcast_rgb Automatic
+      # x-prop-colorspace Default
+      # x-prop-max_bpc 8
+      # x-prop-non_desktop 0
+      ''
+        output DP-1
+        off
+
+        output DP-2
+        off
+
+        output HDMI-1
+        pos 1280x0
+        crtc 0
+        primary
+        mode 3840x2160
+        rate 60.00
+        output eDP-1
+        pos 0x1360
+        crtc 1
+        mode 800x1280
+        rate 60.06
+        rotate right
+      '';
   };
 
   modules.i3wm.extraConfig =
