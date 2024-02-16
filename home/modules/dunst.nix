@@ -111,6 +111,7 @@ in
           frame_color="${color-scheme.foreground}"
           timeout="10"
         '';
+      # TODO: stop using pkgs.procps
       onChange = ''
         ${pkgs.procps}/bin/pkill -u "$USER" ''${VERBOSE+-e} dunst || true
       '';

@@ -1,7 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.modules.telegram) enable;
-  inherit (pkgs.extra) qt mkIfElse;
 
   pkg = pkgs.writeShellScriptBin "telegram-desktop"
     ''

@@ -1,36 +1,36 @@
-{ config, lib, pkgs, specialArgs, ... }:
+{ config, lib, pkgs, ... }:
 let
-  inherit (config.pacman) enable pkgs;
+  inherit (config.pacman) enable packages;
 
-  # flatten = attrs:
-  #   lib.lists.concatMap
-  #     (value: if builtins.isAttrs value then flatten value else value)
-  #     (lib.attrsets.attrValues attrs);
+  quote = str: "'${str}'";
+
+  repo-packages = lib.trivial.pipe packages [
+    (builtins.filter (name: !(lib.strings.hasPrefix "aur/" name)))
+    (builtins.map quote)
+  ];
+
+  aur-packages = lib.trivial.pipe packages [
+    (builtins.filter (name: lib.strings.hasPrefix "aur/" name))
+    (builtins.map quote)
+  ];
 in
 {
   options.pacman = {
     enable = lib.mkEnableOption "Enable pacman module";
-
-    # pkgs = lib.mkOption {
-    #   type = lib.mkOptionType {
-    #     name = "attrs";
-    #     description = "merged attribute set";
-    #     check = builtins.isAttrs;
-    #     merge = loc: lib.lists.foldl' (res: def: lib.attrsets.recursiveUpdate res def.value) { };
-    #     emptyValue = { value = { }; };
-    #   };
-    #   default = { };
-    # };
-
     packages = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
     };
   };
 
-  imports = [
-    ./pacman/pacman-switch.nix
-  ];
-
-  # config.pacman.packages = flatten pkgs;
+  config = lib.mkIf enable {
+    home.packages = [
+      (pkgs.writeShellScriptBin "pacman-switch"
+        ''
+          sudo pacman -Sy --needed --noconfirm archlinux-keyring chaotic-keyring && \
+          sudo pacman -Su --needed --noconfirm ${builtins.concatStringsSep " " repo-packages} && \
+          paru -Sua --needed --noconfirm ${builtins.concatStringsSep " " aur-packages}
+        '')
+    ];
+  };
 }

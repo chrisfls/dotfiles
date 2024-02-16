@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) desktop development archlinux;
+  inherit (config.presets) desktop development;
   enable = desktop && development;
 in
 lib.mkIf enable {
@@ -10,13 +10,13 @@ lib.mkIf enable {
   };
 
   # TODO: trying because I'm curious
-  home.packages = [
-    pkgs.tig
+  # home.packages = [
+  #   pkgs.tig
 
-    # TODO: eval which I'll use
-    pkgs.gitui
-    pkgs.lazygit
-  ];
+  #   # TODO: eval which I'll use
+  #   pkgs.gitui
+  #   pkgs.lazygit
+  # ];
 
   pacman.packages = [
     "extra/dbeaver"

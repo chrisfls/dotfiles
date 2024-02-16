@@ -1,13 +1,9 @@
 { config, lib, pkgs, ... }:
-let
-  inherit (config.modules.rclone) enable; 
-  rclone = "${pkgs.rclone}/bin/rclone";
-  fusermount = "fusermount";
-in {
+let inherit (config.modules.rclone) enable; in {
   options.modules.rclone.enable = lib.mkEnableOption "Enable rclone module";
 
   config = lib.mkIf enable {
-    home.packages = [ pkgs.rclone ];
+    pacman.packages = [ "extra/rclone" ];
 
     xdg.configFile."systemd/user/rclone@.service".text =
       ''
@@ -22,8 +18,8 @@ in {
 
         [Service]
         Type=notify
-        ExecStart=${rclone} mount "%I:" "%h/Desktop/rclone/%I"
-        ExecStop=${fusermount} -u "%h/Desktop/rclone/%I"
+        ExecStart=/usr/bin/rclone mount "%I:" "%h/Desktop/rclone/%I"
+        ExecStop=fusermount -u "%h/Desktop/rclone/%I"
 
         [Install]
         WantedBy=default.target

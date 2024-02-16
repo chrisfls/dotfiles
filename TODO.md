@@ -1,6 +1,8 @@
 ## system
 
 - Configure 10 bit at `/etc/X11/xorg.conf.d/30-screen.conf`
-- [x] Stop using home.packages and pkgs.*
-- [ ] Remove nixos specific code from themes.nix
-  - [ ] Stop using nix cursor package
+- [ ] Stop using pkgs.procps
+- [ ] Stop using pkgs.semgrep
+- [ ] Rewrite pkgs.writeShellScriptBin into pkgs.writeHostScriptBin
+- [x] Remove nixos specific code from themes.nix
+  - [x] Stop using nix cursor package

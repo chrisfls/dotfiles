@@ -1,7 +1,6 @@
 # do not migrate to breeze, all qt5 apps will use gpu accel if you do
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) archlinux;
   inherit (config.modules.themes)
     cursor
     enable
@@ -70,13 +69,8 @@ let
       };
     };
 
-  qt5ct =
-    if archlinux then "/usr/share/qt5ct"
-    else "${pkgs.qt5ct}/share/${qt5ct}";
-
-  qt6ct =
-    if archlinux then "/usr/share/qt6ct"
-    else "${pkgs.qt6ct}/share/${qt6ct}";
+  qt5ct = "/usr/share/qt5ct";
+  qt6ct = "/usr/share/qt6ct";
 
   qtVersions = with pkgs; [ qt5 qt6 ];
 
@@ -114,8 +108,8 @@ in
       };
 
       package = lib.mkOption {
-        type = lib.types.package;
-        default = pkgs.materia-kde-theme;
+        type = lib.types.str;
+        default = "extra/kvantum-theme-materia";
       };
     };
 
@@ -126,8 +120,8 @@ in
       };
 
       package = lib.mkOption {
-        type = lib.types.package;
-        default = pkgs.materia-theme;
+        type = lib.types.str;
+        default = "extra/materia-gtk-theme";
       };
     };
 
@@ -138,15 +132,16 @@ in
       };
 
       package = lib.mkOption {
-        type = lib.types.package;
-        default = pkgs.papirus-icon-theme;
+        type = lib.types.str;
+        default = "extra/papirus-icon-theme";
       };
     };
 
     cursor = {
+      # TODO: eval this theme: https://github.com/keeferrourke/capitaine-cursors/tree/master
       name = lib.mkOption {
         type = lib.types.str;
-        default = "Simp1e-Mix-Dark"; # breeze_cursors
+        default = "Vanilla-DMZ-AA";
       };
 
       size = lib.mkOption {
@@ -155,17 +150,8 @@ in
       };
 
       package = lib.mkOption {
-        type = lib.types.package;
-        default = pkgs.simp1e-cursors.overrideAttrs (prev: rec {
-          version = "20230817";
-          src = pkgs.fetchFromGitLab {
-            owner = "cursors";
-            repo = "simp1e";
-            rev = "3de6aa81683311bfca85e97cff520b3729ebc42a";
-            sha256 = "sha256-p8+3LbPQ1siqSfyxMBEOiB0pR7x+c8/nAwZxZAN5sXU=";
-            fetchSubmodules = true;
-          };
-        }); # pkgs.libsForQt5.breeze-qt5
+        type = lib.types.str;
+        default = "extra/xcursor-vanilla-dmz-aa";
       };
     };
 
@@ -182,8 +168,8 @@ in
         };
 
         package = lib.mkOption {
-          type = lib.types.package;
-          default = pkgs.noto-fonts;
+          type = lib.types.str;
+          default = "extra/noto-fonts";
         };
       };
 
@@ -199,8 +185,8 @@ in
         };
 
         package = lib.mkOption {
-          type = lib.types.package;
-          default = pkgs.noto-fonts;
+          type = lib.types.str;
+          default = "extra/noto-fonts";
         };
       };
     };
@@ -212,75 +198,61 @@ in
     };
   };
 
-  config = lib.mkIf enable (lib.mkMerge [
-    {
-      home.packages = if archlinux then [ cursor.package ] else [
-        qt.package
-        gtk.package
-        icon.package
-        pkgs.libsForQt5.qt5ct
-        pkgs.qt6Packages.qt6ct
-        pkgs.libsForQt5.qtstyleplugin-kvantum
-        pkgs.qt6Packages.qtstyleplugin-kvantum
-      ];
+  config = lib.mkIf enable {
+    pacman.packages = [
+      "extra/kvantum"
+      "extra/qt5ct"
+      "extra/qt6ct"
+      cursor.package
+      font.fixed.package
+      font.general.package
+      gtk.package
+      icon.package
+      qt.package
+    ];
 
-      pacman.packages = [
-        "extra/kvantum"
-        "extra/qt5ct"
-        "extra/qt6ct"
-      ];
+    home.sessionVariables = {
+      QT_QPA_PLATFORMTHEME = "qt5ct";
+      QT_STYLE_OVERRIDE = "qt5ct-style";
+      QT_PLUGIN_PATH = "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins";
+    };
 
-      home.sessionVariables = {
-        QT_QPA_PLATFORMTHEME = "qt5ct";
-        QT_STYLE_OVERRIDE = "qt5ct-style";
-        QT_PLUGIN_PATH =
-          if archlinux then "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins"
-          else "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}" + (makeQtPath "qtPluginPrefix");
+    modules.xorg.imported-variables = [
+      "QT_QPA_PLATFORMTHEME"
+      "QT_STYLE_OVERRIDE"
+      "QT_PLUGIN_PATH"
+      "QML2_IMPORT_PATH"
+    ];
+
+    xresources.properties = {
+      "Xcursor.theme" = cursor.name;
+      "Xcursor.size" = cursor.size;
+    };
+
+    xdg.configFile = {
+      "Kvantum/kvantum.kvconfig".text = toINI {
+        General.theme = qt.kvantum-theme;
       };
-
-      modules.xorg.imported-variables = [
-        "QT_QPA_PLATFORMTHEME"
-        "QT_STYLE_OVERRIDE"
-        "QT_PLUGIN_PATH"
-        "QML2_IMPORT_PATH"
-      ];
-
-      gtk = {
-        enable = true;
-        font = { inherit (font.general) name size; };
-        iconTheme = { inherit (icon) name; };
-        cursorTheme = { inherit (cursor) name package size; };
-        theme = { inherit (gtk) name; };
-      };
-
-      home.pointerCursor = rec {
-        inherit (cursor) name package size;
-        gtk.enable = true;
-        x11.enable = true;
-      };
-
-      xdg.configFile = lib.mkMerge [
-        {
-          "Kvantum/kvantum.kvconfig".text = toINI {
-            General.theme = qt.kvantum-theme;
-          };
-          "qt5ct/qt5ct.conf".text = toQtct qt5ct;
-          "qt6ct/qt6ct.conf".text = toQtct qt6ct;
-        }
-        (lib.mkIf (archlinux) {
-          "Kvantum/${qt.kvantum-theme}".source = "${qt.package}/share/Kvantum/${qt.kvantum-theme}";
-        })
-      ];
-    }
-    (lib.mkIf (!archlinux) {
-      # moonlight fix
-      home.sessionVariables.QML2_IMPORT_PATH = "$QML2_IMPORT_PATH\${QML2_IMPORT_PATH:+:}" + (makeQtPath "qtQmlPrefix");
-
-      gtk = {
-        font.package = font.general.package;
-        iconTheme.package = icon.package;
-        theme.package = gtk.package;
-      };
-    })
-  ]);
+      "qt5ct/qt5ct.conf".text = toQtct qt5ct;
+      "qt6ct/qt6ct.conf".text = toQtct qt6ct;
+      "gtk-3.0/settings.ini".text =
+        ''
+          [Settings]
+          gtk-cursor-theme-name=${cursor.name}
+          gtk-cursor-theme-size=${toString cursor.size}
+          gtk-font-name=${font.general.name} ${toString font.general.size}
+          gtk-icon-theme-name=${icon.name}
+          gtk-theme-name=${gtk.name}
+        '';
+      "gtk-4.0/settings.ini".text =
+        ''
+          [Settings]
+          gtk-cursor-theme-name=${cursor.name}
+          gtk-cursor-theme-size=${toString cursor.size}
+          gtk-font-name=${font.general.name} ${toString font.general.size}
+          gtk-icon-theme-name=${icon.name}
+          gtk-theme-name=${gtk.name}
+        '';
+    };
+  };
 }

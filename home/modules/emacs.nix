@@ -21,7 +21,7 @@ in
   options.modules.emacs.enable = lib.mkEnableOption "Enable emacs module";
 
   config = lib.mkIf enable {
-    # TODO: archlinux semgrep
+    # TODO: stop using pkgs.semgrep
     home.packages = [ doom-install pkgs.semgrep ];
     pacman.packages = [ "extra/emacs" ];
     home.sessionPath = [ "${dir}/bin" ];

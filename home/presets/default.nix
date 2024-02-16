@@ -1,7 +1,6 @@
 { ... }:
 {
   imports = [
-    ./archlinux.nix
     ./desktop.nix
     ./desktop/development.nix
     ./desktop/gamedev.nix

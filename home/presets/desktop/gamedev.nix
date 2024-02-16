@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.presets) desktop gamedev archlinux;
+  inherit (config.presets) desktop gamedev;
   enable = desktop && gamedev;
 in
 {

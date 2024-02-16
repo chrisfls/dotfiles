@@ -13,9 +13,7 @@ let
   xsetroot = "/usr/bin/xsetroot";
   numlockx = "/usr/bin/numlockx";
 
-  cursorPath = "${config.modules.themes.cursor.package}/share/icons/${lib.strings.escapeShellArg config.home.pointerCursor.name}/cursors/${
-    lib.strings.escapeShellArg config.home.pointerCursor.x11.defaultCursor
-  }";
+  cursorPath = "/usr/share/icons/${lib.strings.escapeShellArg config.modules.themes.cursor.name}/cursors/left_ptr";
 in
 {
   options.modules.xorg = {

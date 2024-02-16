@@ -26,7 +26,6 @@ let
 in
 {
   presets = {
-    archlinux = true;
     development = true;
     desktop = true;
     work = true;

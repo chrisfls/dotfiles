@@ -9,10 +9,6 @@ let
     sha256 = "sha256-R0cr7io8m2z9r0T/4xbVtm5sGVaPDj80GEfXyBTWJI0=";
   };
 
-  rofi-pkg = pkgs.rofi.override {
-    plugins = [ pkgs.rofi-calc ];
-  };
-
   wrap = rofi:
     pkgs.writeShellScriptBin "rofi"
       "exec ${rofi} -dpi ${toString config.modules.scaling.dpi-scaled} \"$@\"";
