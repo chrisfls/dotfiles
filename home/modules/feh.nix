@@ -19,8 +19,6 @@ in
   config = lib.mkIf enable {
     pacman.packages = [ "extra/feh" ];
 
-    modules.i3wm.startup = [
-      "feh --bg-center ${args}"
-    ];
+    modules.i3wm.startup = [ "feh --bg-center ${args}" ];
   };
 }

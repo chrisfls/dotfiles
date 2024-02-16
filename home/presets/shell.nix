@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 {
-  targets.genericLinux.enable = true;
+  pacman.packages = [
+    "extra/jq"
+    "extra/jaq"
+    "core/which"
+  ];
 
   modules = {
     agenix.enable = true;
@@ -13,12 +17,6 @@
     git.enable = true;
   };
 
-  pacman.packages = [
-    "extra/jq"
-    "extra/jaq"
-    "core/which"
-  ];
-
   home.sessionVariables = {
     EDITOR = "micro";
     TERM = "xterm-256color";
@@ -27,4 +25,6 @@
     VTE_VERSION = "6003";
     DIRENV_LOG_FORMAT = "";
   };
+
+  targets.genericLinux.enable = true;
 }

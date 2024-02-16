@@ -9,6 +9,7 @@ let inherit (config.modules.keychain) enable extraConfig; in {
       ''
         eval "$(SHELL=bash keychain --eval --quiet id_ed25519)"
       '';
+
     modules.fish.extraConfig =
       ''
         SHELL=fish keychain --eval --quiet id_ed25519 | source

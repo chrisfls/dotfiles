@@ -3,54 +3,6 @@ let inherit (config.presets) desktop; in {
   options.presets.desktop = lib.mkEnableOption "Enable desktop preset";
 
   config = lib.mkIf desktop {
-    modules = {
-      autorandr.enable = true;
-      brave.enable = true;
-      dunst.enable = true;
-      feh.enable = true;
-      fontconfig.enable = true;
-      fonts.enable = true;
-      jamesdsp.enable = true;
-      kitty.enable = true;
-      loopback-toggle.enable = true;
-      micro = { enable = true; desktop = true; };
-      picom.enable = true;
-      polybar.enable = true;
-      qview.enable = true;
-      rclone.enable = true;
-      rofi.enable = true;
-      screenshot.enable = true;
-      steam.enable = true;
-      telegram.enable = true;
-      themes.enable = true;
-      udiskie.enable = true;
-      xdg.enable = true;
-      xorg = {
-        enable = true;
-        imported-variables = [ "PATH" ];
-      };
-      i3wm = {
-        enable = true;
-
-        startup = [
-          "copyq"
-          "nm-tray"
-          "whatsapp-for-linux"
-          "webcord --start-minimized"
-        ];
-
-        apps = {
-          "c" = "io.github.Qalculate.qalculate-qt";
-          "d" = "webcord";
-          "e" = "pcmanfm-qt";
-          "shift+c" = "com.github.hluk.copyq";
-          "w" = "com.github.eneshecan.WhatsAppForLinux";
-        };
-
-        extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
-      };
-    };
-
     pacman.packages = [
       # ######## #### ## #
       # DESK ENV
@@ -101,6 +53,54 @@ let inherit (config.presets) desktop; in {
       "chaotic-aur/webcord"
       "chaotic-aur/whatsapp-for-linux"
     ];
+
+    modules = {
+      autorandr.enable = true;
+      brave.enable = true;
+      dunst.enable = true;
+      feh.enable = true;
+      fontconfig.enable = true;
+      fonts.enable = true;
+      jamesdsp.enable = true;
+      kitty.enable = true;
+      loopback-toggle.enable = true;
+      micro = { enable = true; desktop = true; };
+      picom.enable = true;
+      polybar.enable = true;
+      qview.enable = true;
+      rclone.enable = true;
+      rofi.enable = true;
+      screenshot.enable = true;
+      steam.enable = true;
+      telegram.enable = true;
+      themes.enable = true;
+      udiskie.enable = true;
+      xdg.enable = true;
+      xorg = {
+        enable = true;
+        imported-variables = [ "PATH" ];
+      };
+      i3wm = {
+        enable = true;
+
+        startup = [
+          "copyq"
+          "nm-tray"
+          "whatsapp-for-linux"
+          "webcord --start-minimized"
+        ];
+
+        apps = {
+          "c" = "io.github.Qalculate.qalculate-qt";
+          "d" = "webcord";
+          "e" = "pcmanfm-qt";
+          "shift+c" = "com.github.hluk.copyq";
+          "w" = "com.github.eneshecan.WhatsAppForLinux";
+        };
+
+        extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
+      };
+    };
 
     xdg.configFile."kwalletrc".text =
       ''

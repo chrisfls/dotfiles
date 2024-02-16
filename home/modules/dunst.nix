@@ -3,8 +3,6 @@ let
   inherit (config.modules.dunst) enable;
   inherit (config.modules.scaling) scale xft;
   inherit (config.modules.themes) icon color-scheme;
-
-  withScale = num: toString (if xft then num else num * scale);
 in
 {
   options.modules.dunst.enable = lib.mkEnableOption "Enable dunst module";
@@ -33,6 +31,9 @@ in
 
     xdg.configFile."dunst/dunstrc" = {
       text =
+        let
+          withScale = num: toString (if xft then num else num * scale);
+        in
         ''
           [experimental]
           per_monitor_dpi="false"

@@ -21,10 +21,13 @@ in
   options.modules.emacs.enable = lib.mkEnableOption "Enable emacs module";
 
   config = lib.mkIf enable {
+    pacman.packages = [ "extra/emacs" ];
+
     # TODO: stop using pkgs.semgrep
     home.packages = [ doom-install pkgs.semgrep ];
-    pacman.packages = [ "extra/emacs" ];
+
     home.sessionPath = [ "${dir}/bin" ];
+
     modules.copyFile."${configHome}/doom" = "${toString ../../assets/doom}";
   };
 }

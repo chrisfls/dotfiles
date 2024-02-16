@@ -1,22 +1,19 @@
 { config, lib, pkgs, specialArgs, ... }:
-let
-  inherit (config.modules.telegram) enable;
-
-  pkg = pkgs.writeShellScriptBin "telegram-desktop"
-    ''
-      unset QT_SCREEN_SCALE_FACTORS
-      export QT_AUTO_SCREEN_SCALE_FACTOR="0"
-      export QT_SCALE_FACTOR="1"
-      exec /usr/bin/telegram-desktop "$@"
-    '';
-in
-{
+let inherit (config.modules.telegram) enable; in {
   options.modules.telegram.enable = lib.mkEnableOption "Enable telegram module";
 
   config = lib.mkIf enable {
-    home.packages = [ pkg ];
-
     pacman.packages = [ "extra/telegram-desktop" ];
+
+    home.packages = [
+      (pkgs.writeShellScriptBin "telegram-desktop"
+        ''
+          unset QT_SCREEN_SCALE_FACTORS
+          export QT_AUTO_SCREEN_SCALE_FACTOR="0"
+          export QT_SCALE_FACTOR="1"
+          exec /usr/bin/telegram-desktop "$@"
+        '')
+    ];
 
     modules.i3wm = {
       apps."t" = "org.telegram";

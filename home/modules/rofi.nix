@@ -18,28 +18,6 @@ let
 
   mod = config.xsession.windowManager.i3.config.modifier;
 
-  # rofi notifications menu, not dash because arrays
-  rofi-dunst-pkg = pkgs.writeShellScriptBin "rofi-dunst"
-    ''
-      history=$(dunstctl history | jq -r .data[][])
-      ids=($(echo $history | jq -r .id.data))
-      summaries=("$(echo $history | jq -r .summary.data)" "󰃢 Clear All")
-      selected=$(
-        printf "%s\n" "''${summaries[@]}" | grep -v '^$' \
-          | rofi -dmenu -theme \"${theme'}\" -format i -p " "
-      )
-      if [[ -n $selected ]]; then
-        if [[ $selected -lt ''${#summaries[@]} ]]; then
-          dunstctl history-pop "''${ids[$selected]}"
-        else
-          for id in "''${ids[@]}"; do
-            dunstctl history-rm "$id"
-          done
-        fi
-      fi
-    '';
-
-
   # rofi calculator
   rofi-calc = pkgs.writeScript "rofi-calc"
     ''
@@ -52,11 +30,6 @@ let
         echo -n $out | xclip -sel c
       fi
     '';
-
-  # polybar main menu
-  rofi-menu-pkg = pkgs.writeShellScriptBin "rofi-menu"
-    "exec rofi -show drun -theme \"${theme}\"";
-
   # polybar session menu
   rofi-power-menu = pkgs.writeScript "rofi-power-menu"
     ''
@@ -142,21 +115,44 @@ in
   options.modules.rofi.enable = lib.mkEnableOption "Enable rofi module";
 
   config = lib.mkIf enable {
+    pacman.packages = [ "extra/rofi" "extra/rofi-calc" ];
+
     modules.i3wm = {
-      run = toString rofi-run;
-      menu = "${rofi-menu-pkg}/bin/rofi-menu";
-      power-menu = toString rofi-power-menu;
-      window-list = toString rofi-windows;
-      calculator = toString rofi-calc;
+      run = "rofi-run";
+      menu = "rofi-menu";
+      power-menu = "rofi-power-menu";
+      window-list = "rofi-windows";
+      calculator = "rofi-calc";
     };
 
     home.packages = [
       (wrap "/usr/bin/rofi")
-      rofi-menu-pkg
-      rofi-dunst-pkg
-    ];
 
-    pacman.packages = [ "extra/rofi" "extra/rofi-calc" ];
+      # rofi notifications menu, not dash because arrays
+      (pkgs.writeShellScriptBin "rofi-dunst"
+        ''
+          history=$(dunstctl history | jq -r .data[][])
+          ids=($(echo $history | jq -r .id.data))
+          summaries=("$(echo $history | jq -r .summary.data)" "󰃢 Clear All")
+          selected=$(
+            printf "%s\n" "''${summaries[@]}" | grep -v '^$' \
+              | rofi -dmenu -theme \"${theme'}\" -format i -p " "
+          )
+          if [[ -n $selected ]]; then
+            if [[ $selected -lt ''${#summaries[@]} ]]; then
+              dunstctl history-pop "''${ids[$selected]}"
+            else
+              for id in "''${ids[@]}"; do
+                dunstctl history-rm "$id"
+              done
+            fi
+          fi
+        '')
+
+      # polybar main menu
+      (pkgs.writeShellScriptBin "rofi-menu"
+        "exec rofi -show drun -theme \"${theme}\"")
+    ];
 
     xdg.dataFile = {
       "fonts/GrapeNuts-Regular.ttf".source = "${settings}/fonts/GrapeNuts-Regular.ttf";

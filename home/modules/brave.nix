@@ -1,18 +1,16 @@
 { config, lib, pkgs, specialArgs, ... }:
-let
-  inherit (config.modules.brave) enable;
-
-  pkg = pkgs.writeShellScriptBin "brave"
-    ''
-      exec /usr/bin/brave --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
-    '';
-in
-{
+let inherit (config.modules.brave) enable; in {
   options.modules.brave.enable = lib.mkEnableOption "Enable brave module";
 
   config = lib.mkIf enable {
-    home.packages = [ pkg ];
     pacman.packages = [ "chaotic-aur/brave-bin" ];
+
+    home.packages = [
+      (pkgs.writeShellScriptBin "brave"
+        ''
+          exec /usr/bin/brave --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
+        '')
+    ];
 
     xdg.mimeApps.defaultApplications =
       let desktop = "brave-browser.desktop";

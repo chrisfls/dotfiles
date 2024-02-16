@@ -4,6 +4,12 @@ let
   enable = desktop && development;
 in
 lib.mkIf enable {
+  pacman.packages = [
+    "extra/dbeaver"
+    "chaotic-aur/gittyup"
+    "chaotic-aur/github-desktop"
+  ];
+
   modules = {
     code.enable = true;
     emacs.enable = true;
@@ -17,10 +23,4 @@ lib.mkIf enable {
   #   pkgs.gitui
   #   pkgs.lazygit
   # ];
-
-  pacman.packages = [
-    "extra/dbeaver"
-    "chaotic-aur/gittyup"
-    "chaotic-aur/github-desktop"
-  ];
 }

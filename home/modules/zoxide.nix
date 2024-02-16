@@ -9,6 +9,7 @@ let inherit (config.modules.zoxide) enable extraConfig; in {
       ''
         eval "$(zoxide init bash)"
       '';
+
     modules.fish.extraConfig =
       ''
         zoxide init fish | source

@@ -1,35 +1,28 @@
 { config, lib, pkgs, ... }:
-let
-  inherit (config.modules.screenshot) enable;
-
-  screenshot-copy = pkgs.writeShellScriptBin "screenshot-copy"
-    ''
-      shotgun - | xclip -t 'image/png' -selection clipboard
-    '';
-
-  screenshot-copy-area = pkgs.writeShellScriptBin "screenshot-copy-area"
-    ''
-      shotgun -g "$(slop -r guides)" - | xclip -t 'image/png' -selection clipboard
-    '';
-
-  screenshot-save = pkgs.writeShellScriptBin "screenshot-save"
-    ''
-      d="$XDG_PICTURES_DIR/Screenshots/$(date +"%Y-%m-%d")"
-      mkdir -p "$d"
-      shotgun "$d/$(date +"%H_%M_%S.png")"
-    '';
-in
-{
+let inherit (config.modules.screenshot) enable; in {
   options.modules.screenshot.enable = lib.mkEnableOption "Enable screenshot module";
 
   config = lib.mkIf enable {
-    home.packages = [
-      screenshot-copy
-      screenshot-copy-area
-      screenshot-save
-    ];
-
     pacman.packages = [ "extra/shotgun" "extra/slop" "extra/xclip" ];
+
+    home.packages = [
+      (pkgs.writeShellScriptBin "screenshot-copy"
+        ''
+          shotgun - | xclip -t 'image/png' -selection clipboard
+        '')
+
+      (pkgs.writeShellScriptBin "screenshot-copy-area"
+        ''
+          shotgun -g "$(slop -r guides)" - | xclip -t 'image/png' -selection clipboard
+        '')
+
+      (pkgs.writeShellScriptBin "screenshot-save"
+        ''
+          d="$XDG_PICTURES_DIR/Screenshots/$(date +"%Y-%m-%d")"
+          mkdir -p "$d"
+          shotgun "$d/$(date +"%H_%M_%S.png")"
+        '')
+    ];
 
     xdg.configFile = {
       "slop/guides.vert".text =

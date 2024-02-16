@@ -7,10 +7,6 @@ in
   options.presets.gamedev = lib.mkEnableOption "Enable gamedev preset";
 
   config = lib.mkIf enable {
-    presets.development = true;
-
-    modules.obs.enable = true;
-
     pacman.packages = [
       "aur/aseprite"
       "extra/gimp"
@@ -18,6 +14,10 @@ in
       "chaotic-aur/lmms-git"
       "extra/tiled"
     ];
+
+    presets.development = true;
+
+    modules.obs.enable = true;
 
     nixpkgs.config.allowUnfree = true;
   };
