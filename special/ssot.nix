@@ -34,15 +34,16 @@ rec {
     home = "kress";
     name = "Chris";
     email = "2013206+chrisfls@users.noreply.github.com";
-    github = {
-      email = "2013206+kress95@users.noreply.github.com";
-    };
-    gitlab = {
-      email = "664520-kress95@users.noreply.gitlab.com";
-    };
     work = {
       name = "Christian";
       email = "2013206+chrisfls@users.noreply.github.com";
+    };
+    github = {
+      email = "160303871+kress-x@users.noreply.github.com";
+    };
+    gitlab = {
+      # TODO: rename to kress-x
+      email = "664520-kress95@users.noreply.gitlab.com";
     };
   };
 }
