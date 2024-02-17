@@ -25,7 +25,7 @@ in
 
   config = lib.mkIf enable {
     home.packages = [
-      (pkgs.writeShellScriptBin "pacman-switch"
+      (pkgs.writeHostScriptBin "pacman-switch"
         ''
           sudo pacman -Sy --needed --noconfirm archlinux-keyring chaotic-keyring && \
           sudo pacman -Su --needed --noconfirm ${builtins.concatStringsSep " " repo-packages} && \

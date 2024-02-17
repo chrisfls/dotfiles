@@ -17,7 +17,7 @@ let inherit (config.modules.picom) enable; in {
       Service = {
         ExecStart =
           let
-            scriptPkg = pkgs.writeShellScriptBin "picom-start"
+            scriptPkg = pkgs.writeHostScriptBin "picom-start"
               "picom --config ${config.xdg.configHome}/picom/picom.conf --vsync-use-glfinish --glx-no-stencil";
           in
           "${scriptPkg}/bin/picom-start";

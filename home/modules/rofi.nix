@@ -10,7 +10,7 @@ let
   };
 
   wrap = rofi:
-    pkgs.writeShellScriptBin "rofi"
+    pkgs.writeHostScriptBin "rofi"
       "exec ${rofi} -dpi ${toString config.modules.scaling.dpi-scaled} \"$@\"";
 
   theme = "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5.rasi";
@@ -129,7 +129,7 @@ in
       (wrap "/usr/bin/rofi")
 
       # rofi notifications menu, not dash because arrays
-      (pkgs.writeShellScriptBin "rofi-dunst"
+      (pkgs.writeHostScriptBin "rofi-dunst"
         ''
           history=$(dunstctl history | jq -r .data[][])
           ids=($(echo $history | jq -r .id.data))
@@ -150,7 +150,7 @@ in
         '')
 
       # polybar main menu
-      (pkgs.writeShellScriptBin "rofi-menu"
+      (pkgs.writeHostScriptBin "rofi-menu"
         "exec rofi -show drun -theme \"${theme}\"")
     ];
 

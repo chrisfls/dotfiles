@@ -6,17 +6,17 @@ let inherit (config.modules.screenshot) enable; in {
     pacman.packages = [ "extra/shotgun" "extra/slop" "extra/xclip" ];
 
     home.packages = [
-      (pkgs.writeShellScriptBin "screenshot-copy"
+      (pkgs.writeHostScriptBin "screenshot-copy"
         ''
           shotgun - | xclip -t 'image/png' -selection clipboard
         '')
 
-      (pkgs.writeShellScriptBin "screenshot-copy-area"
+      (pkgs.writeHostScriptBin "screenshot-copy-area"
         ''
           shotgun -g "$(slop -r guides)" - | xclip -t 'image/png' -selection clipboard
         '')
 
-      (pkgs.writeShellScriptBin "screenshot-save"
+      (pkgs.writeHostScriptBin "screenshot-save"
         ''
           d="$XDG_PICTURES_DIR/Screenshots/$(date +"%Y-%m-%d")"
           mkdir -p "$d"

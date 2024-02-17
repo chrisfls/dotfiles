@@ -6,7 +6,7 @@ let inherit (config.modules.telegram) enable; in {
     pacman.packages = [ "extra/telegram-desktop" ];
 
     home.packages = [
-      (pkgs.writeShellScriptBin "telegram-desktop"
+      (pkgs.writeHostScriptBin "telegram-desktop"
         ''
           unset QT_SCREEN_SCALE_FACTORS
           export QT_AUTO_SCREEN_SCALE_FACTOR="0"

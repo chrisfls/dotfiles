@@ -5,7 +5,7 @@ let
   exe = "microsoft-edge-stable";
 
   pkg =
-    pkgs.writeShellScriptBin exe
+    pkgs.writeHostScriptBin exe
       ''
         exec /usr/bin/microsoft-edge-stable --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
       '';

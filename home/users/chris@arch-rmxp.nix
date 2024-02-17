@@ -112,22 +112,22 @@ in
   home.keyboard.layout = "br";
 
   home.packages = [
-    (pkgs.writeShellScriptBin "upgrade"
+    (pkgs.writeHostScriptBin "upgrade"
       ''
         upgrade-system && upgrade-home
       '')
 
-    (pkgs.writeShellScriptBin "upgrade-system"
+    (pkgs.writeHostScriptBin "upgrade-system"
       ''
         pacman-switch && sudo paccache -r
       '')
 
-    (pkgs.writeShellScriptBin "upgrade-home"
+    (pkgs.writeHostScriptBin "upgrade-home"
       ''
         home-manager switch && nix-env --delete-generations old && nix-store --gc
       '')
 
-    (pkgs.writeShellScriptBin "cleanup"
+    (pkgs.writeHostScriptBin "cleanup"
       ''
         sudo paccache -r && nix-env --delete-generations old && nix-store --gc
       '')

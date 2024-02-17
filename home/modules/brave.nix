@@ -6,7 +6,7 @@ let inherit (config.modules.brave) enable; in {
     pacman.packages = [ "chaotic-aur/brave-bin" ];
 
     home.packages = [
-      (pkgs.writeShellScriptBin "brave"
+      (pkgs.writeHostScriptBin "brave"
         ''
           exec /usr/bin/brave --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
         '')

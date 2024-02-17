@@ -89,7 +89,7 @@ in
         Type = "forking";
 
         ExecStart =
-          let scriptPkg = pkgs.writeShellScriptBin "polybar-start" "polybar topbar &";
+          let scriptPkg = pkgs.writeHostScriptBin "polybar-start" "polybar topbar &";
           in "${scriptPkg}/bin/polybar-start";
 
         Restart = "on-failure";

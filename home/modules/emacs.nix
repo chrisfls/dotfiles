@@ -7,7 +7,7 @@ let
   dir = "${configHome}/emacs";
 
   doom-install =
-    pkgs.writeShellScriptBin "doom-install"
+    pkgs.writeHostScriptBin "doom-install"
       ''
         mkdir -p ${dir}
         git init ${dir}
