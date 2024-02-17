@@ -13,8 +13,8 @@ let
     pkgs.writeShellScriptBin "rofi"
       "exec ${rofi} -dpi ${toString config.modules.scaling.dpi-scaled} \"$@\"";
 
-  theme = "${config.xdg.configHome}/rofi/launchers/type-3/style-5.rasi";
-  theme' = "${config.xdg.configHome}/rofi/launchers/type-3/style-5-alt.rasi";
+  theme = "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5.rasi";
+  theme' = "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5-alt.rasi";
 
   mod = config.xsession.windowManager.i3.config.modifier;
 
@@ -33,7 +33,7 @@ let
   # polybar session menu
   rofi-power-menu = pkgs.writeScript "rofi-power-menu"
     ''
-      theme="${config.home.homeDirectory}/.config/rofi/powermenu/type-1/style-1.rasi"
+      theme="$XDG_CONFIG_HOME/rofi/powermenu/type-1/style-1.rasi"
 
       # options
       shutdown=' Shutdown'

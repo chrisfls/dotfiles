@@ -45,7 +45,7 @@ in
           class="Dunst"
           context="mod4+shift+dead_acute"
           corner_radius="8"
-          dmenu="rofi -dmenu -theme "${config.xdg.configHome}/rofi/launchers/type-3/style-5.rasi" -p dunst"
+          dmenu="rofi -dmenu -theme "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5.rasi" -p dunst"
           ellipsize="middle"
           follow="mouse"
           font="Noto Sans ${withScale 10}"

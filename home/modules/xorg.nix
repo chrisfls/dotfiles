@@ -68,7 +68,7 @@ in
       ".xsession".text =
         ''
           if [ -z "$HM_XPROFILE_SOURCED" ]; then
-            . "${config.home.homeDirectory}/.xprofile"
+            . "$HOME/.xprofile"
           fi
           unset HM_XPROFILE_SOURCED
 
@@ -77,7 +77,7 @@ in
           xset s off -dpms
 
           ${xsession}
-          ${xrdb} -merge ${config.home.homeDirectory}/.Xresources
+          ${xrdb} -merge $HOME/.Xresources
         
           ${xsetroot} -xcf ${cursorPath} ${toString config.modules.themes.cursor.size}
 
@@ -96,10 +96,10 @@ in
 
       ".xprofile".text =
         ''
-          . "${config.home.homeDirectory}/.nix-profile/etc/profile.d/hm-session-vars.sh"
+          . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
-          if [ -e "${config.home.homeDirectory}/.profile" ]; then
-            . "${config.home.homeDirectory}/.profile"
+          if [ -e "$HOME/.profile" ]; then
+            . "$HOME/.profile"
           fi
 
           # If there are any running services from a previous session.

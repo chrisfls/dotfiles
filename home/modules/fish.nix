@@ -44,7 +44,7 @@ in
           end
         end
 
-        fenv source ${config.home.homeDirectory}/.nix-profile/etc/profile.d/hm-session-vars.sh
+        fenv source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
 
         set -g SHELL (which fish)
 
@@ -59,7 +59,7 @@ in
               set -l post_joined (string replace $prev_joined "" $joined)
               set -l prev (string split " " (string trim $prev_joined))
               set -l post (string split " " (string trim $post_joined))
-              set fish_complete_path $prev "${config.xdg.dataHome}/fish/home-manager_generated_completions" $post
+              set fish_complete_path $prev "$XDG_DATA_HOME/fish/home-manager_generated_completions" $post
           end
 
           ${extraConfig}
