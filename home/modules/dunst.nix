@@ -22,7 +22,7 @@ in
         BusName = "org.freedesktop.Notifications";
         ExecStart =
           let
-            scriptPkg = pkgs.writeShellScriptBin "dunst-start"
+            scriptPkg = pkgs.writeHostScriptBin "dunst-start"
               "dunst --config ${config.xdg.configHome}/dunst/dunstrc";
           in
           "${scriptPkg}/bin/dunst-start";
@@ -112,9 +112,8 @@ in
           frame_color="${color-scheme.foreground}"
           timeout="10"
         '';
-      # TODO: stop using pkgs.procps
       onChange = ''
-        ${pkgs.procps}/bin/pkill -u "$USER" ''${VERBOSE+-e} dunst || true
+        pkill -u "$USER" ''${VERBOSE+-e} dunst || true
       '';
     };
   };

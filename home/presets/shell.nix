@@ -1,9 +1,10 @@
 { config, lib, pkgs, ... }:
 {
   pacman.packages = [
-    "extra/jq"
-    "extra/jaq"
+    "core/procps-ng"
     "core/which"
+    "extra/jaq"
+    "extra/jq"
   ];
 
   modules = {
