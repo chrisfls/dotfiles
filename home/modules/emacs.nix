@@ -21,10 +21,9 @@ in
   options.modules.emacs.enable = lib.mkEnableOption "Enable emacs module";
 
   config = lib.mkIf enable {
-    pacman.packages = [ "extra/emacs" ];
+    pacman.packages = [ "extra/emacs" "aur/semgrep-bin" ];
 
-    # TODO: stop using pkgs.semgrep
-    home.packages = [ doom-install pkgs.semgrep ];
+    home.packages = [ doom-install ];
 
     home.sessionPath = [ "${dir}/bin" ];
 
