@@ -30,16 +30,19 @@ rec {
     };
   };
   contact = {
-    nickname = "kress95";
+    nickname = "chrisfls";
     home = "kress";
     name = "Chris";
-    email = "2013206+kress95@users.noreply.github.com";
+    email = "2013206+chrisfls@users.noreply.github.com";
+    github = {
+      email = "2013206+kress95@users.noreply.github.com";
+    };
     gitlab = {
       email = "664520-kress95@users.noreply.gitlab.com";
     };
     work = {
       name = "Christian";
-      email = builtins.concatStringsSep "" [ "christian" "@" "timeline" "." "co"  ];
+      email = "2013206+chrisfls@users.noreply.github.com";
     };
   };
 }

@@ -44,13 +44,12 @@ in
       "git/config_personal".text =
         ''
           [user]
-          	email = "2013206+kress95@users.noreply.github.com"
-          	name = "Chris"
+          	email = "${ssot.contact.github.email}"
         '';
       "git/config_gitlab".text =
         ''
           [user]
-          	email = "664520-kress95@users.noreply.gitlab.com"
+          	email = "${ssot.contact.gitlab.email}"
         '';
     };
   };

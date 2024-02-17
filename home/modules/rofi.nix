@@ -3,7 +3,7 @@ let
   inherit (config.modules.rofi) enable;
 
   settings = pkgs.fetchFromGitHub {
-    owner = "kress95";
+    owner = "chrisfls";
     repo = "rofi";
     rev = "62110b40c0c4a15ae45b6fbc7958d5a5cb6cbf62";
     sha256 = "sha256-R0cr7io8m2z9r0T/4xbVtm5sGVaPDj80GEfXyBTWJI0=";

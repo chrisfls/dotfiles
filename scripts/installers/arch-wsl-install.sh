@@ -94,7 +94,7 @@ else
   ssh-add ~/.ssh/id_ed25519
 
   # clone nix config
-  git clone git@github.com:kress95/nix-configs.git /etc/nixos
+  git clone git@github.com:chrisfls/nix-configs.git /etc/nixos
 
   # install home manager
   nix-channel --add https://nixos.org/channels/nixos-22.11 nixpkgs
