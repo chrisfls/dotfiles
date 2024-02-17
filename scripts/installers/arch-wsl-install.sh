@@ -56,16 +56,16 @@ if [ "$(id -u)" = "0" ]; then
   # setup root password
   passwd
 
-  # create kress user
-  useradd -m -G wheel,docker,nix-users -s /bin/bash kress
-  echo "trusted-users = root kress" | tee -a /etc/nix/nix.conf
+  # create chris user
+  useradd -m -G wheel,docker,nix-users -s /bin/bash chris
+  echo "trusted-users = root chris" | tee -a /etc/nix/nix.conf
 
-  # setup kress password
-  passwd kress
+  # setup chris password
+  passwd chris
 
-  # make folder for nix config and make kress own it
+  # make folder for nix config and make chris own it
   mkdir /etc/nixos
-  chown -R kress /etc/nixos
+  chown -R chris /etc/nixos
 
   set +x
   
@@ -73,13 +73,13 @@ if [ "$(id -u)" = "0" ]; then
   echo ""
   echo "Set up the default user on windows:"
   echo ""
-  echo "\> Arch.exe config --default-user kress"
+  echo "\> Arch.exe config --default-user chris"
   echo ""
   echo "If the default user has not been changed, restart the LxssManager in an Admin command prompt:"
   echo ""
   echo "\> net stop lxssmanager && net start lxssmanager"
   echo ""
-  echo "Restart wsl and add your ssh keys to '/home/kress/.ssh/id_ed25519'."
+  echo "Restart wsl and add your ssh keys to '/home/chris/.ssh/id_ed25519'."
   echo "After that, run this script again."
 else
   echo "--- USER SETUP ---"
@@ -87,8 +87,8 @@ else
   set -x
 
   # load ssh keys
-  sudo chown kress ~/.ssh/id_ed25519
-  sudo chown kress ~/.ssh/id_ed25519.pub
+  sudo chown chris ~/.ssh/id_ed25519
+  sudo chown chris ~/.ssh/id_ed25519.pub
   chmod 400 ~/.ssh/id_ed25519
   eval "$(ssh-agent -s)"
   ssh-add ~/.ssh/id_ed25519

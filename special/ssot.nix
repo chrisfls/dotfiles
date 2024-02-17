@@ -6,17 +6,17 @@ rec {
   };
   users = {
     arch-rmxp = {
-      kress = {
+      chris = {
         username = contact.home;
-        id = "${users.arch-rmxp.kress.username}@${hosts.arch-rmxp.hostname}";
-        home = "/home/${users.arch-rmxp.kress.username}";
+        id = "${users.arch-rmxp.chris.username}@${hosts.arch-rmxp.hostname}";
+        home = "/home/${users.arch-rmxp.chris.username}";
       };
     };
   };
   keys = {
     # TODO: cleanup/invalidate arch-wsl-rpgmxp keys
     arch-rmxp = {
-      kress = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFTUCRveiVk6Ri/F5B6KTNmyYFVNmlxNOCwIscuwZCvt kress@arch-rpgmxp";
+      chris = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFTUCRveiVk6Ri/F5B6KTNmyYFVNmlxNOCwIscuwZCvt kress@arch-rpgmxp";
     };
     arch-wsl-rpgmxp = {
       kress = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFTUCRveiVk6Ri/F5B6KTNmyYFVNmlxNOCwIscuwZCvt kress@arch-wsl-rpgmxp";
@@ -31,7 +31,7 @@ rec {
   };
   contact = {
     nickname = "chrisfls";
-    home = "kress";
+    home = "chris";
     name = "Chris";
     email = "2013206+chrisfls@users.noreply.github.com";
     work = {

@@ -1,5 +1,5 @@
 {
-  description = "kress's NixOS Flake";
+  description = "chris's NixOS Flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -41,7 +41,7 @@
     in
     {
       homeConfigurations = {
-        "${ssot.users.arch-rmxp.kress.id}" = home-manager.lib.homeManagerConfiguration rec {
+        "${ssot.users.arch-rmxp.chris.id}" = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import inputs.nixpkgs {
             system = "x86_64-linux";
             overlays = [ (import ./pkgs) ];
@@ -52,7 +52,7 @@
           modules = [
             ./home/modules
             ./home/presets
-            ./home/users/${ssot.users.arch-rmxp.kress.id}.nix
+            ./home/users/${ssot.users.arch-rmxp.chris.id}.nix
           ];
         };
       };

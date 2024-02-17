@@ -17,4 +17,4 @@ user = "greeter"
 
 [initial_session]
 command = "startx"
-user = "kress"
+user = "chris"

@@ -37,7 +37,7 @@ let
     ''
       crossfeed_enable=false
       convolver_enable=true
-      convolver_file=${./../../assets/audio/convolver/kress130.wav}
+      convolver_file=${./../../assets/audio/convolver/chris130.wav}
 
       ${buildBase target}
     '';
