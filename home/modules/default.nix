@@ -25,6 +25,7 @@
     ./micro.nix
     ./microsoft-edge.nix
     ./obs.nix
+    ./onedrive.nix
     ./pacman.nix
     ./picom.nix
     ./podman.nix

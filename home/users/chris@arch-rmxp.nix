@@ -16,6 +16,7 @@ in
     cloudflare-warp.enable = true;
     scaling = { enable = true; scale = 1.5; gtk = true; qt = true; };
     retroarch.enable = true;
+    onedrive.enable = true;
   };
 
   pacman.enable = true;
