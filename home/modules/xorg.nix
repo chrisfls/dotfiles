@@ -29,19 +29,20 @@ in
 
   config = lib.mkIf enable {
     pacman.packages = [
+      "aur/xplugd"
+      "chaotic-aur/xorg-server-git"
+      "extra/numlockx"
       "extra/xclip"
       "extra/xdotool"
-      "extra/numlockx"
       "extra/xorg-setxkbmap"
       "extra/xorg-xev"
+      "extra/xorg-xinit"
+      "extra/xorg-xinput"
       "extra/xorg-xkill"
+      "extra/xorg-xmodmap"
       "extra/xorg-xrdb"
       "extra/xorg-xset"
       "extra/xorg-xsetroot"
-      "aur/xplugd"
-      "extra/xorg-xinit"
-      "extra/xorg-xinput"
-      "extra/xorg-xmodmap"
       "extra/xsettingsd"
     ];
 

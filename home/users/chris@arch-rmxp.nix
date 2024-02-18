@@ -15,12 +15,10 @@ in
   modules = {
     cloudflare-warp.enable = true;
     scaling = { enable = true; scale = 1.5; gtk = true; qt = true; };
+    retroarch.enable = true;
   };
 
-  pacman = {
-    enable = true;
-    packages = [ "chaotic-aur/xorg-server-git" ];
-  };
+  pacman.enable = true;
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"

@@ -31,6 +31,7 @@
     ./polybar.nix
     ./qview.nix
     ./rclone.nix
+    ./retroarch.nix
     ./rofi.nix
     ./scaling.nix
     ./screenshot.nix
