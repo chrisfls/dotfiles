@@ -1,3 +1,4 @@
+.sublime
 pkgbuilds/*/.SRCINFO
 pkgbuilds/*/*.pkg.tar.zst
 pkgbuilds/*/*.tar.xz

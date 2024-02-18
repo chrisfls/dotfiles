@@ -1,0 +1,16 @@
+.local-variables.el
+.session*
+.tramp
+*.bak
+*.elc
+*.eln
+*.swo
+*.swp
+*~
+auto-save-list/
+custom.el
+elpa/
+elpaca/
+emacs.dump
+load-path.el
+TAGS
