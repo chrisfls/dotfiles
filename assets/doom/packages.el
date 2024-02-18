@@ -55,3 +55,7 @@
 (package! deno-fmt)
 
 (package! color-theme-sanityinc-tomorrow)
+
+(package! doom-gruvbox-material)
+
+(package! doom-everforest)
