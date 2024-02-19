@@ -18,8 +18,8 @@ let inherit (config.modules.rclone) enable; in {
 
         [Service]
         Type=notify
-        ExecStart=/usr/bin/rclone mount "%I:" "%h/Desktop/rclone/%I"
-        ExecStop=fusermount -u "%h/Desktop/rclone/%I"
+        ExecStart=/usr/bin/rclone mount "%I:" "%h/Desktop/cloud/%I"
+        ExecStop=fusermount -u "%h/Desktop/cloud/%I"
 
         [Install]
         WantedBy=default.target
