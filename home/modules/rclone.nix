@@ -58,7 +58,7 @@ let inherit (config.modules.rclone) enable; in {
             wait
           }
 
-          case $1 in
+          case "$1" in
             "setup")
               _perform _setup
               mode="--resync"
