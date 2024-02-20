@@ -33,10 +33,10 @@ in
           	email = "${ssot.contact.email}"
           	name = "${ssot.contact.name}"
 
-          [includeIf "gitdir:${config.home.homeDirectory}/personal/"]
+          [includeIf "gitdir:${config.home.homeDirectory}/repos/github"]
           	path = "${config.xdg.configHome}/git/config_personal"
 
-          [includeIf "gitdir:${config.home.homeDirectory}/personal/gitlab/"]
+          [includeIf "gitdir:${config.home.homeDirectory}/repos/gitlab/"]
           	path = "${config.xdg.configHome}/git/config_gitlab"
         
           ${extraConfig}

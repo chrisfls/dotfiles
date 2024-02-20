@@ -9,7 +9,7 @@ in
   config = (lib.mkIf enable {
     modules.git.extraConfig =
       ''
-        [includeIf "$gitdir:${config.xdg.userDirs.desktop}/work/"]
+        [includeIf "gitdir:${config.xdg.userDirs.desktop}/work/"]
         	path = "${config.xdg.configHome}/git/config_work"
       '';
 
