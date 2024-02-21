@@ -51,7 +51,6 @@ let inherit (config.presets) desktop; in {
       "chaotic-aur/parsec-bin"
       "extra/qbittorrent"
       "chaotic-aur/webcord"
-      "chaotic-aur/whatsapp-for-linux"
     ];
 
     modules = {
@@ -86,7 +85,6 @@ let inherit (config.presets) desktop; in {
         startup = [
           "copyq"
           "nm-tray"
-          "whatsapp-for-linux"
           "webcord --start-minimized"
         ];
 
