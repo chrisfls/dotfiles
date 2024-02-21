@@ -9,3 +9,10 @@ Not working:
 
 - `/etc/X11/xorg.conf.d/30-monitor.conf`
 - `/etc/pam.d/i3lock`
+
+
+Home setup
+
+```sh
+sudo mkdir -m 0755 -p /nix/var/nix/{profiles,gcroots}/per-user/$USER
+```
