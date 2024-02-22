@@ -13,6 +13,7 @@ in
 
     home.packages = [
       # devenv
+      inputs.devenv.packages.${pkgs.system}.devenv
       pkgs.cachix
 
       # misc
