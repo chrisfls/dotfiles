@@ -60,25 +60,6 @@ let inherit (config.presets) desktop; in {
       feh.enable = true;
       fontconfig.enable = true;
       fonts.enable = true;
-      jamesdsp.enable = true;
-      kitty.enable = true;
-      loopback-toggle.enable = true;
-      micro = { enable = true; desktop = true; };
-      picom.enable = true;
-      polybar.enable = true;
-      qview.enable = true;
-      rclone.enable = true;
-      rofi.enable = true;
-      screenshot.enable = true;
-      steam.enable = true;
-      telegram.enable = true;
-      themes.enable = true;
-      udiskie.enable = true;
-      xdg.enable = true;
-      xorg = {
-        enable = true;
-        imported-variables = [ "PATH" ];
-      };
       i3wm = {
         enable = true;
 
@@ -97,6 +78,25 @@ let inherit (config.presets) desktop; in {
         };
 
         extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
+      };
+      jamesdsp.enable = true;
+      kitty.enable = true;
+      loopback-toggle.enable = true;
+      micro = { enable = true; desktop = true; };
+      picom.enable = true;
+      polybar.enable = true;
+      qview.enable = true;
+      rclone.enable = true;
+      rofi.enable = true;
+      screenshot.enable = true;
+      steam.enable = true;
+      telegram.enable = true;
+      themes.enable = true;
+      udiskie.enable = true;
+      xdg.enable = true;
+      xorg = {
+        enable = true;
+        imported-variables = [ "PATH" ];
       };
     };
 
