@@ -2,12 +2,8 @@
 let
   inherit (config.modules.jamesdsp) enable presets;
 
-  buildBase = path:
-    let graphicEQ = lib.readFile path; in
+  base =
     ''
-      graphiceq_enable=true
-      graphiceq_param=${graphicEQ}
-
       master_enable=true
       master_limrelease=61
       master_limthreshold=0
@@ -20,6 +16,15 @@ let
       stereowide_enable=false
       tone_enable=false
       tube_enable=false
+    '';
+
+  buildBase = path:
+    let graphicEQ = lib.readFile path; in
+    ''
+      graphiceq_enable=true
+      graphiceq_param=${graphicEQ}
+
+      ${base}
     '';
 
   buildCF = target:
@@ -69,17 +74,37 @@ in
   };
 
   config = lib.mkIf enable {
-    pacman.packages = ["chaotic-aur/jamesdsp-git"];
+    pacman.packages = [ "chaotic-aur/jamesdsp-git" ];
 
-    modules.i3wm.startup = ["jamesdsp --tray"];
-    
+    modules.i3wm.startup = [ "jamesdsp --tray" ];
+
     xdg.configFile = lib.attrsets.foldlAttrs
       (acc: name: path: acc // {
         "jamesdsp/presets/${name} (EQ).conf".text = buildEQ path;
         "jamesdsp/presets/${name} (CF).conf".text = buildCF path;
         "jamesdsp/presets/${name} (IR).conf".text = buildIR path;
       })
-      { }
+      {
+        "jamesdsp/presets/CF.conf".text =
+          ''
+            convolver_enable=false
+            crossfeed_enable=true
+            crossfeed_mode=0
+            crossfeed_bs2b_fcut=700
+            crossfeed_bs2b_feed=60
+
+            ${base}
+          '';
+
+        "jamesdsp/presets/IR.conf".text =
+          ''
+            crossfeed_enable=false
+            convolver_enable=true
+            convolver_file=${./../../assets/audio/convolver/chris130.wav}
+
+            ${base}
+          '';
+      }
       presets;
   };
 }
