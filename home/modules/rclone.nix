@@ -47,12 +47,12 @@ let inherit (config.modules.rclone) enable; in {
             case "$hosname" in
               "arch-rmxp")
                 retroarch="~/.config/retroarch"
-                $1 "RetroArch/arch-rmxp/config" "$retroarch/config" &
                 $1 "RetroArch/all/recordings" "$retroarch/records" &
                 $1 "RetroArch/all/saves" "$retroarch/saves" &
                 $1 "RetroArch/all/screenshots" "$retroarch/screenshots" &
-                $1 "RetroArch/all/states" "$retroarch/states" &
                 $1 "RetroArch/all/system" "$retroarch/system" &
+                $1 "RetroArch/arch-rmxp/config" "$retroarch/config" &
+                $1 "RetroArch/lib64/states" "$retroarch/states" &
                 ;;
             esac
             wait
