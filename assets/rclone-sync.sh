@@ -66,9 +66,9 @@ _perform() {
       _bisync $1 "RetroArch/all/recordings" "$retroarch/records" &
       _bisync $1 "RetroArch/all/saves" "$retroarch/saves" &
       _bisync $1 "RetroArch/all/screenshots" "$retroarch/screenshots" &
+      _bisync $1 "RetroArch/all/states" "$retroarch/states" &
       _bisync $1 "RetroArch/all/system" "$retroarch/system" &
       _bisync $1 "RetroArch/arch-rmxp/config" "$retroarch/config" &
-      _bisync $1 "RetroArch/lib64/states" "$retroarch/states" &
       _sync $1 "RetroArch/arch-rmxp/retroarch.cfg" "$retroarch/retroarch.cfg" &
       ;;
   esac
