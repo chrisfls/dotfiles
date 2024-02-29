@@ -87,6 +87,7 @@ in
       {
         "jamesdsp/presets/CF.conf".text =
           ''
+            graphiceq_enable=false
             convolver_enable=false
             crossfeed_enable=true
             crossfeed_mode=0
@@ -98,6 +99,7 @@ in
 
         "jamesdsp/presets/IR.conf".text =
           ''
+            graphiceq_enable=false
             crossfeed_enable=false
             convolver_enable=true
             convolver_file=${./../../assets/audio/convolver/chris130.wav}
