@@ -111,8 +111,8 @@ in
 
   config = lib.mkIf enable {
     pacman.packages = [
-      "extra/qt5ct"
-      "extra/qt6ct"
+      "aur/qt5ct-kde"
+      "aur/qt6ct-kde"
       cursor.package
       font.fixed.package
       font.general.package
@@ -124,12 +124,10 @@ in
 
     home.sessionVariables = {
       QT_QPA_PLATFORMTHEME = "qt6ct";
-      #QT_STYLE_OVERRIDE = "breeze";
     };
 
     modules.xorg.imported-variables = [
       "QT_QPA_PLATFORMTHEME"
-      #"QT_STYLE_OVERRIDE"
     ];
 
     xresources.properties = {
@@ -137,14 +135,15 @@ in
       "Xcursor.size" = cursor.size;
     };
 
+    # TODO: fetch fonts from theme
     xdg.configFile = {
       "qt5ct/qt5ct.conf".text =
         ''
           [Appearance]
-          color_scheme_path=/usr/share/qt5ct/colors/darker.conf
+          color_scheme_path=/usr/share/color-schemes/BreezeDark.colors
           custom_palette=true
           icon_theme=breeze-dark
-          standard_dialogs=default
+          standard_dialogs=kde
           style=Breeze
 
           [Fonts]
@@ -157,17 +156,17 @@ in
           cursor_flash_time=1000
           dialog_buttons_have_icons=1
           double_click_interval=400
-          gui_effects=General, AnimateMenu, AnimateCombo, AnimateTooltip, AnimateToolBox
+          gui_effects=General, FadeMenu, AnimateCombo, FadeTooltip, AnimateToolBox
           keyboard_scheme=0
           menus_have_icons=true
           show_shortcuts_in_context_menus=true
-          stylesheets=/usr/share/qt5ct/qss/fusion-fixes.qss, /usr/share/qt5ct/qss/scrollbar-simple.qss, /usr/share/qt5ct/qss/sliders-simple.qss, /usr/share/qt5ct/qss/tooltip-simple.qss, /usr/share/qt5ct/qss/traynotification-simple.qss
+          stylesheets=@Invalid()
           toolbutton_style=4
           underline_shortcut=1
           wheel_scroll_lines=3
 
           [SettingsWindow]
-          geometry=@ByteArray(\x1\xd9\xd0\xcb\0\x3\0\0\0\0\vx\0\0\0\x18\0\0\rx\0\0\x5\x9f\0\0\vy\0\0\0)\0\0\rw\0\0\x5\x9e\0\0\0\0\0\0\0\0\n\0\0\0\vy\0\0\0)\0\0\rw\0\0\x5\x9e)
+          geometry=@ByteArray(\x1\xd9\xd0\xcb\0\x3\0\0\0\0\n\0\0\0\0\x18\0\0\xf\0\0\0\x5\x9f\0\0\n\x1\0\0\0)\0\0\xe\xff\0\0\x5\x9e\0\0\0\0\0\0\0\0\n\0\0\0\n\x1\0\0\0)\0\0\xe\xff\0\0\x5\x9e)
 
           [Troubleshooting]
           force_raster_widgets=0
@@ -179,7 +178,7 @@ in
       "qt6ct/qt6ct.conf".text =
         ''
           [Appearance]
-          color_scheme_path=/usr/share/qt6ct/colors/darker.conf
+          color_scheme_path=/usr/share/color-schemes/BreezeDark.colors
           custom_palette=true
           icon_theme=breeze-dark
           standard_dialogs=default
@@ -195,17 +194,17 @@ in
           cursor_flash_time=1000
           dialog_buttons_have_icons=1
           double_click_interval=400
-          gui_effects=General, AnimateMenu, AnimateCombo, AnimateTooltip, AnimateToolBox
+          gui_effects=General, FadeMenu, FadeTooltip, AnimateToolBox
           keyboard_scheme=0
           menus_have_icons=true
           show_shortcuts_in_context_menus=true
-          stylesheets=/usr/share/qt6ct/qss/fusion-fixes.qss, /usr/share/qt6ct/qss/scrollbar-simple.qss, /usr/share/qt6ct/qss/sliders-simple.qss, /usr/share/qt6ct/qss/tooltip-simple.qss, /usr/share/qt6ct/qss/traynotification-simple.qss
+          stylesheets=@Invalid()
           toolbutton_style=4
           underline_shortcut=1
           wheel_scroll_lines=3
 
           [SettingsWindow]
-          geometry=@ByteArray(\x1\xd9\xd0\xcb\0\x3\0\0\0\0\n\x97\0\0\0\x18\0\0\r\x17\0\0\x5\x9f\0\0\n\x98\0\0\0)\0\0\r\x16\0\0\x5\x9e\0\0\0\0\0\0\0\0\n\0\0\0\n\x98\0\0\0)\0\0\r\x16\0\0\x5\x9e)
+          geometry=@ByteArray(\x1\xd9\xd0\xcb\0\x3\0\0\0\0\n\0\0\0\0\x18\0\0\xf\0\0\0\x5\x9f\0\0\n\x1\0\0\0)\0\0\xe\xff\0\0\x5\x9e\0\0\0\0\0\0\0\0\n\0\0\0\n\x1\0\0\0)\0\0\xe\xff\0\0\x5\x9e)
 
           [Troubleshooting]
           force_raster_widgets=0
