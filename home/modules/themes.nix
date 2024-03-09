@@ -1,4 +1,3 @@
-# do not migrate to breeze, all qt5 apps will use gpu accel if you do
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.modules.themes)
@@ -7,141 +6,53 @@ let
     font
     gtk
     icon
-    qt;
+    qt5
+    qt6;
 
   inherit (config.modules.scaling) scale;
-
-  toINI = lib.generators.toINI { };
-
-  fmtFont = { name, size, ... }:
-    let
-      font = lib.strings.concatStringsSep "," [
-        name
-        (builtins.toString size)
-        # TODO: parameterize the rest
-        "-1"
-        "5"
-        "50"
-        "0"
-        "0"
-        "0"
-        "0"
-        "0"
-        "Regular"
-      ];
-    in
-    "\"${font}\"";
-
-  toQtct = path:
-    toINI {
-      Appearance = {
-        color_scheme_path = "${path}/colors/airy.conf";
-        custom_palette = false;
-        icon_theme = icon.name;
-        standard_dialogs = "xdgdesktopportal";
-        style = qt.style;
-      };
-
-      Fonts = {
-        general = fmtFont font.general;
-        fixed = fmtFont font.fixed;
-      };
-
-      Interface = {
-        activate_item_on_single_click = 0;
-        buttonbox_layout = 0;
-        cursor_flash_time = 1000;
-        dialog_buttons_have_icons = 2;
-        double_click_interval = 250;
-        gui_effects = "General, FadeMenu, AnimateCombo, FadeTooltip, AnimateToolBox";
-        keyboard_scheme = 2;
-        menus_have_icons = true;
-        show_shortcuts_in_context_menus = true;
-        stylesheets = "${path}/qss/scrollbar-simple.qss, ${path}/qss/sliders-simple.qss, ${path}/qss/tooltip-simple.qss, ${path}/qss/traynotification-simple.qss";
-        toolbutton_style = 2;
-        underline_shortcut = 2;
-        wheel_scroll_lines = 3;
-      };
-
-      Troubleshooting = {
-        force_raster_widgets = 1;
-        ignored_applications = "@Invalid()";
-      };
-    };
-
-  qt5ct = "/usr/share/qt5ct";
-  qt6ct = "/usr/share/qt6ct";
-
-  qtVersions = with pkgs; [ qt5 qt6 ];
-
-  makeQtPath = prefix:
-    lib.concatStringsSep ":"
-      (map (qt: "${config.home.profileDirectory}/${qt.qtbase.${prefix}}") qtVersions);
 in
 {
   options.modules.themes = {
     enable = lib.mkEnableOption "Enable themes module";
 
-    qt = {
-      style = lib.mkOption {
-        type = lib.types.str;
-        default = "kvantum-dark";
-      };
+    qt5.package = lib.mkOption {
+      type = lib.types.str;
+      default = "extra/breeze5";
+    };
 
-      kvantum-theme = lib.mkOption {
-        type = lib.types.str;
-        default = "MateriaDark";
-        description = ''
-          Other decent kvantum themes (ordered by stars):
-
-          - https://github.com/EliverLara/Nordic [★★★☆☆]
-          - https://github.com/PapirusDevelopmentTeam/arc-kde [★★★★★]
-          - https://github.com/vinceliuice/WhiteSur-kde [★★★★☆]
-          - https://github.com/PapirusDevelopmentTeam/materia-kde [★★★★★]
-          - https://github.com/catppuccin/Kvantum [?????]
-          - https://github.com/vinceliuice/Colloid-kde [★★★★☆]
-          - https://github.com/HimDek/Utterly-Nord-Plasma [★★☆☆☆]
-          - https://github.com/EliverLara/Andromeda-KDE (no pkg)
-          - https://github.com/HimDek/Utterly-Sweet-Plasma [★★☆☆☆]
-          - https://github.com/HimDek/Utterly-Round-Plasma-Style [★★☆☆☆]
-        '';
-      };
-
-      package = lib.mkOption {
-        type = lib.types.str;
-        default = "extra/kvantum-theme-materia";
-      };
+    qt6.package = lib.mkOption {
+      type = lib.types.str;
+      default = "extra/breeze";
     };
 
     gtk = {
       name = lib.mkOption {
         type = lib.types.str;
-        default = "Materia-dark-compact";
+        default = "Breeze-Dark";
       };
 
       package = lib.mkOption {
         type = lib.types.str;
-        default = "extra/materia-gtk-theme";
+        default = "extra/breeze-gtk";
       };
     };
 
     icon = {
       name = lib.mkOption {
         type = lib.types.str;
-        default = "Papirus-Dark";
+        default = "breeze-dark";
       };
 
       package = lib.mkOption {
         type = lib.types.str;
-        default = "extra/papirus-icon-theme";
+        default = "extra/breeze-icons";
       };
     };
 
     cursor = {
-      # TODO: eval this theme: https://github.com/keeferrourke/capitaine-cursors/tree/master
       name = lib.mkOption {
         type = lib.types.str;
-        default = "Vanilla-DMZ-AA";
+        default = "breeze_cursors";
       };
 
       size = lib.mkOption {
@@ -151,7 +62,7 @@ in
 
       package = lib.mkOption {
         type = lib.types.str;
-        default = "extra/xcursor-vanilla-dmz-aa";
+        default = "extra/breeze";
       };
     };
 
@@ -200,28 +111,26 @@ in
 
   config = lib.mkIf enable {
     pacman.packages = [
-      "extra/kvantum"
-      "extra/qt5ct"
-      "extra/qt6ct"
+      "extra/plasma-integration"
+      "extra/plasma5-integration"
+      "extra/systemsettings"
       cursor.package
       font.fixed.package
       font.general.package
       gtk.package
       icon.package
-      qt.package
+      qt5.package
+      qt6.package
     ];
 
     home.sessionVariables = {
-      QT_QPA_PLATFORMTHEME = "qt5ct";
-      QT_STYLE_OVERRIDE = "qt5ct-style";
-      QT_PLUGIN_PATH = "/usr/lib/qt/plugins/:/usr/lib/qt6/plugins";
+      QT_QPA_PLATFORMTHEME = "kde";
+      QT_STYLE_OVERRIDE = "breeze";
     };
 
     modules.xorg.imported-variables = [
       "QT_QPA_PLATFORMTHEME"
       "QT_STYLE_OVERRIDE"
-      "QT_PLUGIN_PATH"
-      "QML2_IMPORT_PATH"
     ];
 
     xresources.properties = {
@@ -230,11 +139,153 @@ in
     };
 
     xdg.configFile = {
-      "Kvantum/kvantum.kvconfig".text = toINI {
-        General.theme = qt.kvantum-theme;
-      };
-      "qt5ct/qt5ct.conf".text = toQtct qt5ct;
-      "qt6ct/qt6ct.conf".text = toQtct qt6ct;
+      kdeglobals.text =
+        ''
+          [ColorEffects:Disabled]
+          ChangeSelectionColor=
+          Color=56,56,56
+          ColorAmount=0
+          ColorEffect=0
+          ContrastAmount=0.65
+          ContrastEffect=1
+          Enable=
+          IntensityAmount=0.1
+          IntensityEffect=2
+
+          [ColorEffects:Inactive]
+          ChangeSelectionColor=true
+          Color=112,111,110
+          ColorAmount=0.025
+          ColorEffect=2
+          ContrastAmount=0.1
+          ContrastEffect=2
+          Enable=false
+          IntensityAmount=0
+          IntensityEffect=0
+
+          [Colors:Button]
+          BackgroundAlternate=30,87,116
+          BackgroundNormal=49,54,59
+          DecorationFocus=61,174,233
+          DecorationHover=61,174,233
+          ForegroundActive=61,174,233
+          ForegroundInactive=161,169,177
+          ForegroundLink=29,153,243
+          ForegroundNegative=218,68,83
+          ForegroundNeutral=246,116,0
+          ForegroundNormal=252,252,252
+          ForegroundPositive=39,174,96
+          ForegroundVisited=155,89,182
+
+          [Colors:Complementary]
+          BackgroundAlternate=30,87,116
+          BackgroundNormal=42,46,50
+          DecorationFocus=61,174,233
+          DecorationHover=61,174,233
+          ForegroundActive=61,174,233
+          ForegroundInactive=161,169,177
+          ForegroundLink=29,153,243
+          ForegroundNegative=218,68,83
+          ForegroundNeutral=246,116,0
+          ForegroundNormal=252,252,252
+          ForegroundPositive=39,174,96
+          ForegroundVisited=155,89,182
+
+          [Colors:Header]
+          BackgroundAlternate=42,46,50
+          BackgroundNormal=49,54,59
+          DecorationFocus=61,174,233
+          DecorationHover=61,174,233
+          ForegroundActive=61,174,233
+          ForegroundInactive=161,169,177
+          ForegroundLink=29,153,243
+          ForegroundNegative=218,68,83
+          ForegroundNeutral=246,116,0
+          ForegroundNormal=252,252,252
+          ForegroundPositive=39,174,96
+          ForegroundVisited=155,89,182
+
+          [Colors:Header][Inactive]
+          BackgroundAlternate=49,54,59
+          BackgroundNormal=42,46,50
+          DecorationFocus=61,174,233
+          DecorationHover=61,174,233
+          ForegroundActive=61,174,233
+          ForegroundInactive=161,169,177
+          ForegroundLink=29,153,243
+          ForegroundNegative=218,68,83
+          ForegroundNeutral=246,116,0
+          ForegroundNormal=252,252,252
+          ForegroundPositive=39,174,96
+          ForegroundVisited=155,89,182
+
+          [Colors:Selection]
+          BackgroundAlternate=30,87,116
+          BackgroundNormal=61,174,233
+          DecorationFocus=61,174,233
+          DecorationHover=61,174,233
+          ForegroundActive=252,252,252
+          ForegroundInactive=161,169,177
+          ForegroundLink=253,188,75
+          ForegroundNegative=176,55,69
+          ForegroundNeutral=198,92,0
+          ForegroundNormal=252,252,252
+          ForegroundPositive=23,104,57
+          ForegroundVisited=155,89,182
+
+          [Colors:Tooltip]
+          BackgroundAlternate=42,46,50
+          BackgroundNormal=49,54,59
+          DecorationFocus=61,174,233
+          DecorationHover=61,174,233
+          ForegroundActive=61,174,233
+          ForegroundInactive=161,169,177
+          ForegroundLink=29,153,243
+          ForegroundNegative=218,68,83
+          ForegroundNeutral=246,116,0
+          ForegroundNormal=252,252,252
+          ForegroundPositive=39,174,96
+          ForegroundVisited=155,89,182
+
+          [Colors:View]
+          BackgroundAlternate=35,38,41
+          BackgroundNormal=27,30,32
+          DecorationFocus=61,174,233
+          DecorationHover=61,174,233
+          ForegroundActive=61,174,233
+          ForegroundInactive=161,169,177
+          ForegroundLink=29,153,243
+          ForegroundNegative=218,68,83
+          ForegroundNeutral=246,116,0
+          ForegroundNormal=252,252,252
+          ForegroundPositive=39,174,96
+          ForegroundVisited=155,89,182
+
+          [Colors:Window]
+          BackgroundAlternate=49,54,59
+          BackgroundNormal=42,46,50
+          DecorationFocus=61,174,233
+          DecorationHover=61,174,233
+          ForegroundActive=61,174,233
+          ForegroundInactive=161,169,177
+          ForegroundLink=29,153,243
+          ForegroundNegative=218,68,83
+          ForegroundNeutral=246,116,0
+          ForegroundNormal=252,252,252
+          ForegroundPositive=39,174,96
+          ForegroundVisited=155,89,182
+
+          [KDE]
+          LookAndFeelPackage=org.kde.breezedark.desktop
+
+          [WM]
+          activeBackground=49,54,59
+          activeBlend=252,252,252
+          activeForeground=252,252,252
+          inactiveBackground=42,46,50
+          inactiveBlend=161,169,177
+          inactiveForeground=161,169,177
+        '';
       "gtk-3.0/settings.ini".text =
         ''
           [Settings]

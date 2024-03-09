@@ -3,6 +3,13 @@ let inherit (config.presets) desktop; in {
   options.presets.desktop = lib.mkEnableOption "Enable desktop preset";
 
   config = lib.mkIf desktop {
+    pacman.explicits = [
+      "extra/lostfiles"
+      "aur/sublime-merge"
+      "aur/sublime-text-4"
+      "aur/audio-share-bin"
+    ];
+
     pacman.packages = [
       # ######## #### ## #
       # DESK ENV
@@ -23,25 +30,23 @@ let inherit (config.presets) desktop; in {
 
       # core apps
       "extra/lxqt-archiver"
+      "chaotic-aur/bottles"
+      "chaotic-aur/joycond-git"
+      "extra/arandr"
+      "extra/cameractrls"
+      "extra/lxqt-config"
       "extra/pavucontrol-qt"
       "extra/pcmanfm-qt"
-      "extra/arandr"
-      "chaotic-aur/joycond-git"
 
       # common apps
+      "chaotic-aur/mpc-qt"
+      "extra/audacity"
       "extra/copyq"
       "extra/featherpad"
       "extra/juk"
       "extra/kolourpaint"
-      "extra/qps"
-      "chaotic-aur/mpc-qt"
       "extra/qalculate-qt"
-      "extra/audacity"
-
-      # themes
-      "extra/papirus-icon-theme"
-      "extra/materia-kde"
-      "extra/materia-gtk-theme"
+      "extra/qps"
 
       # ######## #### ## #
       # MY PKGS
