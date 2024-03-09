@@ -1,8 +1,0 @@
-audio-share-bin
-bottles
-cameractrls
-libvdpau-va-gl
-lostfiles
-mesa-utils
-onevpl-intel-gpu
-pacman-contrib
