@@ -19,7 +19,10 @@ in
     onedrive.enable = true;
   };
 
-  pacman.enable = true;
+  pacman = {
+    enable = true;
+    packages = [ "extra/blueman" ];
+  };
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"

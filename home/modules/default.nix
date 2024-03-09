@@ -11,6 +11,7 @@
     ./copy-file.nix
     ./direnv.nix
     ./dunst.nix
+    ./edge.nix
     ./emacs.nix
     ./feh.nix
     ./fish.nix

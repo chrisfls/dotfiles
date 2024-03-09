@@ -24,6 +24,7 @@ in
   };
 
   config = lib.mkIf enable {
+    pacman.packages = [ "chaotic-aur/paru" "extra/lostfiles" ];
     home.packages = [
       (pkgs.writeHostScriptBin "pacman-switch"
         ''

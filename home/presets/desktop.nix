@@ -25,6 +25,8 @@ let inherit (config.presets) desktop; in {
       "extra/lxqt-archiver"
       "extra/pavucontrol-qt"
       "extra/pcmanfm-qt"
+      "extra/arandr"
+      "chaotic-aur/joycond-git"
 
       # common apps
       "extra/copyq"
@@ -34,6 +36,7 @@ let inherit (config.presets) desktop; in {
       "extra/qps"
       "chaotic-aur/mpc-qt"
       "extra/qalculate-qt"
+      "extra/audacity"
 
       # themes
       "extra/papirus-icon-theme"
@@ -57,6 +60,7 @@ let inherit (config.presets) desktop; in {
       autorandr.enable = true;
       brave.enable = true;
       dunst.enable = true;
+      edge.enable = true;
       feh.enable = true;
       fontconfig.enable = true;
       fonts.enable = true;

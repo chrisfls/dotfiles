@@ -26,6 +26,7 @@ let inherit (config.modules.retroarch) enable; in
       "extra/libretro-yabause"
       "extra/retroarch-assets-ozone"
       "extra/retroarch"
+      "extra/mesa-utils"
     ];
   };
 }
