@@ -145,6 +145,8 @@ in
           for_window [class="pavucontrol-qt"] resize set 1115 px 839 px, move position center
           for_window [class="pcmanfm-qt"] floating enable
           for_window [class="pcmanfm-qt"] move position center
+          for_window [class="dolphin"] floating enable
+          for_window [class="dolphin"] move position center
           for_window [class="qalculate-qt"] floating enable
           for_window [class="qalculate-qt"] resize set 768 px 640 px, move position center
           for_window [class="qps"] floating enable

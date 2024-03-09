@@ -22,7 +22,7 @@ let inherit (config.modules.xdg) enable; in {
       mimeApps = {
         enable = true;
         defaultApplications = {
-          "inode/directory" = "pcmanfm-qt.desktop";
+          "inode/directory" = "org.kde.dolphin.desktop";
           "text/plain" = "featherpad.desktop";
           "application/zip" = "lxqt-archiver.desktop";
           "application/rar" = "lxqt-archiver.desktop";
@@ -55,7 +55,6 @@ let inherit (config.modules.xdg) enable; in {
         "kvantummanager" = { name = "Kvantum Manager"; noDisplay = true; };
         "lxqt-archiver" = { name = "LXQt File Archiver"; noDisplay = true; };
         "nm-tray" = { name = "nm-tray"; noDisplay = true; };
-        "pcmanfm-qt-desktop-pref" = { name = ""; noDisplay = true; };
         "picom" = { name = "picom"; noDisplay = true; };
         "qt5ct" = { name = "Qt5 Settings"; noDisplay = true; };
         "qt6ct" = { name = "Qt6 Settings"; noDisplay = true; };

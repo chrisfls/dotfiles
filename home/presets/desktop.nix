@@ -36,7 +36,7 @@ let inherit (config.presets) desktop; in {
       "extra/cameractrls"
       "extra/lxqt-config"
       "extra/pavucontrol-qt"
-      "extra/pcmanfm-qt"
+      "extra/dolphin"
 
       # common apps
       "chaotic-aur/mpc-qt"
@@ -81,7 +81,7 @@ let inherit (config.presets) desktop; in {
         apps = {
           "c" = "io.github.Qalculate.qalculate-qt";
           "d" = "webcord";
-          "e" = "pcmanfm-qt";
+          "e" = "org.kde.dolphin";
           "shift+c" = "com.github.hluk.copyq";
           "w" = "com.github.eneshecan.WhatsAppForLinux";
         };
