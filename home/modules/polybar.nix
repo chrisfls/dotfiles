@@ -80,8 +80,6 @@ in
     systemd.user.services.polybar = {
       Unit = {
         Description = "Polybar status bar";
-        PartOf = [ "tray.target" ];
-        After = lib.mkIf (config.modules.i3wm.enable) [ "graphical-session-i3.target" ];
         X-Restart-Triggers = "${config.xdg.configHome}/polybar/config.ini";
       };
 
@@ -94,12 +92,6 @@ in
 
         Restart = "on-failure";
       };
-
-      Install.WantedBy =
-        if config.modules.i3wm.enable then
-          [ "graphical-session-i3.target" ]
-        else
-          [ "tray.target" ];
     };
 
     modules.i3wm.startup = [ "systemctl --user restart polybar.service" ];
