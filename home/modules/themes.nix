@@ -111,9 +111,8 @@ in
 
   config = lib.mkIf enable {
     pacman.packages = [
-      "extra/plasma-integration"
-      "extra/plasma5-integration"
-      "extra/systemsettings"
+      "extra/qt5ct"
+      "extra/qt6ct"
       cursor.package
       font.fixed.package
       font.general.package
@@ -124,13 +123,13 @@ in
     ];
 
     home.sessionVariables = {
-      QT_QPA_PLATFORMTHEME = "kde";
-      QT_STYLE_OVERRIDE = "breeze";
+      QT_QPA_PLATFORMTHEME = "qt6ct";
+      #QT_STYLE_OVERRIDE = "breeze";
     };
 
     modules.xorg.imported-variables = [
       "QT_QPA_PLATFORMTHEME"
-      "QT_STYLE_OVERRIDE"
+      #"QT_STYLE_OVERRIDE"
     ];
 
     xresources.properties = {
@@ -139,152 +138,81 @@ in
     };
 
     xdg.configFile = {
-      kdeglobals.text =
+      "qt5ct/qt5ct.conf".text =
         ''
-          [ColorEffects:Disabled]
-          ChangeSelectionColor=
-          Color=56,56,56
-          ColorAmount=0
-          ColorEffect=0
-          ContrastAmount=0.65
-          ContrastEffect=1
-          Enable=
-          IntensityAmount=0.1
-          IntensityEffect=2
+          [Appearance]
+          color_scheme_path=/usr/share/qt5ct/colors/darker.conf
+          custom_palette=true
+          icon_theme=breeze-dark
+          standard_dialogs=default
+          style=Breeze
 
-          [ColorEffects:Inactive]
-          ChangeSelectionColor=true
-          Color=112,111,110
-          ColorAmount=0.025
-          ColorEffect=2
-          ContrastAmount=0.1
-          ContrastEffect=2
-          Enable=false
-          IntensityAmount=0
-          IntensityEffect=0
+          [Fonts]
+          fixed="Noto Sans,12,-1,5,50,0,0,0,0,0"
+          general="Noto Sans,12,-1,5,50,0,0,0,0,0"
 
-          [Colors:Button]
-          BackgroundAlternate=30,87,116
-          BackgroundNormal=49,54,59
-          DecorationFocus=61,174,233
-          DecorationHover=61,174,233
-          ForegroundActive=61,174,233
-          ForegroundInactive=161,169,177
-          ForegroundLink=29,153,243
-          ForegroundNegative=218,68,83
-          ForegroundNeutral=246,116,0
-          ForegroundNormal=252,252,252
-          ForegroundPositive=39,174,96
-          ForegroundVisited=155,89,182
+          [Interface]
+          activate_item_on_single_click=0
+          buttonbox_layout=0
+          cursor_flash_time=1000
+          dialog_buttons_have_icons=1
+          double_click_interval=400
+          gui_effects=General, AnimateMenu, AnimateCombo, AnimateTooltip, AnimateToolBox
+          keyboard_scheme=0
+          menus_have_icons=true
+          show_shortcuts_in_context_menus=true
+          stylesheets=/usr/share/qt5ct/qss/fusion-fixes.qss, /usr/share/qt5ct/qss/scrollbar-simple.qss, /usr/share/qt5ct/qss/sliders-simple.qss, /usr/share/qt5ct/qss/tooltip-simple.qss, /usr/share/qt5ct/qss/traynotification-simple.qss
+          toolbutton_style=4
+          underline_shortcut=1
+          wheel_scroll_lines=3
 
-          [Colors:Complementary]
-          BackgroundAlternate=30,87,116
-          BackgroundNormal=42,46,50
-          DecorationFocus=61,174,233
-          DecorationHover=61,174,233
-          ForegroundActive=61,174,233
-          ForegroundInactive=161,169,177
-          ForegroundLink=29,153,243
-          ForegroundNegative=218,68,83
-          ForegroundNeutral=246,116,0
-          ForegroundNormal=252,252,252
-          ForegroundPositive=39,174,96
-          ForegroundVisited=155,89,182
+          [SettingsWindow]
+          geometry=@ByteArray(\x1\xd9\xd0\xcb\0\x3\0\0\0\0\vx\0\0\0\x18\0\0\rx\0\0\x5\x9f\0\0\vy\0\0\0)\0\0\rw\0\0\x5\x9e\0\0\0\0\0\0\0\0\n\0\0\0\vy\0\0\0)\0\0\rw\0\0\x5\x9e)
 
-          [Colors:Header]
-          BackgroundAlternate=42,46,50
-          BackgroundNormal=49,54,59
-          DecorationFocus=61,174,233
-          DecorationHover=61,174,233
-          ForegroundActive=61,174,233
-          ForegroundInactive=161,169,177
-          ForegroundLink=29,153,243
-          ForegroundNegative=218,68,83
-          ForegroundNeutral=246,116,0
-          ForegroundNormal=252,252,252
-          ForegroundPositive=39,174,96
-          ForegroundVisited=155,89,182
+          [Troubleshooting]
+          force_raster_widgets=0
+          ignored_applications=@Invalid()
+        '';
+      "qt5ct/colorscheme.conf".text =
+        ''
+        '';
+      "qt6ct/qt6ct.conf".text =
+        ''
+          [Appearance]
+          color_scheme_path=/usr/share/qt6ct/colors/darker.conf
+          custom_palette=true
+          icon_theme=breeze-dark
+          standard_dialogs=default
+          style=Breeze
 
-          [Colors:Header][Inactive]
-          BackgroundAlternate=49,54,59
-          BackgroundNormal=42,46,50
-          DecorationFocus=61,174,233
-          DecorationHover=61,174,233
-          ForegroundActive=61,174,233
-          ForegroundInactive=161,169,177
-          ForegroundLink=29,153,243
-          ForegroundNegative=218,68,83
-          ForegroundNeutral=246,116,0
-          ForegroundNormal=252,252,252
-          ForegroundPositive=39,174,96
-          ForegroundVisited=155,89,182
+          [Fonts]
+          fixed="Noto Sans,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+          general="Noto Sans,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
 
-          [Colors:Selection]
-          BackgroundAlternate=30,87,116
-          BackgroundNormal=61,174,233
-          DecorationFocus=61,174,233
-          DecorationHover=61,174,233
-          ForegroundActive=252,252,252
-          ForegroundInactive=161,169,177
-          ForegroundLink=253,188,75
-          ForegroundNegative=176,55,69
-          ForegroundNeutral=198,92,0
-          ForegroundNormal=252,252,252
-          ForegroundPositive=23,104,57
-          ForegroundVisited=155,89,182
+          [Interface]
+          activate_item_on_single_click=0
+          buttonbox_layout=0
+          cursor_flash_time=1000
+          dialog_buttons_have_icons=1
+          double_click_interval=400
+          gui_effects=General, AnimateMenu, AnimateCombo, AnimateTooltip, AnimateToolBox
+          keyboard_scheme=0
+          menus_have_icons=true
+          show_shortcuts_in_context_menus=true
+          stylesheets=/usr/share/qt6ct/qss/fusion-fixes.qss, /usr/share/qt6ct/qss/scrollbar-simple.qss, /usr/share/qt6ct/qss/sliders-simple.qss, /usr/share/qt6ct/qss/tooltip-simple.qss, /usr/share/qt6ct/qss/traynotification-simple.qss
+          toolbutton_style=4
+          underline_shortcut=1
+          wheel_scroll_lines=3
 
-          [Colors:Tooltip]
-          BackgroundAlternate=42,46,50
-          BackgroundNormal=49,54,59
-          DecorationFocus=61,174,233
-          DecorationHover=61,174,233
-          ForegroundActive=61,174,233
-          ForegroundInactive=161,169,177
-          ForegroundLink=29,153,243
-          ForegroundNegative=218,68,83
-          ForegroundNeutral=246,116,0
-          ForegroundNormal=252,252,252
-          ForegroundPositive=39,174,96
-          ForegroundVisited=155,89,182
+          [SettingsWindow]
+          geometry=@ByteArray(\x1\xd9\xd0\xcb\0\x3\0\0\0\0\n\x97\0\0\0\x18\0\0\r\x17\0\0\x5\x9f\0\0\n\x98\0\0\0)\0\0\r\x16\0\0\x5\x9e\0\0\0\0\0\0\0\0\n\0\0\0\n\x98\0\0\0)\0\0\r\x16\0\0\x5\x9e)
 
-          [Colors:View]
-          BackgroundAlternate=35,38,41
-          BackgroundNormal=27,30,32
-          DecorationFocus=61,174,233
-          DecorationHover=61,174,233
-          ForegroundActive=61,174,233
-          ForegroundInactive=161,169,177
-          ForegroundLink=29,153,243
-          ForegroundNegative=218,68,83
-          ForegroundNeutral=246,116,0
-          ForegroundNormal=252,252,252
-          ForegroundPositive=39,174,96
-          ForegroundVisited=155,89,182
-
-          [Colors:Window]
-          BackgroundAlternate=49,54,59
-          BackgroundNormal=42,46,50
-          DecorationFocus=61,174,233
-          DecorationHover=61,174,233
-          ForegroundActive=61,174,233
-          ForegroundInactive=161,169,177
-          ForegroundLink=29,153,243
-          ForegroundNegative=218,68,83
-          ForegroundNeutral=246,116,0
-          ForegroundNormal=252,252,252
-          ForegroundPositive=39,174,96
-          ForegroundVisited=155,89,182
-
-          [KDE]
-          LookAndFeelPackage=org.kde.breezedark.desktop
-
-          [WM]
-          activeBackground=49,54,59
-          activeBlend=252,252,252
-          activeForeground=252,252,252
-          inactiveBackground=42,46,50
-          inactiveBlend=161,169,177
-          inactiveForeground=161,169,177
+          [Troubleshooting]
+          force_raster_widgets=0
+          ignored_applications=@Invalid()
+        '';
+      "qt6ct/colorscheme.conf".text =
+        ''
         '';
       "gtk-3.0/settings.ini".text =
         ''
