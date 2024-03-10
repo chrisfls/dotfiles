@@ -36,7 +36,7 @@ in
           [includeIf "gitdir:${config.home.homeDirectory}/repos/github"]
           	path = "${config.xdg.configHome}/git/config_personal"
 
-          [includeIf "gitdir:${config.home.homeDirectory}/repos/gitlab/"]
+          [includeIf "gitdir:${config.home.homeDirectory}/repos/gitlab"]
           	path = "${config.xdg.configHome}/git/config_gitlab"
         
           ${extraConfig}
