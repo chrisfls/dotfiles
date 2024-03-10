@@ -56,12 +56,12 @@ let
       done
     '';
 
-  black = "#000000";
-  dark-gray = "#404040";
-  gray = "#808080";
-  silver = "#C0C0C0";
-  white = "#ffffff";
-  yellow = "#ffff00";
+  black = "#232627"; # background
+  dark-gray = "#31363B"; # backgroundDim / blackDim
+  gray = "#555555"; # blackBright
+  silver = "#63686D"; # whiteDim
+  white = "#FCFCFC"; # foreground / white
+  yellow = "#F67400"; # yellow
 
   i3 = "/usr/bin/i3";
 
