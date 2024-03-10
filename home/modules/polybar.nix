@@ -1,7 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.modules.polybar) enable;
-  inherit (specialArgs.color-schemes.materia-dark-kde) background foreground black red blue yellow;
 
   toggle = pkgs.writeScript "toggle"
     ''
@@ -63,6 +62,13 @@ let
       dunstctl set-paused toggle
       polybar-msg action notifications next
     '';
+
+  background = "#000000"; # backgroundBright / blackAbsolute
+  foreground = "#FCFCFC"; # foreground / white
+  black = "#232627"; # background / black
+  red = "#ED1515"; # red
+  blue = "#1D99F3"; # blue
+  yellow = "#F67400"; # yellow
 in
 {
   options.modules.polybar.enable = lib.mkEnableOption "Enable polybar module";
