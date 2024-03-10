@@ -39,7 +39,7 @@ let inherit (config.presets) desktop; in {
       "extra/dolphin"
 
       # common apps
-      "chaotic-aur/mpc-qt"
+      "extra/haruna"
       "extra/audacity"
       "extra/copyq"
       "extra/featherpad"

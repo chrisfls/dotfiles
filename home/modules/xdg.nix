@@ -28,7 +28,7 @@ let inherit (config.modules.xdg) enable; in {
           "application/rar" = "lxqt-archiver.desktop";
           "application/7z" = "lxqt-archiver.desktop";
           "application/*tar" = "lxqt-archiver.desktop";
-          "video/*" = "io.github.mpc_qt.Mpc-Qt.desktop";
+          "video/*" = "org.kde.haruna.desktop";
           "audio/*" = "org.kde.juk.desktop";
           "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
         };
