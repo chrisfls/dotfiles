@@ -104,7 +104,7 @@ in
 
     color-scheme = lib.mkOption {
       type = lib.types.attrs;
-      default = specialArgs.color-schemes.tomorrow-night-bright;
+      default = specialArgs.color-schemes.breeze;
       description = "Color scheme for terminal.";
     };
   };

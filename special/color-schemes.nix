@@ -499,6 +499,74 @@ rec {
     whiteBright = "#ffffff";
     yellowBright = "#ffff55";
   };
+  breeze = {
+    background = "#232627";
+    foreground = "#FCFCFC";
+    black = "#232627";
+    blue = "#1D99F3";
+    cyan = "#1ABC9C";
+    green = "#11D116";
+    magenta = "#9B59B6";
+    red = "#ED1515";
+    white = "#FCFCFC";
+    yellow = "#F67400";
+
+    backgroundDim = "#31363B";
+    foregroundDim = "#EFE0F1";
+    blackDim = "#31363B";
+    blueDim = "#1B668F";
+    cyanDim = "#186C60";
+    greenDim = "#17A262";
+    magentaDim = "#614A73";
+    redDim = "#783228";
+    whiteDim = "#63686D";
+    yellowDim = "#B65619";
+
+    backgroundBright = "#000000";
+    foregroundBright = "#61AEE9";
+    blackBright = "#555555";
+    blueBright = "#5555FF";
+    cyanBright = "#55FFFF";
+    greenBright = "#55FF55";
+    magentaBright = "#FF55FF";
+    redBright = "#FF5555";
+    whiteBright = "#FFFFFF";
+    yellowBright = "#FFFF55";
+  };
+  linux = {
+    background = "#000000";
+    foreground = "#B2B2B2";
+    black = "#000000";
+    blue = "#B21818";
+    cyan = "#18B218";
+    green = "#B218B2";
+    magenta = "#1818B2";
+    red = "#B21818";
+    white = "#B2B2B2";
+    yellow = "#B26C18";
+
+    backgroundDim = "#686868";
+    foregroundDim = "#FFFFFF";
+    blackDim = "#686868";
+    blueDim = "#FF5454";
+    cyanDim = "#54FF54";
+    greenDim = "#FF54FF";
+    magentaDim = "#5454FF";
+    redDim = "#FF5454";
+    whiteDim = "#636363";
+    yellowDim = "#B67C54";
+
+    backgroundBright = "#000000";
+    foregroundBright = "#FFFFFF";
+    blackBright = "#555555";
+    blueBright = "#5555FF";
+    cyanBright = "#55FF55";
+    greenBright = "#55FF55";
+    magentaBright = "#FF55FF";
+    redBright = "#FF5555";
+    whiteBright = "#FFFFFF";
+    yellowBright = "#FFFF55";
+  };
 }
 
 # PENDING STUFF
