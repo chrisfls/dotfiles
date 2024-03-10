@@ -32,7 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-ir-black) 
+(setq doom-theme 'doom-outrun-electric) 
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -113,39 +113,10 @@
 (setq-default cursor-type '(bar . 4))
 (blink-cursor-mode 1)
 
-;; ;; setup indent guides
-;; (after! highlight-indent-guides
-;;   (setq highlight-indent-guides-method 'column
-;;         highlight-indent-guides-responsive 'top
-;;         highlight-indent-guides-auto-odd-face-perc 25
-;;         highlight-indent-guides-auto-even-face-perc 25
-;;         highlight-indent-guides-auto-character-face-perc 50)
-;;   (highlight-indent-guides-auto-set-faces))
-
-;; ;; setup rulers
-;; (setq-default display-fill-column-indicator-column 79
-;;               display-fill-column-indicator-character ?\s
-;;               fill-column 80)
-
-;; ;;;
-;; ;;; deferred
-;; ;;;
-
-;; ;; indent guides and rulers
-;; (after! highlight-indent-guides
-;;   ;; setup indent guides colors
-;;   (setq highlight-indent-guides-method 'column
-;;         highlight-indent-guides-responsive 'top
-;;         highlight-indent-guides-auto-odd-face-perc 25
-;;         highlight-indent-guides-auto-even-face-perc 25
-;;         highlight-indent-guides-auto-character-face-perc 50)
-;;   (highlight-indent-guides-auto-set-faces)
-;;   ;; setup ruler colors
-;;   (set-face-attribute 'fill-column-indicator nil
-;;     :background (face-attribute 'highlight-indent-guides-even-face
-;;                                 :background nil
-;;                                 'default)
-;;     :foreground nil))
+;; setup rulers
+(setq-default display-fill-column-indicator-column 79
+              display-fill-column-indicator-character ?\s
+              fill-column 80)
 
 ;;;;;;;;;;;;;;;;
 ;;; BEHAVIOR ;;;
@@ -161,16 +132,16 @@
       doom-localleader-alt-key "C-c SPC"
       doom-localleader-key "C-c SPC")
 
-;; ;; setup editor scroll
-;; (setq scroll-conservatively 10000
-;;       scroll-margin 3
-;;       scroll-preserve-screen-position 1
-;;       scroll-step 3)
+;; setup editor scroll
+(setq scroll-conservatively 10000
+      scroll-margin 3
+      scroll-preserve-screen-position 1
+      scroll-step 3)
 
-;; ;; setup mouse scrolling
-;; (setq mouse-wheel-follow-mouse 't
-;;       mouse-wheel-progressive-speed nil
-;;       mouse-wheel-scroll-amount '(3 ((shift) . 3)))
+;; setup mouse scrolling
+(setq mouse-wheel-follow-mouse 't
+      mouse-wheel-progressive-speed nil
+      mouse-wheel-scroll-amount '(3 ((shift) . 3)))
 
 ;; disable ring bell sound
 (set ring-bell-function 'ignore)
@@ -187,10 +158,9 @@
 (after! recentf
  (add-to-list 'recentf-exclude "~/.config/emacs/.local"))
 
-;; (after! vertico
-;;   (setq vertico-count 10
-;;         vertico-scroll-margin 0))
-
+(after! vertico
+  (setq vertico-count 10
+        vertico-scroll-margin 0))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; LANGUAGE SETTINGS ;;;
@@ -201,14 +171,3 @@
 
 (add-hook! js2-mode
   (deno-fmt-mode 1))
-
-;;;;;;;;;;;;;;;;
-;;; COMMANDS ;;;
-;;;;;;;;;;;;;;;;
-
-;; (defun my/comment ()
-;;   (interactive)
-;;   (if (use-region-p)
-;;       (comment-or-uncomment-region (region-beginning) (region-end))
-;;     (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
-;;   (setq deactivate-mark nil))
