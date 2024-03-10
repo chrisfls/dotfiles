@@ -49,15 +49,6 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 
-(package! macrursors
-  :recipe (:host github :repo "corytertel/macrursors"))
-
 (package! deno-fmt)
 
 (package! color-theme-sanityinc-tomorrow)
-
-(package! doom-gruvbox-material
-  :recipe (:host github :repo "Cardoso1994/doom-gruvbox-material-theme"))
-
-(package! doom-everforest-theme
-  :recipe (:host github :repo "Cardoso1994/doom-everforest-theme"))
