@@ -12,8 +12,6 @@ in
       "extra/ripgrep"
     ];
 
-    home.packages = [ doom-install ];
-
-    home.sessionPath = [ "${dir}/bin" ];
+    home.sessionPath = [ "${config.xdg.configHome}/emacs/bin" ];
   };
 }
