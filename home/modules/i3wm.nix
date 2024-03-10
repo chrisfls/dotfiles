@@ -57,9 +57,9 @@ let
     '';
 
   black = "#000000";
-  silver = "#C0C0C0";
-  gray = "#808080";
   dark-gray = "#404040";
+  gray = "#808080";
+  silver = "#C0C0C0";
   white = "#ffffff";
   yellow = "#ffff00";
 
