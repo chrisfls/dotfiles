@@ -56,6 +56,8 @@
 
 (package! color-theme-sanityinc-tomorrow)
 
-(package! doom-gruvbox-material)
+(package! doom-gruvbox-material
+  :recipe (:host github :repo "Cardoso1994/doom-gruvbox-material-theme"))
 
-(package! doom-everforest)
+(package! doom-everforest-theme
+  :recipe (:host github :repo "Cardoso1994/doom-everforest-theme"))
