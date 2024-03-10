@@ -2,7 +2,7 @@
 let
   inherit (config.modules.emacs) enable;
 
-  rev = "03d692f129633e3bf0bd100d91b3ebf3f77db6d1";
+  rev = "d657be1744a1481dc4646d0b62d5ee1d3e75d1d8";
   configHome = config.xdg.configHome;
   dir = "${configHome}/emacs";
 
