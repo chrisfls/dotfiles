@@ -63,12 +63,12 @@ let
       polybar-msg action notifications next
     '';
 
-  background = "#000000"; # backgroundBright / blackAbsolute
+  background = "#232627"; # backgroundBright / blackAbsolute
   foreground = "#FCFCFC"; # foreground / white
-  black = "#232627"; # background / black
-  red = "#ED1515"; # red
-  blue = "#1D99F3"; # blue
-  yellow = "#F67400"; # yellow
+  black = "#31363B"; # background / black
+  red = "#E77E8E"; # red
+  blue = "#3DAEE9"; # blue
+  yellow = "#E08B4A"; # yellow
 in
 {
   options.modules.polybar.enable = lib.mkEnableOption "Enable polybar module";
