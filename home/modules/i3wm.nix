@@ -56,12 +56,21 @@ let
       done
     '';
 
-  black = "#232627"; # background
-  dark-gray = "#31363B"; # backgroundDim / blackDim
-  gray = "#555555"; # blackBright
-  silver = "#63686D"; # whiteDim
-  white = "#FCFCFC"; # foreground / white
-  yellow = "#F67400"; # yellow
+  black = "#31363B"; # background
+  white = "#FCFCFC"; # foreground
+
+  prim0 = "#3DAEE9"; # border (unused)
+  prim1 = "#508BAA"; # border
+  prim2 = "#355E75"; # background / indicator
+  prim3 = "#334E5E"; # background
+
+  gray0 = "#64686B"; # border
+  gray1 = "#6e7173"; # text
+  gray2 = "#404448"; # border
+  gray3 = "#2f3338"; # background
+
+  acct0 = "#a87656"; # border
+  acct1 = "#5c4434"; # background
 
   i3 = "/usr/bin/i3";
 
@@ -90,6 +99,8 @@ in
     extraConfig = lib.mkOption { type = lib.types.lines; default = ""; };
   };
 
+  #  
+
   config = lib.mkIf enable {
     pacman.packages = [ "extra/i3-wm" ];
 
@@ -107,11 +118,12 @@ in
           #                       border       bg           txt          indicator    child_border
           #                       ------------ ------------ ------------ ------------ ------------ 
           client.background       ${black}
-          client.focused          ${white}     ${dark-gray} ${white}     ${silver}    ${gray}
-          client.focused_inactive ${gray}      ${black}     ${gray}      ${black}     ${black}
-          client.urgent           ${yellow}    ${black}     ${yellow}    ${black}     ${black}
-          client.unfocused        ${black}     ${black}     ${gray}      ${black}     ${black}
-          client.placeholder      ${black}     ${black}     ${black}     ${black}     ${black}
+          client.focused          ${prim1}     ${prim3}     ${white}     ${prim2}     ${gray0}
+          client.urgent           ${acct0}     ${acct1}     ${white}     ${black}     ${gray2}
+          client.focused_inactive ${gray0}     ${black}     ${white}     ${black}     ${gray2}
+
+          client.unfocused        ${black}     ${black}     ${gray1}     ${black}     ${black}
+          client.placeholder      ${black}     ${black}     ${gray1}     ${black}     ${black}
 
           default_border normal 1
           default_floating_border normal 1
