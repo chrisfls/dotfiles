@@ -64,8 +64,8 @@ let
   prim2 = "#355E75"; # background / indicator
   prim3 = "#334E5E"; # background
 
-  gray0 = "#64686B"; # border
-  gray1 = "#6e7173"; # text
+  gray0 = "#6e7173"; # text
+  gray1 = "#64686B"; # border
   gray2 = "#404448"; # border
   gray3 = "#2f3338"; # background
 
@@ -118,12 +118,12 @@ in
           #                       border       bg           txt          indicator    child_border
           #                       ------------ ------------ ------------ ------------ ------------ 
           client.background       ${black}
-          client.focused          ${prim1}     ${prim3}     ${white}     ${prim2}     ${gray0}
+          client.focused          ${prim1}     ${prim3}     ${white}     ${prim2}     ${gray1}
           client.urgent           ${acct0}     ${acct1}     ${white}     ${black}     ${gray2}
-          client.focused_inactive ${gray0}     ${black}     ${white}     ${black}     ${gray2}
+          client.focused_inactive ${gray1}     ${black}     ${white}     ${black}     ${gray2}
 
-          client.unfocused        ${black}     ${black}     ${gray1}     ${black}     ${black}
-          client.placeholder      ${black}     ${black}     ${gray1}     ${black}     ${black}
+          client.unfocused        ${black}     ${black}     ${gray0}     ${black}     ${black}
+          client.placeholder      ${black}     ${black}     ${gray0}     ${black}     ${black}
 
           default_border normal 1
           default_floating_border normal 1
