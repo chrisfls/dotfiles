@@ -37,11 +37,13 @@ let inherit (config.presets) desktop; in {
       "extra/lxqt-config"
       "extra/pavucontrol-qt"
       "extra/dolphin"
+      "extra/pcmanfm-qt"
 
       # common apps
       "extra/haruna"
       "extra/audacity"
       "extra/copyq"
+      "extra/inkscape"
       "extra/featherpad"
       "extra/juk"
       "extra/kolourpaint"
