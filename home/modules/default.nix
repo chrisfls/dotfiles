@@ -41,6 +41,7 @@
     ./telegram.nix
     ./themes.nix
     ./udiskie.nix
+    ./waybar.nix
     ./xdg.nix
     ./xorg.nix
     ./zoxide.nix

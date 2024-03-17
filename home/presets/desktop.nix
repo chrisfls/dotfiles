@@ -96,6 +96,7 @@ let inherit (config.presets) desktop; in {
       micro = { enable = true; desktop = true; };
       picom.enable = true;
       polybar.enable = true;
+      waybar.enable = true;
       qview.enable = true;
       rclone.enable = true;
       rofi.enable = true;
