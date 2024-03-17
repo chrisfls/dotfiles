@@ -74,6 +74,8 @@ in
       "chaotic-aur/swayfx"
     ];
 
+    modules.systemd.imported-variables = [ "WAYLAND_DISPLAY" ];
+
     xdg.configFile."sway/config" = {
       text =
         ''
@@ -358,6 +360,9 @@ in
           input type:keyboard {
               xkb_layout br
           }
+
+          blur enable
+          shadows enable
 
           ${extraConfig}
         '';

@@ -1,11 +1,7 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.modules.xorg) enable xsession imported-variables window-manager;
-
-  vars = lib.trivial.pipe imported-variables [
-    (builtins.map (name: "'${name}'"))
-    (builtins.concatStringsSep " ")
-  ];
+  inherit (config.modules.xorg) enable xsession window-manager;
+  inherit (config.modules.systemd) variables;
 
   xrdb = "/usr/bin/xrdb";
   setxkbmap = "/usr/bin/setxkbmap";
@@ -20,7 +16,6 @@ in
     enable = lib.mkEnableOption "Enable xorg module";
     xsession = lib.mkOption { type = lib.types.lines; default = ""; };
     window-manager = lib.mkOption { type = lib.types.str; default = ""; };
-    imported-variables = lib.mkOption { type = lib.types.listOf lib.types.str; default = [ ]; };
     cursor = {
       name = "";
       size = { type = lib.types.int; default = 36; };
@@ -92,7 +87,7 @@ in
             sleep 0.5
           done
 
-          systemctl --user unset-environment ${vars}
+          systemctl --user unset-environment ${variables}
         '';
 
       ".xprofile".text =
@@ -108,7 +103,7 @@ in
           # script starts up graphical-session.target.
           systemctl --user stop graphical-session.target graphical-session-pre.target
 
-          systemctl --user import-environment ${vars}
+          systemctl --user import-environment ${variables}
 
           export HM_XPROFILE_SOURCED=1
         '';

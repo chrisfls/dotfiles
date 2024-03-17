@@ -182,7 +182,7 @@ in
                 "restart-interval": 1
               },
               "custom/menu": {
-                "format": "",
+                "format": "",
                 "on-click": "rofi-menu"
               },
               "tray": {

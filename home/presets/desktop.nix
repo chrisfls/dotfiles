@@ -115,20 +115,18 @@ let inherit (config.presets) desktop; in {
       micro = { enable = true; desktop = true; };
       picom.enable = true;
       polybar.enable = true;
-      waybar.enable = true;
       qview.enable = true;
       rclone.enable = true;
       rofi.enable = true;
       screenshot.enable = true;
       steam.enable = true;
+      systemd.imported-variables = [ "PATH" ];
       telegram.enable = true;
       themes.enable = true;
       udiskie.enable = true;
+      waybar.enable = true;
       xdg.enable = true;
-      xorg = {
-        enable = true;
-        imported-variables = [ "PATH" ];
-      };
+      xorg.enable = true;
     };
 
     xdg.configFile."kwalletrc".text =

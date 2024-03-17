@@ -126,7 +126,7 @@ in
       QT_QPA_PLATFORMTHEME = "qt6ct";
     };
 
-    modules.xorg.imported-variables = [
+    modules.systemd.imported-variables = [
       "QT_QPA_PLATFORMTHEME"
     ];
 

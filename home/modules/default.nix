@@ -39,6 +39,7 @@
     ./screenshot.nix
     ./steam.nix
     ./sway.nix
+    ./systemd.nix
     ./telegram.nix
     ./themes.nix
     ./udiskie.nix
