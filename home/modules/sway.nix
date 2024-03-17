@@ -146,10 +146,6 @@ in
             ]
           }
 
-          output eDP-1 transform 90 position 0 1360 resolution 1280x800 background /nix/store/kig7s57szlz5whz4588irrlqd0zyck5y-23-12-30_800p.png fit
-          output HDMI-A-1 position 1280 0 resolution 3840x2160 background /nix/store/fy35xavv91dikwqybngvqba9cgpklsk3-23-12-29_2160p.png fit
-
-
           # ######## #### ## #
           # KEYBINDINGS
           # ######## #### ## #
