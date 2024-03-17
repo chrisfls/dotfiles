@@ -109,6 +109,28 @@ in
   options.modules.waybar.enable = lib.mkEnableOption "Enable waybar module";
 
   config = lib.mkIf enable {
+    pacman.packages = [
+      "extra/waybar"
+    ];
+
+    systemd.user.services.waybar = {
+      Unit = {
+        Description = "Waybar status bar";
+        X-Restart-Triggers = "${config.xdg.configHome}/waybar/config";
+      };
+
+      Service = {
+        Type = "forking";
+
+        ExecStart =
+          let scriptPkg = pkgs.writeHostScriptBin "waybar-start" "waybar &";
+          in "${scriptPkg}/bin/waybar-start";
+
+        Restart = "on-failure";
+      };
+    };
+
+    modules.sway.startup = [ "systemctl --user restart waybar.service" ];
 
     xdg.configFile."waybar/config" = {
       text =
