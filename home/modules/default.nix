@@ -38,6 +38,7 @@
     ./scaling.nix
     ./screenshot.nix
     ./steam.nix
+    ./sway.nix
     ./telegram.nix
     ./themes.nix
     ./udiskie.nix

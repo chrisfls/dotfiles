@@ -90,6 +90,25 @@ let inherit (config.presets) desktop; in {
 
         extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
       };
+      sway = {
+        enable = true;
+
+        startup = [
+          "copyq"
+          "nm-tray"
+          "webcord --start-minimized"
+        ];
+
+        apps = {
+          "c" = "io.github.Qalculate.qalculate-qt";
+          "d" = "webcord";
+          "e" = "org.kde.dolphin";
+          "shift+c" = "com.github.hluk.copyq";
+          "w" = "com.github.eneshecan.WhatsAppForLinux";
+        };
+
+        extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
+      };
       jamesdsp.enable = true;
       kitty.enable = true;
       loopback-toggle.enable = true;

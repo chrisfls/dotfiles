@@ -31,6 +31,9 @@ let inherit (config.modules.brave) enable; in {
         "x-scheme-handler/unknown" = desktop;
       };
 
-    modules.i3wm.apps."b" = "brave-browser";
+    modules = {
+      i3wm.apps."b" = "brave-browser";
+      sway.apps."b" = "brave-browser";
+    };
   };
 }

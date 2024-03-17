@@ -117,12 +117,22 @@ in
   config = lib.mkIf enable {
     pacman.packages = [ "extra/rofi" "extra/rofi-calc" ];
 
-    modules.i3wm = {
-      run = "rofi-run";
-      menu = "rofi-menu";
-      power-menu = "rofi-power-menu";
-      window-list = "rofi-windows";
-      calculator = "rofi-calc";
+    modules = {
+      i3wm = {
+        run = "rofi-run";
+        menu = "rofi-menu";
+        power-menu = "rofi-power-menu";
+        window-list = "rofi-windows";
+        calculator = "rofi-calc";
+      };
+
+      sway = {
+        run = "rofi-run";
+        menu = "rofi-menu";
+        power-menu = "rofi-power-menu";
+        window-list = "rofi-windows";
+        calculator = "rofi-calc";
+      };
     };
 
     home.packages = [

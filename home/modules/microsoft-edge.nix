@@ -15,7 +15,10 @@ in
 
   config = lib.mkIf enable {
     home.packages = [ pkg ];
-    modules.i3wm.apps."shift+b" = exe;
+    modules = {
+      i3wm.apps."shift+b" = exe;
+      sway.apps."shift+b" = exe;
+    };
 
     xdg.desktopEntries = {
       "microsoft-edge" = {

@@ -14,9 +14,47 @@ in
 
   modules = {
     cloudflare-warp.enable = true;
+
     scaling = { enable = true; scale = 1.5; gtk = true; qt = true; };
+
     retroarch.enable = true;
+
     onedrive.enable = true;
+
+    i3wm.extraConfig =
+      ''
+        workspace "0" output "eDP-1"
+        workspace "1" output "HDMI-1"
+        workspace "2" output "HDMI-1"
+        workspace "3" output "HDMI-1"
+        workspace "4" output "HDMI-1"
+        workspace "5" output "HDMI-1"
+        workspace "6" output "HDMI-1"
+        workspace "7" output "HDMI-1"
+        workspace "8" output "HDMI-1"
+        workspace "9" output "HDMI-1"
+        workspace "10" output "HDMI-1"
+      '';
+
+    sway.extraConfig =
+      ''
+        workspace "0" output "eDP-1"
+        workspace "1" output "HDMI-A-1"
+        workspace "2" output "HDMI-A-1"
+        workspace "3" output "HDMI-A-1"
+        workspace "4" output "HDMI-A-1"
+        workspace "5" output "HDMI-A-1"
+        workspace "6" output "HDMI-A-1"
+        workspace "7" output "HDMI-A-1"
+        workspace "8" output "HDMI-A-1"
+        workspace "9" output "HDMI-A-1"
+        workspace "10" output "HDMI-A-1"
+      '';
+
+    feh.wallpapers = [
+      ../../assets/wallpaper/23-12-29_2160p.png
+      ../../assets/wallpaper/23-12-30_800p.png
+    ];
   };
 
   pacman = {
@@ -91,25 +129,6 @@ in
       '';
   };
 
-  modules.i3wm.extraConfig =
-    ''
-      workspace "0" output "eDP-1"
-      workspace "1" output "HDMI-1"
-      workspace "2" output "HDMI-1"
-      workspace "3" output "HDMI-1"
-      workspace "4" output "HDMI-1"
-      workspace "5" output "HDMI-1"
-      workspace "6" output "HDMI-1"
-      workspace "7" output "HDMI-1"
-      workspace "8" output "HDMI-1"
-      workspace "9" output "HDMI-1"
-      workspace "10" output "HDMI-1"
-    '';
-
-  modules.feh.wallpapers = [
-    ../../assets/wallpaper/23-12-29_2160p.png
-    ../../assets/wallpaper/23-12-30_800p.png
-  ];
 
   home.keyboard.layout = "br";
 
