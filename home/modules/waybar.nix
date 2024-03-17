@@ -3,6 +3,7 @@ let
   inherit (config.modules.waybar) enable;
 
   background = "#232627"; # backgroundBright / blackAbsolute
+  background-alpha = "rgba(35,38,39,0.9)";
   white = "#FFFFFF";
   foreground = "#FCFCFC"; # foreground / white
   black = "#31363B"; # background / black
@@ -290,13 +291,13 @@ in
 
 
           window#waybar {
-          	background: ${background}E4;
+          	background: ${background-alpha};
             
           }
 
           tooltip {
           	border-radius: 2px;
-          	background-color: ${background}E4;
+          	background-color: ${background-alpha};
             padding: 4px;
           }
 
