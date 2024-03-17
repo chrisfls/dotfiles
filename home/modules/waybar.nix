@@ -173,6 +173,8 @@ in
               ],
               "sway/window": {
                 "format": "{title}",
+                "all-outputs": true,
+                "icon": false,
                 "justify": "left"
               },
               /** modules-right ********************************************************/
