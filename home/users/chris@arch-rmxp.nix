@@ -108,7 +108,7 @@ in
 
   modules.feh.wallpapers = [
     ../../assets/wallpaper/23-12-29_2160p.png
-    ../../assets/wallpaper/23-12-29_800p.png
+    ../../assets/wallpaper/23-12-30_800p.png
   ];
 
   home.keyboard.layout = "br";
