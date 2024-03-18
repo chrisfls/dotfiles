@@ -5,6 +5,7 @@ let inherit (config.modules.screenshot) enable; in {
   config = lib.mkIf enable {
     pacman.packages = [ "extra/shotgun" "extra/slop" "extra/xclip" ];
 
+    # TODO: move to i3wm.nix
     home.packages = [
       (pkgs.writeHostScriptBin "screenshot-copy"
         ''
