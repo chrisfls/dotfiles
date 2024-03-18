@@ -292,7 +292,7 @@ in
             background: ${foreground};
 
             padding-left: 2px;
-            padding-right: 4px;
+            padding-right: 8px;
 
             border-bottom-right-radius: 16px;
           }
