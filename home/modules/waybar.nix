@@ -77,6 +77,7 @@ let
 
       readonly ENABLED=''
       readonly DISABLED=''
+
       dbus-monitor path='/org/freedesktop/Notifications',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged' --profile |
         while read -r _; do
           PAUSED="$(dunstctl is-paused)"
@@ -86,10 +87,6 @@ let
           else
             CLASS="disabled"
             TEXT="$DISABLED"
-            COUNT="$(dunstctl count waiting)"
-            if [ "$COUNT" != '0' ]; then
-              TEXT="$DISABLED ($COUNT)"
-            fi
           fi
           printf '{"text": "%s", "class": "%s"}\n' "$TEXT" "$CLASS"
         done
@@ -162,6 +159,8 @@ in
                 "return-type": "json",
                 "exec": "${dunst-toggle}",
                 "on-click": "dunstctl set-paused toggle",
+                "on-scroll-up": "dunstctl close",
+                "on-scroll-down": "dunstctl history-pop",
                 "restart-interval": 1
               },
               "custom/menu": {
