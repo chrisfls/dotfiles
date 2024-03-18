@@ -3,6 +3,7 @@ let
   inherit (config.modules.sway)
     enable
     apps
+    autostart
     startup
     extraConfig
     window-list
@@ -12,6 +13,7 @@ let
     screenshot
     terminal
     calculator;
+  inherit (config.modules.systemd) variables;
   inherit (builtins) concatStringsSep;
 
   focus = dir:
@@ -46,6 +48,7 @@ in
 {
   options.modules.sway = {
     enable = lib.mkEnableOption "Enable sway module";
+    autostart = lib.mkEnableOption "Add startup line to bash profile";
 
     terminal = lib.mkOption { type = lib.types.str; };
     menu = lib.mkOption { type = lib.types.str; default = "rofi-menu"; };
@@ -74,7 +77,19 @@ in
       "chaotic-aur/swayfx"
     ];
 
-    modules.systemd.imported-variables = [ "WAYLAND_DISPLAY" ];
+    modules = {
+      bash.autostart = lib.mkIf autostart
+        ''
+          systemctl --user import-environment ${variables}
+
+          if [ -z "''${WAYLAND_DISPLAY}" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
+            exec sway
+          fi
+        '';
+
+      systemd.imported-variables = [ "WAYLAND_DISPLAY" ];
+    };
+
 
     xdg.configFile."sway/config" = {
       text =

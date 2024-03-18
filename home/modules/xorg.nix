@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.modules.xorg) enable xsession window-manager;
+  inherit (config.modules.xorg) enable xsession window-manager startx;
   inherit (config.modules.systemd) variables;
 
   xrdb = "/usr/bin/xrdb";
@@ -14,6 +14,7 @@ in
 {
   options.modules.xorg = {
     enable = lib.mkEnableOption "Enable xorg module";
+    startx = lib.mkEnableOption "Add startx to bash profile";
     xsession = lib.mkOption { type = lib.types.lines; default = ""; };
     window-manager = lib.mkOption { type = lib.types.str; default = ""; };
     cursor = {
@@ -40,6 +41,13 @@ in
       "extra/xorg-xsetroot"
       "extra/xsettingsd"
     ];
+
+    modules.bash.autostart = lib.mkIf startx
+      ''
+        if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
+          exec startx
+        fi
+      '';
 
     home.file = {
       ".xinitrc" = {

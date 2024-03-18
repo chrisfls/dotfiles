@@ -93,6 +93,8 @@ let inherit (config.presets) desktop; in {
       sway = {
         enable = true;
 
+        autostart = true;
+
         startup = [
           "copyq"
           "nm-tray"
