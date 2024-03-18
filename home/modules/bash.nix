@@ -1,8 +1,11 @@
 { config, lib, pkgs, ... }:
-let inherit (config.modules.bash) enable extraConfig autostart; in {
+let
+  inherit (config.modules.bash) enable extraConfig;
+  inherit (config.modules.systemd) variables;
+in
+{
   options.modules.bash.enable = lib.mkEnableOption "Enable bash module";
   options.modules.bash.extraConfig = lib.mkOption { type = lib.types.lines; default = ""; };
-  options.modules.bash.autostart = lib.mkOption { type = lib.types.str; default = ""; };
 
   config = lib.mkIf enable {
     pacman.packages = [ "core/bash" ];
@@ -39,7 +42,7 @@ let inherit (config.modules.bash) enable extraConfig autostart; in {
           . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
           unset HISTFILE
 
-          ${autostart}
+          systemctl --user import-environment ${variables}
         '';
     };
   };
