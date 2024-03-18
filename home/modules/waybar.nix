@@ -132,9 +132,9 @@ in
               "modules-left": [
                 "custom/menu",
                 "sway/workspaces",
-                "sway/mode",
                 "custom/dunst",
-                "tray"
+                "tray",
+                "sway/mode"
               ],
               "sway/workspaces": {
                 "disable-scroll": true,
@@ -169,7 +169,7 @@ in
                 "on-click": "rofi-menu"
               },
               "tray": {
-                "icon-size": 20,
+                "icon-size": 21,
                 "spacing": 8
               },
               /** modules-center *******************************************************/
@@ -291,47 +291,60 @@ in
       text =
         ''
           * {
-          	all: unset;
-          	font-size: 11pt;
-          	font-family: 'CaskaydiaCoveNerdFont', monospace;
+            all: unset;
+            font-size: 11pt;
+            font-family: 'NotoSansMNerdFont';
           }
 
-
           window#waybar {
-          	background: ${background-alpha};
-            
+            background: ${background-alpha};
           }
 
           tooltip {
-          	border-radius: 2px;
-          	background-color: ${background-alpha};
+            color: ${foreground};
+            background-color: ${background-alpha};
+
+            border-radius: 2px;
+
             padding: 4px;
+          }
+
+          #tray menu {
+            color: ${foreground};
+            background-color: ${background-alpha};
+
+            border-radius: 2px;
+
+            padding: 4px;
+          }
+
+          #tray menu  *:hover {
+            background-color: ${background};
           }
 
           /** modules-left *********************************************************/
 
           .modules-left {
-          	background: ${black};
-          	
-          	border-top-right-radius: 18px;
-          	border-bottom-right-radius: 18px;
-          	
-          	padding-right: 18px;
+            background: ${black};
+            
+            border-top-right-radius: 18px;
+            border-bottom-right-radius: 18px;
           }
 
           #custom-menu {
-          	background: ${foreground};
-          	color: ${background};
+            color: ${background};
+            background: ${foreground};
 
-          	padding-left: 10px;
-          	padding-right: 10px;
+            padding-left: calc(18px - 9px);
+            padding-right: calc(18px - 8px);
 
-          	font-family: 'CaskaydiaCoveNerdFontPropo';
+            font-family: 'NotoSansMNerdFontPropo';
           }
 
           #workspaces {
-          	background: ${foreground};
-          	color: ${background};
+            color: ${background};
+            background: ${foreground};
+            padding-left: 2px;
           }
 
           #workspaces button {
@@ -342,15 +355,15 @@ in
           }
 
           #workspaces button#sway-workspace-0 {
-          	margin-left: 0px;
+            margin-left: 0px;
           }
 
           #workspaces button#sway-workspace-10 {
-          	margin-right: 0px;
+            margin-right: 0px;
           }
 
           #workspaces button.visible {
-          	color: ${black};
+            color: ${black};
           }
 
           #workspaces button.focused {
@@ -363,190 +376,182 @@ in
           }
 
           #workspaces button.urgent {
-          	color: ${yellow};
-          }
-
-          #mode {
-          	background: ${foreground};
-          	color: ${background};
-
-          	padding-left: 10px;
+            color: ${yellow};
           }
 
           #custom-dunst {
-          	background-image: url("${light-border-left}");
-          	background-repeat: no-repeat;
-          	background-position: 0% 0%;
-          	background-size: 18px 36px;
+            background-image: url("${light-border-left}");
+            background-position: 0% 0%;
+            background-repeat: no-repeat;
+            background-size: 18px calc(18px * 2);
 
-          	padding-left: calc(18px + 10px);
+            padding-left: calc(18px + 10px);
+            padding-right: 5px;
 
-          	font-family: 'CaskaydiaCoveNerdFontPropo';
+            font-family: 'NotoSansMNerdFontPropo';
           }
 
           #tray {
-          	background: ${background};
-          	margin: 3px 0px;
-          	margin-left: 14px;
-          	padding: 0px 10px;
-          	border-radius: 16px;
+            background: ${background};
+
+            border-radius: 16px;
+
+            margin: 4px;
+
+            padding: 0px 10px;
+          }
+
+          #mode {
+            color: ${foreground};
+
+            margin: 0px 4px;
+            padding-right: 18px;
           }
 
           /** modules-center *******************************************************/
 
           #window {
-          	background: ${black};
-          	color: ${foreground};
+            color: ${foreground};
+            background: ${black};
 
-          	margin: 3px 0px;
-          	padding: 0px 16px;
-          	border-radius: 18px;
+            border-radius: 18px;
+
+            margin: 2px 0px;
+
+            padding: 0px 16px;
           }
 
           .empty #window {
-          	background: transparent;
+            background: transparent;
           }
 
           /** modules-right ********************************************************/
 
           .modules-right {
-          	background: ${black};
+            background: ${black};
 
-          	border-top-left-radius: 18px;
-          	border-bottom-left-radius: 18px;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
 
-          	padding-left: 18px;
+            padding-left: 18px;
           }
 
           /* disk */
 
           #disk {
-          	background: ${black};
-          	color: ${foreground};
+            color: ${foreground};
 
-          	border-top-left-radius: 18px;
-          	border-bottom-left-radius: 18px;
-
-          	padding-left: 4px;
-          	padding-right: 18px;
-
-          	/*margin-right: 10px;*/
+            padding-right: calc(18px - 3px);
           }
 
           /* temperature */
 
           #temperature {
-          	background: ${foreground};
-          	color: ${black};
+            color: ${black};
+            background: ${foreground};
 
-          	border-top-left-radius: 18px;
-          	border-bottom-left-radius: 18px;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
 
-          	background-image: url("${dark-border-right}");
-          	background-repeat: no-repeat;
-          	background-position: 100% 0%;
-          	background-size: 18px 36px;
+            background-image: url("${dark-border-right}");
+            background-position: 100% 0%;
+            background-repeat: no-repeat;
+            background-size: 18px calc(18px * 2);
 
-          	padding-left: 18px;
-          	padding-right: calc(18px + 14px);
-
-          	/*margin-right: 10px;*/
+            padding-left: 18px;
+            padding-right: calc((18px * 2) - 6px);
           }
 
           /* memory */
 
           #memory {
-          	background: ${black};
-          	color: ${foreground};
+            color: ${foreground};
+            background: ${black};
 
-          	border-top-left-radius: 18px;
-          	border-bottom-left-radius: 18px;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
 
-          	padding-left: 4px;
-          	padding-right: 18px;
-
+            padding-right: calc(18px + 4px);
           }
 
           /* cpu */
 
           #cpu {
-          	background: ${foreground};
-          	color: ${black};
+            color: ${black};
+            background: ${foreground};
 
-          	border-top-left-radius: 18px;
-          	border-bottom-left-radius: 18px;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
 
-          	background-image: url("${dark-border-right}");
-          	background-repeat: no-repeat;
-          	background-position: 100% 0%;
-          	background-size: 18px 36px;
+            background-image: url("${dark-border-right}");
+            background-position: 100% 0%;
+            background-repeat: no-repeat;
+            background-size: 18px calc(18px * 2);
 
-          	padding-left: 18px;
-          	padding-right: calc(18px + 14px);
+            padding-left: 18px;
+            padding-right: calc(18px * 2);
           }
 
           /* network */
           #network {
-          	background: ${black};
-          	color: ${foreground};
+            color: ${foreground};
+            background: ${black};
 
-          	border-top-left-radius: 18px;
-          	border-bottom-left-radius: 18px;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
 
-          	padding-left: 4px;
-          	padding-right: 18px;
+            padding-right: calc(18px - 7px);
           }
 
           /* bluetooth */
 
           #bluetooth {
-          	background: ${foreground};
-          	color: ${black};
+            color: ${black};
+            background: ${foreground};
 
-          	border-top-left-radius: 18px;
-          	border-bottom-left-radius: 18px;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
 
-          	background-image: url("${dark-border-right}");
-          	background-repeat: no-repeat;
-          	background-position: 100% 0%;
-          	background-size: 18px 36px;
+            background-image: url("${dark-border-right}");
+            background-position: 100% 0%;
+            background-repeat: no-repeat;
+            background-size: 18px calc(18px * 2);
 
-          	padding-left: 18px;
-          	padding-right: calc(18px + 14px);
+            padding-left: 18px;
+            padding-right: calc((18px * 2) - 3px);
           }
 
           #bluetooth.on {
-          	color: ${black};
+            color: ${black};
           }
 
           #bluetooth.connected {
-          	color: ${blue};
+            color: ${blue};
           }
 
           /* pulseaudio */
 
           #pulseaudio {
-          	background: ${black};
-          	color: ${foreground};
+            color: ${foreground};
+            background: ${black};
 
-          	border-top-left-radius: 18px;
-          	border-bottom-left-radius: 18px;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
 
-          	padding-left: 4px;
-          	padding-right: 18px;
+            padding-right: calc(18px - 3px);
           }
 
           /* clock */
 
           #clock {
-          	background: ${foreground};
-          	color: ${black};
+            color: ${black};
+            background: ${foreground};
 
-          	border-top-left-radius: 18px;
-          	border-bottom-left-radius: 18px;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
 
-          	padding-left: 18px;
-          	padding-right: 12px;
+            padding-left: 18px;
+            padding-right: calc(18px - 3px);
           }
         '';
     };
