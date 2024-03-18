@@ -77,6 +77,16 @@ in
 
     modules.systemd.imported-variables = [ "WAYLAND_DISPLAY" ];
 
+    systemd.user.targets.sway-session = {
+      Unit = {
+        Description = "Sway compositor session";
+        Documentation = "man:systemd.special";
+        BindsTo = "graphical-session.target";
+        Wants = "graphical-session-pre.target";
+        After = "graphical-session-pre.target";
+      };
+    };
+
     xdg.configFile."sway/config" = {
       text =
         ''
@@ -366,6 +376,8 @@ in
           shadows enable
 
           ${extraConfig}
+
+          exec_always systemctl --user start sway-session.target
         '';
       onChange = ''
         # There may be several sockets after log out/log in, but the old ones
