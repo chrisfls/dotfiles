@@ -119,7 +119,7 @@ let inherit (config.presets) desktop; in {
       steam.enable = true;
       systemd.imported-variables = [ "PATH" ];
       telegram.enable = true;
-      themes.enable = true;
+      theme.enable = true;
       udiskie.enable = true;
       waybar.enable = true;
       xdg.enable = true;

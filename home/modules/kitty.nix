@@ -2,7 +2,7 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.modules.kitty) enable;
-  inherit (config.modules.themes) color-scheme;
+  inherit (config.modules.theme) color-scheme;
 in
 {
   options.modules.kitty.enable = lib.mkEnableOption "Enable kitty module";
@@ -16,7 +16,7 @@ in
     };
 
     xdg.configFile."kitty/kitty.conf".text =
-      with config.modules.themes.color-scheme;
+      with color-scheme;
       ''
         editor micro
         shell fish

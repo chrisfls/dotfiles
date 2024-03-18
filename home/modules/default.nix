@@ -39,7 +39,7 @@
     ./sway.nix
     ./systemd.nix
     ./telegram.nix
-    ./themes.nix
+    ./theme.nix
     ./udiskie.nix
     ./waybar.nix
     ./xdg.nix

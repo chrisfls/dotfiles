@@ -1,6 +1,6 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.modules.themes)
+  inherit (config.modules.theme)
     cursor
     enable
     font
@@ -16,8 +16,8 @@ let
   dpi = "96";
 in
 {
-  options.modules.themes = {
-    enable = lib.mkEnableOption "Enable themes module";
+  options.modules.theme = {
+    enable = lib.mkEnableOption "Enable theme module";
 
     qt5.package = lib.mkOption {
       type = lib.types.str;
@@ -126,8 +126,19 @@ in
       qt6.package
     ];
 
-    home.sessionVariables = {
-      QT_QPA_PLATFORMTHEME = "qt6ct";
+    home = {
+      sessionVariables = {
+        QT_QPA_PLATFORMTHEME = "qt6ct";
+      };
+
+      file.".gtkrc-2.0".text =
+        ''
+          gtk-cursor-theme-name = "${cursor.name}"
+          gtk-cursor-theme-size = "${toString cursor.size}"
+          gtk-font-name = "${font.general.name} ${toString font.general.size}"
+          gtk-icon-theme-name = "${icon.name}"
+          gtk-theme-name = "${gtk.name}"
+        '';
     };
 
     modules.systemd.imported-variables = [
@@ -145,8 +156,6 @@ in
       "Xft.lcdfilter" = lcdfilter;
       "Xft.rgba" = rgba;
     };
-
-    modules.sway.extraConfig = "seat seat0 xcursor_theme ${cursor.name} ${toString cursor.size}";
 
     xdg.configFile = {
       "qt5ct/qt5ct.conf".text =
@@ -184,6 +193,7 @@ in
           force_raster_widgets=0
           ignored_applications=@Invalid()
         '';
+
       "qt6ct/qt6ct.conf".text =
         ''
           [Appearance]
@@ -219,6 +229,7 @@ in
           force_raster_widgets=0
           ignored_applications=@Invalid()
         '';
+
       "gtk-3.0/settings.ini".text =
         ''
           [Settings]
@@ -228,6 +239,7 @@ in
           gtk-icon-theme-name=${icon.name}
           gtk-theme-name=${gtk.name}
         '';
+
       "gtk-4.0/settings.ini".text =
         ''
           [Settings]
@@ -237,6 +249,7 @@ in
           gtk-icon-theme-name=${icon.name}
           gtk-theme-name=${gtk.name}
         '';
+
       "fontconfig/fonts.conf".text =
         ''
           <?xml version="1.0" encoding="UTF-8"?>

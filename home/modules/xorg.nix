@@ -9,7 +9,7 @@ let
   xsetroot = "/usr/bin/xsetroot";
   numlockx = "/usr/bin/numlockx";
 
-  cursorPath = "/usr/share/icons/${lib.strings.escapeShellArg config.modules.themes.cursor.name}/cursors/left_ptr";
+  cursorPath = "/usr/share/icons/${lib.strings.escapeShellArg config.modules.theme.cursor.name}/cursors/left_ptr";
 in
 {
   options.modules.xorg = {
@@ -75,7 +75,7 @@ in
           ${xsession}
           ${xrdb} -merge $HOME/.Xresources
         
-          ${xsetroot} -xcf ${cursorPath} ${toString config.modules.themes.cursor.size}
+          ${xsetroot} -xcf ${cursorPath} ${toString config.modules.theme.cursor.size}
 
           ${window-manager}
 

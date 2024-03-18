@@ -56,6 +56,14 @@ in
         output eDP-1 transform 90 position 0 1360 resolution 1280x800 background ${../../assets/wallpaper/23-12-30_800p.png} fit
         output HDMI-A-1 position 1280 0 resolution 3840x2160 background ${../../assets/wallpaper/23-12-29_2160p.png} fit
       '';
+
+    theme = {
+      cursor.size = 36;
+      font = {
+        general.size = 14;
+        fixed.size = 14;
+      };
+    };
   };
 
   pacman = {
@@ -102,12 +110,6 @@ in
         eDP-1 ${eDP-1}
       '';
     "autorandr/docked/config".text =
-      # x-prop-aspect_ratio Automaticmn
-      # x-prop-audio auto
-      # x-prop-broadcast_rgb Automatic
-      # x-prop-colorspace Default
-      # x-prop-max_bpc 8
-      # x-prop-non_desktop 0
       ''
         output DP-1
         off

@@ -291,7 +291,7 @@ in
         ''
           * {
             all: unset;
-            font-size: 11pt;
+            font-size: 16.5pt;
             font-family: 'NotoSansMNerdFont';
           }
 

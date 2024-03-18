@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   inherit (config.modules.dunst) enable;
-  inherit (config.modules.themes) icon color-scheme;
+  inherit (config.modules.theme) icon color-scheme;
 in
 {
   options.modules.dunst.enable = lib.mkEnableOption "Enable dunst module";

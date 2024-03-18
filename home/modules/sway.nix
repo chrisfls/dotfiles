@@ -374,6 +374,8 @@ in
             xkb_numlock enabled
           }
 
+          seat seat0 xcursor_theme ${config.modules.theme.cursor.name} ${toString config.modules.theme.cursor.size}
+
           layer_effects 'waybar' 'blur enable; shadows enable
           layer_effects 'rofi' 'blur enable; shadows enable
 
