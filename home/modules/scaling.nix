@@ -46,7 +46,6 @@ in
         QT_AUTO_SCREEN_SCALE_FACTOR = toString 0;
         QT_ENABLE_HIGHDPI_SCALING = toString 1;
         QT_SCALE_FACTOR = toString scale;
-
         QT_FONT_DPI = toString dpi;
       })
 
