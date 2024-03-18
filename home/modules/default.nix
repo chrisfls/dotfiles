@@ -15,7 +15,6 @@
     ./emacs.nix
     ./feh.nix
     ./fish.nix
-    ./fontconfig.nix
     ./fonts.nix
     ./git.nix
     ./i3wm.nix
@@ -35,7 +34,6 @@
     ./rclone.nix
     ./retroarch.nix
     ./rofi.nix
-    ./scaling.nix
     ./screenshot.nix
     ./steam.nix
     ./sway.nix

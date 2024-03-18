@@ -150,7 +150,7 @@ in
           for_window [class="Whatsapp-for-linux"] move position center
           for_window [class="Yad"] floating enable
 
-          exec_always systemctl --user import-environment 'WAYLAND_DISPLAY' 'DISPLAY' 'SWAYSOCK' 'GDK_DPI_SCALE'
+          exec_always systemctl --user import-environment 'DISPLAY' 'WAYLAND_DISPLAY' 'SWAYSOCK'
           exec_always systemctl --user start sway-session.target
 
           ${

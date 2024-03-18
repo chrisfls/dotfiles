@@ -9,7 +9,11 @@ let
     qt5
     qt6;
 
-  inherit (config.modules.scaling) scale;
+  hintstyle = "hintslight";
+  rgba = "rgb"; # REVIEW: turn into option if needed
+  lcdfilter = "lcddefault"; # REVIEW: turn into option if needed
+  weight = "medium";
+  dpi = "96";
 in
 {
   options.modules.themes = {
@@ -57,7 +61,7 @@ in
 
       size = lib.mkOption {
         type = lib.types.int;
-        default = builtins.floor (24 * scale);
+        default = 24;
       };
 
       package = lib.mkOption {
@@ -131,11 +135,19 @@ in
     ];
 
     xresources.properties = {
-      "Xcursor.theme" = cursor.name;
       "Xcursor.size" = cursor.size;
+      "Xcursor.theme" = cursor.name;
+      "Xft.antialias" = 1;
+      "Xft.autohint" = 0;
+      "Xft.dpi" = dpi;
+      "Xft.hinting" = 1;
+      "Xft.hintstyle" = hintstyle;
+      "Xft.lcdfilter" = lcdfilter;
+      "Xft.rgba" = rgba;
     };
 
-    # TODO: fetch fonts from theme
+    modules.sway.extraConfig = "seat seat0 xcursor_theme ${cursor.name} ${toString cursor.size}";
+
     xdg.configFile = {
       "qt5ct/qt5ct.conf".text =
         ''
@@ -143,12 +155,12 @@ in
           color_scheme_path=/usr/share/color-schemes/BreezeDark.colors
           custom_palette=true
           icon_theme=breeze-dark
-          standard_dialogs=kde
+          standard_dialogs=default
           style=Breeze
 
           [Fonts]
-          fixed="Noto Sans,12,-1,5,50,0,0,0,0,0"
-          general="Noto Sans,12,-1,5,50,0,0,0,0,0"
+          fixed="${font.fixed.name},${toString font.fixed.size},-1,5,50,0,0,0,0,0"
+          general="${font.general.name},${toString font.general.size},-1,5,50,0,0,0,0,0"
 
           [Interface]
           activate_item_on_single_click=0
@@ -172,9 +184,6 @@ in
           force_raster_widgets=0
           ignored_applications=@Invalid()
         '';
-      "qt5ct/colorscheme.conf".text =
-        ''
-        '';
       "qt6ct/qt6ct.conf".text =
         ''
           [Appearance]
@@ -185,8 +194,8 @@ in
           style=Breeze
 
           [Fonts]
-          fixed="Noto Sans,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
-          general="Noto Sans,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+          fixed="${font.fixed.name},${toString font.fixed.size},-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
+          general="${font.general.name},${toString font.general.size},-1,5,400,0,0,0,0,0,0,0,0,0,0,1"
 
           [Interface]
           activate_item_on_single_click=0
@@ -194,7 +203,7 @@ in
           cursor_flash_time=1000
           dialog_buttons_have_icons=1
           double_click_interval=400
-          gui_effects=General, FadeMenu, FadeTooltip, AnimateToolBox
+          gui_effects=General, FadeMenu, AnimateCombo, FadeTooltip, AnimateToolBox
           keyboard_scheme=0
           menus_have_icons=true
           show_shortcuts_in_context_menus=true
@@ -209,9 +218,6 @@ in
           [Troubleshooting]
           force_raster_widgets=0
           ignored_applications=@Invalid()
-        '';
-      "qt6ct/colorscheme.conf".text =
-        ''
         '';
       "gtk-3.0/settings.ini".text =
         ''
@@ -230,6 +236,44 @@ in
           gtk-font-name=${font.general.name} ${toString font.general.size}
           gtk-icon-theme-name=${icon.name}
           gtk-theme-name=${gtk.name}
+        '';
+      "fontconfig/fonts.conf".text =
+        ''
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+          <fontconfig>
+            <match target="font">
+              <edit name="antialias" mode="assign">
+                <bool>true</bool>
+              </edit>
+              <edit name="hinting" mode="assign">
+                <bool>true</bool>
+              </edit>
+              <edit name="hintstyle" mode="assign">
+                <const>${hintstyle}</const>
+              </edit>
+              <edit name="rgba" mode="assign">
+                <const>${rgba}</const>
+              </edit>
+              <edit name="autohint" mode="assign">
+                <bool>false</bool>
+              </edit>
+              <edit name="lcdfilter" mode="assign">
+                <const>${lcdfilter}</const>
+              </edit>
+              <edit name="dpi" mode="assign">
+                <double>${dpi}</double>
+              </edit>
+            </match>
+            <match target="font">
+              <test name="weight" compare="more">
+                <const>${weight}</const>
+              </test>
+              <edit name="autohint" mode="assign">
+                <bool>false</bool>
+              </edit>
+            </match>
+          </fontconfig>
         '';
     };
   };

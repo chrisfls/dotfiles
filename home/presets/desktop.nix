@@ -67,7 +67,6 @@ let inherit (config.presets) desktop; in {
       dunst.enable = true;
       edge.enable = true;
       feh.enable = true;
-      fontconfig.enable = true;
       fonts.enable = true;
       i3wm = {
         enable = true;

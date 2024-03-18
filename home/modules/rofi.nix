@@ -11,7 +11,7 @@ let
 
   wrap = rofi:
     pkgs.writeHostScriptBin "rofi"
-      "exec ${rofi} -dpi ${toString config.modules.scaling.dpi-scaled} \"$@\"";
+      "exec ${rofi} -dpi 144 \"$@\"";
 
   theme = "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5.rasi";
   theme' = "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5-alt.rasi";

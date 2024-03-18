@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 let
   inherit (config.modules.dunst) enable;
-  inherit (config.modules.scaling) scale xft;
   inherit (config.modules.themes) icon color-scheme;
 in
 {
@@ -31,9 +30,6 @@ in
 
     xdg.configFile."dunst/dunstrc" = {
       text =
-        let
-          withScale = num: toString (if xft then num else num * scale);
-        in
         ''
           [experimental]
           per_monitor_dpi="false"
@@ -48,7 +44,7 @@ in
           dmenu="rofi -dmenu -theme "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5.rasi" -p dunst"
           ellipsize="middle"
           follow="mouse"
-          font="Noto Sans ${withScale 10}"
+          font="Noto Sans 15" # 10
           force_xinerama="false"
           force_xwayland="false"
           format="%s %p\n%b "
@@ -81,7 +77,7 @@ in
           progress_bar_height="10"
           progress_bar_max_width="300"
           progress_bar_min_width="150"
-          scale="${toString (if xft then 0 else scale)}"
+          scale="1.5"
           separator_color="frame"
           separator_height="2"
           show_age_threshold="60"
