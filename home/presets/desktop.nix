@@ -30,14 +30,12 @@ let inherit (config.presets) desktop; in {
 
       # core apps
       "extra/lxqt-archiver"
-      "chaotic-aur/bottles"
+      "chaotic-aur/bottles" # TODO: replace?
       "chaotic-aur/joycond-git"
-      "extra/arandr"
+      "extra/arandr" # TODO: replace
       "extra/cameractrls"
-      "extra/lxqt-config"
       "extra/pavucontrol-qt"
       "extra/dolphin"
-      "extra/pcmanfm-qt"
 
       # common apps
       "extra/haruna"
