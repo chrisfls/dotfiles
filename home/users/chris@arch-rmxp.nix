@@ -53,17 +53,9 @@ in
         workspace "9" output "HDMI-A-1"
         workspace "10" output "HDMI-A-1"
 
-        output eDP-1 transform 90 position 0 1360 resolution 1280x800 background ${../../assets/wallpaper/23-12-30_800p.png} fit
-        output HDMI-A-1 position 1280 0 resolution 3840x2160 background ${../../assets/wallpaper/23-12-29_2160p.png} fit
+        output eDP-1 transform 90 position 0 1360 resolution 1280x800 scale 1 background ${../../assets/wallpaper/23-12-30_800p.png} fit
+        output HDMI-A-1 position 1280 0 resolution 3840x2160 scale 1.5 background ${../../assets/wallpaper/23-12-29_2160p.png} fit
       '';
-
-    theme = {
-      cursor.size = 36;
-      font = {
-        general.size = 14;
-        fixed.size = 14;
-      };
-    };
   };
 
   pacman = {

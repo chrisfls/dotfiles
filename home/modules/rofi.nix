@@ -1,4 +1,3 @@
-# TODO: handle scaling
 { config, lib, pkgs, ... }:
 let
   inherit (config.modules.rofi) enable;
@@ -12,7 +11,7 @@ let
 
   wrap = rofi:
     pkgs.writeHostScriptBin "rofi"
-      "exec ${rofi} -dpi 144 \"$@\"";
+      "exec ${rofi} \"$@\"";
 
   theme = "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5.rasi";
   theme' = "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5-alt.rasi";

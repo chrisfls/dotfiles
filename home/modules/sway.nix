@@ -1,4 +1,3 @@
-# TODO: handle scaling
 { config, lib, pkgs, ... }:
 let
   inherit (config.modules.sway)
@@ -95,7 +94,7 @@ in
           # THEMING
           # ######## #### ## #
 
-          font pango:Noto Sans Mono Bold 11
+          font pango:Noto Sans Mono Bold 8
 
           #                       border       bg           txt          indicator    child_border
           #                       ------------ ------------ ------------ ------------ ------------ 

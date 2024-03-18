@@ -1,4 +1,3 @@
-# TODO: handle scaling
 { config, lib, pkgs, ... }:
 let
   inherit (config.modules.dunst) enable;
@@ -45,7 +44,7 @@ in
           dmenu="rofi -dmenu -theme "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5.rasi" -p dunst"
           ellipsize="middle"
           follow="mouse"
-          font="Noto Sans 15" # 10
+          font="Noto Sans 10"
           force_xinerama="false"
           force_xwayland="false"
           format="%s %p\n%b "
@@ -78,7 +77,6 @@ in
           progress_bar_height="10"
           progress_bar_max_width="300"
           progress_bar_min_width="150"
-          scale="1.5"
           separator_color="frame"
           separator_height="2"
           show_age_threshold="60"

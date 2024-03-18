@@ -26,7 +26,7 @@ in
         scrollback_lines 1000000
 
         font_family CaskaydiaCove NFM
-        font_size 16.0
+        font_size 10.0
 
         tab_bar_edge top
         tab_bar_align left
@@ -54,7 +54,6 @@ in
         cursor ${foregroundBright}
         selection_foreground none
         selection_background ${foregroundDim}
-
 
         color0 ${black}
         color8 ${blackBright}
