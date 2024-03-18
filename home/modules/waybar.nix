@@ -1,3 +1,4 @@
+# TODO: handle scaling
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.modules.waybar) enable;

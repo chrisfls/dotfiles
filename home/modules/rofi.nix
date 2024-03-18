@@ -1,3 +1,4 @@
+# TODO: handle scaling
 { config, lib, pkgs, ... }:
 let
   inherit (config.modules.rofi) enable;

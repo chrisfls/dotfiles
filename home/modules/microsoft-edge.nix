@@ -7,7 +7,7 @@ let
   pkg =
     pkgs.writeHostScriptBin exe
       ''
-        exec /usr/bin/microsoft-edge-stable --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
+        exec /usr/bin/${exe} --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
       '';
 in
 {

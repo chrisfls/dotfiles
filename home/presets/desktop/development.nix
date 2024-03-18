@@ -14,13 +14,4 @@ lib.mkIf enable {
     code.enable = true;
     emacs.enable = true;
   };
-
-  # TODO: trying because I'm curious
-  # home.packages = [
-  #   pkgs.tig
-
-  #   # TODO: eval which I'll use
-  #   pkgs.gitui
-  #   pkgs.lazygit
-  # ];
 }
