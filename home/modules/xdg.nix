@@ -4,18 +4,17 @@ let inherit (config.modules.xdg) enable; in {
 
   config = lib.mkIf enable {
     pacman.packages = [
-      # "extra/xdg-desktop-portal-lxqt"
-      # "extra/xdg-desktop-portal" # will be installed for flatpak anyway
-      # "extra/xdg-desktop-portal-gtk"
+      "extra/xdg-desktop-portal-lxqt"
       "extra/xdg-user-dirs"
       "extra/xdg-utils"
+      "extra/xdg-desktop-portal-wlr"
     ];
 
-    # home.sessionVariables = {
-    #   XDG_CURRENT_DESKTOP = "LXQt";
-    #   DE = "lxqt";
-    #   # GTK_USE_PORTAL = 1; # breaks vscode
-    # };
+    home.sessionVariables = {
+      XDG_CURRENT_DESKTOP = "sway";
+      XDG_SESSION_TYPE = "wayland";
+      # GTK_USE_PORTAL = 1; # breaks vscode
+    };
 
     xdg = {
       enable = true;
@@ -34,20 +33,20 @@ let inherit (config.modules.xdg) enable; in {
         };
       };
       userDirs.enable = true;
-      # configFile = {
-      #   "xdg-desktop-portal/portals.conf".text =
-      #     ''
-      #       [preferred]
-      #       default=gtk
-      #       org.freedesktop.impl.portal.FileChooser=xapp
-      #     '';
+      configFile = {
+        "xdg-desktop-portal/portals.conf".text =
+          ''
+            [preferred]
+            default=lxqt
+            org.freedesktop.portal.ScreenCast=wlr
+          '';
 
-      #   "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
-      #     ''
-      #       [Service]
-      #       Environment="XDG_CURRENT_DESKTOP=LXQt"
-      #     '';
-      # };
+        "systemd/user/xdg-desktop-portal.service.d/override.conf".text =
+          ''
+            [Service]
+            Environment="XDG_CURRENT_DESKTOP=sway"
+          '';
+      };
       desktopEntries = {
         "avahi-discover" = { name = "Avahi Zeroconf Browser"; noDisplay = true; };
         "bssh" = { name = "Avahi SSH Server Browser"; noDisplay = true; };
