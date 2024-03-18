@@ -4,7 +4,7 @@ let inherit (config.modules.xdg) enable; in {
 
   config = lib.mkIf enable {
     pacman.packages = [
-      "extra/xdg-desktop-portal-lxqt"
+      "extra/xdg-desktop-portal-gtk"
       "extra/xdg-user-dirs"
       "extra/xdg-utils"
       "extra/xdg-desktop-portal-wlr"
@@ -37,7 +37,7 @@ let inherit (config.modules.xdg) enable; in {
         "xdg-desktop-portal/portals.conf".text =
           ''
             [preferred]
-            default=lxqt
+            default=gtk
             org.freedesktop.portal.ScreenCast=wlr
           '';
 
