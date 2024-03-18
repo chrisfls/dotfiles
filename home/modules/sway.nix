@@ -9,7 +9,6 @@ let
     menu
     power-menu
     run
-    screenshot
     terminal
     calculator;
   inherit (config.modules.systemd) variables;
@@ -43,6 +42,14 @@ let
   sway = "/usr/bin/sway";
   swaynag = "/usr/bin/swaynag";
   swaymsg = "/usr/bin/swaymsg";
+
+  grimshot-save = 
+    pkgs.writeScript "grimshot-save"
+      ''
+        d="$XDG_PICTURES_DIR/Screenshots/$(date +"%Y-%m-%d")"
+        mkdir -p "$d"
+        grimshot save screen "$d/$(date +"%H_%M_%S.png")"
+      '';
 in
 {
   options.modules.sway = {
@@ -54,12 +61,6 @@ in
     power-menu = lib.mkOption { type = lib.types.str; default = "rofi-power-menu"; };
     window-list = lib.mkOption { type = lib.types.str; default = "rofi-windows"; };
     calculator = lib.mkOption { type = lib.types.str; default = "rofi-calc"; };
-
-    screenshot = {
-      copy = lib.mkOption { type = lib.types.str; default = "screenshot-copy"; };
-      copy-area = lib.mkOption { type = lib.types.str; default = "screenshot-copy-area"; };
-      save = lib.mkOption { type = lib.types.str; default = "screenshot-save"; };
-    };
 
     apps = lib.mkOption { type = lib.types.attrsOf lib.types.str; default = { }; };
     startup = lib.mkOption { type = lib.types.listOf lib.types.str; default = [ ]; };
@@ -73,6 +74,7 @@ in
     pacman.packages = [
       "extra/swaybg"
       "chaotic-aur/swayfx"
+      "chaotic-aur/grimshot"
     ];
 
     systemd.user.targets.sway-session = {
@@ -199,9 +201,9 @@ in
           bindsym $mod+w exec --no-startup-id "${window-list}"
 
           # screenshot
-          bindsym Print exec --no-startup-id "${screenshot.copy}"
-          bindsym shift+Print exec --no-startup-id "${screenshot.save}"
-          bindsym $mod+Print exec --no-startup-id "${screenshot.copy-area}"
+          bindsym Print exec --no-startup-id "grimshot copy screen"
+          bindsym shift+Print exec --no-startup-id "${grimshot-save}"
+          bindsym $mod+Print exec --no-startup-id "grimshot copy anything"
         
           # #### ## #
           # WINDOW CONTROLS
