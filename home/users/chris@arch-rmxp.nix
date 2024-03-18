@@ -15,11 +15,10 @@ in
   modules = {
     cloudflare-warp.enable = true;
 
-    scaling = { enable = true; scale = 1.5; gtk = true; qt = true; };
-
-    retroarch.enable = true;
-
-    onedrive.enable = true;
+    feh.wallpapers = [
+      ../../assets/wallpaper/23-12-29_2160p.png
+      ../../assets/wallpaper/23-12-30_800p.png
+    ];
 
     i3wm.extraConfig =
       ''
@@ -36,10 +35,9 @@ in
         workspace "10" output "HDMI-1"
       '';
 
-    feh.wallpapers = [
-      ../../assets/wallpaper/23-12-29_2160p.png
-      ../../assets/wallpaper/23-12-30_800p.png
-    ];
+    onedrive.enable = true;
+
+    retroarch.enable = true;
 
     sway.extraConfig =
       ''
