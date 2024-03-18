@@ -8,7 +8,7 @@ let inherit (config.modules.brave) enable; in {
     home.packages = [
       (pkgs.writeHostScriptBin "brave"
         ''
-          exec /usr/bin/brave --force-device-scale-factor=1.5 --enable-features=VaapiVideoDecodeLinuxGL "$@"
+          exec /usr/bin/brave --ozone-platform=wayland --enable-features=VaapiVideoDecodeLinuxGL "$@"
         '')
     ];
 

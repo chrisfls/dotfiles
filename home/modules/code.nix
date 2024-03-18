@@ -2,11 +2,10 @@
 let
   inherit (config.modules.code) enable;
 
-  # TODO: handle scaling
   pkg =
     pkgs.writeHostScriptBin "code"
       ''
-        exec /usr/bin/code --force-device-scale-factor=1.5 "$@"
+        exec /usr/bin/code --ozone-platform=wayland "$@"
       '';  
 in {
   options.modules.code.enable = lib.mkEnableOption "Enable code module";
