@@ -394,3 +394,6 @@ in
     };
   };
 }
+
+# probably not needed:
+# systemctl --user start xdg-desktop-portal-wlr.service
