@@ -75,8 +75,6 @@ in
       "chaotic-aur/swayfx"
     ];
 
-    modules.systemd.imported-variables = [ "WAYLAND_DISPLAY" ];
-
     systemd.user.targets.sway-session = {
       Unit = {
         Description = "Sway compositor session";
@@ -151,6 +149,9 @@ in
           for_window [class="Whatsapp-for-linux"] floating enable
           for_window [class="Whatsapp-for-linux"] move position center
           for_window [class="Yad"] floating enable
+
+          exec_always systemctl --user import-environment 'WAYLAND_DISPLAY' 'DISPLAY' 'SWAYSOCK' 'GDK_DPI_SCALE'
+          exec_always systemctl --user start sway-session.target
 
           ${
             lib.trivial.pipe startup [
@@ -374,10 +375,10 @@ in
 
           blur enable
           shadows enable
+          layer_effects 'waybar' 'blur enable; shadows enable
+          layer_effects 'rofi' 'blur enable; shadows enable
 
           ${extraConfig}
-
-          exec_always systemctl --user start sway-session.target
         '';
       onChange = ''
         # There may be several sockets after log out/log in, but the old ones
