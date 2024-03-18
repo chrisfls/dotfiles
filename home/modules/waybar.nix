@@ -12,65 +12,6 @@ let
   blue = "#3DAEE9"; # blue
   yellow = "#E08B4A"; # yellow
 
-  light-border-left =
-    pkgs.writeTextFile {
-      name = "light-border.svg";
-      text =
-        ''
-          <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-          <svg
-            width="18"
-            height="36"
-            viewBox="0 0 4.7624999 9.5249999"
-            version="1.1"
-            id="svg1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:svg="http://www.w3.org/2000/svg">
-            <defs
-              id="defs1" />
-            <g
-              id="layer1"
-              transform="translate(-4.7624999)">
-              <circle
-                style="fill:${foreground};stroke-width:0.0415811"
-                id="path1"
-                cx="4.7624998"
-                cy="4.7624998"
-                r="4.7624998" />
-            </g>
-          </svg>
-        '';
-    };
-
-  dark-border-right =
-    pkgs.writeTextFile {
-      name = "light-border.svg";
-      text =
-        ''
-          <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-          <svg
-             width="18"
-             height="36"
-             viewBox="0 0 4.7624999 9.5249999"
-             version="1.1"
-             id="svg1"
-             xmlns="http://www.w3.org/2000/svg"
-             xmlns:svg="http://www.w3.org/2000/svg">
-            <defs
-               id="defs1" />
-            <g
-               id="layer1">
-              <circle
-                 style="fill:${black};stroke-width:0.0415811"
-                 id="path1"
-                 cx="4.7624998"
-                 cy="4.7624998"
-                 r="4.7624998" />
-            </g>
-          </svg>
-        '';
-    };
-
   dunst-toggle = pkgs.writeScript "bluetooth-toggle"
     ''
       #!/usr/bin/env bash
@@ -120,7 +61,7 @@ in
             {
               "layer": "bottom",
               "position": "top",
-              "height": 36,
+              "height": 24,
               "margin-left": 0,
               "margin-right": 0,
               "output": [
@@ -169,8 +110,8 @@ in
                 "on-click": "rofi-menu"
               },
               "tray": {
-                "icon-size": 21,
-                "spacing": 8
+                "icon-size": 14,
+                "spacing": 5
               },
               /** modules-center *******************************************************/
               "modules-center": [
@@ -193,6 +134,10 @@ in
                 "pulseaudio",
                 "clock"
               ],
+              "custom/rsep": {
+                "format": " ",
+                "max-length": 1
+              },
               "disk": {
                 "format": "{free} 󰋊",
                 "path": "/",
@@ -292,7 +237,7 @@ in
         ''
           * {
             all: unset;
-            font-size: 16.5pt;
+            font-size: 11pt;
             font-family: 'NotoSansMNerdFont';
           }
 
@@ -319,7 +264,8 @@ in
           }
 
           #tray menu  *:hover {
-            background-color: ${background};
+            color: ${background};
+            background-color: ${foreground};
           }
 
           /** modules-left *********************************************************/
@@ -327,16 +273,16 @@ in
           .modules-left {
             background: ${black};
             
-            border-top-right-radius: 18px;
-            border-bottom-right-radius: 18px;
+            border-bottom-right-radius: 16px;
+            padding-right: 16px;
           }
 
           #custom-menu {
             color: ${background};
             background: ${foreground};
 
-            padding-left: calc(18px - 9px);
-            padding-right: calc(18px - 8px);
+            padding-left: calc(16px - 9px);
+            padding-right: calc(16px - 8px);
 
             font-family: 'NotoSansMNerdFontPropo';
           }
@@ -344,14 +290,18 @@ in
           #workspaces {
             color: ${background};
             background: ${foreground};
+
             padding-left: 2px;
+            padding-right: 4px;
+
+            border-bottom-right-radius: 16px;
           }
 
           #workspaces button {
-            margin: 0px 4px;
+            margin: 0px 1px;
 
-            padding-left: 3px;
-            padding-right: 8px;
+            padding-left: 2px;
+            padding-right: 5px;
           }
 
           #workspaces button#sway-workspace-0 {
@@ -380,32 +330,21 @@ in
           }
 
           #custom-dunst {
-            background-image: url("${light-border-left}");
-            background-position: 0% 0%;
-            background-repeat: no-repeat;
-            background-size: 18px calc(18px * 2);
-
-            padding-left: calc(18px + 10px);
-            padding-right: 5px;
+            padding-left: 4px;
+            padding-right: 4px;
+            margin-left: 4px;
 
             font-family: 'NotoSansMNerdFontPropo';
           }
 
           #tray {
-            background: ${background};
-
-            border-radius: 16px;
-
-            margin: 4px;
-
-            padding: 0px 10px;
+            color: ${foreground};
+            margin-left: 2px;
           }
 
           #mode {
             color: ${foreground};
-
-            margin: 0px 4px;
-            padding-right: 18px;
+            padding-left: 8px;
           }
 
           /** modules-center *******************************************************/
@@ -414,10 +353,8 @@ in
             color: ${foreground};
             background: ${black};
 
-            border-radius: 18px;
-
-            margin: 2px 0px;
-
+            border-radius: 16px;
+            margin: 4px 0px;
             padding: 0px 16px;
           }
 
@@ -430,10 +367,9 @@ in
           .modules-right {
             background: ${black};
 
-            border-top-left-radius: 18px;
-            border-bottom-left-radius: 18px;
+            border-bottom-left-radius: 16px;
 
-            padding-left: 18px;
+            padding-left: 16px;
           }
 
           /* disk */
@@ -441,25 +377,21 @@ in
           #disk {
             color: ${foreground};
 
-            padding-right: calc(18px - 3px);
+            padding-right: 16px;
           }
 
           /* temperature */
 
           #temperature {
-            color: ${black};
-            background: ${foreground};
+            color: ${foreground};
+            background: ${background};
 
-            border-top-left-radius: 18px;
-            border-bottom-left-radius: 18px;
-
-            background-image: url("${dark-border-right}");
-            background-position: 100% 0%;
-            background-repeat: no-repeat;
-            background-size: 18px calc(18px * 2);
-
-            padding-left: 18px;
-            padding-right: calc((18px * 2) - 6px);
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            
+            margin-top: -2px;
+            margin-bottom: 4px;
+            padding: 0px 16px;
           }
 
           /* memory */
@@ -468,28 +400,20 @@ in
             color: ${foreground};
             background: ${black};
 
-            border-top-left-radius: 18px;
-            border-bottom-left-radius: 18px;
-
-            padding-right: calc(18px + 4px);
+            padding: 0px 16px;
           }
 
           /* cpu */
 
           #cpu {
-            color: ${black};
-            background: ${foreground};
+            color: ${foreground};
+            background: ${background};
 
-            border-top-left-radius: 18px;
-            border-bottom-left-radius: 18px;
-
-            background-image: url("${dark-border-right}");
-            background-position: 100% 0%;
-            background-repeat: no-repeat;
-            background-size: 18px calc(18px * 2);
-
-            padding-left: 18px;
-            padding-right: calc(18px * 2);
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            margin-top: -2px;
+            margin-bottom: 4px;
+            padding: 0px 16px;
           }
 
           /* network */
@@ -497,32 +421,25 @@ in
             color: ${foreground};
             background: ${black};
 
-            border-top-left-radius: 18px;
-            border-bottom-left-radius: 18px;
-
-            padding-right: calc(18px - 7px);
+            padding: 0px 16px;
           }
 
           /* bluetooth */
 
           #bluetooth {
-            color: ${black};
-            background: ${foreground};
+            color: ${foreground};
+            background: ${background};
 
-            border-top-left-radius: 18px;
-            border-bottom-left-radius: 18px;
-
-            background-image: url("${dark-border-right}");
-            background-position: 100% 0%;
-            background-repeat: no-repeat;
-            background-size: 18px calc(18px * 2);
-
-            padding-left: 18px;
-            padding-right: calc((18px * 2) - 3px);
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            
+            margin-top: -2px;
+            margin-bottom: 4px;
+            padding: 0px 16px;
           }
 
           #bluetooth.on {
-            color: ${black};
+            color: ${foreground};
           }
 
           #bluetooth.connected {
@@ -535,23 +452,19 @@ in
             color: ${foreground};
             background: ${black};
 
-            border-top-left-radius: 18px;
-            border-bottom-left-radius: 18px;
-
-            padding-right: calc(18px - 3px);
+            padding: 0px 16px;
           }
 
           /* clock */
 
           #clock {
-            color: ${black};
+            color: ${background};
             background: ${foreground};
 
-            border-top-left-radius: 18px;
-            border-bottom-left-radius: 18px;
+            border-bottom-left-radius: 16px;
 
-            padding-left: 18px;
-            padding-right: calc(18px - 3px);
+            padding-left: 16px;
+            padding-right: calc(16px - 3px);
           }
         '';
     };
