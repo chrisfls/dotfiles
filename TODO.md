@@ -1,9 +1,10 @@
 ## system
 
 - [ ] Deprecate i3 config.
-  - [ ] Blur rofi background.
-  - [ ] Optimize: windows that get blur, only enable shadows for waybar.
-  - [ ] Fix cursor size. (why so small?)
-  - [ ] Fix dunst icon scroll and remove rofi integration.
+  - [ ] Optimize swayfx
+    - only add shadows to waybar and rofi
+    - only blur terminals, waybar and rofi
+  - [ ] Fix cursor size. (why it's so small?)
+  - [ ] Fix dunst scroll in waybar, remove rofi integration.
   - [ ] Start sway with numlock on.
   - [ ] Replace kitty with foot.
