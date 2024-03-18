@@ -59,7 +59,7 @@ in
           history="mod4+dead_acute"
           history_length="20"
           horizontal_padding="10"
-          icon_theme="Breeze-Dark"
+          icon_theme="breeze-dark"
           enable_recursive_icon_lookup=true
           icon_position="left"
           idle_threshold="120"
