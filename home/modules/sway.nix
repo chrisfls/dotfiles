@@ -43,7 +43,7 @@ let
   swaynag = "/usr/bin/swaynag";
   swaymsg = "/usr/bin/swaymsg";
 
-  grimshot-save = 
+  grimshot-save =
     pkgs.writeScript "grimshot-save"
       ''
         d="$XDG_PICTURES_DIR/Screenshots/$(date +"%Y-%m-%d")"
@@ -77,13 +77,15 @@ in
       "chaotic-aur/grimshot"
     ];
 
-    systemd.user.targets.sway-session = {
-      Unit = {
-        Description = "Sway compositor session";
-        Documentation = "man:systemd.special";
-        BindsTo = "graphical-session.target";
-        Wants = "graphical-session-pre.target";
-        After = "graphical-session-pre.target";
+    systemd.user = {
+      targets.sway-session = {
+        Unit = {
+          Description = "Sway compositor session";
+          Documentation = "man:systemd.special";
+          BindsTo = "graphical-session.target";
+          Wants = "graphical-session-pre.target";
+          After = "graphical-session-pre.target";
+        };
       };
     };
 
@@ -94,7 +96,7 @@ in
           # THEMING
           # ######## #### ## #
 
-          font pango:Noto Sans Mono Bold 8
+          font pango:Noto Sans Mono Bold 6
 
           #                       border       bg           txt          indicator    child_border
           #                       ------------ ------------ ------------ ------------ ------------ 
@@ -108,6 +110,7 @@ in
 
           default_border normal 1
           default_floating_border normal 1
+          titlebar_border_thickness 1
           gaps inner 0
           gaps outer 0
           hide_edge_borders none
@@ -152,6 +155,7 @@ in
 
           exec_always systemctl --user import-environment 'DISPLAY' 'WAYLAND_DISPLAY' 'SWAYSOCK'
           exec_always systemctl --user start sway-session.target
+          exec_always systemctl --user restart xsettingsd.service
 
           ${
             lib.trivial.pipe startup [
@@ -378,6 +382,7 @@ in
 
           layer_effects 'waybar' 'blur enable; shadows enable
           layer_effects 'rofi' 'blur enable; shadows enable
+          layer_effects 'kitty' 'blur enable
 
           ${extraConfig}
         '';
@@ -393,6 +398,3 @@ in
     };
   };
 }
-
-# probably not needed:
-# systemctl --user start xdg-desktop-portal-wlr.service

@@ -145,18 +145,6 @@ in
       "QT_QPA_PLATFORMTHEME"
     ];
 
-    xresources.properties = {
-      "Xcursor.size" = cursor.size;
-      "Xcursor.theme" = cursor.name;
-      "Xft.antialias" = 1;
-      "Xft.autohint" = 0;
-      "Xft.dpi" = dpi;
-      "Xft.hinting" = 1;
-      "Xft.hintstyle" = hintstyle;
-      "Xft.lcdfilter" = lcdfilter;
-      "Xft.rgba" = rgba;
-    };
-
     xdg.configFile = {
       "qt5ct/qt5ct.conf".text =
         ''
@@ -248,6 +236,19 @@ in
           gtk-font-name=${font.general.name} ${toString font.general.size}
           gtk-icon-theme-name=${icon.name}
           gtk-theme-name=${gtk.name}
+        '';
+
+      "xsettingsd/xsettingsd.conf".text =
+        ''
+          Xcursor/Size "${toString cursor.size}"
+          Gtk/CursorThemeName "${cursor.name}"
+          Xft/Antialias 1
+          Xft/Autohint 0
+          Xft/Dpi ${toString dpi}
+          Xft/Hinting 1
+          Xft/HintStyle "${hintstyle}"
+          Xft/lcdfilter "${lcdfilter}"
+          Xft/RGBA "${rgba}"
         '';
 
       "fontconfig/fonts.conf".text =
