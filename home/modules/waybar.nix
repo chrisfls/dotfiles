@@ -353,9 +353,9 @@ in
             color: ${foreground};
             background: ${black};
 
-            border-radius: 16px;
+            border-radius: 8px;
             margin: 4px 0px;
-            padding: 0px 16px;
+            padding: 0px 8px;
           }
 
           .empty #window {
@@ -386,12 +386,10 @@ in
             color: ${foreground};
             background: ${background};
 
-            border-bottom-left-radius: 16px;
-            border-bottom-right-radius: 16px;
-            
-            margin-top: -2px;
-            margin-bottom: 4px;
             padding: 0px 16px;
+
+            border-radius: 12px;
+            margin: 2px 0px;
           }
 
           /* memory */
@@ -409,11 +407,10 @@ in
             color: ${foreground};
             background: ${background};
 
-            border-bottom-left-radius: 16px;
-            border-bottom-right-radius: 16px;
-            margin-top: -2px;
-            margin-bottom: 4px;
             padding: 0px 16px;
+
+            border-radius: 12px;
+            margin: 2px 0px;
           }
 
           /* network */
@@ -430,12 +427,11 @@ in
             color: ${foreground};
             background: ${background};
 
-            border-bottom-left-radius: 16px;
-            border-bottom-right-radius: 16px;
+           
+
+            border-radius: 12px;            padding: 0px 16px;
             
-            margin-top: -2px;
-            margin-bottom: 4px;
-            padding: 0px 16px;
+            margin: 0px 2px;
           }
 
           #bluetooth.on {
