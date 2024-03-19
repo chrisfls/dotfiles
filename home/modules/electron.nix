@@ -16,6 +16,7 @@ in
     xdg.configFile = {
       "electron28-flags.conf".text = flags;
       "electron29-flags.conf".text = flags;
+      "logseq-flags.conf".text = flags;
     };
   };
 }

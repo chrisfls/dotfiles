@@ -50,6 +50,10 @@ let
         mkdir -p "$d"
         grimshot save screen "$d/$(date +"%H_%M_%S.png")"
       '';
+
+  scale = config.modules.theme.scale;
+
+  cursor-size-scale = toString (builtins.floor (config.modules.theme.cursor.size * (builtins.ceil scale)));
 in
 {
   options.modules.sway = {
@@ -96,7 +100,7 @@ in
           # THEMING
           # ######## #### ## #
 
-          font pango:Noto Sans Mono Bold 6
+          font pango:Noto Sans Mono Bold 7
 
           #                       border       bg           txt          indicator    child_border
           #                       ------------ ------------ ------------ ------------ ------------ 
@@ -131,6 +135,7 @@ in
           mouse_warping output
           workspace_layout default
         
+          # TODO: fix 
           for_window [class="bluedevil-wizard"] floating enable
           for_window [class="bluedevil-wizard"] resize set 750 px 678 px, move position center
           for_window [class="copyq"] floating enable
@@ -378,13 +383,13 @@ in
             xkb_numlock enabled
           }
 
-          seat seat0 xcursor_theme ${config.modules.theme.cursor.name} ${toString config.modules.theme.cursor.size}
-
           layer_effects 'waybar' 'blur enable; shadows enable
           layer_effects 'rofi' 'blur enable; shadows enable
-          layer_effects 'kitty' 'blur enable
 
           ${extraConfig}
+
+          seat seat0 xcursor_theme ${config.modules.theme.cursor.name} ${cursor-size-scale}
+          output "*" scale ${toString scale}
         '';
       onChange = ''
         # There may be several sockets after log out/log in, but the old ones

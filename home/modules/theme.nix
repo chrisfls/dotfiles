@@ -7,7 +7,8 @@ let
     gtk
     icon
     qt5
-    qt6;
+    qt6
+    scale;
 
   hintstyle = "hintslight";
   rgba = "rgb"; # REVIEW: turn into option if needed
@@ -18,6 +19,11 @@ in
 {
   options.modules.theme = {
     enable = lib.mkEnableOption "Enable theme module";
+
+    scale = lib.mkOption {
+      type = lib.types.float;
+      default = 1.0;
+    };
 
     qt5.package = lib.mkOption {
       type = lib.types.str;
@@ -61,7 +67,7 @@ in
 
       size = lib.mkOption {
         type = lib.types.int;
-        default = 24;
+        default = 10;
       };
 
       package = lib.mkOption {
@@ -127,9 +133,7 @@ in
     ];
 
     home = {
-      sessionVariables = {
-        QT_QPA_PLATFORMTHEME = "qt6ct";
-      };
+      sessionVariables.QT_QPA_PLATFORMTHEME = "qt6ct";
 
       file.".gtkrc-2.0".text =
         ''
@@ -244,7 +248,7 @@ in
           Gtk/CursorThemeName "${cursor.name}"
           Xft/Antialias 1
           Xft/Autohint 0
-          Xft/Dpi ${toString dpi}
+          Xft/Dpi ${dpi}
           Xft/Hinting 1
           Xft/HintStyle "${hintstyle}"
           Xft/lcdfilter "${lcdfilter}"
