@@ -52,8 +52,6 @@ let
       '';
 
   scale = config.modules.theme.scale;
-
-  cursor-size-scale = toString (builtins.floor (config.modules.theme.cursor.size * (builtins.ceil scale)));
 in
 {
   options.modules.sway = {
@@ -388,7 +386,7 @@ in
 
           ${extraConfig}
 
-          seat seat0 xcursor_theme ${config.modules.theme.cursor.name} ${cursor-size-scale}
+          seat seat0 xcursor_theme ${config.modules.theme.cursor.name} 38
           output "*" scale ${toString scale}
         '';
       onChange = ''

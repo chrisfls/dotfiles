@@ -15,6 +15,8 @@ let
   lcdfilter = "lcddefault"; # REVIEW: turn into option if needed
   weight = "medium";
   dpi = "96";
+
+  cursor-size = "1";
 in
 {
   options.modules.theme = {
@@ -138,7 +140,7 @@ in
       file.".gtkrc-2.0".text =
         ''
           gtk-cursor-theme-name = "${cursor.name}"
-          gtk-cursor-theme-size = "${toString cursor.size}"
+          gtk-cursor-theme-size = "${cursor-size}"
           gtk-font-name = "${font.general.name} ${toString font.general.size}"
           gtk-icon-theme-name = "${icon.name}"
           gtk-theme-name = "${gtk.name}"
@@ -226,7 +228,7 @@ in
         ''
           [Settings]
           gtk-cursor-theme-name=${cursor.name}
-          gtk-cursor-theme-size=${toString cursor.size}
+          gtk-cursor-theme-size=${cursor-size}
           gtk-font-name=${font.general.name} ${toString font.general.size}
           gtk-icon-theme-name=${icon.name}
           gtk-theme-name=${gtk.name}
@@ -236,7 +238,7 @@ in
         ''
           [Settings]
           gtk-cursor-theme-name=${cursor.name}
-          gtk-cursor-theme-size=${toString cursor.size}
+          gtk-cursor-theme-size=${cursor-size}
           gtk-font-name=${font.general.name} ${toString font.general.size}
           gtk-icon-theme-name=${icon.name}
           gtk-theme-name=${gtk.name}
@@ -244,7 +246,7 @@ in
 
       "xsettingsd/xsettingsd.conf".text =
         ''
-          Xcursor/Size "${toString cursor.size}"
+          Xcursor/Size "${cursor-size}"
           Gtk/CursorThemeName "${cursor.name}"
           Xft/Antialias 1
           Xft/Autohint 0
