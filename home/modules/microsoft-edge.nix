@@ -25,10 +25,7 @@ in
         '')
     ];
 
-    modules = {
-      i3wm.apps."shift+b" = exe;
-      sway.apps."shift+b" = exe;
-    };
+    modules.sway.apps."shift+b" = exe;
 
     xdg.desktopEntries = {
       "microsoft-edge" = {

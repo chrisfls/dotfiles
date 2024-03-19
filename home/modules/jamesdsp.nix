@@ -76,10 +76,7 @@ in
   config = lib.mkIf enable {
     pacman.packages = [ "chaotic-aur/jamesdsp-git" ];
 
-    modules = {
-      i3wm.startup = [ "jamesdsp --tray" ];
-      sway.startup = [ "jamesdsp --tray" ];
-    };
+    modules.sway.startup = [ "jamesdsp --tray" ];
 
     xdg.configFile = lib.attrsets.foldlAttrs
       (acc: name: path: acc // {

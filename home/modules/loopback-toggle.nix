@@ -40,10 +40,7 @@ in
   config = lib.mkIf enable {
     pacman.packages = ["extra/pipewire-pulse" "extra/pamixer"];
 
-    modules = {
-      i3wm.extraConfig = "bindcode 202 exec --no-startup-id ${loopback-toggle}";
-      sway.extraConfig = "bindcode 202 exec --no-startup-id ${loopback-toggle}";
-    };
+    modules.sway.extraConfig = "bindcode 202 exec --no-startup-id ${loopback-toggle}";
 
     systemd.user.services.loopback-offd = {
       Unit.Description = "Disables audio loopback by default";

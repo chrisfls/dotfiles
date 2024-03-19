@@ -62,31 +62,10 @@ let inherit (config.presets) desktop; in {
     ];
 
     modules = {
-      autorandr.enable = true;
       brave.enable = true;
       dunst.enable = true;
       electron.enable = true;
-      feh.enable = true;
       fonts.enable = true;
-      i3wm = {
-        enable = true;
-
-        startup = [
-          "copyq"
-          "nm-tray"
-          "webcord --start-minimized"
-        ];
-
-        apps = {
-          "c" = "io.github.Qalculate.qalculate-qt";
-          "d" = "webcord";
-          "e" = "org.kde.dolphin";
-          "shift+c" = "com.github.hluk.copyq";
-          "w" = "com.github.eneshecan.WhatsAppForLinux";
-        };
-
-        extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
-      };
       sway = {
         enable = true;
 
@@ -110,12 +89,9 @@ let inherit (config.presets) desktop; in {
       kitty.enable = true;
       loopback-toggle.enable = true;
       micro = { enable = true; desktop = true; };
-      picom.enable = true;
-      polybar.enable = true;
       qview.enable = true;
       rclone.enable = true;
       rofi.enable = true;
-      screenshot.enable = true;
       steam.enable = true;
       systemd.imported-variables = [ "PATH" ];
       telegram.enable = true;
@@ -123,7 +99,6 @@ let inherit (config.presets) desktop; in {
       udiskie.enable = true;
       waybar.enable = true;
       xdg.enable = true;
-      xorg.enable = true;
     };
 
     xdg.configFile."kwalletrc".text =

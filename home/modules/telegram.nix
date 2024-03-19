@@ -15,16 +15,9 @@ let inherit (config.modules.telegram) enable; in {
         '')
     ];
 
-    modules = {
-      i3wm = {
-        apps."t" = "org.telegram";
-        startup = [ "telegram-desktop -startintray" ];
-      };
-
-      sway = {
-        apps."t" = "org.telegram";
-        startup = [ "telegram-desktop -startintray" ];
-      };
+    modules.sway = {
+      apps."t" = "org.telegram";
+      startup = [ "telegram-desktop -startintray" ];
     };
   };
 }

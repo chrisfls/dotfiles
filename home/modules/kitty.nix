@@ -10,10 +10,7 @@ in
   config = lib.mkIf enable {
     pacman.packages = [ "extra/kitty" ];
 
-    modules = {
-      i3wm.terminal = "kitty -1";
-      sway.terminal = "kitty -1";
-    };
+    modules.sway.terminal = "kitty -1";
 
     xdg.configFile."kitty/kitty.conf".text =
       with color-scheme;

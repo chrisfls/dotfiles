@@ -15,26 +15,6 @@ in
   modules = {
     cloudflare-warp.enable = true;
 
-    feh.wallpapers = [
-      ../../assets/wallpaper/23-12-29_2160p.png
-      ../../assets/wallpaper/23-12-30_800p.png
-    ];
-
-    i3wm.extraConfig =
-      ''
-        workspace "0" output "eDP-1"
-        workspace "1" output "HDMI-1"
-        workspace "2" output "HDMI-1"
-        workspace "3" output "HDMI-1"
-        workspace "4" output "HDMI-1"
-        workspace "5" output "HDMI-1"
-        workspace "6" output "HDMI-1"
-        workspace "7" output "HDMI-1"
-        workspace "8" output "HDMI-1"
-        workspace "9" output "HDMI-1"
-        workspace "10" output "HDMI-1"
-      '';
-
     onedrive.enable = true;
 
     retroarch.enable = true;
@@ -53,7 +33,7 @@ in
         workspace "9" output "HDMI-A-1"
         workspace "10" output "HDMI-A-1"
 
-        output eDP-1 transform 90 position 0 1360 resolution 1280x800 scale 1 background ${../../assets/wallpaper/23-12-30_800p.png} fit
+        output eDP-1 transform 90 position 0 1360 resolution 1280x800 scale 1.5 background ${../../assets/wallpaper/23-12-30_800p.png} fit
         output HDMI-A-1 position 1280 0 resolution 3840x2160 scale 1.5 background ${../../assets/wallpaper/23-12-29_2160p.png} fit
       '';
   };
@@ -72,58 +52,6 @@ in
     identityPaths = [ ".ssh/id_ed25519" ];
     installationType = "systemd";
   };
-
-  xdg.configFile = {
-    # undocked mode
-    "autorandr/undocked/setup".text = "eDP-1 ${eDP-1}";
-    "autorandr/undocked/config".text =
-      ''
-        output DP-1
-        off
-
-        output DP-2
-        off
-
-        output HDMI-1
-        off
-
-        output eDP-1
-        pos 0x0
-        crtc 0
-        primary
-        mode 800x1280
-        rate 60.06
-        rotate right
-      '';
-    # docked mode
-    "autorandr/docked/setup".text =
-      ''
-        HDMI-1 ${HDMI-1}
-        eDP-1 ${eDP-1}
-      '';
-    "autorandr/docked/config".text =
-      ''
-        output DP-1
-        off
-
-        output DP-2
-        off
-
-        output HDMI-1
-        pos 1280x0
-        crtc 0
-        primary
-        mode 3840x2160
-        rate 60.00
-        output eDP-1
-        pos 0x1360
-        crtc 1
-        mode 800x1280
-        rate 60.06
-        rotate right
-      '';
-  };
-
 
   home.keyboard.layout = "br";
 

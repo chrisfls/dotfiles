@@ -2,7 +2,6 @@
   imports = [
     ./agenix.nix
     ./any-nix-shell.nix
-    ./autorandr.nix
     ./bash.nix
     ./brave.nix
     ./cloudflare-warp.nix
@@ -11,11 +10,9 @@
     ./electron.nix
     ./dunst.nix
     ./emacs.nix
-    ./feh.nix
     ./fish.nix
     ./fonts.nix
     ./git.nix
-    ./i3wm.nix
     ./jamesdsp.nix
     ./keychain.nix
     ./kitty.nix
@@ -25,14 +22,11 @@
     ./obs.nix
     ./onedrive.nix
     ./pacman.nix
-    ./picom.nix
     ./podman.nix
-    ./polybar.nix
     ./qview.nix
     ./rclone.nix
     ./retroarch.nix
     ./rofi.nix
-    ./screenshot.nix
     ./steam.nix
     ./sway.nix
     ./systemd.nix
@@ -41,7 +35,6 @@
     ./udiskie.nix
     ./waybar.nix
     ./xdg.nix
-    ./xorg.nix
     ./zoxide.nix
   ];
 }

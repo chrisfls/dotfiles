@@ -1,16 +1,10 @@
-{ config, lib, pkgs, specialArgs, ... }:
+{ config, lib, ... }:
 let inherit (config.modules.brave) enable; in {
   options.modules.brave.enable = lib.mkEnableOption "Enable brave module";
 
   config = lib.mkIf enable {
     pacman.packages = [ "chaotic-aur/brave-bin" ];
 
-    home.packages = [
-      (pkgs.writeHostScriptBin "brave"
-        ''
-          exec /usr/bin/brave --ozone-platform=wayland --enable-features=VaapiVideoDecodeLinuxGL "$@"
-        '')
-    ];
 
     xdg.mimeApps.defaultApplications =
       let desktop = "brave-browser.desktop";
@@ -31,9 +25,6 @@ let inherit (config.modules.brave) enable; in {
         "x-scheme-handler/unknown" = desktop;
       };
 
-    modules = {
-      i3wm.apps."b" = "brave-browser";
-      sway.apps."b" = "brave-browser";
-    };
+    modules.sway.apps."b" = "brave-browser";
   };
 }
