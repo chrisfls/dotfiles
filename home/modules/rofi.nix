@@ -9,10 +9,6 @@ let
     sha256 = "sha256-R0cr7io8m2z9r0T/4xbVtm5sGVaPDj80GEfXyBTWJI0=";
   };
 
-  wrap = rofi:
-    pkgs.writeHostScriptBin "rofi"
-      "exec ${rofi} \"$@\"";
-
   theme = "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5.rasi";
   theme' = "$XDG_CONFIG_HOME/rofi/launchers/type-3/style-5-alt.rasi";
 
@@ -30,6 +26,7 @@ let
         echo -n $out | xclip -sel c
       fi
     '';
+
   # polybar session menu
   rofi-power-menu = pkgs.writeScript "rofi-power-menu"
     ''
@@ -115,7 +112,8 @@ in
   options.modules.rofi.enable = lib.mkEnableOption "Enable rofi module";
 
   config = lib.mkIf enable {
-    pacman.packages = [ "extra/rofi" "extra/rofi-calc" ];
+    pacman.packages = [ "chaotic-aur/rofi-lbonn-wayland" "extra/rofi-calc" ];
+    
 
     modules = {
       i3wm = {
@@ -136,8 +134,6 @@ in
     };
 
     home.packages = [
-      (wrap "/usr/bin/rofi")
-
       # rofi notifications menu, not dash because arrays
       (pkgs.writeHostScriptBin "rofi-dunst"
         ''
