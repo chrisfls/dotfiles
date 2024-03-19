@@ -7,8 +7,8 @@
     ./brave.nix
     ./cloudflare-warp.nix
     ./code.nix
-    ./copy-file.nix
     ./direnv.nix
+    ./electron.nix
     ./dunst.nix
     ./emacs.nix
     ./feh.nix

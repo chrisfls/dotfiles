@@ -65,6 +65,7 @@ let inherit (config.presets) desktop; in {
       autorandr.enable = true;
       brave.enable = true;
       dunst.enable = true;
+      electron.enable = true;
       feh.enable = true;
       fonts.enable = true;
       i3wm = {
