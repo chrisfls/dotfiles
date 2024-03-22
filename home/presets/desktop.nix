@@ -20,8 +20,7 @@ let inherit (config.presets) desktop; in {
 
       # desktop env
       "extra/plasma-meta"
-      "aur/savedesktop" # TODO: decide between this and konsave (depends on gtk)
-      "aur/konsave" # TODO: decide between this and savedesktop
+      "aur/konsave"
 
       # desktop env apps
       "extra/ark" # compressed archiving tool
@@ -58,6 +57,26 @@ let inherit (config.presets) desktop; in {
       "chaotic-aur/parsec-bin" # game stream (poor performance on linux)
       "chaotic-aur/webcord" # audio chat with friends
       "extra/obsidian" # personal knowledge manager
+    ];
+
+    home.packages = [
+      (pkgs.writeHostScriptBin "kde-save"
+        ''
+          #!/usr/bin/bash
+          user_at_hostname="''${USER}@$(cat /etc/hostname)"
+          konsave -r "$user_at_hostname"
+          konsave -s "$user_at_hostname"
+          rm "$XDG_CONFIG_HOME/home-manager/assets/konsave/$user_at_hostname.knsv"
+          konsave -e "$user_at_hostname" -d "$XDG_CONFIG_HOME/home-manager/assets/konsave"
+        '')
+      (pkgs.writeHostScriptBin "kde-load"
+        ''
+          #!/usr/bin/bash
+          user_at_hostname="''${USER}@$(cat /etc/hostname)"
+          konsave -r "$user_at_hostname"
+          konsave -i "$XDG_CONFIG_HOME/home-manager/assets/konsave/$user_at_hostname.knsv"
+          konsave -a "$user_at_hostname"
+        '')
     ];
 
     modules = {
