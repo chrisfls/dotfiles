@@ -5,9 +5,9 @@ let inherit (config.modules.telegram) enable; in {
   config = lib.mkIf enable {
     pacman.packages = [ "extra/telegram-desktop" ];
 
-    modules.sway = {
-      apps."t" = "org.telegram";
-      startup = [ "telegram-desktop -startintray" ];
-    };
+    #modules.sway = {
+    #  apps."t" = "org.telegram";
+    #  startup = [ "telegram-desktop -startintray" ];
+    #};
   };
 }

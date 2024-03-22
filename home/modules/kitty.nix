@@ -1,16 +1,22 @@
 # evaluate migrating to Zutty
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.modules.kitty) enable;
-  inherit (config.modules.theme) color-scheme;
+  inherit (config.modules.kitty) enable color-scheme;
 in
 {
-  options.modules.kitty.enable = lib.mkEnableOption "Enable kitty module";
+  options.modules.kitty = {
+    enable = lib.mkEnableOption "Enable kitty module";
+
+    color-scheme = lib.mkOption {
+      type = lib.types.attrs;
+      default = specialArgs.color-schemes.breeze;
+    };
+  };
 
   config = lib.mkIf enable {
     pacman.packages = [ "extra/kitty" ];
 
-    modules.sway.terminal = "kitty -1";
+    #modules.sway.terminal = "kitty -1";
 
     xdg.configFile."kitty/kitty.conf".text =
       with color-scheme;
@@ -45,7 +51,7 @@ in
         initial_window_height 24c
 
         background ${background}
-        background_opacity 0.80
+        background_opacity 1
         foreground ${foreground}
 
         cursor ${foregroundBright}

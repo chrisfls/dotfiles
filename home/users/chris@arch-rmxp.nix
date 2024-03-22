@@ -18,31 +18,14 @@ in
     onedrive.enable = true;
 
     retroarch.enable = true;
-
-    sway.extraConfig =
-      ''
-        workspace "0" output "eDP-1"
-        workspace "1" output "HDMI-A-1"
-        workspace "2" output "HDMI-A-1"
-        workspace "3" output "HDMI-A-1"
-        workspace "4" output "HDMI-A-1"
-        workspace "5" output "HDMI-A-1"
-        workspace "6" output "HDMI-A-1"
-        workspace "7" output "HDMI-A-1"
-        workspace "8" output "HDMI-A-1"
-        workspace "9" output "HDMI-A-1"
-        workspace "10" output "HDMI-A-1"
-
-        output eDP-1 transform 90 position 0 1360 resolution 1280x800 background ${../../assets/wallpaper/23-12-30_800p.png} fit
-        output HDMI-A-1 position 1280 0 resolution 3840x2160 background ${../../assets/wallpaper/23-12-29_2160p.png} fit
-      '';
-
-    theme.scale = 1.5;
   };
 
   pacman = {
     enable = true;
-    packages = [ "extra/blueman" ];
+    packages = [
+      "extra/intel-ucode"
+      # "extra/blueman"
+    ];
   };
 
   nixpkgs.config.permittedInsecurePackages = [

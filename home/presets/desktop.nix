@@ -15,89 +15,64 @@ let inherit (config.presets) desktop; in {
       # DESK ENV
       # ######## #### ## #
 
-      # cli
-      "extra/alsa-utils"
-      "extra/pamixer"
+      # tooling
+      "chaotic-aur/joycond-git" # joycon drivers
 
-      # dialogs
-      "extra/kdialog"
-      "extra/lxqt-openssh-askpass"
-      "extra/lxqt-policykit"
-      "extra/lxqt-sudo"
+      # desktop env
+      "extra/plasma-meta"
+      "aur/savedesktop" # TODO: decide between this and konsave (depends on gtk)
+      "aur/konsave" # TODO: decide between this and savedesktop
 
-      # misc
-      "chaotic-aur/nm-tray"
+      # desktop env apps
+      "extra/ark" # compressed archiving tool
+      "extra/dolphin-plugins" # git
+      "extra/dolphin" # file manager
+      "extra/featherpad" # text editor
+      "extra/ffmpegthumbs" # video thumbs
+      "extra/filelight" # disk usage by folder
+      "extra/gwenview" # image viewer
+      "extra/juk" # lightweight music player
+      "extra/kalk" # calculator
+      "extra/kamoso" # webcam recorder
+      "extra/kcharselect" # character selector
+      "extra/kdeconnect" # phone notifications
+      "extra/kdenlive" # video editor
+      "extra/ktorrent" # torrent downloader
+      "extra/kolourpaint" # image editor
+      "extra/qbittorrent" # torrents
+      "extra/partitionmanager" # partition manager TODO: remove?
+      "extra/spectacle" # screenshooter
 
-      # core apps
-      "extra/lxqt-archiver"
-      "chaotic-aur/bottles" # TODO: replace?
-      "chaotic-aur/joycond-git"
-      "extra/arandr" # TODO: replace
+      # desktop apps
+      "chaotic-aur/bottles" # TODO: replace with qt/kde equivalent?
       "extra/cameractrls"
-      "extra/pavucontrol-qt"
-      "extra/dolphin"
-
-      # common apps
-      "extra/haruna"
-      "extra/audacity"
-      "extra/copyq"
       "extra/inkscape"
-      "extra/featherpad"
-      "extra/juk"
-      "extra/kolourpaint"
-      "extra/qalculate-qt"
-      "extra/qps"
 
       # ######## #### ## #
       # MY PKGS
       # ######## #### ## #
 
-      "chaotic-aur/anydesk-bin"
-      "chaotic-aur/logseq-desktop-bin"
-      "chaotic-aur/moonlight-qt"
-      "extra/obsidian"
-      "chaotic-aur/parsec-bin"
-      "extra/qbittorrent"
-      "chaotic-aur/webcord"
+      "chaotic-aur/anydesk-bin" # remote access
+      "chaotic-aur/logseq-desktop-bin" # work logs
+      "chaotic-aur/moonlight-qt" # game stream
+      "chaotic-aur/parsec-bin" # game stream (poor performance on linux)
+      "chaotic-aur/webcord" # audio chat with friends
+      "extra/obsidian" # personal knowledge manager
     ];
 
     modules = {
       brave.enable = true;
-      dunst.enable = true;
       electron.enable = true;
       fonts.enable = true;
-      sway = {
-        enable = true;
-
-        startup = [
-          "copyq"
-          "nm-tray"
-          "webcord --start-minimized"
-        ];
-
-        apps = {
-          "c" = "io.github.Qalculate.qalculate-qt";
-          "d" = "webcord";
-          "e" = "org.kde.dolphin";
-          "shift+c" = "com.github.hluk.copyq";
-          "w" = "com.github.eneshecan.WhatsAppForLinux";
-        };
-
-        extraConfig = "bindsym Control+Mod1+Delete exec --no-startup-id gtk-launch qps";
-      };
       jamesdsp.enable = true;
-      kitty.enable = true;
+      foot.enable = true;
       loopback-toggle.enable = true;
       micro = { enable = true; desktop = true; };
-      qview.enable = true;
       rclone.enable = true;
-      rofi.enable = true;
       steam.enable = true;
       systemd.imported-variables = [ "PATH" ];
       telegram.enable = true;
-      theme.enable = true;
       udiskie.enable = true;
-      waybar.enable = true;
       xdg.enable = true;
     };
 

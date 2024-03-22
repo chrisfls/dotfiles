@@ -42,24 +42,24 @@ in
 
   config = lib.mkIf enable {
     pacman.packages = [
-      #
+      # system
       "core/base"
       "core/base-devel"
-      "extra/intel-ucode"
       "extra/linux-zen"
-      "extra/nix"
-      # 
-      "extra/pacman-contrib"
+      # chaotic
       "chaotic-aur/chaotic-keyring"
       "chaotic-aur/chaotic-mirrorlist"
       "chaotic-aur/paru"
+      # builtins
+      "extra/pacman-contrib"
+      "extra/nix"
     ];
 
     home.packages = [
       (pkgs.writeHostScriptBin "pacman-switch"
         ''
           # mark all packages as deps
-          pacman -Qqe | sudo pacman -D --asdeps -
+          pacman -Qq | sudo pacman -D --asdeps -
 
           # mark these packages as explicts
           sudo pacman -D --asexplicit  ${all-packages}

@@ -5,7 +5,7 @@ let inherit (config.modules.code) enable; in {
   config = lib.mkIf enable {
     pacman.packages = [ "chaotic-aur/visual-studio-code-bin" ];
 
-    xdg.desktopEntries."code" = {
+    /*xdg.desktopEntries."code" = {
       name = "Visual Studio Code";
       comment = "Code Editing. Refined.";
       genericName = "Text Editor";
@@ -24,6 +24,6 @@ let inherit (config.modules.code) enable; in {
         exec = "/usr/bin/code --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-features=WaylandWindowDecorations --new-window %F";
         icon = "visual-studio-code";
       };
-    };
+    };*/
   };
 }

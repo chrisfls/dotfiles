@@ -9,10 +9,11 @@ in
   config = lib.mkIf enable {
     pacman.packages = [
       "aur/aseprite"
-      "extra/gimp"
-      "extra/krita"
       "chaotic-aur/lmms-git"
       "extra/tiled"
+      "extra/krita"
+      "extra/gimp"
+      "extra/audacity"
     ];
 
     presets.development = true;

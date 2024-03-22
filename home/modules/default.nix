@@ -8,10 +8,10 @@
     ./code.nix
     ./direnv.nix
     ./electron.nix
-    ./dunst.nix
     ./emacs.nix
     ./fish.nix
     ./fonts.nix
+    ./foot.nix
     ./git.nix
     ./jamesdsp.nix
     ./keychain.nix
@@ -23,17 +23,12 @@
     ./onedrive.nix
     ./pacman.nix
     ./podman.nix
-    ./qview.nix
     ./rclone.nix
     ./retroarch.nix
-    ./rofi.nix
     ./steam.nix
-    ./sway.nix
     ./systemd.nix
     ./telegram.nix
-    ./theme.nix
     ./udiskie.nix
-    ./waybar.nix
     ./xdg.nix
     ./zoxide.nix
   ];

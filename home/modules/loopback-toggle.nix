@@ -2,17 +2,18 @@
 let
   inherit (config.modules.loopback-toggle) device enable volume;
 
-  loopback-toggle = pkgs.writeScript "loopback-toggle"
-    ''
-      d=$(awk '/${device}/ {print $1; exit}' /proc/asound/cards)
-      amixer -c $d sset Mic Capture 100%
-      amixer -c $d sset Mic Playback ${toString volume}%
-      amixer -c $d sset Mic Playback toggle
-    '';
+  loopback-toggle = 
+      (pkgs.writeHostScriptBin "loopback-toggle"
+        ''
+          d=$(awk '/${device}/ {print $1; exit}' /proc/asound/cards)
+          amixer -c $d sset Mic Capture 100%
+          amixer -c $d sset Mic Playback ${toString volume}%
+          amixer -c $d sset Mic Playback toggle
+        '');
 
   loopback-offd = pkgs.writeScript "loopback-offd"
     ''
-      ${loopback-toggle}
+      ${loopback-toggle}/bin/loopback-toggle
       pactl subscribe | grep --line-buffered "Event 'change' on source" | while read line
       do
         d=$(awk '/${device}/ {print $1; exit}' /proc/asound/cards)
@@ -38,9 +39,9 @@ in
   };
 
   config = lib.mkIf enable {
-    pacman.packages = ["extra/pipewire-pulse" "extra/pamixer"];
+    pacman.packages = ["extra/alsa-utils" "extra/pamixer"];
 
-    modules.sway.extraConfig = "bindcode 202 exec --no-startup-id ${loopback-toggle}";
+    home.packages = [ loopback-toggle ];
 
     systemd.user.services.loopback-offd = {
       Unit.Description = "Disables audio loopback by default";
