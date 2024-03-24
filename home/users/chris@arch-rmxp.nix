@@ -43,15 +43,15 @@ in
   home.packages = [
     (pkgs.writeHostScriptBin "upgrade"
       ''
-        upgrade-system && upgrade-home
+        system-switch && home-switch
       '')
 
-    (pkgs.writeHostScriptBin "upgrade-system"
+    (pkgs.writeHostScriptBin "system-switch"
       ''
         pacman-switch && sudo paccache -r
       '')
 
-    (pkgs.writeHostScriptBin "upgrade-home"
+    (pkgs.writeHostScriptBin "home-switch"
       ''
         home-manager switch && nix-env --delete-generations old && nix-store --gc
       '')
