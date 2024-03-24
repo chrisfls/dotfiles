@@ -29,7 +29,7 @@ in
 
     volume = lib.mkOption {
       type = lib.types.int;
-      default = 2;
+      default = 25;
     };
 
     device = lib.mkOption {
