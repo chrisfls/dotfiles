@@ -15,7 +15,6 @@
     ./git.nix
     ./jamesdsp.nix
     ./keychain.nix
-    ./kitty.nix
     ./loopback-toggle.nix
     ./micro.nix
     ./microsoft-edge.nix
