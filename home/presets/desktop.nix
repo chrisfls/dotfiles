@@ -36,10 +36,9 @@ let inherit (config.presets) desktop; in {
       "extra/kcharselect" # character selector
       "extra/kdeconnect" # phone notifications
       "extra/kdenlive" # video editor
-      "extra/ktorrent" # torrent downloader
       "extra/kolourpaint" # image editor
-      "extra/qbittorrent" # torrents
       "extra/partitionmanager" # partition manager TODO: remove?
+      "extra/qbittorrent" # torrent downloader
       "extra/spectacle" # screenshooter
 
       # desktop apps
