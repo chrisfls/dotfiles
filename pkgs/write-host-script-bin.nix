@@ -5,7 +5,7 @@ pkgs.writeTextFile {
   destination = "/bin/${name}";
   text =
     ''
-      #!/usr/bin/env bash
+      #!/usr/bin/bash
       ${text}
     '';
 }

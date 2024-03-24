@@ -13,6 +13,7 @@ let
 
   loopback-offd = pkgs.writeScript "loopback-offd"
     ''
+      #!/usr/bin/bash
       ${loopback-toggle}/bin/loopback-toggle
       pactl subscribe | grep --line-buffered "Event 'change' on source" | while read line
       do
@@ -45,7 +46,7 @@ in
 
     systemd.user.services.loopback-offd = {
       Unit.Description = "Disables audio loopback by default";
-      Service.ExecStart = "exec \"${loopback-offd}\"";
+      Service.ExecStart = "${loopback-offd}";
     };
   };
 }
