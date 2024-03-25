@@ -4,8 +4,7 @@ let
 
   flags =
     ''
-      --enable-features=UseOzonePlatform
-      --enable-features=WaylandWindowDecorations
+      --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer
       --ozone-platform=wayland
     '';
 in
