@@ -26,20 +26,5 @@ in
     ];
 
     #modules.sway.apps."shift+b" = exe;
-
-    xdg.desktopEntries = {
-      "microsoft-edge" = {
-        name = "Microsoft Edge";
-        type = "Application";
-        genericName = "Web Browser";
-        comment = "Access the Internet";
-        categories = [ "Network" "WebBrowser" ];
-        icon = "microsoft-edge";
-        exec = "microsoft-edge-stable %U";
-        noDisplay = false;
-        startupNotify = true;
-        terminal = false;
-      };
-    };
   };
 }
