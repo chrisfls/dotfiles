@@ -3,6 +3,7 @@ let inherit (config.modules.helix) enable; in {
   options.modules.helix.enable = lib.mkEnableOption "Enable helix module";
 
   config = lib.mkIf enable {
+    pacman.packages = ["chaotic-aur/helix-git"];
     programs.helix = {
       enable = true;
       extraPackages = [ ];

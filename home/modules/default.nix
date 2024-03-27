@@ -8,11 +8,11 @@
     ./code.nix
     ./direnv.nix
     ./electron.nix
-    ./emacs.nix
     ./fish.nix
     ./fonts.nix
     ./foot.nix
     ./git.nix
+    ./helix.nix
     ./jamesdsp.nix
     ./keychain.nix
     ./loopback-toggle.nix
