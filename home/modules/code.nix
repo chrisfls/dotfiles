@@ -5,12 +5,10 @@ let inherit (config.modules.code) enable; in {
   config = lib.mkIf enable {
     pacman.packages = [ "chaotic-aur/visual-studio-code-bin" ];
 
-    xdg.configFile = {
-      "code-flags.conf".text =
-        ''
-          --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer
-          --ozone-platform=wayland
-        '';
-    };
+    xdg.configFile."code-flags.conf".text =
+      ''
+        --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer
+        --ozone-platform=wayland
+      '';
   };
 }

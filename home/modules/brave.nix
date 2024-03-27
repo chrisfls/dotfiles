@@ -4,6 +4,11 @@ let inherit (config.modules.brave) enable; in {
 
   config = lib.mkIf enable {
     pacman.packages = [ "chaotic-aur/brave-bin" ];
-    #modules.sway.apps."b" = "brave-browser";
+
+    xdg.configFile."brave-flags.conf".text =
+      ''
+        --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer,VaapiVideoDecodeLinuxGL
+        --ozone-platform=wayland
+      '';
   };
 }

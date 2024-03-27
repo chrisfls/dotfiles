@@ -71,27 +71,6 @@ in
 
           # remove unneeded packages
           pacman -Qdtq | sudo pacman -Rs -
-
-          desktop-switch
-        '')
-
-      (pkgs.writeHostScriptBin "desktop-switch"
-        ''
-          source_dir="/usr/share/applications/"
-          target_dir="$XDG_DATA_HOME/applications/"
-
-          mkdir -p "$target_dir"
-
-          for desktop_file in "$source_dir"*.desktop; do
-            filename=$(basename "$desktop_file")
-            original_content=$(cat "$desktop_file")
-            modified_content=$(echo "$original_content" | sed 's|/usr/bin/||g')
-
-            if [[ "$modified_content" != "$original_content" ]]; then
-              cp -f "$desktop_file" "$target_dir$filename"
-              echo "Copied $filename"
-            fi
-          done
         '')
     ];
   };

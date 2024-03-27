@@ -15,12 +15,10 @@ let inherit (config.modules.direnv) enable extraConfig; in {
         direnv hook fish | source
       '';
 
-    xdg.configFile = {
-      "direnv/direnv.toml".text =
-        ''
-          [whitelist]
-          prefix = ["${config.xdg.userDirs.desktop}"]
-        '';
-    };
+    xdg.configFile."direnv/direnv.toml".text =
+      ''
+        [whitelist]
+        prefix = ["${config.xdg.userDirs.desktop}"]
+      '';
   };
 }

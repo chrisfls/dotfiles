@@ -17,7 +17,8 @@
     ./keychain.nix
     ./loopback-toggle.nix
     ./micro.nix
-    ./microsoft-edge.nix
+    ./microsoft-edge-beta.nix
+    ./microsoft-edge-stable.nix
     ./obs.nix
     ./onedrive.nix
     ./pacman.nix

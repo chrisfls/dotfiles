@@ -1,12 +1,14 @@
-{ config, lib, pkgs, specialArgs, ... }:
-let
-  inherit (config.presets) desktop gamedev;
-  enable = desktop && gamedev;
-in
+{ config, lib, ... }:
+let enable = config.presets.gamedev; in
 {
   options.presets.gamedev = lib.mkEnableOption "Enable gamedev preset";
 
   config = lib.mkIf enable {
+    presets = {
+      desktop = true;
+      development = true;
+    };
+
     pacman.packages = [
       "aur/aseprite"
       "chaotic-aur/lmms-git"
@@ -15,11 +17,5 @@ in
       "extra/gimp"
       "extra/audacity"
     ];
-
-    presets.development = true;
-
-    modules.obs.enable = true;
-
-    nixpkgs.config.allowUnfree = true;
   };
 }
