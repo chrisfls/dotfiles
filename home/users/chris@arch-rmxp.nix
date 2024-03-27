@@ -6,10 +6,11 @@ let
 in
 {
   presets = {
-    development = true;
     desktop = true;
-    work = true;
+    development = true;
     gamedev = true;
+    stream = true;
+    work = true;
   };
 
   modules = {
