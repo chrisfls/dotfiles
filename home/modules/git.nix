@@ -18,18 +18,6 @@ in
         Host *
           PreferredAuthentications publickey
           IdentityFile ~/.ssh/id_ed25519
-          AddKeysToAgent yes
-        
-        Host alt.github.com
-          HostName github.com
-          PreferredAuthentications publickey
-          IdentityFile ~/.ssh/id_ed25519_alt
-          AddKeysToAgent yes
-
-        Host gitlab.com
-          PreferredAuthentications publickey
-          IdentityFile ~/.ssh/id_ed25519_alt
-          AddKeysToAgent yes
       '';
 
     xdg.configFile = {
@@ -52,24 +40,27 @@ in
           	email = "${ssot.contact.email}"
           	name = "${ssot.contact.name}"
 
-          [includeIf "gitdir:${config.home.homeDirectory}/Desktop/repos/github/"]
-          	path = "${config.xdg.configHome}/git/config_personal"
+          [includeIf "gitdir:${config.home.homeDirectory}/Desktop/personal/github/"]
+          	path = "${config.xdg.configHome}/git/config_github"
 
-          [includeIf "gitdir:${config.home.homeDirectory}/Desktop/repos/gitlab/"]
+          [includeIf "gitdir:${config.home.homeDirectory}/Desktop/personal/gitlab/"]
           	path = "${config.xdg.configHome}/git/config_gitlab"
 
           ${extraConfig}
         '';
-      "git/config_personal".text =
+      "git/config_github".text =
         ''
+          [core]
+          	sshCommand = "ssh -o PreferredAuthentications=publickey -i ~/.ssh/id_ed25519_personal -F /dev/null"
+
           [user]
           	email = "${ssot.contact.github.email}"
-          
-          [url "git@alt.github.com"]
-          	insteadOf = git@github.com
         '';
       "git/config_gitlab".text =
         ''
+          [core]
+          	sshCommand = "ssh -o PreferredAuthentications=publickey -i ~/.ssh/id_ed25519_personal -F /dev/null"
+
           [user]
           	email = "${ssot.contact.gitlab.email}"
         '';
