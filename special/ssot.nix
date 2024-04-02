@@ -42,8 +42,7 @@ rec {
       email = "160303871+kress-x@users.noreply.github.com";
     };
     gitlab = {
-      # TODO: rename to kress-x
-      email = "664520-kress95@users.noreply.gitlab.com";
+      email = "664520-kress@users.noreply.gitlab.com";
     };
   };
 }

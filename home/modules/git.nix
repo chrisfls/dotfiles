@@ -13,6 +13,25 @@ in
   config = lib.mkIf enable {
     pacman.packages = [ "extra/git" ];
 
+    home.file.".ssh/config".text =
+      ''
+        Host *
+          PreferredAuthentications publickey
+          IdentityFile ~/.ssh/id_ed25519
+          AddKeysToAgent yes
+        
+        Host alt.github.com
+          HostName github.com
+          PreferredAuthentications publickey
+          IdentityFile ~/.ssh/id_ed25519_alt
+          AddKeysToAgent yes
+
+        Host gitlab.com
+          PreferredAuthentications publickey
+          IdentityFile ~/.ssh/id_ed25519_alt
+          AddKeysToAgent yes
+      '';
+
     xdg.configFile = {
       "git/config".text =
         ''
@@ -38,13 +57,16 @@ in
 
           [includeIf "gitdir:${config.home.homeDirectory}/Desktop/repos/gitlab/"]
           	path = "${config.xdg.configHome}/git/config_gitlab"
-        
+
           ${extraConfig}
         '';
       "git/config_personal".text =
         ''
           [user]
           	email = "${ssot.contact.github.email}"
+          
+          [url "git@alt.github.com"]
+          	insteadOf = git@github.com
         '';
       "git/config_gitlab".text =
         ''
