@@ -42,7 +42,6 @@ let inherit (config.presets) desktop; in {
       "extra/spectacle" # screenshooter
 
       # desktop apps
-      "chaotic-aur/bottles" # TODO: replace with qt/kde equivalent?
       "extra/cameractrls"
       "extra/inkscape"
 
