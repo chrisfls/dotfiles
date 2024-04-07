@@ -11,7 +11,10 @@ in
   };
 
   config = lib.mkIf enable {
-    pacman.packages = [ "extra/git" ];
+    pacman.packages = [
+      "extra/git"
+      "extra/git-lfs"
+    ];
 
     home.file.".ssh/config".text =
       ''
