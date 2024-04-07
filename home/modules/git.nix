@@ -48,7 +48,13 @@ in
 
           [includeIf "gitdir:${config.home.homeDirectory}/Desktop/personal/forgejo/"]
           	path = "${config.xdg.configHome}/git/config_forgejo"
-          
+
+          [filter "lfs"]
+          	smudge = git-lfs smudge -- %f
+          	process = git-lfs filter-process
+          	required = true
+          	clean = git-lfs clean -- %f
+
           ${extraConfig}
         '';
       "git/config_gitlab".text =
