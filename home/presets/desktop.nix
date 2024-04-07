@@ -34,7 +34,8 @@ let inherit (config.presets) desktop; in {
       "extra/kalk" # calculator
       "extra/kamoso" # webcam recorder
       "extra/kcharselect" # character selector
-      "extra/kcron" # gui cronjob editor 
+      "extra/kcron" # gui cronjob editor
+      "extra/cronie" # cron implementation
       "extra/kdeconnect" # phone notifications
       "extra/kdenlive" # video editor
       "extra/kolourpaint" # image editor
