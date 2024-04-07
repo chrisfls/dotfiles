@@ -5,8 +5,6 @@ let inherit (config.presets) desktop; in {
   config = lib.mkIf desktop {
     pacman.explicits = [
       "extra/lostfiles"
-      "aur/sublime-merge"
-      "aur/sublime-text-4"
       "aur/audio-share-bin"
     ];
 
