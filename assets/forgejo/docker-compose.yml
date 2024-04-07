@@ -20,4 +20,4 @@ services:
       - /etc/localtime:/etc/localtime:ro
     ports:
       - '1234:1234'
-      - '2222:22'
+      - '2222:2222'
