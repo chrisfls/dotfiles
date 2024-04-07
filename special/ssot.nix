@@ -33,16 +33,12 @@ rec {
     nickname = "chrisfls";
     home = "chris";
     name = "Chris";
-    email = "2013206+chrisfls@users.noreply.github.com";
+    github.email = "2013206+chrisfls@users.noreply.github.com";
+    gitlab.email = "664520-kress@users.noreply.gitlab.com";
+    forgejo.email = "kress@noreply.localhost";
     work = {
       name = "Christian";
       email = "2013206+chrisfls@users.noreply.github.com";
-    };
-    github = {
-      email = "160303871+kress-x@users.noreply.github.com";
-    };
-    gitlab = {
-      email = "664520-kress@users.noreply.gitlab.com";
     };
   };
 }

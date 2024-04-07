@@ -24,8 +24,8 @@ in
     xdg.configFile."git/config_work".text =
       ''
         [user]
-        	email = "${ssot.contact.work.email}"
         	name = "${ssot.contact.work.name}"
+        	email = "${ssot.contact.work.email}"
       '';
   };
 }

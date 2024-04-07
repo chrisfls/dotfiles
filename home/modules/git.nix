@@ -37,32 +37,26 @@ in
           	enabled = true
 
           [user]
-          	email = "${ssot.contact.email}"
           	name = "${ssot.contact.name}"
-
-          [includeIf "gitdir:${config.home.homeDirectory}/Desktop/personal/github/"]
-          	path = "${config.xdg.configHome}/git/config_github"
+          	email = "${ssot.contact.github.email}"
 
           [includeIf "gitdir:${config.home.homeDirectory}/Desktop/personal/gitlab/"]
           	path = "${config.xdg.configHome}/git/config_gitlab"
 
+          [includeIf "gitdir:${config.home.homeDirectory}/Desktop/personal/forgejo/"]
+          	path = "${config.xdg.configHome}/git/config_forgejo"
+          
           ${extraConfig}
-        '';
-      "git/config_github".text =
-        ''
-          [core]
-          	sshCommand = "ssh -o PreferredAuthentications=publickey -i ~/.ssh/id_ed25519_personal -F /dev/null"
-
-          [user]
-          	email = "${ssot.contact.github.email}"
         '';
       "git/config_gitlab".text =
         ''
-          [core]
-          	sshCommand = "ssh -o PreferredAuthentications=publickey -i ~/.ssh/id_ed25519_personal -F /dev/null"
-
           [user]
           	email = "${ssot.contact.gitlab.email}"
+        '';
+      "git/config_forgejo".text =
+        ''
+          [user]
+          	email = "${ssot.contact.forgejo.email}"
         '';
     };
   };
