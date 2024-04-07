@@ -76,8 +76,6 @@ in
   config = lib.mkIf enable {
     pacman.packages = [ "chaotic-aur/jamesdsp-git" ];
 
-    #modules.sway.startup = [ "jamesdsp --tray" ];
-
     xdg.configFile = lib.attrsets.foldlAttrs
       (acc: name: path: acc // {
         "jamesdsp/presets/${name} (EQ).conf".text = buildEQ path;

@@ -1,3 +1,4 @@
+# TODO: not sure this is needed anymore, plasma has its own thing
 { config, lib, pkgs, specialArgs, ... }:
 let inherit (config.modules.udiskie) enable; in
 {
@@ -14,6 +15,7 @@ let inherit (config.modules.udiskie) enable; in
           tray: auto
       '';
 
+    # TODO: see if this can be moved to plasma
     systemd.user.services.udiskie = {
       Unit = {
         Description = "udiskie mount daemon";
