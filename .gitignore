@@ -1,8 +1,0 @@
-.sublime
-pkgbuilds/*/.SRCINFO
-pkgbuilds/*/*.pkg.tar.zst
-pkgbuilds/*/*.tar.xz
-pkgbuilds/*/*.tar.xz.asc
-pkgbuilds/*/pkg
-pkgbuilds/*/src
-result
