@@ -3,20 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    devenv.url = "github:cachix/devenv";
-    devenv.inputs.nixpkgs.follows = "nixpkgs";
-
-    systems.url = "github:nix-systems/default";
-
-    flake-utils.url = "github:numtide/flake-utils";
-    flake-utils.inputs.systems.follows = "systems";
-
-    flake-compat.url = "github:edolstra/flake-compat";
-
-    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
-    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
-    pre-commit-hooks.inputs.flake-utils.follows = "flake-utils";
-    pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -28,6 +14,8 @@
 
     homeage.url = "github:jordanisaacs/homeage";
     homeage.inputs.nixpkgs.follows = "nixpkgs";
+
+    systems.url = "github:nix-systems/default";
   };
 
   nixConfig = {
@@ -35,17 +23,13 @@
     extra-substituters = "https://devenv.cachix.org https://nix-community.cachix.org";
   };
 
-  outputs = { nixpkgs, home-manager, devenv, ... }@inputs:
+  outputs = { nixpkgs, home-manager, ... }@inputs:
     let
       specialArgs = import ./special inputs;
       inherit (specialArgs) ssot;
       forEachSystem = nixpkgs.lib.genAttrs (import inputs.systems);
     in
     {
-      packages = forEachSystem (system: {
-        devenv = devenv.packages.${system}.devenv;
-      });
-
       homeConfigurations = {
         "${ssot.users.arch-rmxp.chris.id}" = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import inputs.nixpkgs {
