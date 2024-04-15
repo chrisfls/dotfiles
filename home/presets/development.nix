@@ -14,23 +14,13 @@ in
       podman.enable = true;
       helix.enable = true;
       code.enable = true;
-      # TODO: sublime
     };
 
-    # pacman.packages = ["chaotic-aur/gittyup" "chaotic-aur/github-desktop"];
-
+    # nix stuff
     home.packages = [
-      # devenv
-      inputs.devenv.packages.${pkgs.system}.devenv
+      pkgs.devenv
       pkgs.cachix
-
-      # misc
       pkgs.nixpkgs-fmt
     ];
-
-    # programs.nix-index = {
-    #   enable = true;
-    #   enableFishIntegration = true;
-    # };
   };
 }
