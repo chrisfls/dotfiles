@@ -19,6 +19,7 @@ let inherit (config.presets) desktop; in {
       # desktop env
       "extra/plasma-meta"
       "aur/konsave"
+      "extra/bitwarden-cli"
 
       # desktop env apps
       "extra/ark" # compressed archiving tool
