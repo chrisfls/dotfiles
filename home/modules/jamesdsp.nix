@@ -5,7 +5,7 @@ let
   base =
     ''
       master_enable=true
-      master_limrelease=61
+      master_limrelease=100
       master_limthreshold=0
       master_postgain=6
 
