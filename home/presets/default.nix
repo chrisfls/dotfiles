@@ -20,11 +20,12 @@
       agenix.enable = true;
       bash.enable = true;
       direnv.enable = true;
+      fish.enable = true;
+      git.enable = true;
       keychain.enable = true;
       micro.enable = true;
-      fish.enable = true;
+      vfox.enable = true;
       zoxide.enable = true;
-      git.enable = true;
     };
 
     home.sessionVariables = {

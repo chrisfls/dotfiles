@@ -29,6 +29,7 @@
     ./systemd.nix
     ./telegram.nix
     ./udiskie.nix
+    ./vfox.nix
     ./xdg.nix
     ./zoxide.nix
   ];
