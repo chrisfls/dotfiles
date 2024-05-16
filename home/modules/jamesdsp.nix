@@ -4,11 +4,6 @@ let
 
   base =
     ''
-      master_enable=true
-      master_limrelease=100
-      master_limthreshold=0
-      master_postgain=6
-
       bass_enable=false
       compander_enable=false
       liveprog_enable=false
@@ -16,6 +11,10 @@ let
       stereowide_enable=false
       tone_enable=false
       tube_enable=false
+
+      master_enable=true
+      master_limrelease=100
+      master_limthreshold=0
     '';
 
   buildBase = path:
@@ -25,6 +24,7 @@ let
       graphiceq_param=${graphicEQ}
 
       ${base}
+      master_postgain=6
     '';
 
   buildCF = target:
@@ -62,13 +62,13 @@ in
     presets = lib.mkOption {
       type = lib.types.attrsOf lib.types.path;
       default = {
-        "7Hz-Salnotes Zero" = ../../assets/audio/equalizer/${"7Hz-Salnotes Zero +.txt"};
-        "CCA CRA" = ../../assets/audio/equalizer/${"CCA CRA +.txt"};
-        "Etymotic ER2SE" = ../../assets/audio/equalizer/${"Etymotic ER2SE +.txt"};
-        "Moondrop Aria SE" = ../../assets/audio/equalizer/${"Moondrop Aria SE +.txt"};
-        "Moondrop Chu" = ../../assets/audio/equalizer/${"Moondrop Chu +.txt"};
+        "7Hz-Salnotes Zero" = ../../assets/audio/equalizer/${"7Hz-Salnotes Zero + L.txt"};
+        "CCA CRA" = ../../assets/audio/equalizer/${"CCA CRA + L.txt"};
+        "Etymotic ER2SE" = ../../assets/audio/equalizer/${"Etymotic ER2SE + L.txt"};
+        "Moondrop Aria SE" = ../../assets/audio/equalizer/${"Moondrop Aria SE + L.txt"};
+        "Moondrop Chu" = ../../assets/audio/equalizer/${"Moondrop Chu + L.txt"};
         # this version might trigger the limiter too often
-        "Philips SHP9500" = ../../assets/audio/equalizer/${"Philips SHP9500 +.txt"};
+        "Philips SHP9500" = ../../assets/audio/equalizer/${"Philips SHP9500 + L.txt"};
       };
     };
   };
@@ -93,6 +93,7 @@ in
             crossfeed_bs2b_feed=60
 
             ${base}
+            master_postgain=0
           '';
 
         "jamesdsp/presets/IR.conf".text =
@@ -103,6 +104,7 @@ in
             convolver_file=${./../../assets/audio/convolver/chris130.wav}
 
             ${base}
+            master_postgain=0
           '';
       }
       presets;
