@@ -15,6 +15,9 @@ let inherit (config.presets) desktop; in {
 
       # tooling
       "chaotic-aur/joycond-git" # joycon drivers
+      "extra/cabextract"
+      "extra/p7zip"
+      "extra/unzip"
 
       # desktop env
       "extra/plasma-meta"
@@ -55,6 +58,7 @@ let inherit (config.presets) desktop; in {
       "chaotic-aur/moonlight-qt" # game stream
       "chaotic-aur/parsec-bin" # game stream (poor performance on linux)
       "chaotic-aur/webcord" # audio chat with friends
+      "chaotic-aur/vesktop-git"
       "extra/obsidian" # personal knowledge manager
     ];
 
