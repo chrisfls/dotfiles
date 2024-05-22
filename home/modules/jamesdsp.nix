@@ -45,7 +45,7 @@ let
     ''
       crossfeed_enable=false
       convolver_enable=true
-      convolver_file=${./../../assets/audio/convolver/chris130.wav}
+      convolver_file=${./../../assets/audio/convolver/chris130eq.wav}
 
       ${buildBase target}
     '';
@@ -103,7 +103,7 @@ in
             graphiceq_enable=false
             crossfeed_enable=false
             convolver_enable=true
-            convolver_file=${./../../assets/audio/convolver/chris130.wav}
+            convolver_file=${./../../assets/audio/convolver/chris130eq.wav}
 
             ${base}
             master_postgain=0
