@@ -27,7 +27,6 @@ let
       graphiceq_param=${graphicEQ}
 
       ${base}
-      master_postgain=6
     '';
 
   buildCF = target:
@@ -36,9 +35,10 @@ let
       crossfeed_enable=true
       crossfeed_mode=0
       crossfeed_bs2b_fcut=700
-      crossfeed_bs2b_feed=60
+      crossfeed_bs2b_feed=90
 
       ${buildBase target}
+      master_postgain=3
     '';
 
   buildIR = target:
@@ -48,6 +48,7 @@ let
       convolver_file=${./../../assets/audio/convolver/chris130eq.wav}
 
       ${buildBase target}
+      master_postgain=6
     '';
 
   buildEQ = target:
@@ -56,6 +57,7 @@ let
       crossfeed_enable=false
 
       ${buildBase target}
+      master_postgain=3
     '';
 in
 {
@@ -80,9 +82,10 @@ in
 
     xdg.configFile = lib.lists.foldl
       (acc: name: acc // {
+        # NOTE: to use df-tilt use `"${name} DF";` instead
         "jamesdsp/presets/${name} (EQ).conf".text = buildEQ name;
-        "jamesdsp/presets/${name} (CF).conf".text = buildCF name;
-        "jamesdsp/presets/${name} (IR).conf".text = buildIR "${name} DF";
+        "jamesdsp/presets/${name} (CF).conf".text = buildCF name; 
+        "jamesdsp/presets/${name} (IR).conf".text = buildIR name;
       })
       {
         "jamesdsp/presets/CF.conf".text =
@@ -92,7 +95,7 @@ in
             crossfeed_enable=true
             crossfeed_mode=0
             crossfeed_bs2b_fcut=700
-            crossfeed_bs2b_feed=60
+            crossfeed_bs2b_feed=45
 
             ${base}
             master_postgain=0
@@ -106,7 +109,7 @@ in
             convolver_file=${./../../assets/audio/convolver/chris130eq.wav}
 
             ${base}
-            master_postgain=0
+            master_postgain=3
           '';
       }
       presets;
