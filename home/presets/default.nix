@@ -24,7 +24,6 @@
       git.enable = true;
       keychain.enable = true;
       micro.enable = true;
-      vfox.enable = true;
       zoxide.enable = true;
     };
 

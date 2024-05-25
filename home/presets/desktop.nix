@@ -57,8 +57,7 @@ let inherit (config.presets) desktop; in {
       "chaotic-aur/logseq-desktop-bin" # work logs
       "chaotic-aur/moonlight-qt" # game stream
       "chaotic-aur/parsec-bin" # game stream (poor performance on linux)
-      "chaotic-aur/webcord" # audio chat with friends
-      "chaotic-aur/vesktop-git"
+      "chaotic-aur/vesktop-git" # audio chat with friends
       "extra/obsidian" # personal knowledge manager
     ];
 
