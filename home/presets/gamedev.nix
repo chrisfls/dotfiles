@@ -9,6 +9,8 @@ let enable = config.presets.gamedev; in
       development = true;
     };
 
+    modules.vfox.enable = true;
+
     pacman.packages = [
       "aur/aseprite"
       "chaotic-aur/lmms-git"
