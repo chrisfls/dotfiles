@@ -14,10 +14,11 @@ let enable = config.presets.gamedev; in
     pacman.packages = [
       "aur/aseprite"
       "chaotic-aur/lmms-git"
-      "extra/tiled"
-      "extra/krita"
-      "extra/gimp"
       "extra/audacity"
+      "extra/gimp"
+      "extra/go-task"
+      "extra/krita"
+      "extra/tiled"
     ];
   };
 }
