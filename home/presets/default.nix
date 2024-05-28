@@ -12,6 +12,7 @@
     pacman.packages = [
       "core/procps-ng"
       "core/which"
+      "extra/earlyoom"
       "extra/jaq"
       "extra/jq"
     ];
