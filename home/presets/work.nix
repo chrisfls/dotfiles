@@ -9,9 +9,16 @@ in
   config = lib.mkIf enable {
     presets.desktop = true;
 
-    pacman.packages = [ "extra/dbeaver" ];
+    pacman.packages = [
+      "extra/dbeaver"
+      # vivaldi and firefox are the least buggy browsers on wayland now
+      # firefox does not have 
+      "extra/vivaldi"
+      "extra/vivaldi-ffmpeg-codecs"
+    ];
 
     modules = {
+      # TODO: delegate edge for stream TTS
       microsoft-edge-stable.enable = true;
 
       git.extraConfig =

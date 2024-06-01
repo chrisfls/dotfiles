@@ -1,3 +1,4 @@
+# TODO: deprecate
 { config, lib, pkgs, specialArgs, ... }:
 let
   inherit (config.modules.microsoft-edge-beta) enable;
