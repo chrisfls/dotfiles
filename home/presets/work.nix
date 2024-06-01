@@ -18,9 +18,6 @@ in
     ];
 
     modules = {
-      # TODO: delegate edge for stream TTS
-      microsoft-edge-stable.enable = true;
-
       git.extraConfig =
         ''
           [includeIf "gitdir:${config.xdg.userDirs.desktop}/work/"]

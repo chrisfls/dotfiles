@@ -1,11 +1,11 @@
 { config, lib, pkgs, specialArgs, ... }:
 let
-  inherit (config.modules.microsoft-edge-stable) enable;
+  inherit (config.modules.microsoft-edge) enable;
 
   exe = "microsoft-edge-stable";
 in
 {
-  options.modules.microsoft-edge-stable.enable = lib.mkEnableOption "Enable microsoft-edge module";
+  options.modules.microsoft-edge.enable = lib.mkEnableOption "Enable microsoft-edge module";
 
   config = lib.mkIf enable {
     pacman.packages = [ "chaotic-aur/${exe}-bin" ];
