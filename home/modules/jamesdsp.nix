@@ -48,7 +48,7 @@ let
       convolver_file=${./../../assets/audio/convolver/chris130eq.wav}
 
       ${buildBase target}
-      master_postgain=6
+      master_postgain=4.5
     '';
 
   buildEQ = target:
@@ -84,7 +84,7 @@ in
       (acc: name: acc // {
         # NOTE: to use df-tilt use `"${name} DF";` instead
         "jamesdsp/presets/${name} (EQ).conf".text = buildEQ name;
-        "jamesdsp/presets/${name} (CF).conf".text = buildCF name; 
+        "jamesdsp/presets/${name} (CF).conf".text = buildCF "${name} DF"; 
         "jamesdsp/presets/${name} (IR).conf".text = buildIR name;
       })
       {
@@ -109,7 +109,7 @@ in
             convolver_file=${./../../assets/audio/convolver/chris130eq.wav}
 
             ${base}
-            master_postgain=3
+            master_postgain=0
           '';
       }
       presets;
