@@ -1,9 +1,5 @@
 { config, lib, pkgs, ... }:
-let inherit (config.modules.fish) enable extraConfig;
-  aliases = {
-    "g" = "git";
-  };
-
+let inherit (config.modules.fish) enable extraConfig aliases;
   plugins = [
     "ilancosman/tide"
     "oh-my-fish/plugin-foreign-env"
@@ -12,6 +8,7 @@ in
 {
   options.modules.fish.enable = lib.mkEnableOption "Enable fish module";
   options.modules.fish.extraConfig = lib.mkOption { type = lib.types.lines; default = ""; };
+  options.modules.fish.aliases = lib.mkOption { type = lib.types.attrsOf lib.types.str; default = {}; };
 
   config = lib.mkIf enable {
     pacman.packages = [
@@ -21,7 +18,8 @@ in
 
     xdg.configFile."fish/config.fish".text =
       let
-        aliases' = builtins.concatStringsSep "\n" (lib.attrsets.mapAttrsToList (n: v: "alias ${n} ${v}") aliases);
+        aliases' = builtins.concatStringsSep "\n"
+          (lib.attrsets.mapAttrsToList (n: v: "alias ${n} ${v}") aliases);
         plugins' = builtins.concatStringsSep " " plugins;
       in
       ''

@@ -16,6 +16,8 @@ in
       "extra/git-lfs"
     ];
 
+    modules.fish.aliases."g" = "git";
+
     home.file.".ssh/config".text =
       ''
         Host *
