@@ -9,12 +9,16 @@ let enable = config.presets.gamedev; in
       development = true;
     };
 
-    modules.vfox.enable = true;
+    modules = {
+      vfox.enable = true;
+      fish.aliases."task" = "go-task";
+    };
 
     pacman.packages = [
       "aur/aseprite"
       "chaotic-aur/lmms-git"
       "extra/audacity"
+      "extra/blender"
       "extra/gimp"
       "extra/go-task"
       "extra/krita"
