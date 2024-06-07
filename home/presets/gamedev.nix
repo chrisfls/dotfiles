@@ -17,10 +17,12 @@ let enable = config.presets.gamedev; in
     pacman.packages = [
       "aur/aseprite"
       "chaotic-aur/lmms-git"
+      "chaotic-aur/magicavoxel"
       "extra/audacity"
       "extra/blender"
       "extra/gimp"
       "extra/go-task"
+      "extra/goxel"
       "extra/krita"
       "extra/tiled"
     ];
