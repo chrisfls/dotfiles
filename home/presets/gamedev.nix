@@ -10,7 +10,7 @@ let enable = config.presets.gamedev; in
     };
 
     modules = {
-      vfox.enable = true;
+      vfox.enable = false;
       fish.aliases."task" = "go-task";
     };
 

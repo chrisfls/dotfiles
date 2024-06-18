@@ -84,7 +84,7 @@ in
       (acc: name: acc // {
         # NOTE: to use df-tilt use `"${name} DF";` instead
         "jamesdsp/presets/${name} (EQ).conf".text = buildEQ name;
-        "jamesdsp/presets/${name} (CF).conf".text = buildCF "${name} DF"; 
+        "jamesdsp/presets/${name} (CF).conf".text = buildCF name;
         "jamesdsp/presets/${name} (IR).conf".text = buildIR name;
       })
       {
@@ -93,7 +93,7 @@ in
             graphiceq_enable=false
             convolver_enable=false
             crossfeed_enable=true
-            crossfeed_mode=0
+            crossfeed_mode=2
             crossfeed_bs2b_fcut=700
             crossfeed_bs2b_feed=45
 

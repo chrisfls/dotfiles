@@ -16,6 +16,11 @@ in
       code.enable = true;
     };
 
+    pacman.packages = [
+      "extra/deno"
+      "extra/ollama"
+    ];
+
     # nix stuff
     home.packages = [
       pkgs.devenv
