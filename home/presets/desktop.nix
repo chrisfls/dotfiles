@@ -18,6 +18,7 @@ let inherit (config.presets) desktop; in {
       "extra/cabextract"
       "extra/p7zip"
       "extra/unzip"
+      "extra/yt-dlp"
 
       # desktop env
       "extra/plasma-meta"
