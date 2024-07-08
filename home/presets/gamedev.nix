@@ -11,7 +11,6 @@ let enable = config.presets.gamedev; in
 
     modules = {
       vfox.enable = false;
-      fish.aliases."task" = "go-task";
     };
 
     pacman.packages = [
@@ -21,7 +20,6 @@ let enable = config.presets.gamedev; in
       "extra/audacity"
       "extra/blender"
       "extra/gimp"
-      "extra/go-task"
       "extra/goxel"
       "extra/krita"
       "extra/tiled"
