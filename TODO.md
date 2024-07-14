@@ -1,0 +1,1 @@
+- [ ] Fully drop home manager, replace everything with bash scripts and only use nix for devenv.
