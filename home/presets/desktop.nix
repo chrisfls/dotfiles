@@ -15,6 +15,7 @@ let inherit (config.presets) desktop; in {
 
       # tooling
       "chaotic-aur/joycond-git" # joycon drivers
+      "chaotic-aur/python-telegram-send"
       "extra/cabextract"
       "extra/p7zip"
       "extra/unzip"
