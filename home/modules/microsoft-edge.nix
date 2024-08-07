@@ -12,8 +12,7 @@ in
 
     xdg.configFile."${exe}-flags.conf".text =
       ''
-        --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer,VaapiVideoDecodeLinuxGL
-        --ozone-platform=wayland
+        --enable-features=WebRTCPipeWireCapturer,VaapiVideoDecodeLinuxGL
       '';
   };
 }

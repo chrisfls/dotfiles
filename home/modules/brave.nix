@@ -7,8 +7,7 @@ let inherit (config.modules.brave) enable; in {
 
     xdg.configFile."brave-flags.conf".text =
       ''
-        --enable-features=UseOzonePlatform,WaylandWindowDecorations,WebRTCPipeWireCapturer,VaapiVideoDecodeLinuxGL
-        --ozone-platform=wayland
+        --enable-features=WebRTCPipeWireCapturer,VaapiVideoDecodeLinuxGL
       '';
   };
 }
