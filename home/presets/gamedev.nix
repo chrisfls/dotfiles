@@ -22,6 +22,7 @@ let enable = config.presets.gamedev; in
       "extra/gimp"
       "extra/goxel"
       "extra/krita"
+      "extra/musescore"
       "extra/tiled"
     ];
   };
