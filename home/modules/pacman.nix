@@ -46,6 +46,8 @@ in
       "core/base"
       "core/base-devel"
       "extra/linux-zen"
+      "extra/greetd"
+      "extra/greetd-agreety"
       # chaotic
       "chaotic-aur/chaotic-keyring"
       "chaotic-aur/chaotic-mirrorlist"
