@@ -15,15 +15,15 @@ let enable = config.presets.gamedev; in
 
     pacman.packages = [
       "aur/aseprite-git"
-      "chaotic-aur/lmms-git"
+      # "chaotic-aur/lmms-git"
       "chaotic-aur/magicavoxel"
-      "extra/audacity"
-      "extra/blender"
-      "extra/gimp"
-      "extra/goxel"
-      "extra/krita"
-      "extra/musescore"
-      "extra/tiled"
+      # "extra/audacity"
+      # "extra/blender"
+      # "extra/gimp"
+      # "extra/goxel"
+      # "extra/krita"
+      # "extra/musescore"
+      # "extra/tiled"
     ];
   };
 }
