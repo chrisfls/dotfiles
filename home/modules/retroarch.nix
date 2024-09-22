@@ -5,28 +5,7 @@ let inherit (config.modules.retroarch) enable; in
   config = lib.mkIf enable {
     # TODO: move to flatpak
     pacman.packages = [
-      "aur/libretro-swanstation-git"
-      "chaotic-aur/libretro-mupen64plus-next-git" # extra/libretro-mupen64plus-next
-      "extra/libretro-beetle-psx-hw"
-      "extra/libretro-beetle-psx"
-      "extra/libretro-core-info"
-      "extra/libretro-desmume"
-      "extra/libretro-flycast"
-      "extra/libretro-genesis-plus-gx"
-      "extra/libretro-kronos"
-      "extra/libretro-melonds"
-      "extra/libretro-mesen-s"
-      "extra/libretro-mesen"
-      "extra/libretro-mgba"
-      "extra/libretro-parallel-n64"
-      "extra/libretro-pcsx2"
-      "extra/libretro-play"
-      "extra/libretro-ppsspp"
-      "extra/libretro-sameboy"
-      "extra/libretro-shaders-slang"
-      "extra/libretro-yabause"
-      "extra/retroarch-assets-ozone"
-      "extra/retroarch"
+      # "chaotic-aur/libretro-mupen64plus-next-git" # extra/libretro-mupen64plus-next
       "extra/mesa-utils"
     ];
   };

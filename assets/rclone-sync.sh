@@ -62,7 +62,7 @@ _bisync() {
 _perform() {
   case "$hosname" in
     "arch-rmxp")
-      retroarch="~/.config/retroarch"
+      retroarch="~/.var/app/org.libretro.RetroArch/config/retroarch"
       _bisync $1 "RetroArch/all/recordings" "$retroarch/records" &
       _bisync $1 "RetroArch/all/saves" "$retroarch/saves" &
       _bisync $1 "RetroArch/all/screenshots" "$retroarch/screenshots" &
