@@ -85,7 +85,6 @@ let inherit (config.presets) desktop; in {
     ];
 
     modules = {
-      brave.enable = true;
       electron.enable = true;
       fonts.enable = true;
       jamesdsp.enable = true;
@@ -93,9 +92,7 @@ let inherit (config.presets) desktop; in {
       loopback-toggle.enable = true;
       micro = { enable = true; desktop = true; };
       rclone.enable = true;
-      steam.enable = true;
       systemd.imported-variables = [ "PATH" ];
-      telegram.enable = true;
       udiskie.enable = true;
       xdg.enable = true;
     };

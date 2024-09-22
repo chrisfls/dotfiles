@@ -7,7 +7,6 @@ let enable = config.presets.stream; in
     presets.desktop = true;
     modules = {
       obs.enable = true;
-      microsoft-edge.enable = true;
     };
   };
 }

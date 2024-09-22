@@ -3,7 +3,6 @@
     ./agenix.nix
     ./any-nix-shell.nix
     ./bash.nix
-    ./brave.nix
     ./cloudflare-warp.nix
     ./code.nix
     ./direnv.nix
@@ -18,16 +17,13 @@
     ./kitty.nix
     ./loopback-toggle.nix
     ./micro.nix
-    ./microsoft-edge.nix
     ./obs.nix
     ./onedrive.nix
     ./pacman.nix
     ./podman.nix
     ./rclone.nix
     ./retroarch.nix
-    ./steam.nix
     ./systemd.nix
-    ./telegram.nix
     ./udiskie.nix
     ./vfox.nix
     ./xdg.nix
