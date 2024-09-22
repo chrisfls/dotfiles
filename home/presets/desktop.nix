@@ -28,7 +28,7 @@ let inherit (config.presets) desktop; in {
       # "extra/bitwarden-cli"
 
       # desktop env apps
-      # TODO: migrate apps to flatpak
+      # REVIEW: migrate apps to flatpak
       # "extra/ark" # compressed archiving tool
       # "extra/dolphin-plugins" # git
       # "extra/dolphin" # file manager

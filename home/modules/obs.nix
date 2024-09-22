@@ -8,7 +8,7 @@ let inherit (config.modules.obs) enable; in
     pacman.packages = [
       "chaotic-aur/obs-studio-tytan652"
       "chaotic-aur/obs-vkcapture-git"
-      "chaotic-aur/vlc-luajit" # TODO: review
+      "chaotic-aur/vlc-luajit"
     ];
   };
 }

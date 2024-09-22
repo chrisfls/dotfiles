@@ -44,7 +44,7 @@ in
 
     home.packages = [ loopback-toggle ];
 
-    # TODO: see if this can be moved to plasma
+    # REVIEW: see if this can be moved to plasma
     systemd.user.services.loopback-offd = {
       Unit.Description = "Disables audio loopback by default";
       Service.ExecStart = "${loopback-offd}";
