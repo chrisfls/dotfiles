@@ -20,6 +20,7 @@ let inherit (config.presets) desktop; in {
       "extra/p7zip"
       "extra/unzip"
       "extra/yt-dlp"
+      "extra/gamemode"
 
       # desktop env
       "extra/plasma-meta"
