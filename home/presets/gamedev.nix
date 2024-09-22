@@ -14,7 +14,7 @@ let enable = config.presets.gamedev; in
     };
 
     pacman.packages = [
-      "aur/aseprite-git" # TODO: use steam version
+      # "aur/aseprite-git"
       # "chaotic-aur/lmms-git"
       "chaotic-aur/magicavoxel"
       # "extra/audacity"
