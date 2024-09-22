@@ -52,6 +52,7 @@ in
       "chaotic-aur/chaotic-keyring"
       "chaotic-aur/chaotic-mirrorlist"
       "chaotic-aur/paru"
+      "chaotic-aur/downgrade"
       # builtins
       "extra/pacman-contrib"
       "extra/nix"
