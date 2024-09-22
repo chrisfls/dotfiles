@@ -10,9 +10,10 @@ in
     presets.desktop = true;
 
     pacman.packages = [
-      "extra/dbeaver"
-      # vivaldi and firefox are the least buggy browsers on wayland now
-      # firefox does not have 
+      # "extra/dbeaver"
+      # vivaldi and firefox are the least buggy browsers on wayland now,
+      # but firefox does not have loom support
+      # TODO: replace with flatpak
       "extra/vivaldi"
       "extra/vivaldi-ffmpeg-codecs"
     ];
