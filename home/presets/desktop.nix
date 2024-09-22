@@ -28,22 +28,23 @@ let inherit (config.presets) desktop; in {
       # "extra/bitwarden-cli"
 
       # desktop env apps
-      "extra/ark" # compressed archiving tool
-      "extra/dolphin-plugins" # git
-      "extra/dolphin" # file manager
+      # TODO: migrate apps to flatpak
+      # "extra/ark" # compressed archiving tool
+      # "extra/dolphin-plugins" # git
+      # "extra/dolphin" # file manager
       "extra/featherpad" # text editor
       "extra/ffmpegthumbs" # video thumbs
-      "extra/filelight" # disk usage by folder
-      "extra/gwenview" # image viewer
-      "extra/juk" # lightweight music player
-      "extra/kalk" # calculator
-      "extra/kamoso" # webcam recorder
-      "extra/kcharselect" # character selector
+      # "extra/filelight" # disk usage by folder
+      # "extra/gwenview" # image viewer
+      # "extra/juk" # lightweight music player
+      # "extra/kalk" # calculator
+      # "extra/kamoso" # webcam recorder
+      # "extra/kcharselect" # character selector
       "extra/kcron" # gui cronjob editor
       "extra/cronie" # cron implementation
       "extra/kdeconnect" # phone notifications
-      "extra/kdenlive" # video editor
-      "extra/kolourpaint" # image editor
+      # "extra/kdenlive" # video editor
+      # "extra/kolourpaint" # image editor
       "extra/partitionmanager" # partition manager TODO: remove?
       "extra/spectacle" # screenshooter
 
