@@ -111,6 +111,7 @@ in
   };
 
   config = lib.mkIf enable {
+    # TODO: move to flatpak
     pacman.packages = [ "chaotic-aur/jamesdsp-git" ];
 
     xdg.configFile = lib.lists.foldl
