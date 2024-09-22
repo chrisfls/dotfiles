@@ -30,8 +30,8 @@ let inherit (config.presets) desktop; in {
       # desktop env apps
       # REVIEW: migrate apps to flatpak
       # "extra/ark" # compressed archiving tool
-      # "extra/dolphin-plugins" # git
-      # "extra/dolphin" # file manager
+      "extra/dolphin-plugins" # git
+      "extra/dolphin" # file manager
       # "extra/featherpad" # text editor, replaced with kwrite
       "extra/ffmpegthumbs" # video thumbs
       # "extra/filelight" # disk usage by folder
