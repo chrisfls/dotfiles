@@ -32,7 +32,7 @@ let inherit (config.presets) desktop; in {
       # "extra/ark" # compressed archiving tool
       # "extra/dolphin-plugins" # git
       # "extra/dolphin" # file manager
-      "extra/featherpad" # text editor
+      # "extra/featherpad" # text editor, replaced with kwrite
       "extra/ffmpegthumbs" # video thumbs
       # "extra/filelight" # disk usage by folder
       # "extra/gwenview" # image viewer
