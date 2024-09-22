@@ -24,7 +24,7 @@ let inherit (config.presets) desktop; in {
       # desktop env
       "extra/plasma-meta"
       "aur/konsave"
-      "extra/bitwarden-cli"
+      # "extra/bitwarden-cli"
 
       # desktop env apps
       "extra/ark" # compressed archiving tool
@@ -44,23 +44,23 @@ let inherit (config.presets) desktop; in {
       "extra/kdenlive" # video editor
       "extra/kolourpaint" # image editor
       "extra/partitionmanager" # partition manager TODO: remove?
-      "extra/qbittorrent" # torrent downloader
       "extra/spectacle" # screenshooter
 
       # desktop apps
-      "extra/cameractrls"
-      "extra/inkscape"
+      # "extra/qbittorrent" # torrent downloader
+      # "extra/cameractrls"
+      # "extra/inkscape"
 
       # ######## #### ## #
       # MY PKGS
       # ######## #### ## #
 
-      "chaotic-aur/anydesk-bin" # remote access
-      "chaotic-aur/logseq-desktop-bin" # work logs
-      "chaotic-aur/moonlight-qt" # game stream
-      "chaotic-aur/parsec-bin" # game stream (poor performance on linux)
-      "extra/vesktop-git" # audio chat with friends
-      "extra/obsidian" # personal knowledge manager
+      # "chaotic-aur/anydesk-bin" # remote access
+      # "chaotic-aur/logseq-desktop-bin" # work logs
+      # "chaotic-aur/moonlight-qt" # game stream
+      # "chaotic-aur/parsec-bin" # game stream (poor performance on linux)
+      # "extra/vesktop-git" # audio chat with friends
+      # "extra/obsidian" # personal knowledge manager
     ];
 
     home.packages = [
