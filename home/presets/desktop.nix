@@ -45,7 +45,7 @@ let inherit (config.presets) desktop; in {
       "extra/kdeconnect" # phone notifications
       # "extra/kdenlive" # video editor
       # "extra/kolourpaint" # image editor
-      "extra/partitionmanager" # partition manager TODO: remove?
+      # "extra/partitionmanager" # partition manager REVIEW: remove
       "extra/spectacle" # screenshooter
 
       # desktop apps
