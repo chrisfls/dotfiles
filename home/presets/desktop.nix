@@ -46,7 +46,9 @@ let inherit (config.presets) desktop; in {
       # "extra/kdenlive" # video editor
       # "extra/kolourpaint" # image editor
       # "extra/partitionmanager" # partition manager REVIEW: remove
-      # "extra/spectacle" # screenshooter REVIEW: replaced with flameshot
+      # REVIEW: replaced spectacle with flameshot because of broken libraries
+      # REVIEW: not using flameshot flatpak because of broken clipboard
+      "extra/flameshot" # screenshooter 
 
       # desktop apps
       # "extra/qbittorrent" # torrent downloader
