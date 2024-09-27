@@ -2,6 +2,7 @@
   imports = [
     ./agenix.nix
     ./any-nix-shell.nix
+    ./audio-share.nix
     ./bash.nix
     ./cloudflare-warp.nix
     ./code.nix

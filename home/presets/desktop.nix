@@ -5,7 +5,6 @@ let inherit (config.presets) desktop; in {
   config = lib.mkIf desktop {
     pacman.explicits = [
       "extra/lostfiles"
-      "aur/audio-share-bin"
     ];
 
     pacman.packages = [
@@ -88,6 +87,7 @@ let inherit (config.presets) desktop; in {
     ];
 
     modules = {
+      audio-share.enable = true;
       electron.enable = true;
       fonts.enable = true;
       jamesdsp.enable = true;
