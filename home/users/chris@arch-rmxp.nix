@@ -25,6 +25,7 @@ in
     enable = true;
     packages = [
       "extra/intel-ucode"
+      "extra/vulkan-intel"
       # "extra/blueman"
     ];
   };
