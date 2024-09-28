@@ -59,6 +59,7 @@ let inherit (config.presets) desktop; in {
           konsave -i "$XDG_CONFIG_HOME/home-manager/assets/konsave/$user_at_hostname.knsv"
           konsave -a "$user_at_hostname"
         '')
+      (pkgs.writeHostScriptBin "yaknt" (lib.readFile ../../assets/yaknt))
     ];
 
     modules = {
