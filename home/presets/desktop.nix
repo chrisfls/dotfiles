@@ -59,7 +59,39 @@ let inherit (config.presets) desktop; in {
           konsave -i "$XDG_CONFIG_HOME/home-manager/assets/konsave/$user_at_hostname.knsv"
           konsave -a "$user_at_hostname"
         '')
-      (pkgs.writeHostScriptBin "yaknt" (lib.readFile ../../assets/yaknt))
+      (pkgs.writeHostScriptBin "yakuake-newtab"
+        ''
+          #!/usr/bin/bash
+
+          qdbus6 org.kde.yakuake /yakuake/sessions org.kde.yakuake.addSession
+
+          if [ "$(qdbus6 org.kde.yakuake /yakuake/MainWindow_1 org.qtproject.Qt.QWidget.visible)" = "false" ]; then
+            qdbus6 org.kde.yakuake /yakuake/window org.kde.yakuake.toggleWindowState
+          else
+            if [ "$(qdbus6 org.kde.yakuake /yakuake/MainWindow_1 org.qtproject.Qt.QWidget.isActiveWindow)" = "false" ]; then
+              qdbus6 org.kde.yakuake /yakuake/window org.kde.yakuake.toggleWindowState
+              qdbus6 org.kde.yakuake /yakuake/window org.kde.yakuake.toggleWindowState
+            fi
+          fi
+        '')
+      (pkgs.writeHostScriptBin "yakuake-toggle"
+        ''
+          #!/usr/bin/bash
+
+          if [ "$(qdbus6 org.kde.yakuake /yakuake/MainWindow_1 org.qtproject.Qt.QWidget.visible)" = "false" ]; then
+            # focus if hidden
+            qdbus6 org.kde.yakuake /yakuake/window org.kde.yakuake.toggleWindowState
+          else
+            if [ "$(qdbus6 org.kde.yakuake /yakuake/MainWindow_1 org.qtproject.Qt.QWidget.isActiveWindow)" = "false" ]; then
+              # focus if not visible
+              qdbus6 org.kde.yakuake /yakuake/window org.kde.yakuake.toggleWindowState
+              qdbus6 org.kde.yakuake /yakuake/window org.kde.yakuake.toggleWindowState
+            else
+              # hide if focused
+              qdbus6 org.kde.yakuake /yakuake/window org.kde.yakuake.toggleWindowState
+            fi
+          fi
+        '')
     ];
 
     modules = {
