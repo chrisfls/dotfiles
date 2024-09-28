@@ -35,6 +35,7 @@ let inherit (config.presets) desktop; in {
       "extra/flameshot" # screenshooter NOTE: replaced spectacle with flameshot because of broken libraries,  not using flatpak because of broken clipboard
       "extra/kcron" # gui cronjob editor
       "extra/kdeconnect" # phone notifications
+      "extra/yakuake" # terminal
 
       # desktop apps
       "extra/cameractrls"
