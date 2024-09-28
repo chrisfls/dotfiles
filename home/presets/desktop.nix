@@ -20,50 +20,23 @@ let inherit (config.presets) desktop; in {
       "extra/unzip"
       "extra/yt-dlp"
       "extra/gamemode"
+      "extra/cronie" # cron
 
       # desktop env
       "extra/plasma-meta"
       "aur/konsave"
-      # "extra/bitwarden-cli"
 
       # desktop env apps
-      # REVIEW: migrate apps to flatpak
-      # "extra/ark" # compressed archiving tool
+      "extra/ark" # compressed archiving tool
       "extra/dolphin-plugins" # git
       "extra/dolphin" # file manager
-      # "extra/featherpad" # text editor, replaced with kwrite
       "extra/ffmpegthumbs" # video thumbs
-      # "extra/filelight" # disk usage by folder
-      # "extra/gwenview" # image viewer
-      # "extra/juk" # lightweight music player
-      # "extra/kalk" # calculator
-      # "extra/kamoso" # webcam recorder
-      # "extra/kcharselect" # character selector
+      "extra/filelight" # disk usage by folder
+      "extra/flameshot" # screenshooter NOTE: replaced spectacle with flameshot because of broken libraries,  not using flatpak because of broken clipboard
       "extra/kcron" # gui cronjob editor
-      "extra/cronie" # cron implementation
       "extra/kdeconnect" # phone notifications
-      # "extra/kdenlive" # video editor
-      # "extra/kolourpaint" # image editor
-      # "extra/partitionmanager" # partition manager REVIEW: remove
-      # REVIEW: replaced spectacle with flameshot because of broken libraries
-      # REVIEW: not using flameshot flatpak because of broken clipboard
-      "extra/flameshot" # screenshooter 
 
       # desktop apps
-      # "extra/qbittorrent" # torrent downloader
-      # "extra/cameractrls"
-      # "extra/inkscape"
-
-      # ######## #### ## #
-      # MY PKGS
-      # ######## #### ## #
-
-      # "chaotic-aur/anydesk-bin" # remote access
-      # "chaotic-aur/logseq-desktop-bin" # work logs
-      # "chaotic-aur/moonlight-qt" # game stream
-      # "chaotic-aur/parsec-bin" # game stream (poor performance on linux)
-      # "extra/vesktop-git" # audio chat with friends (replaced with flatpak webcord)
-      # "extra/obsidian" # personal knowledge manager
       "extra/cameractrls"
     ];
 
