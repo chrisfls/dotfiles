@@ -1,0 +1,24 @@
+[Animation]
+Frames=0
+
+[Appearance]
+BackgroundColor=34,37,38
+Skin=yakuake-breeze_perfect_dark-2.0
+SkinInstalledWithKns=true
+Translucency=true
+
+[Desktop Entry]
+DefaultProfile=Fish.profile
+
+[Dialogs]
+FirstRun=false
+
+[SplitView]
+SplitDragHandleSize=SplitDragHandleLarge
+SplitViewVisibility=ShowSplitHeaderWhenNeeded
+
+[Window]
+DynamicTabTitles=true
+Height=34
+Screen=1
+Width=27
