@@ -15,6 +15,7 @@
       "extra/earlyoom"
       "extra/jaq"
       "extra/jq"
+      "extra/unrar"
     ];
 
     modules = {
