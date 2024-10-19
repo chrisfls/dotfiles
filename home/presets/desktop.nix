@@ -33,6 +33,7 @@ let inherit (config.presets) desktop; in {
       "extra/ffmpegthumbs" # video thumbs
       "extra/filelight" # disk usage by folder
       "extra/flameshot" # screenshooter NOTE: replaced spectacle with flameshot because of broken libraries,  not using flatpak because of broken clipboard
+      "extra/spectacle"
       "extra/kcron" # gui cronjob editor
       "extra/kdeconnect" # phone notifications
       "extra/yakuake" # terminal
