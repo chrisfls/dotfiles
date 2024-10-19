@@ -32,11 +32,12 @@ let inherit (config.presets) desktop; in {
       "extra/dolphin" # file manager
       "extra/ffmpegthumbs" # video thumbs
       "extra/filelight" # disk usage by folder
-      "extra/flameshot" # screenshooter NOTE: replaced spectacle with flameshot because of broken libraries,  not using flatpak because of broken clipboard
-      "extra/spectacle"
+      "extra/flameshot" # secondary screenshooter
+      "extra/spectacle" # screenshooter
       "extra/kcron" # gui cronjob editor
       "extra/kdeconnect" # phone notifications
       "extra/yakuake" # terminal
+      "chaotic-aur/64gram-desktop" # telegram, unless it breaks again
 
       # desktop apps
       "extra/cameractrls"
