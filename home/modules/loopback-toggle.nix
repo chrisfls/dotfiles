@@ -17,6 +17,7 @@ let
       ${loopback-toggle}/bin/loopback-toggle
       pactl subscribe | grep --line-buffered "Event 'change' on source" | while read line
       do
+        sleep 1
         d=$(awk '/${device}/ {print $1; exit}' /proc/asound/cards)
         amixer -c $d sset Mic Capture 100%
         amixer -c $d sset Mic Playback ${toString volume}%
