@@ -21,6 +21,7 @@ in
       "extra/deno"
       "extra/ollama"
       "extra/chromium"
+      "chaotic-aur/postman-bin"
     ];
 
     # nix stuff
