@@ -14,6 +14,7 @@ in
       podman.enable = true;
       helix.enable = true;
       code.enable = true;
+      asdf.enable = true;
     };
 
     pacman.packages = [
