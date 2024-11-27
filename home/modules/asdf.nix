@@ -5,12 +5,14 @@ let inherit (config.modules.asdf) enable extraConfig; in {
   config = lib.mkIf enable {
     pacman.packages = [ 
       "chaotic-aur/asdf-vm"
-      "core/unixodbc"
-      "extra/wxwidgets-gtk3"
-      "extra/libssh"
+      "chaotic-aur/postman-bin"
+      "chaotic-aur/heroku-cli-bin"
       "core/ncurses"
-      "extra/libxslt"
+      "core/unixodbc"
       "extra/fop"
+      "extra/libssh"
+      "extra/libxslt"
+      "extra/wxwidgets-gtk3"
     ];
 
     modules.bash.extraConfig =
