@@ -20,6 +20,7 @@ in
     pacman.packages = [
       "extra/deno"
       "extra/ollama"
+      "extra/chromium"
     ];
 
     # nix stuff
