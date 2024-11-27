@@ -18,10 +18,22 @@ in
     };
 
     pacman.packages = [
+      # mine
       "extra/deno"
       "extra/ollama"
-      "extra/chromium"
+      # timeline
+      "chaotic-aur/heroku-cli-bin"
+      "chaotic-aur/ngrok"
       "chaotic-aur/postman-bin"
+      "core/ncurses"
+      "core/unixodbc"
+      "extra/chromium"
+      "extra/fop"
+      "extra/inotify-tools"
+      "extra/libssh"
+      "extra/libxslt"
+      "extra/postgresql"
+      "extra/wxwidgets-gtk3"
     ];
 
     # nix stuff
