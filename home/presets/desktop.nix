@@ -41,6 +41,7 @@ let inherit (config.presets) desktop; in {
 
       # desktop apps
       "extra/cameractrls"
+      "chaotic-aur/appimagelauncher"
     ];
 
     home.packages = [
