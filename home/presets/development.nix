@@ -21,6 +21,7 @@ in
       # mine
       "extra/deno"
       "extra/ollama"
+      "extra/zed"
       # timeline
       "chaotic-aur/heroku-cli-bin"
       "chaotic-aur/ngrok"
