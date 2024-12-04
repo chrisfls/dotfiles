@@ -30,6 +30,7 @@ in
       "core/unixodbc"
       "extra/chromium"
       "extra/fop"
+      "extra/imagemagick"
       "extra/inotify-tools"
       "extra/libssh"
       "extra/libxslt"
