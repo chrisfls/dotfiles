@@ -48,6 +48,7 @@ in
       "extra/linux-zen"
       "extra/greetd"
       "extra/greetd-agreety"
+      "extra/aria2"
       # chaotic
       "chaotic-aur/chaotic-keyring"
       "chaotic-aur/chaotic-mirrorlist"
